@@ -2,7 +2,7 @@ import fs from 'fs';
 import tmp from 'tmp';
 import {basename} from 'path';
 
-let _tmpDir: string|null = null;
+let _tmpDir: string | null = null;
 
 /** Get a consistent temp dir for the duration of the program */
 export function getTempDir(): string {

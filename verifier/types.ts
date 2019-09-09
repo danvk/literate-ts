@@ -1,4 +1,4 @@
-import { CompilerOptions } from 'typescript';
+import {CompilerOptions} from 'typescript';
 
 export interface CodeSample {
   language: 'js' | 'ts' | null;

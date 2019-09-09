@@ -2,46 +2,56 @@ import fs from 'fs';
 
 import ts from 'typescript';
 
-import {extractExpectedErrors, hasTypeAssertions, extractTypeAssertions, checkTypeAssertions} from '../ts-checker';
-import { dedent } from '../utils';
+import {
+  extractExpectedErrors,
+  hasTypeAssertions,
+  extractTypeAssertions,
+  checkTypeAssertions,
+} from '../ts-checker';
+import {dedent} from '../utils';
 
 describe('ts-checker', () => {
   describe('extractExpectedErrors', () => {
     test('basic functionality', () => {
-      expect(extractExpectedErrors(dedent`
+      expect(
+        extractExpectedErrors(dedent`
         const city = 'new york city';
         console.log(city.toUppercase());
                       // ~~~~~~~~~~~ Property 'toUppercase' does not exist.
         // 345678901234567890123456789
         //        1         2
-      `)).toEqual([
+      `),
+      ).toEqual([
         {
           line: 1,
           start: 17,
           end: 28,
-          message: `Property 'toUppercase' does not exist.`
-        }
+          message: `Property 'toUppercase' does not exist.`,
+        },
       ]);
     });
 
     test('multiline error', () => {
-      expect(extractExpectedErrors(dedent`
+      expect(
+        extractExpectedErrors(dedent`
         const city = 'new york city';
         console.log(city.toUppercase());
                       // ~~~~~~~~~~~ Property 'toUppercase' does not exist.
                       //             Did you mean 'toUpperCase'?
-      `)).toEqual([
+      `),
+      ).toEqual([
         {
           line: 1,
           start: 17,
           end: 28,
-          message: `Property 'toUppercase' does not exist. Did you mean 'toUpperCase'?`
-        }
+          message: `Property 'toUppercase' does not exist. Did you mean 'toUpperCase'?`,
+        },
       ]);
     });
 
     test('two errors on a line', () => {
-      expect(extractExpectedErrors(dedent`
+      expect(
+        extractExpectedErrors(dedent`
         function add(a, b) {
                   // ~    Parameter 'a' implicitly has an 'any' type.
                   //    ~ Parameter 'b' implicitly has an 'any' type.
@@ -49,44 +59,48 @@ describe('ts-checker', () => {
         //        1         2
           return a + b;
         }
-      `)).toEqual([
+      `),
+      ).toEqual([
         {
           line: 0,
           start: 13,
           end: 14,
-          message: `Parameter 'a' implicitly has an 'any' type.`
+          message: `Parameter 'a' implicitly has an 'any' type.`,
         },
         {
           line: 0,
           start: 16,
           end: 17,
-          message: `Parameter 'b' implicitly has an 'any' type.`
-        }
+          message: `Parameter 'b' implicitly has an 'any' type.`,
+        },
       ]);
 
-      expect(extractExpectedErrors(dedent`
+      expect(
+        extractExpectedErrors(dedent`
         if (pt.x < box.x[0] || pt.x > box.x[1] ||
             //     ~~~                ~~~  Object is possibly undefined
         // 3456789012345678901234567890123
         //        1         2         3
-      `)).toEqual([
+      `),
+      ).toEqual([
         {
           line: 0,
           start: 11,
           end: 14,
-          message: `Object is possibly undefined`
+          message: `Object is possibly undefined`,
         },
         {
           line: 0,
           start: 30,
           end: 33,
-          message: `Object is possibly undefined`
-        }
+          message: `Object is possibly undefined`,
+        },
       ]);
     });
 
     test('comment on first line', () => {
-      expect(extractExpectedErrors(dedent`
+      expect(
+        extractExpectedErrors(dedent`
         // HIDE
         type Shape = null;
         // END
@@ -97,11 +111,13 @@ describe('ts-checker', () => {
             return shape.width * shape.width;  // shape's type is Square
           }
         }
-      `)).toEqual([]);
+      `),
+      ).toEqual([]);
     });
 
     test('error with no expected message', () => {
-      expect(extractExpectedErrors(dedent`
+      expect(
+        extractExpectedErrors(dedent`
         const states: State[] = [
           {name: 'Alaska',  capitol: 'Juneau'},
                          // ~~~~~~~~~~~~~~~~~
@@ -110,84 +126,101 @@ describe('ts-checker', () => {
           {name: 'Arizona', capitol: 'Phoenix'},
                          // ~~~~~~~~~~~~~~~~~~ Object literal may only specify known
         ];
-      `)).toEqual([
-          {
-            line: 1,
-            start: 20,
-            end: 37,
-            message: '',
-          },
-          {
-            line: 5,
-            start: 20,
-            end: 38,
-            message: `Object literal may only specify known`
-          },
+      `),
+      ).toEqual([
+        {
+          line: 1,
+          start: 20,
+          end: 37,
+          message: '',
+        },
+        {
+          line: 5,
+          start: 20,
+          end: 38,
+          message: `Object literal may only specify known`,
+        },
       ]);
     });
   });
 
   test('hasTypeAssertions', () => {
-    expect(hasTypeAssertions(dedent`
+    expect(
+      hasTypeAssertions(dedent`
       for (const x of xs) {
         x;  // type is number
-      }`)).toBe(true);
+      }`),
+    ).toBe(true);
 
-      expect(hasTypeAssertions(dedent`
+    expect(
+      hasTypeAssertions(dedent`
       for (const x of xs) {
         x;  // number
-      }`)).toBe(false);
+      }`),
+    ).toBe(false);
   });
-
 
   test('extractTypeAssertions', () => {
     const getAssertions = (text: string) => {
       const testFile = ts.createSourceFile('test.ts', text, ts.ScriptTarget.ES2015);
       const scanner = ts.createScanner(
-        ts.ScriptTarget.ES2015, false, testFile.languageVariant, testFile.getFullText()
-      )
+        ts.ScriptTarget.ES2015,
+        false,
+        testFile.languageVariant,
+        testFile.getFullText(),
+      );
       return extractTypeAssertions(scanner, testFile);
     };
 
-    expect(getAssertions(dedent`
+    expect(
+      getAssertions(dedent`
       for (const x of xs) {
         x;  // type is number
-      }`)).toEqual([
-        {
-          line: 1,
-          type: 'number'
-        }
-      ]);
+      }`),
+    ).toEqual([
+      {
+        line: 1,
+        type: 'number',
+      },
+    ]);
 
-    expect(getAssertions(dedent`
+    expect(
+      getAssertions(dedent`
       for (const x of xs) {
         x;  // type is just number
-      }`)).toEqual([
-        {
-          line: 1,
-          type: 'number'
-        }
-      ]);
+      }`),
+    ).toEqual([
+      {
+        line: 1,
+        type: 'number',
+      },
+    ]);
 
-    expect(getAssertions(dedent`
+    expect(
+      getAssertions(dedent`
       type T = typeof document.getElementById;
         // type is (elementId: string) => HTMLElement | null
-      `)).toEqual([
-        {
-          line: 0,
-          type: '(elementId: string) => HTMLElement | null'
-        }
-      ]);
+      `),
+    ).toEqual([
+      {
+        line: 0,
+        type: '(elementId: string) => HTMLElement | null',
+      },
+    ]);
   });
 
   describe('checkTypeAssertions', () => {
     // const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
-    const config = ts.parseJsonConfigFileContent({
-      compilerOptions: {
-        strictNullChecks: true,
-        module: "commonjs",
-      }
-    }, ts.sys, process.cwd());
+    const config = ts.parseJsonConfigFileContent(
+      {
+        compilerOptions: {
+          strictNullChecks: true,
+          module: 'commonjs',
+        },
+      },
+      ts.sys,
+      process.cwd(),
+    );
     // const host = ts.createCompilerHost(config.options, true);
 
     const checkAssertions = (text: string) => {
@@ -196,56 +229,67 @@ describe('ts-checker', () => {
       const filename = `/tmp/test.ts`;
       fs.writeFileSync(filename, text, 'utf8');
       // const sourceFile = ts.createSourceFile(filename, text, ts.ScriptTarget.ES2015, true /* setParentNodes */);
-      const program = ts.createProgram([
-        filename,
-      ], config.options /*, host */);
+      const program = ts.createProgram([filename], config.options /*, host */);
       const sourceFile = program.getSourceFile(filename);
       if (!sourceFile) {
         throw new Error('could not get sourceFile');
       }
       const scanner = ts.createScanner(
-        ts.ScriptTarget.ES2015, false, sourceFile.languageVariant, sourceFile.getFullText()
-      )
+        ts.ScriptTarget.ES2015,
+        false,
+        sourceFile.languageVariant,
+        sourceFile.getFullText(),
+      );
 
       const assertions = extractTypeAssertions(scanner, sourceFile);
       return checkTypeAssertions(sourceFile, program.getTypeChecker(), assertions);
     };
 
     test('type assertion on a value', () => {
-      expect(checkAssertions(dedent`
+      expect(
+        checkAssertions(dedent`
         const x = 2 + '3';  // ok, x's type is string
         const y = '2' + 3;  // ok, y's type is string
-      `)).toBe(true);
+      `),
+      ).toBe(true);
     });
 
     test('type assertion on a type', () => {
-      expect(checkAssertions(dedent`
+      expect(
+        checkAssertions(dedent`
         type T = typeof document.getElementById;
         // type is (elementId: string) => HTMLElement | null
-      `)).toBe(true);
+      `),
+      ).toBe(true);
     });
 
     test('type assertion on a nested value', () => {
-      expect(checkAssertions(dedent`
+      expect(
+        checkAssertions(dedent`
         const o = { x: 'a' };
         o;  // type is { x: string; }
         o.x;  // type is string
-      `)).toBe(true);
+      `),
+      ).toBe(true);
     });
 
     test('type assertion on a multiline value', () => {
-      expect(checkAssertions(dedent`
+      expect(
+        checkAssertions(dedent`
         const o = {
           x: 'a',
         };  // type is { x: string; }
-      `)).toBe(true);
+      `),
+      ).toBe(true);
     });
 
     test('type assertion on a call expression', () => {
-      expect(checkAssertions(dedent`
+      expect(
+        checkAssertions(dedent`
         const double = (n: number) => ('' + n * n);
         double(10);  // type is string
-      `)).toBe(true);
+      `),
+      ).toBe(true);
     });
 
     // third-party type

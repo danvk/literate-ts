@@ -1,18 +1,15 @@
 import _ from 'lodash';
 
-import { CodeSample, PrefixedCodeSample, Prefix } from './types';
-import { matchAndExtract } from './utils';
-import { log } from './logger';
-import { fail } from './test-tracker';
+import {CodeSample, PrefixedCodeSample, Prefix} from './types';
+import {matchAndExtract} from './utils';
+import {log} from './logger';
+import {fail} from './test-tracker';
 
 const EXTRACT_ID = /\[\[([^\]]*)\]\]/;
 const EXTRACT_SOURCE = /\[source,(ts|js)\]/;
 const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 
-export function extractSamples(
-  text: string,
-  filename: string,
-): PrefixedCodeSample[] {
+export function extractSamples(text: string, filename: string): PrefixedCodeSample[] {
   const samples = [];
   const lines = text.split('\n');
   let i = 0;
@@ -23,14 +20,14 @@ export function extractSamples(
     line = lines[i];
   };
 
-  let lastId: string|null = null;
-  let lastLanguage: string|null = null;
+  let lastId: string | null = null;
+  let lastLanguage: string | null = null;
   let prefixes: readonly Prefix[] = [];
   let skipNext = false;
   let prependNext = false;
   let prependLines: number[] | null = null;
   let nodeModules: readonly string[] = [];
-  let tsOptions: {[key: string]: string|boolean} = {};
+  let tsOptions: {[key: string]: string | boolean} = {};
   let nextIsTSX = false;
   let nextShouldCheckJs = false;
 
@@ -62,11 +59,19 @@ export function extractSamples(
         prependNext = true;
       } else if (directive.startsWith('prepend-subset-to-following:')) {
         prependNext = true;
-        prependLines = directive.split(':', 2)[1].split('-').map(Number);
+        prependLines = directive
+          .split(':', 2)[1]
+          .split('-')
+          .map(Number);
       } else if (directive.startsWith('prepend-id-to-following')) {
-        prefixes = prefixes.concat([{
-          id: directive.split(':').slice(1).join(':')
-        }]);
+        prefixes = prefixes.concat([
+          {
+            id: directive
+              .split(':')
+              .slice(1)
+              .join(':'),
+          },
+        ]);
       } else if (directive.startsWith('skip')) {
         skipNext = true;
       } else if (directive.startsWith('tsconfig:')) {
@@ -79,7 +84,7 @@ export function extractSamples(
         nextIsTSX = true;
       } else if (directive === 'check-js') {
         nextShouldCheckJs = true;
-        tsOptions['allowJs'] = true;  // convenience, it's useless without this!
+        tsOptions['allowJs'] = true; // convenience, it's useless without this!
         tsOptions['noEmit'] = true;
       } else {
         throw new Error(`Unknown directive: ${line}`);
@@ -114,10 +119,12 @@ export function extractSamples(
           });
         }
         if (prependNext) {
-          prefixes = prefixes.concat([{
-            id: lastId,
-            ...(prependLines ? {lines: prependLines} : {})
-          }]);
+          prefixes = prefixes.concat([
+            {
+              id: lastId,
+              ...(prependLines ? {lines: prependLines} : {}),
+            },
+          ]);
           prependNext = false;
           prependLines = null;
         }
@@ -166,17 +173,23 @@ export function checkSource(sample: CodeSample, source: string) {
   return true;
 }
 
-export function applyPrefixes(samples: PrefixedCodeSample[], sources: {[id: string]: string} = {}): CodeSample[] {
+export function applyPrefixes(
+  samples: PrefixedCodeSample[],
+  sources: {[id: string]: string} = {},
+): CodeSample[] {
   const idToSample = _.keyBy(samples, 'id');
-  const sliceLines = (text: string, lines: number[] | undefined) => (
-    lines ? text.split('\n').slice(lines[0] - 1, lines[1]).join('\n') : text
-  );
+  const sliceLines = (text: string, lines: number[] | undefined) =>
+    lines
+      ? text
+          .split('\n')
+          .slice(lines[0] - 1, lines[1])
+          .join('\n')
+      : text;
   return samples.map(sample => {
-    const content = sample.prefixes.map(
-      ({id, lines}) => sliceLines(sources[id] || idToSample[id].content, lines)
-    ).concat([
-      sources[sample.id] || sample.content
-    ]).join('\n');
+    const content = sample.prefixes
+      .map(({id, lines}) => sliceLines(sources[id] || idToSample[id].content, lines))
+      .concat([sources[sample.id] || sample.content])
+      .join('\n');
     return {
       id: sample.id,
       language: sample.language,
@@ -184,7 +197,7 @@ export function applyPrefixes(samples: PrefixedCodeSample[], sources: {[id: stri
       nodeModules: sample.nodeModules,
       isTSX: sample.isTSX,
       checkJS: sample.checkJS,
-      content
+      content,
     };
   });
 }

@@ -8,13 +8,20 @@ import ora from 'ora';
 import ts from 'typescript';
 import yargs from 'yargs';
 
-import { extractSamples, checkSource, applyPrefixes } from './verifier/code-sample';
-import { startLog, log, flushLog, logFile } from './verifier/logger';
-import { runNode } from './verifier/node-runner';
-import { getTestResults, startFile, fail, finishFile, finishSample, startSample } from './verifier/test-tracker';
-import { checkTs, ConfigBundle } from './verifier/ts-checker';
-import { CodeSample } from './verifier/types';
-import { getTempDir, writeTempFile, fileSlug } from './verifier/utils';
+import {extractSamples, checkSource, applyPrefixes} from './verifier/code-sample';
+import {startLog, log, flushLog, logFile} from './verifier/logger';
+import {runNode} from './verifier/node-runner';
+import {
+  getTestResults,
+  startFile,
+  fail,
+  finishFile,
+  finishSample,
+  startSample,
+} from './verifier/test-tracker';
+import {checkTs, ConfigBundle} from './verifier/ts-checker';
+import {CodeSample} from './verifier/types';
+import {getTempDir, writeTempFile, fileSlug} from './verifier/utils';
 
 function checkOutput(expectedOutput: string, input: CodeSample) {
   const actualOutput = input.output;
@@ -29,7 +36,7 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
     .split('\n')
     .filter(line => !line.startsWith('    at '))
     // Remove temp paths which vary from run to run.
-    .map(line => tmpDir ? line.replace('/private' + tmpDir, '').replace(tmpDir, '') : line)
+    .map(line => (tmpDir ? line.replace('/private' + tmpDir, '').replace(tmpDir, '') : line))
     .join('\n')
     .trim();
   // remove markers
@@ -49,16 +56,13 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
   }
 }
 
-async function checkSample(
-  sample: CodeSample,
-  idToSample: {[id: string]: CodeSample}
-) {
+async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSample}) {
   const {id, language} = sample;
   let {content} = sample;
   startSample(id);
 
   if (language === 'ts' || (language === 'js' && sample.checkJS)) {
-    await checkTs(content, sample, (id + '-output') in idToSample, typeScriptBundle);
+    await checkTs(content, sample, id + '-output' in idToSample, typeScriptBundle);
   } else if (language === 'js') {
     // Run the sample through Node and record the output.
     const path = writeTempFile(id + '.js', content);
@@ -79,7 +83,7 @@ async function checkSample(
       fail(`No paired input: #${inputId}`);
     } else {
       checkOutput(content, input);
-      log('Actual output matched expected.')
+      log('Actual output matched expected.');
     }
   }
   finishSample();
@@ -128,14 +132,14 @@ const argv = yargs
   .options({
     filter: {
       type: 'string',
-      description: 'Only check IDs with the given prefix'
-    }
+      description: 'Only check IDs with the given prefix',
+    },
   })
   .options({
     alsologtostderr: {
       type: 'boolean',
       description: 'Log to stderr in addition to a log file',
-    }
+    },
   })
   .parse();
 
@@ -152,7 +156,7 @@ for (const filePath of glob.sync('checks/**')) {
 }
 
 const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
-const { options: tsOptions } = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
+const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
 
 console.log('Verifying with TypeScript', ts.version);
 let spinner = argv.alsologtostderr ? null : ora('Initializing').start();
@@ -173,7 +177,7 @@ const typeScriptBundle: ConfigBundle = {
   if (spinner) spinner.stop();
 
   for (const [file, fileResults] of Object.entries(getTestResults())) {
-    const numPassed = _.sum(_.map(fileResults, n => n === 0 ? 1 : 0));
+    const numPassed = _.sum(_.map(fileResults, n => (n === 0 ? 1 : 0)));
     console.log(file, `${numPassed}/${_.size(fileResults)} passed`);
     for (const [id, failures] of Object.entries(fileResults)) {
       numTotal += 1;
@@ -181,7 +185,7 @@ const typeScriptBundle: ConfigBundle = {
         console.log(chalk.green(` ✓ ${id}`));
       } else {
         console.log(chalk.red(` ✗ ${id}`));
-        numFailures += 1
+        numFailures += 1;
       }
     }
   }
@@ -194,7 +198,9 @@ const typeScriptBundle: ConfigBundle = {
   } else {
     console.log(chalk.green(`✓ All samples passed!`));
   }
-})().catch(e => {
-  if (spinner) spinner.stop();
-  console.error(e);
-}).then(flushLog);
+})()
+  .catch(e => {
+    if (spinner) spinner.stop();
+    console.error(e);
+  })
+  .then(flushLog);

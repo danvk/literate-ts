@@ -1,5 +1,5 @@
-import { extractSamples, stripSource, applyPrefixes } from "../code-sample";
-import { dedent } from "../utils";
+import {extractSamples, stripSource, applyPrefixes} from '../code-sample';
+import {dedent} from '../utils';
 
 const ASCII_DOC1 = `
 
@@ -115,7 +115,7 @@ describe('code-sample', () => {
             function greet(who: string) {
               console.log('Hello', who);
             }`,
-        }
+        },
       ]);
     });
 
@@ -127,7 +127,7 @@ describe('code-sample', () => {
           language: 'ts',
           id: 'noid-10',
           content: `console.log('Hello', 'TS');`,
-        }
+        },
       ]);
     });
 
@@ -186,7 +186,10 @@ describe('code-sample', () => {
   });
 
   test('prepend-subset directive', () => {
-    expect(applyPrefixes(extractSamples(dedent`
+    expect(
+      applyPrefixes(
+        extractSamples(
+          dedent`
     // verifier:prepend-subset-to-following:1-3
     [[a]]
     [source,ts]
@@ -202,7 +205,11 @@ describe('code-sample', () => {
     ----
     const p = {} as Person;
     ----
-    `, 'prepend-subset'))).toEqual([
+    `,
+          'prepend-subset',
+        ),
+      ),
+    ).toEqual([
       {
         ...baseSample,
         language: 'ts',
@@ -222,12 +229,15 @@ describe('code-sample', () => {
           name: string;
         }
         const p = {} as Person;`,
-      }
+      },
     ]);
   });
 
   test('prepend-subset-of-js', () => {
-    expect(applyPrefixes(extractSamples(dedent`
+    expect(
+      applyPrefixes(
+        extractSamples(
+          dedent`
     // verifier:prepend-subset-to-following:1-2
     [[a]]
     [source,js]
@@ -242,7 +252,11 @@ describe('code-sample', () => {
     ----
     const {name} = p;
     ----
-    `, 'prepend-subset'))).toEqual([
+    `,
+          'prepend-subset',
+        ),
+      ),
+    ).toEqual([
       {
         ...baseSample,
         language: 'js',
@@ -260,7 +274,7 @@ describe('code-sample', () => {
         import _ from 'lodash';
         const p = {name: 'Bob'};
         const {name} = p;`,
-      }
+      },
     ]);
   });
 
@@ -269,7 +283,9 @@ describe('code-sample', () => {
   });
 
   test('tsconfig directive', () => {
-    expect(extractSamples(dedent`
+    expect(
+      extractSamples(
+        dedent`
     // verifier:tsconfig:noImplicitAny=false
     // verifier:tsconfig:strictNullChecks=false
     [[implicit-any]]
@@ -286,7 +302,10 @@ describe('code-sample', () => {
     const x: number = null;
     ----
 
-    `, 'tsconfig')).toEqual([
+    `,
+        'tsconfig',
+      ),
+    ).toEqual([
       {
         ...baseExtract,
         language: 'ts',
@@ -306,12 +325,16 @@ describe('code-sample', () => {
           noImplicitAny: true,
           strictNullChecks: true,
         },
-      }
+      },
     ]);
   });
 
   test('prepend-with-id', () => {
-    expect(extractSamples(ASCIIDOC_PREPEND + '\n' + dedent`
+    expect(
+      extractSamples(
+        ASCIIDOC_PREPEND +
+          '\n' +
+          dedent`
     // verifier:reset
 
     // verifier:prepend-id-to-following:prefix
@@ -321,64 +344,74 @@ describe('code-sample', () => {
     ----
     console.log(a);
     ----
-    `, 'prepend-with-id').slice(-1)).toEqual([
+    `,
+        'prepend-with-id',
+      ).slice(-1),
+    ).toEqual([
       {
         ...baseExtract,
         language: 'ts',
         id: 'prepended-with-ids',
         content: `console.log(a);`,
-        prefixes: [
-          { id: 'prefix' },
-          { id: 'combined' },
-        ],
-      }
+        prefixes: [{id: 'prefix'}, {id: 'combined'}],
+      },
     ]);
   });
 
   test('next-is-tsx', () => {
-    expect(extractSamples(dedent`
+    expect(
+      extractSamples(
+        dedent`
     // verifier:next-is-tsx
     [[tsx-example]]
     [source,ts]
     ----
     console.log(a);
     ----
-    `, 'tsx-example').slice(-1)).toEqual([
+    `,
+        'tsx-example',
+      ).slice(-1),
+    ).toEqual([
       {
         ...baseExtract,
         language: 'ts',
         id: 'tsx-example',
         content: `console.log(a);`,
         isTSX: true,
-      }
+      },
     ]);
   });
 });
 
 describe('stripSource', () => {
   test('HIDE..END', () => {
-    expect(stripSource(dedent`
+    expect(
+      stripSource(dedent`
     // HIDE
     type AB = 'a' | 'b';
     // END
-    const a: AB = 'a';`)).toEqual(`const a: AB = 'a';`);
+    const a: AB = 'a';`),
+    ).toEqual(`const a: AB = 'a';`);
   });
 
   test('indented HIDE..END', () => {
-    expect(stripSource(dedent`
+    expect(
+      stripSource(dedent`
       function foo() {
         // HIDE
         type AB = 'a' | 'b';
         // END
         const a: AB = 'a';
-      }`)).toEqual(dedent`
+      }`),
+    ).toEqual(dedent`
       function foo() {
         const a: AB = 'a';
       }`);
   });
 
   test('multiple HIDE..END', () => {
-    expect(stripSource(dedent`
+    expect(
+      stripSource(dedent`
     // HIDE
     type AB = 'a' | 'b';
     // END
@@ -386,17 +419,20 @@ describe('stripSource', () => {
     // HIDE
     console.log(a);
     // END
-    `)).toEqual(`const a: AB = 'a';\n`);
+    `),
+    ).toEqual(`const a: AB = 'a';\n`);
   });
 
   test('COMPRESS..END', () => {
-    expect(stripSource(dedent`
+    expect(
+      stripSource(dedent`
       function foo() {
         // COMPRESS
         return 1 + 2 + 3;
         // END
       }
-      const x = foo();`)).toEqual(dedent`
+      const x = foo();`),
+    ).toEqual(dedent`
       function foo() {
         // ...
       }
@@ -404,9 +440,11 @@ describe('stripSource', () => {
   });
 
   test('inline COMPRESS..END', () => {
-    expect(stripSource(dedent`
+    expect(
+      stripSource(dedent`
       function foo() { /* COMPRESS */ return 1 + 2 + 3; /* END */ }
-      const x = foo();`)).toEqual(dedent`
+      const x = foo();`),
+    ).toEqual(dedent`
       function foo() { /* ... */ }
       const x = foo();`);
   });

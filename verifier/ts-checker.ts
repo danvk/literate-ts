@@ -1,18 +1,18 @@
 import fs from 'fs-extra';
 
-import _ from "lodash";
+import _ from 'lodash';
 import ts from 'typescript';
 
-import { log } from "./logger";
-import { fail } from "./test-tracker";
-import { writeTempFile, matchAndExtract, getTempDir, matchAll } from "./utils";
-import { CodeSample } from './types';
-import { runNode } from './node-runner';
+import {log} from './logger';
+import {fail} from './test-tracker';
+import {writeTempFile, matchAndExtract, getTempDir, matchAll} from './utils';
+import {CodeSample} from './types';
+import {runNode} from './node-runner';
 
 export interface TypeScriptError {
   line: number;
-  start: number;  // inclusive
-  end: number;  // exclusive
+  start: number; // inclusive
+  end: number; // exclusive
   message: string;
 }
 
@@ -54,7 +54,7 @@ export function extractExpectedErrors(content: string): TypeScriptError[] {
     }
 
     const messageMatch = POST_TILDE_PAT.exec(line);
-    const message = (messageMatch ? (messageMatch[1] || '') : '').trim();
+    const message = (messageMatch ? messageMatch[1] || '' : '').trim();
     for (const m of tildes) {
       const start = m.index + 1;
       const end = start + m[1].length;
@@ -77,7 +77,7 @@ function checkMatchingErrors(expectedErrorsIn: TypeScriptError[], actualErrors: 
     if (i >= 0) {
       const matchedError = expectedErrors.splice(i, 1)[0];
       matchedErrors.push(matchedError);
-      log('matched errors:')
+      log('matched errors:');
       log('  expected: ' + matchedError.message);
       log('    actual: ' + error.message);
       // TODO: check that the text matches
@@ -88,11 +88,10 @@ function checkMatchingErrors(expectedErrorsIn: TypeScriptError[], actualErrors: 
     }
   }
 
-
   for (const error of expectedErrors) {
     const {line, start, end, message} = error;
     fail(`Expected TypeScript error was not produced: ${line}:${start}-${end}: ${message}`);
-    anyFailures = true
+    anyFailures = true;
   }
 
   if (expectedErrorsIn.length) {
@@ -118,7 +117,7 @@ export function extractTypeAssertions(
   let appliesToPreviousLine = false;
   while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
     const token = scanner.getToken();
-    if (token === ts.SyntaxKind.WhitespaceTrivia) continue;  // ignore leading whitespace.
+    if (token === ts.SyntaxKind.WhitespaceTrivia) continue; // ignore leading whitespace.
 
     if (token === ts.SyntaxKind.NewLineTrivia) {
       // an assertion at thes tart of a line applies to the previous line.
@@ -127,7 +126,7 @@ export function extractTypeAssertions(
     }
 
     const pos = scanner.getTokenPos();
-    let { line } = source.getLineAndCharacterOfPosition(pos);
+    let {line} = source.getLineAndCharacterOfPosition(pos);
 
     if (token === ts.SyntaxKind.SingleLineCommentTrivia) {
       const commentText = scanner.getTokenText();
@@ -136,7 +135,7 @@ export function extractTypeAssertions(
 
       if (appliesToPreviousLine) line -= 1;
 
-      assertions.push({ line, type });
+      assertions.push({line, type});
     } else {
       appliesToPreviousLine = false;
     }
@@ -145,7 +144,7 @@ export function extractTypeAssertions(
 }
 
 // Use this to figure out which node you really want:
-const debugWalkNode = (node: ts.Node, indent='') => {
+const debugWalkNode = (node: ts.Node, indent = '') => {
   console.log(`${indent}${node.kind}: ${node.getText()}`);
   for (const child of node.getChildren()) {
     debugWalkNode(child, '  ' + indent);
@@ -160,9 +159,11 @@ const debugWalkNode = (node: ts.Node, indent='') => {
  */
 export function getNodeForType(node: ts.Node): ts.Node {
   const findIdentifier = (node: ts.Node): ts.Node | null => {
-    if (node.kind === ts.SyntaxKind.Identifier ||
-        node.kind === ts.SyntaxKind.PropertyAccessExpression ||
-        node.kind === ts.SyntaxKind.CallExpression) {
+    if (
+      node.kind === ts.SyntaxKind.Identifier ||
+      node.kind === ts.SyntaxKind.PropertyAccessExpression ||
+      node.kind === ts.SyntaxKind.CallExpression
+    ) {
       return node;
     }
     for (const child of node.getChildren()) {
@@ -188,11 +189,13 @@ export function checkTypeAssertions(
 
   // Match assertions to the first node that appears on the line they apply to.
   const walkTree = (node: ts.Node) => {
-    if (node.kind !== ts.SyntaxKind.SourceFile &&
-        node.kind !== ts.SyntaxKind.SyntaxList &&
-        node.kind !== ts.SyntaxKind.Block) {
+    if (
+      node.kind !== ts.SyntaxKind.SourceFile &&
+      node.kind !== ts.SyntaxKind.SyntaxList &&
+      node.kind !== ts.SyntaxKind.Block
+    ) {
       const pos = node.getEnd();
-      const { line } = source.getLineAndCharacterOfPosition(pos);
+      const {line} = source.getLineAndCharacterOfPosition(pos);
       const assertionIndex = _.findIndex(assertions, {line});
       if (assertionIndex >= 0) {
         const assertion = assertions[assertionIndex];
@@ -202,7 +205,7 @@ export function checkTypeAssertions(
         const actualType = checker.typeToString(type, nodeForType);
 
         if (actualType !== assertion.type) {
-          const testedText = (node !== nodeForType) ? ` (tested ${nodeForType.getText()})` : '';
+          const testedText = node !== nodeForType ? ` (tested ${nodeForType.getText()})` : '';
           fail(`Failed type assertion for ${node.getText()}${testedText}`);
           log(`  Expected: ${assertion.type}`);
           log(`    Actual: ${actualType}`);
@@ -216,8 +219,10 @@ export function checkTypeAssertions(
       }
     }
 
-    ts.forEachChild(node, child => { walkTree(child); });
-  }
+    ts.forEachChild(node, child => {
+      walkTree(child);
+    });
+  };
 
   walkTree(source);
   if (assertions.length) {
@@ -230,9 +235,13 @@ export function checkTypeAssertions(
   return !anyFailures;
 }
 
-
 /** Verify that a TypeScript sample has the expected errors and no others. */
-export async function checkTs(content: string, sample: CodeSample, runCode: boolean, config: ConfigBundle) {
+export async function checkTs(
+  content: string,
+  sample: CodeSample,
+  runCode: boolean,
+  config: ConfigBundle,
+) {
   const {id} = sample;
   const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
@@ -264,17 +273,16 @@ export async function checkTs(content: string, sample: CodeSample, runCode: bool
 
   const expectedErrors = extractExpectedErrors(content);
   const numLines = content.split('\n').length;
-  const actualErrorsRaw: TypeScriptError[] = diagnostics.map(diagnostic => {
-    let { line, character } = diagnostic.file!.getLineAndCharacterOfPosition(
-      diagnostic.start!
-    );
-    return {
-      line,
-      start: character,
-      end: character + diagnostic.length!,
-      message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
-    };
-  })
+  const actualErrorsRaw: TypeScriptError[] = diagnostics
+    .map(diagnostic => {
+      let {line, character} = diagnostic.file!.getLineAndCharacterOfPosition(diagnostic.start!);
+      return {
+        line,
+        start: character,
+        end: character + diagnostic.length!,
+        message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
+      };
+    })
     // sometimes library errors show up as being past the end of the source.
     .filter(err => err.line < numLines);
 
@@ -291,7 +299,11 @@ export async function checkTs(content: string, sample: CodeSample, runCode: bool
   if (hasTypeAssertions(content)) {
     const languageVersion = config.options.target || ts.ScriptTarget.ES5;
     const scanner = ts.createScanner(
-      languageVersion, false, source.languageVariant, source.getFullText());
+      languageVersion,
+      false,
+      source.languageVariant,
+      source.getFullText(),
+    );
     const checker = program.getTypeChecker();
 
     const assertions = extractTypeAssertions(scanner, source);
@@ -311,5 +323,5 @@ export async function checkTs(content: string, sample: CodeSample, runCode: bool
     return;
   }
 
-  sample.output = await runNode(jsFile);;
+  sample.output = await runNode(jsFile);
 }

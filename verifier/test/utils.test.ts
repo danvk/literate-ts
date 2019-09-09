@@ -1,4 +1,4 @@
-import { matchAndExtract } from "../utils";
+import {matchAndExtract} from '../utils';
 
 describe('utils', () => {
   test('matchAndExtract', () => {

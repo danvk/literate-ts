@@ -1,4 +1,4 @@
-import { log, isLoggingToStderr } from "./logger";
+import {log, isLoggingToStderr} from './logger';
 
 let currentFile: string;
 let currentSampleId: string;

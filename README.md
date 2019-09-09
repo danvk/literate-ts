@@ -42,7 +42,7 @@ It does this by letting you assert three things:
 
    Literate TS will convert your code sample to JavaScript, run it and diff the output.
 
-Quickstart:
+## Quickstart
 
     $ yarn
     $ yarn ts-node index.ts examples/asciidoc/sample.asciidoc
@@ -57,5 +57,15 @@ Quickstart:
     ✓ All samples passed!
     ✨  Done in 9.24s.
 
+## Directives
+
+In Asciidoc, directives begin with `// verifier`:
+
+- `// verifier:reset`
+- `// verifier:skip`
+- `// verifier:prepend-to-following`
+- `// verifier:prepend-subset-to-following:A-B`
+- `// verifier:prepend-id-to-following:ID`
+- `// verifier:tsconfig:setting=value`
 
 [dtslint]: https://github.com/microsoft/dtslint

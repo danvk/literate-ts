@@ -8,9 +8,9 @@ import ora from 'ora';
 import ts from 'typescript';
 import yargs from 'yargs';
 
-import {extractSamples, checkSource, applyPrefixes} from './verifier/code-sample';
-import {startLog, log, flushLog, logFile} from './verifier/logger';
-import {runNode} from './verifier/node-runner';
+import {extractSamples, checkSource, applyPrefixes} from './code-sample';
+import {startLog, log, flushLog, logFile} from './logger';
+import {runNode} from './node-runner';
 import {
   getTestResults,
   startFile,
@@ -18,10 +18,10 @@ import {
   finishFile,
   finishSample,
   startSample,
-} from './verifier/test-tracker';
-import {checkTs, ConfigBundle} from './verifier/ts-checker';
-import {CodeSample} from './verifier/types';
-import {getTempDir, writeTempFile, fileSlug} from './verifier/utils';
+} from './test-tracker';
+import {checkTs, ConfigBundle} from './ts-checker';
+import {CodeSample} from './types';
+import {getTempDir, writeTempFile, fileSlug} from './utils';
 
 function checkOutput(expectedOutput: string, input: CodeSample) {
   const actualOutput = input.output;
@@ -166,41 +166,43 @@ const typeScriptBundle: ConfigBundle = {
   host: ts.createCompilerHost(tsOptions, true),
 };
 
-(async () => {
-  let n = 0;
-  let numFailures = 0;
-  let numTotal = 0;
-  for (const asciidoc of asciidocs) {
-    await processAsciidoc(asciidoc, ++n, asciidocs.length);
-  }
+export function main() {
+  (async () => {
+    let n = 0;
+    let numFailures = 0;
+    let numTotal = 0;
+    for (const asciidoc of asciidocs) {
+      await processAsciidoc(asciidoc, ++n, asciidocs.length);
+    }
 
-  if (spinner) spinner.stop();
+    if (spinner) spinner.stop();
 
-  for (const [file, fileResults] of Object.entries(getTestResults())) {
-    const numPassed = _.sum(_.map(fileResults, n => (n === 0 ? 1 : 0)));
-    console.log(file, `${numPassed}/${_.size(fileResults)} passed`);
-    for (const [id, failures] of Object.entries(fileResults)) {
-      numTotal += 1;
-      if (failures === 0) {
-        console.log(chalk.green(` ✓ ${id}`));
-      } else {
-        console.log(chalk.red(` ✗ ${id}`));
-        numFailures += 1;
+    for (const [file, fileResults] of Object.entries(getTestResults())) {
+      const numPassed = _.sum(_.map(fileResults, n => (n === 0 ? 1 : 0)));
+      console.log(file, `${numPassed}/${_.size(fileResults)} passed`);
+      for (const [id, failures] of Object.entries(fileResults)) {
+        numTotal += 1;
+        if (failures === 0) {
+          console.log(chalk.green(` ✓ ${id}`));
+        } else {
+          console.log(chalk.red(` ✗ ${id}`));
+          numFailures += 1;
+        }
       }
     }
-  }
 
-  if (numFailures > 0) {
-    console.log(chalk.red(`✗ ${numFailures} / ${numTotal} samples failed.`));
-    if (!argv.alsologtostderr) {
-      console.log(`View detailed logs at ${logFile}`);
+    if (numFailures > 0) {
+      console.log(chalk.red(`✗ ${numFailures} / ${numTotal} samples failed.`));
+      if (!argv.alsologtostderr) {
+        console.log(`View detailed logs at ${logFile}`);
+      }
+    } else {
+      console.log(chalk.green(`✓ All samples passed!`));
     }
-  } else {
-    console.log(chalk.green(`✓ All samples passed!`));
-  }
-})()
-  .catch(e => {
-    if (spinner) spinner.stop();
-    console.error(e);
-  })
-  .then(flushLog);
+  })()
+    .catch(e => {
+      if (spinner) spinner.stop();
+      console.error(e);
+    })
+    .then(flushLog);
+}

@@ -1,0 +1,53 @@
+All code samples are TypeScript except where it's clear from context that they are JSON, GraphQL, etc. Much of the experience of using TypeScript involves interacting with your editor, which presents some challenges in print. I've adopted a few conventions to make this work.
+
+Most editors surface errors using squiggly underlines. To see the full error message, you hover over the underlined text. To indicate an error in a code sample, I put squiggles in a comment line under the place where the error occurs:
+
+[source,ts]
+----
+let str = 'not a number';
+let num: number = str;
+ // ~~~ Type 'string' is not assignable to type 'number'.
+----
+
+I occasionally edit the error messages for clarity and brevity, but I never remove an error. If you copy/paste a code sample into your editor, you should get exactly the errors indicated, no more no less.
+
+To draw attention to the lack of an error, I use `// ok`:
+
+[source,ts]
+----
+let str = 'not a number';
+let num: number = str as any;  // ok
+----
+
+You should be able to hover over a symbol in your editor to see what TypeScript considers its type. To indicate this in text, I use a comment starting with "type is":
+
+[source,ts]
+----
+let v = {str: 'hello', num: 42};  // type is { str: string; num: number; }
+----
+
+The type is for the first symbol on the line (`v` in this case) or for the result of a function call:
+
+[source,ts]
+----
+'four score'.split(' ');  // type is string[]
+----
+
+This matches the type you'd see in your editor character-for-character. In the case of function calls you may need to assign to a temporary variable to see the type.
+
+I will occasionally introduce no-op statements to indicate the type of a variable on a specific line of code:
+
+[source,ts]
+----
+function foo(x: string|string[]) {
+  if (Array.isArray(x)) {
+    x;  // type is string[]
+  } else {
+    x;  // type is string
+  }
+}
+----
+
+The `x;` lines are only there to demonstrate the type in each branch of the conditional. You don't need to (and shouldn't) include statements like this in your own code.
+
+Unless it's otherwise noted or clear from context, code samples are intended to be checked with the `--strict` flag. All samples were verified using TypeScript 3.5.3.

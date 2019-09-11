@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "test": "jest",
-    "prettier-check": "prettier --check 'src/**/*.ts'"
+    "lint": "eslint 'src/**'",
+    "test": "jest"
   },
   "dependencies": {
     "chalk": "^2.4.2",
@@ -30,6 +30,11 @@
     "@types/ora": "^3.2.0",
     "@types/tmp": "^0.1.0",
     "@types/yargs": "^13.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",

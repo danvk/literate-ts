@@ -23,6 +23,46 @@ import {checkTs, ConfigBundle} from './ts-checker';
 import {CodeSample} from './types';
 import {getTempDir, writeTempFile, fileSlug} from './utils';
 
+const argv = yargs
+  .strict()
+  .demandCommand(1, 'Must specify path to at least one asciidoc file.')
+  .options({
+    filter: {
+      type: 'string',
+      description: 'Only check IDs with the given prefix',
+    },
+  })
+  .options({
+    alsologtostderr: {
+      type: 'boolean',
+      description: 'Log to stderr in addition to a log file',
+    },
+  })
+  .parse();
+
+const asciidocs = argv._;
+startLog(!!argv.alsologtostderr);
+
+const sources: {[id: string]: string} = {};
+for (const filePath of glob.sync('checks/**')) {
+  const filename = path.basename(filePath);
+  const [noExt, ext] = filename.split('.');
+  if (ext === 'txt' || ext === 'js' || ext === 'ts') {
+    sources[noExt] = fs.readFileSync(filePath, 'utf8');
+  }
+}
+
+const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
+const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
+
+console.log('Verifying with TypeScript', ts.version);
+const spinner = argv.alsologtostderr ? null : ora('Initializing').start();
+
+const typeScriptBundle: ConfigBundle = {
+  options: tsOptions,
+  host: ts.createCompilerHost(tsOptions, true),
+};
+
 function checkOutput(expectedOutput: string, input: CodeSample) {
   const actualOutput = input.output;
   if (!actualOutput) {
@@ -58,7 +98,7 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
 
 async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSample}) {
   const {id, language} = sample;
-  let {content} = sample;
+  const {content} = sample;
   startSample(id);
 
   if (language === 'ts' || (language === 'js' && sample.checkJS)) {
@@ -125,46 +165,6 @@ async function processAsciidoc(path: string, fileNum: number, outOf: number) {
 
   finishFile();
 }
-
-const argv = yargs
-  .strict()
-  .demandCommand(1, 'Must specify path to at least one asciidoc file.')
-  .options({
-    filter: {
-      type: 'string',
-      description: 'Only check IDs with the given prefix',
-    },
-  })
-  .options({
-    alsologtostderr: {
-      type: 'boolean',
-      description: 'Log to stderr in addition to a log file',
-    },
-  })
-  .parse();
-
-const asciidocs = argv._;
-startLog(!!argv.alsologtostderr);
-
-const sources: {[id: string]: string} = {};
-for (const filePath of glob.sync('checks/**')) {
-  const filename = path.basename(filePath);
-  const [noExt, ext] = filename.split('.');
-  if (ext === 'txt' || ext === 'js' || ext === 'ts') {
-    sources[noExt] = fs.readFileSync(filePath, 'utf8');
-  }
-}
-
-const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
-const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
-
-console.log('Verifying with TypeScript', ts.version);
-let spinner = argv.alsologtostderr ? null : ora('Initializing').start();
-
-const typeScriptBundle: ConfigBundle = {
-  options: tsOptions,
-  host: ts.createCompilerHost(tsOptions, true),
-};
 
 export function main() {
   (async () => {

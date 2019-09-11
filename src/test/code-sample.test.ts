@@ -92,14 +92,14 @@ keyof A&B = (keyof A) | (keyof B)
 `;
 
 describe('code-sample', () => {
-  let baseSample = {
+  const baseSample = {
     tsOptions: {},
     nodeModules: [],
     isTSX: false,
     checkJS: false,
   };
 
-  let baseExtract = {
+  const baseExtract = {
     ...baseSample,
     prefixes: [],
   };

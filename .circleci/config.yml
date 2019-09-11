@@ -25,5 +25,5 @@ jobs:
 
       # run tests!
       - run: |
+          yarn lint
           yarn test
-          yarn prettier-check

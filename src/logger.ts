@@ -3,7 +3,7 @@ import fs from 'fs';
 import {getTempDir} from './utils';
 
 let logHandle: number | null = null;
-let _alsoStderr: boolean = false;
+let _alsoStderr = false;
 
 export let logFile: string | null = null;
 

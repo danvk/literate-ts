@@ -144,12 +144,12 @@ export function extractTypeAssertions(
 }
 
 // Use this to figure out which node you really want:
-const debugWalkNode = (node: ts.Node, indent = '') => {
-  console.log(`${indent}${node.kind}: ${node.getText()}`);
-  for (const child of node.getChildren()) {
-    debugWalkNode(child, '  ' + indent);
-  }
-};
+// const debugWalkNode = (node: ts.Node, indent = '') => {
+//   console.log(`${indent}${node.kind}: ${node.getText()}`);
+//   for (const child of node.getChildren()) {
+//     debugWalkNode(child, '  ' + indent);
+//   }
+// };
 
 /**
  * Figure out which node we should check the type of.
@@ -275,7 +275,7 @@ export async function checkTs(
   const numLines = content.split('\n').length;
   const actualErrorsRaw: TypeScriptError[] = diagnostics
     .map(diagnostic => {
-      let {line, character} = diagnostic.file!.getLineAndCharacterOfPosition(diagnostic.start!);
+      const {line, character} = diagnostic.file!.getLineAndCharacterOfPosition(diagnostic.start!);
       return {
         line,
         start: character,

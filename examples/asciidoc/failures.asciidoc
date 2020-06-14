@@ -1,0 +1,110 @@
+Just as important as passing when things are right is failing when things are wrong.
+
+Here are a few examples of the types of mistakes that literate-ts can catch:
+
+=== Unexpected errors
+
+This has a type error that isn't marked in the source:
+
+[source,ts]
+----
+const nums = [1, 2, 3];
+nums.push('four');
+----
+
+It should be:
+
+[source,ts]
+----
+const nums = [1, 2, 3];
+nums.push('four');
+       // ~~~~~~ Argument of type '"four"' is not
+       //        assignable to parameter of type 'number'.
+----
+
+
+=== Expected errors that don't happen
+
+If you have an error marked but TypeScript doesn't produce it, that's also a problem that requires investigation. For example:
+
+[source,ts]
+----
+const nums = [1, 2, 3];
+let x;
+ // ~ Variable 'x' implicitly has an 'any' type.
+x = 4;
+nums.push(x);
+----
+
+The solution is to either remove the error comment:
+
+[source,ts]
+----
+const nums = [1, 2, 3];
+let x;
+x = 4;
+nums.push(x);
+----
+
+or adjust the example to figure out why you aren't getting the expected error. (For more on the behavior in this example, see https://effectivetypescript.com/2020/03/09/evolving-any/[Item 41: Understand Evolving any].)
+
+=== Failing type assertions
+
+literate-ts uses "type is" at the start of a comment to assert a type. If the type of the symbol does not match whatever is after "type is", character for character, then it's considered a failure:
+
+[source,ts]
+----
+let x = 10;  // type is number
+const y = 10;  // type is number
+----
+
+This will fail since the type of `y` is inferred as `10`, not `number`:
+
+----
+Failed type assertion for const y = 10; (tested y)
+----
+
+(The symbol tested is the last on which appears on the line, or the return type of a function if the last AST node is a function invocation.)
+
+=== Output mismatches
+
+If you're checking the output of a code sample, it has to match!
+
+[[log-bad]]
+[source,ts]
+----
+for (let i = 0; i < 3; i++) {
+  console.log(i);
+}
+----
+
+definitely doesn't log:
+
+[[log-bad-output]]
+----
+1
+2
+3
+----
+
+When you run this through literate-ts, you'll get an error like
+
+----
+Actual output from Node did not match expected output.
+----
+
+If you open the detailed logs, you'll see the diff:
+
+----
+Actual output from Node did not match expected output.
+Expected:
+1
+2
+3
+---
+Actual:
+0
+1
+2
+Actual output matched expected.
+----

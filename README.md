@@ -1,6 +1,6 @@
 # literate-ts
 
-Literate TS helps you verify TypeScript code samples in written text (blog posts, books, etc.).
+Literate TS helps you verify TypeScript code samples in written text (blog posts, books, etc.). It was developed and used to type check [_Effective TypeScript_][ets] (O'Reilly 2019).
 
 It does this by letting you assert three things:
 
@@ -69,3 +69,4 @@ In Asciidoc, directives begin with `// verifier`:
 - `// verifier:tsconfig:setting=value`
 
 [dtslint]: https://github.com/microsoft/dtslint
+[ets]: https://amzn.to/38s1oCK

@@ -1,0 +1,31 @@
+In addition to types, literate-ts can also run your code snippets and check the output against whatever you expected. To do this, you need to give your code samples names.
+
+For example:
+
+[[log-numbers]]
+[source,ts]
+----
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+----
+
+produces the following output:
+
+[[log-numbers-output]]
+----
+0
+1
+2
+3
+4
+----
+
+When you run this file through literate-ts, it verifies two things:
+
+1. That the TypeScript sample contains no type errors.
+2. That the output (when the compiled JS is run through node) matches the contents of the output block.
+
+The code and output blocks are linked by their names: `log-numbers` and `log-numbers-output`.
+
+This also works for JS code samples.

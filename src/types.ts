@@ -3,6 +3,8 @@ import {CompilerOptions} from 'typescript';
 export interface CodeSample {
   language: 'js' | 'ts' | null;
   id: string;
+  sectionId: string | null;
+  sectionHeader: string | null;
   content: string;
   isTSX: boolean;
   checkJS: boolean;

@@ -197,7 +197,7 @@ export function main() {
         console.log(`View detailed logs at ${logFile}`);
       }
     } else {
-      console.log(chalk.green(`✓ All samples passed!`));
+      console.log(chalk.green(`✓ All ${numTotal} samples passed!`));
     }
   })()
     .catch(e => {

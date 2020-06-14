@@ -92,14 +92,16 @@ keyof A&B = (keyof A) | (keyof B)
 `;
 
 describe('code-sample', () => {
-  const baseSample = {
+  let baseSample = {
     tsOptions: {},
     nodeModules: [],
     isTSX: false,
     checkJS: false,
+    sectionId: null,
+    sectionHeader: null,
   };
 
-  const baseExtract = {
+  let baseExtract = {
     ...baseSample,
     prefixes: [],
   };
@@ -378,6 +380,122 @@ describe('code-sample', () => {
         id: 'tsx-example',
         content: `console.log(a);`,
         isTSX: true,
+      },
+    ]);
+  });
+
+  test('header resets', () => {
+    expect(
+      extractSamples(
+        dedent`
+      == Chapter 1
+      // verifier:prepend-to-following
+      [source,ts]
+      ----
+      const x = 12;
+      ----
+
+      [[chapter-2]]
+      == Chapter 2
+      [source,ts]
+      ----
+      const x = 12;
+      ----
+    `,
+        'header-reset',
+      ),
+    ).toEqual([
+      {
+        ...baseExtract,
+        id: 'header-reset-4',
+        sectionHeader: 'Chapter 1',
+        language: 'ts',
+        content: `const x = 12;`,
+      },
+      {
+        ...baseExtract,
+        id: 'header-reset-11',
+        sectionId: 'chapter-2',
+        sectionHeader: 'Chapter 2',
+        language: 'ts',
+        content: `const x = 12;`,
+      },
+    ]);
+
+    expect(
+      extractSamples(
+        dedent`
+      == Chapter 1
+      // verifier:prepend-to-following
+      [source,ts]
+      ----
+      const x = 12;
+      ----
+
+      ==== Chapter 2
+      [source,ts]
+      ----
+      const x = 12;
+      ----
+    `,
+        'header-reset',
+      ),
+    ).toEqual([
+      {
+        ...baseExtract,
+        id: 'header-reset-4',
+        sectionHeader: 'Chapter 1',
+        language: 'ts',
+        content: `const x = 12;`,
+      },
+      {
+        ...baseExtract,
+        id: 'header-reset-10',
+        sectionHeader: 'Chapter 1',
+        language: 'ts',
+        content: `const x = 12;`,
+        prefixes: [
+          {
+            id: 'header-reset-4',
+          },
+        ],
+      },
+    ]);
+  });
+
+  test('does not prepend to -output', () => {
+    expect(
+      applyPrefixes(
+        extractSamples(
+          dedent`
+      // verifier:prepend-to-following
+      [[hello]]
+      [source,ts]
+      ----
+      console.log('Hello');
+      ----
+
+      This writes:
+      [[hello-output]]
+      ----
+      Hello
+      ----
+      `,
+          'header-reset',
+        ),
+      ),
+    ).toEqual([
+      {
+        ...baseSample,
+        language: 'ts',
+        id: 'hello',
+        content: `console.log('Hello');`,
+      },
+      {
+        ...baseSample,
+        language: null,
+        id: 'hello-output',
+        content: 'Hello',
       },
     ]);
   });

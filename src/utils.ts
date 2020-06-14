@@ -30,7 +30,7 @@ export function matchAndExtract(pat: RegExp, text: string): string | null {
 
 export function matchAll(pat: RegExp, text: string): RegExpExecArray[] {
   let m: RegExpExecArray | null;
-  const out = [];
+  let out = [];
   while ((m = pat.exec(text)) !== null) {
     out.push(m);
   }

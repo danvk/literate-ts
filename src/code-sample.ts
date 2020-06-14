@@ -112,7 +112,7 @@ export function extractSamples(text: string, filename: string): PrefixedCodeSamp
         advance();
       }
       const endLine = i;
-      let content = lines.slice(startLine, endLine).join('\n');
+      const content = lines.slice(startLine, endLine).join('\n');
       if (!lastId && (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))) {
         // TS samples get checked even without IDs.
         lastId = filename + '-' + startLine;

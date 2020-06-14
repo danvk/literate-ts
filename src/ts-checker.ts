@@ -311,7 +311,7 @@ export async function checkTs(
   const numLines = content.split('\n').length;
   const actualErrorsRaw: TypeScriptError[] = diagnostics
     .map(diagnostic => {
-      let {line, character} = diagnostic.file!.getLineAndCharacterOfPosition(diagnostic.start!);
+      const {line, character} = diagnostic.file!.getLineAndCharacterOfPosition(diagnostic.start!);
       return {
         line,
         start: character,

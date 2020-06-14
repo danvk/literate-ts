@@ -279,6 +279,7 @@ export async function checkTs(
   const {id} = sample;
   const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
+  console.log(tsFile);
   const nodeModulesPath = getTempDir() + '/node_modules';
   fs.emptyDirSync(nodeModulesPath);
   for (const nodeModule of sample.nodeModules) {
@@ -288,20 +289,28 @@ export async function checkTs(
     let match;
     const candidates = [];
     let dir = path.dirname(path.resolve(process.cwd(), sample.sourceFile));
-    while (dir !== '.') {
+    console.log('sample', sample);
+    console.log('process.cwd:', process.cwd());
+    while (true) {
+      console.log('dir: ', dir);
       const candidate = path.join(dir, 'node_modules', nodeModule);
       candidates.push(candidate);
       if (fs.pathExistsSync(candidate)) {
         match = candidate;
         break;
       }
-      dir = path.dirname(dir);
+      const parent = path.dirname(dir);
+      if (parent === dir) {
+        break;
+      }
+      dir = parent;
     }
     if (!match) {
       fail(`Could not find requested node_module ${nodeModule}. See logs for details.`);
       log('Looked in:\n  ' + candidates.join('\n  '));
+      return;
     }
-    fs.copySync(`node_modules/${nodeModule}`, `${nodeModulesPath}/${nodeModule}`);
+    fs.copySync(match, `${nodeModulesPath}/${nodeModule}`);
   }
 
   const options: ts.CompilerOptions = {

@@ -29,8 +29,9 @@ const argv = yargs
   .options({
     replacements: {
       type: 'string',
-      description: ('If specified, load **/*.{ts,js,txt} under this directory' +
-      'as additional sources. See README for details on how to use these.'),
+      description:
+        'If specified, load **/*.{ts,js,txt} under this directory' +
+        'as additional sources. See README for details on how to use these.',
       alias: 'r',
     },
     filter: {

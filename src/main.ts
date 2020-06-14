@@ -27,12 +27,17 @@ const argv = yargs
   .strict()
   .demandCommand(1, 'Must specify path to at least one asciidoc file.')
   .options({
+    replacements: {
+      type: 'string',
+      description: ('If specified, load **/*.{ts,js,txt} under this directory' +
+      'as additional sources. See README for details on how to use these.'),
+      alias: 'r',
+    },
     filter: {
       type: 'string',
       description: 'Only check IDs with the given prefix',
+      alias: 'f',
     },
-  })
-  .options({
     alsologtostderr: {
       type: 'boolean',
       description: 'Log to stderr in addition to a log file',
@@ -44,11 +49,13 @@ const asciidocs = argv._;
 startLog(!!argv.alsologtostderr);
 
 const sources: {[id: string]: string} = {};
-for (const filePath of glob.sync('checks/**')) {
-  const filename = path.basename(filePath);
-  const [noExt, ext] = filename.split('.');
-  if (ext === 'txt' || ext === 'js' || ext === 'ts') {
-    sources[noExt] = fs.readFileSync(filePath, 'utf8');
+if (argv.replacements) {
+  for (const filePath of glob.sync(argv.replacements + '/**')) {
+    const filename = path.basename(filePath);
+    const [noExt, ext] = filename.split('.');
+    if (ext === 'txt' || ext === 'js' || ext === 'ts') {
+      sources[noExt] = fs.readFileSync(filePath, 'utf8');
+    }
   }
 }
 

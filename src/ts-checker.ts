@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 
 import _ from 'lodash';
+import path from 'path';
 import ts from 'typescript';
 
 import {log} from './logger';
@@ -281,6 +282,25 @@ export async function checkTs(
   const nodeModulesPath = getTempDir() + '/node_modules';
   fs.emptyDirSync(nodeModulesPath);
   for (const nodeModule of sample.nodeModules) {
+    // For each requested module, look for node_modules in the same directory as the source file
+    // and then march up directories until we find it.
+    // There's probably a better way to do this.
+    let match;
+    const candidates = [];
+    let dir = path.dirname(path.resolve(process.cwd(), sample.sourceFile));
+    while (dir !== '.') {
+      const candidate = path.join(dir, 'node_modules', nodeModule);
+      candidates.push(candidate);
+      if (fs.pathExistsSync(candidate)) {
+        match = candidate;
+        break;
+      }
+      dir = path.dirname(dir);
+    }
+    if (!match) {
+      fail(`Could not find requested node_module ${nodeModule}. See logs for details.`);
+      log('Looked in:\n  ' + candidates.join('\n  '));
+    }
     fs.copySync(`node_modules/${nodeModule}`, `${nodeModulesPath}/${nodeModule}`);
   }
 

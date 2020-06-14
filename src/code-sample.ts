@@ -129,6 +129,7 @@ export function extractSamples(text: string, filename: string): PrefixedCodeSamp
             nodeModules,
             isTSX: nextIsTSX,
             checkJS: nextShouldCheckJs,
+            sourceFile: filename,
             tsOptions: {...tsOptions},
           });
         }
@@ -214,6 +215,7 @@ export function applyPrefixes(
       nodeModules: sample.nodeModules,
       isTSX: sample.isTSX,
       checkJS: sample.checkJS,
+      sourceFile: sample.sourceFile,
       content,
     };
   });

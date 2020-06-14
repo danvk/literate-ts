@@ -29,7 +29,7 @@ export interface ConfigBundle {
 const COMMENT_PAT = /^( *\/\/) /;
 const TILDE_PAT = / (~+)/g;
 const POST_TILDE_PAT = /\/\/ [~ ]+(?:(.*))?/;
-const TYPE_ASSERTION_PAT = /\/\/.*type is (?:still )?(?:just )?(.*)\.?$/;
+const TYPE_ASSERTION_PAT = /\/\/.*[tT]ype is (?:still )?(?:just )?(.*)\.?$/;
 
 export function extractExpectedErrors(content: string): TypeScriptError[] {
   const lines = content.split('\n');
@@ -80,7 +80,40 @@ function checkMatchingErrors(expectedErrorsIn: TypeScriptError[], actualErrors: 
       log('matched errors:');
       log('  expected: ' + matchedError.message);
       log('    actual: ' + error.message);
-      // TODO: check that the text matches
+
+      const posMismatch = [];
+      const dStart = error.start - matchedError.start;
+      const dEnd = error.end - matchedError.end;
+      if (dStart) posMismatch.push(`start: ${dStart}`);
+      if (dEnd) posMismatch.push(`end: ${dEnd}`);
+      if (posMismatch.length) {
+        log('  mismatched error span: ' + posMismatch.join(', '));
+      }
+
+      let matchType = '';
+      let disagree = false;
+      if (error.message === matchedError.message) {
+        matchType = 'perfect';
+      } else if (!error.message) {
+        matchType = 'empty message';
+      } else if (error.message.includes(matchedError.message)) {
+        matchType = 'subset';
+      } else if (matchedError.message.includes('...')) {
+        const parts = matchedError.message.split('...');
+        const allMatch = _.every(parts, part => error.message.includes(part));
+        if (allMatch) {
+          matchType = 'match with ...';
+        } else {
+          disagree = true;
+        }
+      } else {
+        disagree = true;
+      }
+      if (disagree) {
+        log('  error messages could not be matched!');
+      } else {
+        log('  error messages match: ' + matchType);
+      }
     } else {
       const {line, start, end, message} = error;
       fail(`Unexpected TypeScript error: ${line}:${start}-${end}: ${message}`);
@@ -251,7 +284,10 @@ export async function checkTs(
     fs.copySync(`node_modules/${nodeModule}`, `${nodeModulesPath}/${nodeModule}`);
   }
 
-  const options: ts.CompilerOptions = {...config.options, ...sample.tsOptions};
+  const options: ts.CompilerOptions = {
+    ...config.options,
+    ...sample.tsOptions,
+  };
   const program = ts.createProgram([tsFile], options, config.host);
   const source = program.getSourceFile(tsFile);
   if (!source) {

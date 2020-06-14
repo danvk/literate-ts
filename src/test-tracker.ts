@@ -30,7 +30,11 @@ export function finishSample() {
   currentSampleId = '';
 }
 
-export function fail(message: string) {
+export function fail(message: string, sampleId?: string) {
+  if (sampleId === undefined) {
+    sampleId = currentSampleId;
+  }
+
   const fullMessage = `${currentFile} ${currentSampleId}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error(fullMessage);

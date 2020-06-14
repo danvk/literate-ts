@@ -8,6 +8,7 @@ import {fail} from './test-tracker';
 const EXTRACT_ID = /\[\[([^\]]*)\]\]/;
 const EXTRACT_SOURCE = /\[source,(ts|js)\]/;
 const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
+const TOP_HEADER = /^={1,3} (.*)$/;
 
 export function extractSamples(text: string, filename: string): PrefixedCodeSample[] {
   const samples = [];
@@ -20,6 +21,8 @@ export function extractSamples(text: string, filename: string): PrefixedCodeSamp
     line = lines[i];
   };
 
+  let lastSectionId: string | null = null;
+  let lastSectionHeader: string | null = null;
   let lastId: string | null = null;
   let lastLanguage: string | null = null;
   let prefixes: readonly Prefix[] = [];
@@ -43,6 +46,15 @@ export function extractSamples(text: string, filename: string): PrefixedCodeSamp
     if (language) {
       lastLanguage = language;
       continue;
+    }
+
+    const header = matchAndExtract(TOP_HEADER, line);
+    if (header) {
+      // Sufficiently high-level headings should reset
+      line = '// verifier:reset';
+      lastSectionId = lastId;
+      lastSectionHeader = header;
+      lastId = null;
     }
 
     const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
@@ -109,6 +121,8 @@ export function extractSamples(text: string, filename: string): PrefixedCodeSamp
         if (!skipNext) {
           samples.push({
             id: lastId,
+            sectionId: lastSectionId,
+            sectionHeader: lastSectionHeader,
             language: lastLanguage as CodeSample['language'],
             content,
             prefixes,
@@ -162,7 +176,7 @@ export function checkSource(sample: CodeSample, source: string) {
   // Strip out code behind HIDE..END markers
   const strippedSource = stripSource(source);
   if (sample.content.trim() !== strippedSource.trim()) {
-    fail('Inline sample does not match sample in source file');
+    fail('Inline sample does not match sample in source file', sample.id);
     log('Inline sample:');
     log(sample.content.trim());
     log('----');
@@ -186,12 +200,15 @@ export function applyPrefixes(
           .join('\n')
       : text;
   return samples.map(sample => {
-    const content = sample.prefixes
+    const prefixes = sample.id.endsWith('-output') ? [] : sample.prefixes;
+    const content = prefixes
       .map(({id, lines}) => sliceLines(sources[id] || idToSample[id].content, lines))
       .concat([sources[sample.id] || sample.content])
       .join('\n');
     return {
       id: sample.id,
+      sectionId: sample.sectionId,
+      sectionHeader: sample.sectionHeader,
       language: sample.language,
       tsOptions: sample.tsOptions,
       nodeModules: sample.nodeModules,

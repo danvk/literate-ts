@@ -10,7 +10,11 @@ const EXTRACT_SOURCE = /\[source,(ts|js)\]/;
 const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^={1,3} (.*)$/;
 
-export function extractSamples(text: string, filename: string, sourceFile: string): PrefixedCodeSample[] {
+export function extractSamples(
+  text: string,
+  filename: string,
+  sourceFile: string,
+): PrefixedCodeSample[] {
   const samples = [];
   const lines = text.split('\n');
   let i = 0;

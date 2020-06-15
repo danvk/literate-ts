@@ -60,6 +60,7 @@ if (argv.replacements) {
   }
 }
 
+// TODO(danvk): prefer the tsconfig.json from asciidocs directory
 const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
 const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
 

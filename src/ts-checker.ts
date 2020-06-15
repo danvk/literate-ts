@@ -279,8 +279,8 @@ export async function checkTs(
   const {id} = sample;
   const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
-  console.log(tsFile);
-  const nodeModulesPath = getTempDir() + '/node_modules';
+  const sampleDir = getTempDir();
+  const nodeModulesPath = path.join(sampleDir, 'node_modules');
   fs.emptyDirSync(nodeModulesPath);
   for (const nodeModule of sample.nodeModules) {
     // For each requested module, look for node_modules in the same directory as the source file
@@ -289,10 +289,7 @@ export async function checkTs(
     let match;
     const candidates = [];
     let dir = path.dirname(path.resolve(process.cwd(), sample.sourceFile));
-    console.log('sample', sample);
-    console.log('process.cwd:', process.cwd());
     while (true) {
-      console.log('dir: ', dir);
       const candidate = path.join(dir, 'node_modules', nodeModule);
       candidates.push(candidate);
       if (fs.pathExistsSync(candidate)) {
@@ -310,13 +307,17 @@ export async function checkTs(
       log('Looked in:\n  ' + candidates.join('\n  '));
       return;
     }
-    fs.copySync(match, `${nodeModulesPath}/${nodeModule}`);
+    fs.copySync(match, path.join(nodeModulesPath, nodeModule));
   }
 
   const options: ts.CompilerOptions = {
     ...config.options,
     ...sample.tsOptions,
   };
+  if (!_.isEmpty(sample.nodeModules)) {
+    options.typeRoots = [path.join(sampleDir, 'node_modules', '@types')];
+  }
+
   const program = ts.createProgram([tsFile], options, config.host);
   const source = program.getSourceFile(tsFile);
   if (!source) {

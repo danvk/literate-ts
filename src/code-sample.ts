@@ -10,7 +10,11 @@ const EXTRACT_SOURCE = /\[source,(ts|js)\]/;
 const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^={1,3} (.*)$/;
 
-export function extractSamples(text: string, filename: string): PrefixedCodeSample[] {
+export function extractSamples(
+  text: string,
+  filename: string,
+  sourceFile: string,
+): PrefixedCodeSample[] {
   const samples = [];
   const lines = text.split('\n');
   let i = 0;
@@ -129,6 +133,7 @@ export function extractSamples(text: string, filename: string): PrefixedCodeSamp
             nodeModules,
             isTSX: nextIsTSX,
             checkJS: nextShouldCheckJs,
+            sourceFile,
             tsOptions: {...tsOptions},
           });
         }
@@ -214,6 +219,7 @@ export function applyPrefixes(
       nodeModules: sample.nodeModules,
       isTSX: sample.isTSX,
       checkJS: sample.checkJS,
+      sourceFile: sample.sourceFile,
       content,
     };
   });

@@ -60,6 +60,7 @@ if (argv.replacements) {
   }
 }
 
+// TODO(danvk): prefer the tsconfig.json from asciidocs directory
 const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
 const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
 
@@ -149,7 +150,7 @@ async function processAsciidoc(path: string, fileNum: number, outOf: number) {
   startFile(path);
 
   const text = fs.readFileSync(path, 'utf-8');
-  const rawSamples = extractSamples(text, fileSlug(path));
+  const rawSamples = extractSamples(text, fileSlug(path), path);
   log(`Found ${rawSamples.length} code samples in ${path}`);
 
   for (const sample of rawSamples) {

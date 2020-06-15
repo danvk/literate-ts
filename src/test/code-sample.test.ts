@@ -99,6 +99,7 @@ describe('code-sample', () => {
     checkJS: false,
     sectionId: null,
     sectionHeader: null,
+    sourceFile: 'source.asciidoc',
   };
 
   const baseExtract = {
@@ -108,7 +109,7 @@ describe('code-sample', () => {
 
   describe('extractSamples', () => {
     test('basic', () => {
-      expect(extractSamples(ASCII_DOC1, 'doc1')).toEqual([
+      expect(extractSamples(ASCII_DOC1, 'doc1', 'source.asciidoc')).toEqual([
         {
           ...baseExtract,
           language: 'ts',
@@ -123,7 +124,7 @@ describe('code-sample', () => {
 
     test('no ID', () => {
       // Only the TypeScript sample gets extracted (may want to revisit this).
-      expect(extractSamples(ASCIIDOC_NO_ID, 'noid')).toEqual([
+      expect(extractSamples(ASCIIDOC_NO_ID, 'noid', 'source.asciidoc')).toEqual([
         {
           ...baseExtract,
           language: 'ts',
@@ -134,33 +135,37 @@ describe('code-sample', () => {
     });
 
     test('prepend directive', () => {
-      expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND, 'prepend'))).toEqual([
-        {
-          ...baseSample,
-          language: 'ts',
-          id: 'prefix',
-          content: `type AB = 'a' | 'b';`,
-        },
-        {
-          ...baseSample,
-          language: 'ts',
-          id: 'combined',
-          content: dedent`
+      expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND, 'prepend', 'source.asciidoc'))).toEqual(
+        [
+          {
+            ...baseSample,
+            language: 'ts',
+            id: 'prefix',
+            content: `type AB = 'a' | 'b';`,
+          },
+          {
+            ...baseSample,
+            language: 'ts',
+            id: 'combined',
+            content: dedent`
             type AB = 'a' | 'b';
             const a: AB = 'a';`,
-        },
-        {
-          ...baseSample,
-          language: 'ts',
-          id: 'final',
-          content: `const a: AB = 'a';`,
-        },
-      ]);
+          },
+          {
+            ...baseSample,
+            language: 'ts',
+            id: 'final',
+            content: `const a: AB = 'a';`,
+          },
+        ],
+      );
     });
   });
 
   test('multiple prepend directives', () => {
-    expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND_MULTIPLE, 'mpd'))).toEqual([
+    expect(
+      applyPrefixes(extractSamples(ASCIIDOC_PREPEND_MULTIPLE, 'mpd', 'source.asciidoc')),
+    ).toEqual([
       {
         ...baseSample,
         language: 'ts',
@@ -209,6 +214,7 @@ describe('code-sample', () => {
     ----
     `,
           'prepend-subset',
+          'source.asciidoc',
         ),
       ),
     ).toEqual([
@@ -256,6 +262,7 @@ describe('code-sample', () => {
     ----
     `,
           'prepend-subset',
+          'source.asciidoc',
         ),
       ),
     ).toEqual([
@@ -281,7 +288,7 @@ describe('code-sample', () => {
   });
 
   test('skip directive', () => {
-    expect(extractSamples(ASCIIDOC_SKIP, 'skip')).toEqual([]);
+    expect(extractSamples(ASCIIDOC_SKIP, 'skip', 'source.asciidoc')).toEqual([]);
   });
 
   test('tsconfig directive', () => {
@@ -306,6 +313,7 @@ describe('code-sample', () => {
 
     `,
         'tsconfig',
+        'source.asciidoc',
       ),
     ).toEqual([
       {
@@ -348,6 +356,7 @@ describe('code-sample', () => {
     ----
     `,
         'prepend-with-id',
+        'source.asciidoc',
       ).slice(-1),
     ).toEqual([
       {
@@ -372,6 +381,7 @@ describe('code-sample', () => {
     ----
     `,
         'tsx-example',
+        'source.asciidoc',
       ).slice(-1),
     ).toEqual([
       {
@@ -403,6 +413,7 @@ describe('code-sample', () => {
       ----
     `,
         'header-reset',
+        'source.asciidoc',
       ),
     ).toEqual([
       {
@@ -439,6 +450,7 @@ describe('code-sample', () => {
       ----
     `,
         'header-reset',
+        'source.asciidoc',
       ),
     ).toEqual([
       {
@@ -482,6 +494,7 @@ describe('code-sample', () => {
       ----
       `,
           'header-reset',
+          'source.asciidoc',
         ),
       ),
     ).toEqual([

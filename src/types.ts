@@ -9,6 +9,7 @@ export interface CodeSample {
   isTSX: boolean;
   checkJS: boolean;
   tsOptions: CompilerOptions;
+  sourceFile: string;
   nodeModules: readonly string[];
   output?: SampleOutput;
 }

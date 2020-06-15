@@ -99,6 +99,7 @@ describe('code-sample', () => {
     checkJS: false,
     sectionId: null,
     sectionHeader: null,
+    sourceFile: 'source.asciidoc',
   };
 
   const baseExtract = {

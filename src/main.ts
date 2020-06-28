@@ -8,7 +8,7 @@ import ora from 'ora';
 import ts from 'typescript';
 import yargs from 'yargs';
 
-import {checkSource, applyPrefixes} from './code-sample';
+import {checkSource, applyPrefixes, extractSample} from './code-sample';
 import {startLog, log, flushLog, logFile} from './logger';
 import {runNode} from './node-runner';
 import {
@@ -22,11 +22,10 @@ import {
 import {checkTs, ConfigBundle} from './ts-checker';
 import {CodeSample} from './types';
 import {getTempDir, writeTempFile, fileSlug} from './utils';
-import {extractAsciidocSamples} from './asciidoc';
 
 const argv = yargs
   .strict()
-  .demandCommand(1, 'Must specify path to at least one asciidoc file.')
+  .demandCommand(1, 'Must specify path to at least one source file.')
   .options({
     replacements: {
       type: 'string',
@@ -47,7 +46,7 @@ const argv = yargs
   })
   .parse();
 
-const asciidocs = argv._;
+const sourceFiles = argv._;
 startLog(!!argv.alsologtostderr);
 
 const sources: {[id: string]: string} = {};
@@ -145,13 +144,14 @@ function setStatus(status: string) {
   spinner.render();
 }
 
-async function processAsciidoc(path: string, fileNum: number, outOf: number) {
+async function processSourceFile(path: string, fileNum: number, outOf: number) {
   const fileStatus = `${fileNum}/${outOf}: ${path}`;
   setStatus(fileStatus);
   startFile(path);
 
   const text = fs.readFileSync(path, 'utf-8');
-  const rawSamples = extractAsciidocSamples(text, fileSlug(path), path);
+
+  const rawSamples = extractSample(text, fileSlug(path), path);
   log(`Found ${rawSamples.length} code samples in ${path}`);
 
   for (const sample of rawSamples) {
@@ -181,8 +181,8 @@ export function main() {
     let n = 0;
     let numFailures = 0;
     let numTotal = 0;
-    for (const asciidoc of asciidocs) {
-      await processAsciidoc(asciidoc, ++n, asciidocs.length);
+    for (const sourceFile of sourceFiles) {
+      await processSourceFile(sourceFile, ++n, sourceFiles.length);
     }
 
     if (spinner) spinner.stop();

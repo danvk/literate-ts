@@ -3,6 +3,8 @@ import _ from 'lodash';
 import {CodeSample, PrefixedCodeSample} from './types';
 import {log} from './logger';
 import {fail} from './test-tracker';
+import { extractAsciidocSamples } from './asciidoc';
+import { extractMarkdownSamples } from './markdown';
 
 /** Apply HIDE..END and COMPRESS..END directives */
 export function stripSource(source: string) {
@@ -67,4 +69,13 @@ export function applyPrefixes(
       content,
     };
   });
+}
+
+export function extractSample(text: string, slug: string, sourceFile: string) {
+  if (sourceFile.endsWith('.asciidoc')) {
+    return extractAsciidocSamples(text, slug, sourceFile);
+  } else if (sourceFile.endsWith('.md')) {
+    return extractMarkdownSamples(text, slug, sourceFile);
+  }
+  throw new Error(`Unknown source format, expected .{asciidoc,md}: ${sourceFile}`);
 }

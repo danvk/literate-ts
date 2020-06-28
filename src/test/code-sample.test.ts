@@ -1,7 +1,7 @@
 import {stripSource, applyPrefixes} from '../code-sample';
 import {dedent} from '../utils';
-import { extractSamples } from '../asciidoc';
-import { baseSample } from './common';
+import {extractSamples} from '../asciidoc';
+import {baseSample} from './common';
 
 const ASCIIDOC_PREPEND = `
 
@@ -48,30 +48,28 @@ const c: ABC = 'c';
 
 describe('code-sample', () => {
   test('prepend directive', () => {
-    expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND, 'prepend', 'source.asciidoc'))).toEqual(
-      [
-        {
-          ...baseSample,
-          language: 'ts',
-          id: 'prefix',
-          content: `type AB = 'a' | 'b';`,
-        },
-        {
-          ...baseSample,
-          language: 'ts',
-          id: 'combined',
-          content: dedent`
+    expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND, 'prepend', 'source.asciidoc'))).toEqual([
+      {
+        ...baseSample,
+        language: 'ts',
+        id: 'prefix',
+        content: `type AB = 'a' | 'b';`,
+      },
+      {
+        ...baseSample,
+        language: 'ts',
+        id: 'combined',
+        content: dedent`
           type AB = 'a' | 'b';
           const a: AB = 'a';`,
-        },
-        {
-          ...baseSample,
-          language: 'ts',
-          id: 'final',
-          content: `const a: AB = 'a';`,
-        },
-      ],
-    );
+      },
+      {
+        ...baseSample,
+        language: 'ts',
+        id: 'final',
+        content: `const a: AB = 'a';`,
+      },
+    ]);
   });
 
   test('multiple prepend directives', () => {

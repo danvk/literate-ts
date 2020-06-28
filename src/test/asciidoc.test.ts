@@ -1,6 +1,6 @@
-import { dedent } from "../utils";
-import { extractSamples } from "../asciidoc";
-import { baseExtract } from "./common";
+import {dedent} from '../utils';
+import {extractSamples} from '../asciidoc';
+import {baseExtract} from './common';
 
 const ASCII_DOC1 = `
 
@@ -99,7 +99,6 @@ describe('extractSamples', () => {
       },
     ]);
   });
-
 
   test('skip directive', () => {
     expect(extractSamples(ASCIIDOC_SKIP, 'skip', 'source.asciidoc')).toEqual([]);

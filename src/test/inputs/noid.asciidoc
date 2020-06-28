@@ -1,0 +1,11 @@
+blah blah
+
+[source,js]
+----
+console.log('Hello', 'node');
+----
+
+[source,ts]
+----
+console.log('Hello', 'TS');
+----

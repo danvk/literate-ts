@@ -77,13 +77,26 @@ const a: AB = 'a';
 
 describe('extractSamples', () => {
   test('snapshot', () => {
-    expect(
-      extractAsciidocSamples(
-        fs.readFileSync('./src/test/inputs/doc1.asciidoc', 'utf8'),
-        'doc1',
-        'doc1.asciidoc',
-      ),
-    ).toMatchSnapshot('doc1');
+    const dir = './src/test/inputs';
+
+    // TODO(danvk): use a glob here
+    const inputs = [
+      'doc1',
+      'noid',
+      'prepend',
+      'prepend-multiple',
+      'skip',
+    ];
+
+    for (const input of inputs) {
+      expect(
+        extractAsciidocSamples(
+          fs.readFileSync(`${dir}/${input}.asciidoc`, 'utf8'),
+          input,
+          `${input}.asciidoc`,
+        ),
+      ).toMatchSnapshot(input);
+    }
   });
 
   test('basic', () => {

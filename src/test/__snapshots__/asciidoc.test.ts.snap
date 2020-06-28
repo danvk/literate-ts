@@ -19,3 +19,126 @@ Array [
   },
 ]
 `;
+
+exports[`extractSamples snapshot: noid 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "console.log('Hello', 'TS');",
+    "id": "noid-9",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "noid.asciidoc",
+    "tsOptions": Object {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: prepend 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "type AB = 'a' | 'b';",
+    "id": "prefix",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend.asciidoc",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "const a: AB = 'a';",
+    "id": "combined",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "prefix",
+      },
+    ],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend.asciidoc",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "const a: AB = 'a';",
+    "id": "final",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend.asciidoc",
+    "tsOptions": Object {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: prepend-multiple 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "type AB = 'a' | 'b';",
+    "id": "prepend-multiple-3",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend-multiple.asciidoc",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "type ABC = AB | 'c';",
+    "id": "prepend-multiple-9",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "prepend-multiple-3",
+      },
+    ],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend-multiple.asciidoc",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "const c: ABC = 'c';",
+    "id": "prepend-multiple-14",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "prepend-multiple-3",
+      },
+      Object {
+        "id": "prepend-multiple-9",
+      },
+    ],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend-multiple.asciidoc",
+    "tsOptions": Object {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: skip 1`] = `Array []`;

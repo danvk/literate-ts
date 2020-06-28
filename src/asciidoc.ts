@@ -11,53 +11,36 @@ const TOP_HEADER = /^={1,3} (.*)$/;
 
 export function extractAsciidocSamples(text: string, p: Processor) {
   const lines = text.split('\n');
-  let i = 0;
-  let line: string;
 
-  const advance = () => {
-    i++;
-    line = lines[i];
-  };
-
-  for (; i < lines.length; i++) {
-    line = lines[i];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     const id = matchAndExtract(EXTRACT_ID, line);
+    const language = matchAndExtract(EXTRACT_SOURCE, line);
+    const header = matchAndExtract(TOP_HEADER, line);
+    const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
+
     if (id) {
       p.setNextId(id);
-      continue;
-    }
-
-    const language = matchAndExtract(EXTRACT_SOURCE, line);
-    if (language) {
+    } else if (language) {
       p.setNextLanguage(language);
-      continue;
-    }
-
-    const header = matchAndExtract(TOP_HEADER, line);
-    if (header) {
+    } else if (header) {
       p.setHeader(header);
-      continue;
-    }
-
-    const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
-    if (directive) {
+    } else if (directive) {
       p.setDirective(directive);
-      continue;
-    }
+    } else {
+      if (line === '----') {
+        // This is a code sample. Extract it!
+        i += 1;
+        const startLine = i;
+        p.setLineNum(startLine);
 
-    if (line === '----') {
-      // This is a code sample. Extract it!
-      advance();
-      const startLine = i;
-      p.setLineNum(startLine);
-      while (line !== '----') {
-        advance();
+        for (; lines[i] !== '----'; i++);
+
+        const content = lines.slice(startLine, i).join('\n');
+        p.addSample(content);
       }
-      const endLine = i;
-      const content = lines.slice(startLine, endLine).join('\n');
-      p.addSample(content);
-    }
 
-    p.resetWithNormalLine();
+      p.resetWithNormalLine();
+    }
   }
 }

@@ -27,10 +27,10 @@ export function extractMarkdownSamples(text: string, p: Processor) {
         const language = line.slice(3);
         p.setNextLanguage(language || null);
 
-        const startLine = i + 1;
+        i += 1;
+        const startLine = i;
         p.setLineNum(startLine);
 
-        i += 1;
         for (; lines[i] !== '```'; i++);
 
         const content = lines.slice(startLine, i).join('\n');

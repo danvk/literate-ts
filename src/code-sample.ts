@@ -1,10 +1,148 @@
 import _ from 'lodash';
 
-import {CodeSample, PrefixedCodeSample} from './types';
+import {CodeSample, PrefixedCodeSample, Prefix} from './types';
 import {log} from './logger';
 import {fail} from './test-tracker';
-import { extractAsciidocSamples } from './asciidoc';
-import { extractMarkdownSamples } from './markdown';
+import {extractAsciidocSamples} from './asciidoc';
+import {extractMarkdownSamples} from './markdown';
+
+export interface Processor {
+  setLineNum(line: number): void;
+  setHeader(header: string): void;
+  setDirective(directive: string): void;
+  setNextId(id: string): void;
+  setNextLanguage(lang: string | null): void;
+  addSample(code: string): void;
+  resetWithNormalLine(): void;
+}
+
+// TODO(danvk): rename filename --> slug
+function process(
+  text: string,
+  filename: string,
+  sourceFile: string,
+  processor: (text: string, processor: Processor) => void,
+): PrefixedCodeSample[] {
+  const samples: PrefixedCodeSample[] = [];
+
+  let i = 0;  // TODO(danvk): rename
+  let lastSectionId: string | null = null;
+  let lastSectionHeader: string | null = null;
+  let lastId: string | null = null;
+  let lastLanguage: string | null = null;
+  let prefixes: readonly Prefix[] = [];
+  let skipNext = false;
+  let prependNext = false;
+  let prependLines: number[] | null = null;
+  let nodeModules: readonly string[] = [];
+  let tsOptions: {[key: string]: string | boolean} = {};
+  let nextIsTSX = false;
+  let nextShouldCheckJs = false;
+
+  const p: Processor = {
+    setLineNum(line) { i = line; },
+    setHeader(header) {
+      p.setDirective('reset');
+      lastSectionId = lastId;
+      lastSectionHeader = header;
+      lastId = null;
+    },
+    setDirective(directive) {
+      if (directive === 'reset') {
+        prefixes = [];
+        prependNext = false;
+        skipNext = false;
+        tsOptions = {};
+        nodeModules = [];
+        nextIsTSX = false;
+        nextShouldCheckJs = false;
+      } else if (directive === 'prepend-to-following') {
+        prependNext = true;
+      } else if (directive.startsWith('prepend-subset-to-following:')) {
+        prependNext = true;
+        prependLines = directive
+          .split(':', 2)[1]
+          .split('-')
+          .map(Number);
+      } else if (directive.startsWith('prepend-id-to-following')) {
+        prefixes = prefixes.concat([
+          {
+            id: directive
+              .split(':')
+              .slice(1)
+              .join(':'),
+          },
+        ]);
+      } else if (directive.startsWith('skip')) {
+        skipNext = true;
+      } else if (directive.startsWith('tsconfig:')) {
+        const [key, value] = directive.split(':', 2)[1].split('=', 2);
+        tsOptions[key] = value === 'true' ? true : value === 'false' ? false : value;
+      } else if (directive.startsWith('include-node-module:')) {
+        const value = directive.split(':', 2)[1];
+        nodeModules = nodeModules.concat([value]);
+      } else if (directive === 'next-is-tsx') {
+        nextIsTSX = true;
+      } else if (directive === 'check-js') {
+        nextShouldCheckJs = true;
+        tsOptions['allowJs'] = true; // convenience, it's useless without this!
+        tsOptions['noEmit'] = true;
+      } else {
+        throw new Error(`Unknown directive: ${directive}`);
+      }
+    },
+    setNextId(id) {
+      lastId = id;
+    },
+    setNextLanguage(lang) {
+      lastLanguage = lang;
+    },
+    addSample(content) {
+      if (!lastId && (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))) {
+        // TS samples get checked even without IDs.
+        lastId = filename + '-' + i;
+      }
+      if (lastId) {
+        if (!skipNext) {
+          samples.push({
+            id: lastId,
+            sectionId: lastSectionId,
+            sectionHeader: lastSectionHeader,
+            language: lastLanguage as CodeSample['language'],
+            content,
+            prefixes,
+            nodeModules,
+            isTSX: nextIsTSX,
+            checkJS: nextShouldCheckJs,
+            sourceFile,
+            tsOptions: {...tsOptions},
+          });
+        }
+        if (prependNext) {
+          prefixes = prefixes.concat([
+            {
+              id: lastId,
+              ...(prependLines ? {lines: prependLines} : {}),
+            },
+          ]);
+          prependNext = false;
+          prependLines = null;
+        }
+      }
+    },
+    resetWithNormalLine() {
+      lastId = null;
+      lastLanguage = null;
+      skipNext = false;
+      nextIsTSX = false;
+      nextShouldCheckJs = false;
+    },
+  };
+
+  processor(text, p);
+
+  return samples;
+}
 
 /** Apply HIDE..END and COMPRESS..END directives */
 export function stripSource(source: string) {
@@ -71,11 +209,15 @@ export function applyPrefixes(
   });
 }
 
-export function extractSample(text: string, slug: string, sourceFile: string) {
+export function extractSamples(text: string, slug: string, sourceFile: string) {
+  let processor;
   if (sourceFile.endsWith('.asciidoc')) {
-    return extractAsciidocSamples(text, slug, sourceFile);
+    processor = extractAsciidocSamples;
   } else if (sourceFile.endsWith('.md')) {
-    return extractMarkdownSamples(text, slug, sourceFile);
+    processor = extractMarkdownSamples;
+  } else {
+    throw new Error(`Unknown source format, expected .{asciidoc,md}: ${sourceFile}`);
   }
-  throw new Error(`Unknown source format, expected .{asciidoc,md}: ${sourceFile}`);
+
+  return process(text, slug, sourceFile, processor);
 }

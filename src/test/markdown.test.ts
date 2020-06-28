@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { extractMarkdownSamples } from "../markdown";
+import { extractSamples } from '../code-sample';
 
 describe('markdown', () => {
   it('should match snapshots', () => {
@@ -17,7 +17,7 @@ describe('markdown', () => {
 
     for (const input of inputs) {
       expect(
-        extractMarkdownSamples(
+        extractSamples(
           fs.readFileSync(`${dir}/${input}.md`, 'utf8'),
           input,
           `${input}.md`,

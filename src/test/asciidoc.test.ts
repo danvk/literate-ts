@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import {dedent} from '../utils';
-import {extractAsciidocSamples} from '../asciidoc';
+import {extractSamples} from '../code-sample';
 import {baseExtract} from './common';
 
 const ASCII_DOC1 = `
@@ -90,7 +90,7 @@ describe('extractSamples', () => {
 
     for (const input of inputs) {
       expect(
-        extractAsciidocSamples(
+        extractSamples(
           fs.readFileSync(`${dir}/${input}.asciidoc`, 'utf8'),
           input,
           `${input}.asciidoc`,
@@ -100,7 +100,7 @@ describe('extractSamples', () => {
   });
 
   test('basic', () => {
-    expect(extractAsciidocSamples(ASCII_DOC1, 'doc1', 'source.asciidoc')).toEqual([
+    expect(extractSamples(ASCII_DOC1, 'doc1', 'source.asciidoc')).toEqual([
       {
         ...baseExtract,
         language: 'ts',
@@ -115,7 +115,7 @@ describe('extractSamples', () => {
 
   test('no ID', () => {
     // Only the TypeScript sample gets extracted (may want to revisit this).
-    expect(extractAsciidocSamples(ASCIIDOC_NO_ID, 'noid', 'source.asciidoc')).toEqual([
+    expect(extractSamples(ASCIIDOC_NO_ID, 'noid', 'source.asciidoc')).toEqual([
       {
         ...baseExtract,
         language: 'ts',
@@ -126,12 +126,12 @@ describe('extractSamples', () => {
   });
 
   test('skip directive', () => {
-    expect(extractAsciidocSamples(ASCIIDOC_SKIP, 'skip', 'source.asciidoc')).toEqual([]);
+    expect(extractSamples(ASCIIDOC_SKIP, 'skip', 'source.asciidoc')).toEqual([]);
   });
 
   test('tsconfig directive', () => {
     expect(
-      extractAsciidocSamples(
+      extractSamples(
         dedent`
     // verifier:tsconfig:noImplicitAny=false
     // verifier:tsconfig:strictNullChecks=false
@@ -179,7 +179,7 @@ describe('extractSamples', () => {
 
   test('prepend-with-id', () => {
     expect(
-      extractAsciidocSamples(
+      extractSamples(
         ASCIIDOC_PREPEND +
           '\n' +
           dedent`
@@ -209,7 +209,7 @@ describe('extractSamples', () => {
 
   test('next-is-tsx', () => {
     expect(
-      extractAsciidocSamples(
+      extractSamples(
         dedent`
     // verifier:next-is-tsx
     [[tsx-example]]
@@ -234,7 +234,7 @@ describe('extractSamples', () => {
 
   test('header resets', () => {
     expect(
-      extractAsciidocSamples(
+      extractSamples(
         dedent`
       == Chapter 1
       // verifier:prepend-to-following
@@ -272,7 +272,7 @@ describe('extractSamples', () => {
     ]);
 
     expect(
-      extractAsciidocSamples(
+      extractSamples(
         dedent`
       == Chapter 1
       // verifier:prepend-to-following

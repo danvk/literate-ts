@@ -1,0 +1,17 @@
+For instance, this is a valid TypeScript program:
+
+<!-- #greet-ts -->
+```ts
+function greet(who: string) {
+  console.log('Hello', who);
+}
+```
+
+But when you run this through a program like `node` that expects JavaScript, you'll get an error:
+
+```
+function greet(who: string) {
+                  ^
+
+SyntaxError: Unexpected token :
+```

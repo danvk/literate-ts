@@ -1,0 +1,20 @@
+// verifier:prepend-to-following
+[[prefix]]
+[source,ts]
+----
+type AB = 'a' | 'b';
+----
+
+[[combined]]
+[source,ts]
+----
+const a: AB = 'a';
+----
+
+// verifier:reset
+
+[[final]]
+[source,ts]
+----
+const a: AB = 'a';
+----

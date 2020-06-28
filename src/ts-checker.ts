@@ -149,12 +149,13 @@ export function extractTypeAssertions(
   const assertions = [] as TypeScriptTypeAssertion[];
 
   let appliesToPreviousLine = false;
+  let maybeContinuation = false;
   while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
     const token = scanner.getToken();
     if (token === ts.SyntaxKind.WhitespaceTrivia) continue; // ignore leading whitespace.
 
     if (token === ts.SyntaxKind.NewLineTrivia) {
-      // an assertion at thes tart of a line applies to the previous line.
+      // an assertion at the start of a line applies to the previous line.
       appliesToPreviousLine = true;
       continue;
     }
@@ -164,14 +165,19 @@ export function extractTypeAssertions(
 
     if (token === ts.SyntaxKind.SingleLineCommentTrivia) {
       const commentText = scanner.getTokenText();
-      const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
-      if (!type) continue;
+      if (maybeContinuation) {
+        assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
+      } else {
+        const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
+        if (!type) continue;
 
-      if (appliesToPreviousLine) line -= 1;
-
-      assertions.push({line, type});
+        if (appliesToPreviousLine) line -= 1;
+        assertions.push({line, type});
+        maybeContinuation = true;
+      }
     } else {
       appliesToPreviousLine = false;
+      maybeContinuation = false;
     }
   }
   return assertions;
@@ -212,6 +218,18 @@ export function getNodeForType(node: ts.Node): ts.Node {
   return findIdentifier(node) || node;
 }
 
+export function typesMatch(expected: string, actual: string) {
+  if (expected.endsWith('!')) {
+    expected = expected.slice(0, -1);
+  }
+
+  if (expected === actual) {
+    return true;
+  }
+  const n = expected.length;
+  return expected.endsWith('...') && actual.slice(0, n - 3) === expected.slice(0, n - 3);
+}
+
 export function checkTypeAssertions(
   source: ts.SourceFile,
   checker: ts.TypeChecker,
@@ -238,7 +256,7 @@ export function checkTypeAssertions(
         const type = checker.getTypeAtLocation(nodeForType);
         const actualType = checker.typeToString(type, nodeForType);
 
-        if (actualType !== assertion.type) {
+        if (!typesMatch(assertion.type, actualType)) {
           const testedText = node !== nodeForType ? ` (tested ${nodeForType.getText()})` : '';
           fail(`Failed type assertion for ${node.getText()}${testedText}`);
           log(`  Expected: ${assertion.type}`);

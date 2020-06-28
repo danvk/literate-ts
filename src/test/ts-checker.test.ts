@@ -292,6 +292,34 @@ describe('ts-checker', () => {
       ).toBe(true);
     });
 
+    test('multiline type assertions', () => {
+      expect(
+        checkAssertions(dedent`
+        const v = {x: 10, y: 20};
+        // type is {
+        //   x: number;
+        //   y: number;
+        // }
+      `),
+      ).toBe(true);
+    });
+
+    test('type assertion with ellipsis', () => {
+      expect(
+        checkAssertions(dedent`
+        type T = keyof string[];  // type is number | "length" | "toString" | ...
+        `),
+      ).toBe(true);
+    });
+
+    test('type assertion with excitement', () => {
+      expect(
+        checkAssertions(dedent`
+        type T = ['a', 'b'][number];  // type is "a" | "b"!
+        `),
+      ).toBe(true);
+    });
+
     // third-party type
     // test('type assertion on a third-party type', () => {
     //   expect(checkAssertions(dedent`

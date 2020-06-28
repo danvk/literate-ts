@@ -1,30 +1,30 @@
 import _ from 'lodash';
 
 import {CodeSample, PrefixedCodeSample, Prefix} from './types';
-import {matchAndExtract} from './utils';
 import {log} from './logger';
 import {fail} from './test-tracker';
+import {extractAsciidocSamples} from './asciidoc';
+import {extractMarkdownSamples} from './markdown';
 
-const EXTRACT_ID = /\[\[([^\]]*)\]\]/;
-const EXTRACT_SOURCE = /\[source,(ts|js)\]/;
-const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
-const TOP_HEADER = /^={1,3} (.*)$/;
+export interface Processor {
+  setLineNum(line: number): void;
+  setHeader(header: string): void;
+  setDirective(directive: string): void;
+  setNextId(id: string): void;
+  setNextLanguage(lang: string | null): void;
+  addSample(code: string): void;
+  resetWithNormalLine(): void;
+}
 
-export function extractSamples(
+function process(
   text: string,
-  filename: string,
+  slug: string,
   sourceFile: string,
+  processor: (text: string, processor: Processor) => void,
 ): PrefixedCodeSample[] {
-  const samples = [];
-  const lines = text.split('\n');
-  let i = 0;
-  let line: string;
+  const samples: PrefixedCodeSample[] = [];
 
-  const advance = () => {
-    i++;
-    line = lines[i];
-  };
-
+  let lineNum = 0;
   let lastSectionId: string | null = null;
   let lastSectionHeader: string | null = null;
   let lastId: string | null = null;
@@ -38,31 +38,17 @@ export function extractSamples(
   let nextIsTSX = false;
   let nextShouldCheckJs = false;
 
-  for (; i < lines.length; i++) {
-    line = lines[i];
-    const id = matchAndExtract(EXTRACT_ID, line);
-    if (id) {
-      lastId = id;
-      continue;
-    }
-
-    const language = matchAndExtract(EXTRACT_SOURCE, line);
-    if (language) {
-      lastLanguage = language;
-      continue;
-    }
-
-    const header = matchAndExtract(TOP_HEADER, line);
-    if (header) {
-      // Sufficiently high-level headings should reset
-      line = '// verifier:reset';
+  const p: Processor = {
+    setLineNum(line) {
+      lineNum = line;
+    },
+    setHeader(header) {
+      p.setDirective('reset');
       lastSectionId = lastId;
       lastSectionHeader = header;
       lastId = null;
-    }
-
-    const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
-    if (directive) {
+    },
+    setDirective(directive) {
       if (directive === 'reset') {
         prefixes = [];
         prependNext = false;
@@ -103,23 +89,19 @@ export function extractSamples(
         tsOptions['allowJs'] = true; // convenience, it's useless without this!
         tsOptions['noEmit'] = true;
       } else {
-        throw new Error(`Unknown directive: ${line}`);
+        throw new Error(`Unknown directive: ${directive}`);
       }
-      continue;
-    }
-
-    if (line === '----') {
-      // This is a code sample. Extract it!
-      advance();
-      const startLine = i;
-      while (line !== '----') {
-        advance();
-      }
-      const endLine = i;
-      const content = lines.slice(startLine, endLine).join('\n');
+    },
+    setNextId(id) {
+      lastId = id;
+    },
+    setNextLanguage(lang) {
+      lastLanguage = lang;
+    },
+    addSample(content) {
       if (!lastId && (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))) {
         // TS samples get checked even without IDs.
-        lastId = filename + '-' + startLine;
+        lastId = slug + '-' + lineNum;
       }
       if (lastId) {
         if (!skipNext) {
@@ -148,14 +130,17 @@ export function extractSamples(
           prependLines = null;
         }
       }
-    }
+    },
+    resetWithNormalLine() {
+      lastId = null;
+      lastLanguage = null;
+      skipNext = false;
+      nextIsTSX = false;
+      nextShouldCheckJs = false;
+    },
+  };
 
-    lastId = null;
-    lastLanguage = null;
-    skipNext = false;
-    nextIsTSX = false;
-    nextShouldCheckJs = false;
-  }
+  processor(text, p);
 
   return samples;
 }
@@ -223,4 +208,17 @@ export function applyPrefixes(
       content,
     };
   });
+}
+
+export function extractSamples(text: string, slug: string, sourceFile: string) {
+  let processor;
+  if (sourceFile.endsWith('.asciidoc')) {
+    processor = extractAsciidocSamples;
+  } else if (sourceFile.endsWith('.md')) {
+    processor = extractMarkdownSamples;
+  } else {
+    throw new Error(`Unknown source format, expected .{asciidoc,md}: ${sourceFile}`);
+  }
+
+  return process(text, slug, sourceFile, processor);
 }

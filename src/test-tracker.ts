@@ -35,7 +35,7 @@ export function fail(message: string, sampleId?: string) {
     sampleId = currentSampleId;
   }
 
-  const fullMessage = `${currentFile} ${currentSampleId}: ${message}`;
+  const fullMessage = `${currentSampleId}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error('\n' + fullMessage);
   }

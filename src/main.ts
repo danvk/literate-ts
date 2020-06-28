@@ -8,7 +8,7 @@ import ora from 'ora';
 import ts from 'typescript';
 import yargs from 'yargs';
 
-import {checkSource, applyPrefixes, extractSample} from './code-sample';
+import {checkSource, applyPrefixes, extractSamples} from './code-sample';
 import {startLog, log, flushLog, logFile} from './logger';
 import {runNode} from './node-runner';
 import {
@@ -151,7 +151,7 @@ async function processSourceFile(path: string, fileNum: number, outOf: number) {
 
   const text = fs.readFileSync(path, 'utf-8');
 
-  const rawSamples = extractSample(text, fileSlug(path), path);
+  const rawSamples = extractSamples(text, fileSlug(path), path);
   log(`Found ${rawSamples.length} code samples in ${path}`);
 
   for (const sample of rawSamples) {

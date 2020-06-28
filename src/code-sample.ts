@@ -16,16 +16,15 @@ export interface Processor {
   resetWithNormalLine(): void;
 }
 
-// TODO(danvk): rename filename --> slug
 function process(
   text: string,
-  filename: string,
+  slug: string,
   sourceFile: string,
   processor: (text: string, processor: Processor) => void,
 ): PrefixedCodeSample[] {
   const samples: PrefixedCodeSample[] = [];
 
-  let i = 0; // TODO(danvk): rename
+  let lineNum = 0;
   let lastSectionId: string | null = null;
   let lastSectionHeader: string | null = null;
   let lastId: string | null = null;
@@ -41,7 +40,7 @@ function process(
 
   const p: Processor = {
     setLineNum(line) {
-      i = line;
+      lineNum = line;
     },
     setHeader(header) {
       p.setDirective('reset');
@@ -102,7 +101,7 @@ function process(
     addSample(content) {
       if (!lastId && (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))) {
         // TS samples get checked even without IDs.
-        lastId = filename + '-' + i;
+        lastId = slug + '-' + lineNum;
       }
       if (lastId) {
         if (!skipNext) {

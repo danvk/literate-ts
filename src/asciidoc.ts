@@ -1,8 +1,8 @@
-import _, { head } from 'lodash';
+import _, {head} from 'lodash';
 
 import {CodeSample, PrefixedCodeSample, Prefix} from './types';
 import {matchAndExtract} from './utils';
-import { Processor } from './code-sample';
+import {Processor} from './code-sample';
 
 const EXTRACT_ID = /\[\[([^\]]*)\]\]/;
 const EXTRACT_SOURCE = /\[source,(ts|js)\]/;

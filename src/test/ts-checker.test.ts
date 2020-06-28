@@ -308,7 +308,7 @@ describe('ts-checker', () => {
       expect(
         checkAssertions(dedent`
         type T = keyof string[];  // type is number | "length" | "toString" | ...
-        `)
+        `),
       ).toBe(true);
     });
 
@@ -316,7 +316,7 @@ describe('ts-checker', () => {
       expect(
         checkAssertions(dedent`
         type T = ['a', 'b'][number];  // type is "a" | "b"!
-        `)
+        `),
       ).toBe(true);
     });
 

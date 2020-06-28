@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import {matchAndExtract} from './utils';
-import { Processor } from './code-sample';
+import {Processor} from './code-sample';
 
 const EXTRACT_ID = /<!-- #([^ ]+) -->/;
 const EXTRACT_DIRECTIVE = /<!-- verifier:(.*) -->/;

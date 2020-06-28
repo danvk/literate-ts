@@ -25,7 +25,7 @@ function process(
 ): PrefixedCodeSample[] {
   const samples: PrefixedCodeSample[] = [];
 
-  let i = 0;  // TODO(danvk): rename
+  let i = 0; // TODO(danvk): rename
   let lastSectionId: string | null = null;
   let lastSectionHeader: string | null = null;
   let lastId: string | null = null;
@@ -40,7 +40,9 @@ function process(
   let nextShouldCheckJs = false;
 
   const p: Processor = {
-    setLineNum(line) { i = line; },
+    setLineNum(line) {
+      i = line;
+    },
     setHeader(header) {
       p.setDirective('reset');
       lastSectionId = lastId;

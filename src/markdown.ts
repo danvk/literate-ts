@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import {matchAndExtract} from './utils';
 import {Processor} from './code-sample';
 
@@ -11,7 +9,7 @@ export function extractMarkdownSamples(text: string, p: Processor) {
   const lines = text.split('\n');
 
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i];
+    const line = lines[i];
     const id = matchAndExtract(EXTRACT_ID, line);
     const header = matchAndExtract(TOP_HEADER, line);
     const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);

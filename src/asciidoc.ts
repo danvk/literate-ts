@@ -1,6 +1,3 @@
-import _, {head} from 'lodash';
-
-import {CodeSample, PrefixedCodeSample, Prefix} from './types';
 import {matchAndExtract} from './utils';
 import {Processor} from './code-sample';
 

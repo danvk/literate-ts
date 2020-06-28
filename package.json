@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "lint": "eslint 'src/**'",
+    "lint": "eslint 'src/**/*.ts'",
     "test": "jest"
   },
   "dependencies": {

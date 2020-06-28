@@ -304,6 +304,14 @@ describe('ts-checker', () => {
       ).toBe(true);
     });
 
+    test('type assertion with ellipsis', () => {
+      expect(
+        checkAssertions(dedent`
+        type T = keyof string[];  // type is number | "length" | "toString" | ...
+        `)
+      ).toBe(true);
+    });
+
     // third-party type
     // test('type assertion on a third-party type', () => {
     //   expect(checkAssertions(dedent`

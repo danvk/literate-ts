@@ -218,6 +218,14 @@ export function getNodeForType(node: ts.Node): ts.Node {
   return findIdentifier(node) || node;
 }
 
+export function typesMatch(expected: string, actual: string) {
+  if (expected === actual) {
+    return true;
+  }
+  const n = expected.length;
+  return expected.endsWith('...') && actual.slice(0, n - 3) === expected.slice(0, n - 3);
+}
+
 export function checkTypeAssertions(
   source: ts.SourceFile,
   checker: ts.TypeChecker,
@@ -244,7 +252,7 @@ export function checkTypeAssertions(
         const type = checker.getTypeAtLocation(nodeForType);
         const actualType = checker.typeToString(type, nodeForType);
 
-        if (actualType !== assertion.type) {
+        if (!typesMatch(assertion.type, actualType)) {
           const testedText = node !== nodeForType ? ` (tested ${nodeForType.getText()})` : '';
           fail(`Failed type assertion for ${node.getText()}${testedText}`);
           log(`  Expected: ${assertion.type}`);

@@ -8,7 +8,7 @@ const EXTRACT_SOURCE = /\[source,(ts|js)\]/;
 const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^={1,3} (.*)$/;
 
-export function extractSamples(
+export function extractAsciidocSamples(
   text: string,
   filename: string,
   sourceFile: string,

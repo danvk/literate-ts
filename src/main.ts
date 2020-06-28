@@ -8,7 +8,7 @@ import ora from 'ora';
 import ts from 'typescript';
 import yargs from 'yargs';
 
-import {extractSamples, checkSource, applyPrefixes} from './code-sample';
+import {checkSource, applyPrefixes} from './code-sample';
 import {startLog, log, flushLog, logFile} from './logger';
 import {runNode} from './node-runner';
 import {
@@ -22,6 +22,7 @@ import {
 import {checkTs, ConfigBundle} from './ts-checker';
 import {CodeSample} from './types';
 import {getTempDir, writeTempFile, fileSlug} from './utils';
+import {extractSamples} from './asciidoc';
 
 const argv = yargs
   .strict()

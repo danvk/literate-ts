@@ -1,6 +1,5 @@
 import _ from 'lodash';
 
-import {CodeSample, PrefixedCodeSample, Prefix} from './types';
 import {matchAndExtract} from './utils';
 import { Processor } from './code-sample';
 
@@ -14,37 +13,31 @@ export function extractMarkdownSamples(text: string, p: Processor) {
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i];
     const id = matchAndExtract(EXTRACT_ID, line);
+    const header = matchAndExtract(TOP_HEADER, line);
+    const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
+
     if (id) {
       p.setNextId(id);
-      continue;
-    }
-
-    const header = matchAndExtract(TOP_HEADER, line);
-    if (header) {
+    } else if (header) {
       p.setHeader(header);
-      continue;
-    }
-
-    const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
-    if (directive) {
+    } else if (directive) {
       p.setDirective(directive);
-      continue;
+    } else {
+      if (line.startsWith('```')) {
+        const language = line.slice(3);
+        p.setNextLanguage(language || null);
+
+        const startLine = i + 1;
+        p.setLineNum(startLine);
+
+        i += 1;
+        for (; lines[i] !== '```'; i++);
+
+        const content = lines.slice(startLine, i).join('\n');
+        p.addSample(content);
+      }
+
+      p.resetWithNormalLine();
     }
-
-    if (line.startsWith('```')) {
-      const language = line.slice(3);
-      p.setNextLanguage(language || null);
-
-      const startLine = i + 1;
-      p.setLineNum(startLine);
-
-      i += 1;
-      for (; lines[i] !== '```'; i++);
-
-      const content = lines.slice(startLine, i).join('\n');
-      p.addSample(content);
-    }
-
-    p.resetWithNormalLine();
   }
 }

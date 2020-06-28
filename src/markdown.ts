@@ -10,16 +10,9 @@ const TOP_HEADER = /^#{1,3} (.*)$/;
 
 export function extractMarkdownSamples(text: string, p: Processor) {
   const lines = text.split('\n');
-  let i = 0;
-  let line: string;
 
-  const advance = () => {
-    i++;
-    line = lines[i];
-  };
-
-  for (; i < lines.length; i++) {
-    line = lines[i];
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
     const id = matchAndExtract(EXTRACT_ID, line);
     if (id) {
       p.setNextId(id);
@@ -42,14 +35,13 @@ export function extractMarkdownSamples(text: string, p: Processor) {
       const language = line.slice(3);
       p.setNextLanguage(language || null);
 
-      advance();
-      const startLine = i;
+      const startLine = i + 1;
       p.setLineNum(startLine);
-      while (line !== '```') {
-        advance();
-      }
-      const endLine = i;
-      const content = lines.slice(startLine, endLine).join('\n');
+
+      i += 1;
+      for (; lines[i] !== '```'; i++);
+
+      const content = lines.slice(startLine, i).join('\n');
       p.addSample(content);
     }
 

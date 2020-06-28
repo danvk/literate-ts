@@ -1,6 +1,6 @@
 import {stripSource, applyPrefixes} from '../code-sample';
 import {dedent} from '../utils';
-import {extractSamples} from '../asciidoc';
+import {extractAsciidocSamples} from '../asciidoc';
 import {baseSample} from './common';
 
 const ASCIIDOC_PREPEND = `
@@ -48,7 +48,7 @@ const c: ABC = 'c';
 
 describe('code-sample', () => {
   test('prepend directive', () => {
-    expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND, 'prepend', 'source.asciidoc'))).toEqual([
+    expect(applyPrefixes(extractAsciidocSamples(ASCIIDOC_PREPEND, 'prepend', 'source.asciidoc'))).toEqual([
       {
         ...baseSample,
         language: 'ts',
@@ -74,7 +74,7 @@ describe('code-sample', () => {
 
   test('multiple prepend directives', () => {
     expect(
-      applyPrefixes(extractSamples(ASCIIDOC_PREPEND_MULTIPLE, 'mpd', 'source.asciidoc')),
+      applyPrefixes(extractAsciidocSamples(ASCIIDOC_PREPEND_MULTIPLE, 'mpd', 'source.asciidoc')),
     ).toEqual([
       {
         ...baseSample,
@@ -105,7 +105,7 @@ describe('code-sample', () => {
   test('prepend-subset directive', () => {
     expect(
       applyPrefixes(
-        extractSamples(
+        extractAsciidocSamples(
           dedent`
     // verifier:prepend-subset-to-following:1-3
     [[a]]
@@ -154,7 +154,7 @@ describe('code-sample', () => {
   test('prepend-subset-of-js', () => {
     expect(
       applyPrefixes(
-        extractSamples(
+        extractAsciidocSamples(
           dedent`
     // verifier:prepend-subset-to-following:1-2
     [[a]]
@@ -200,7 +200,7 @@ describe('code-sample', () => {
   test('does not prepend to -output', () => {
     expect(
       applyPrefixes(
-        extractSamples(
+        extractAsciidocSamples(
           dedent`
       // verifier:prepend-to-following
       [[hello]]

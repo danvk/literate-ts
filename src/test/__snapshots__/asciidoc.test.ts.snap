@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extractSamples snapshot: doc1 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "function greet(who: string) {
+  console.log('Hello', who);
+}",
+    "id": "greet-ts",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "doc1.asciidoc",
+    "tsOptions": Object {},
+  },
+]
+`;

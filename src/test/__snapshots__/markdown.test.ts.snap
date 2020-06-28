@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`markdown should match snapshots: doc1 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "function greet(who: string) {
+  console.log('Hello', who);
+}",
+    "id": "greet-ts",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "doc1.md",
+    "tsOptions": Object {},
+  },
+]
+`;
+
+exports[`markdown should match snapshots: noid 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "console.log('Hello', 'TS');",
+    "id": "noid-7",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "noid.md",
+    "tsOptions": Object {},
+  },
+]
+`;
+
+exports[`markdown should match snapshots: prepend 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "type AB = 'a' | 'b';",
+    "id": "prefix",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend.md",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "const a: AB = 'a';",
+    "id": "combined",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "prefix",
+      },
+    ],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend.md",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "const a: AB = 'a';",
+    "id": "final",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend.md",
+    "tsOptions": Object {},
+  },
+]
+`;
+
+exports[`markdown should match snapshots: prepend-multiple 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "type AB = 'a' | 'b';",
+    "id": "prepend-multiple-2",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend-multiple.md",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "type ABC = AB | 'c';",
+    "id": "prepend-multiple-7",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "prepend-multiple-2",
+      },
+    ],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend-multiple.md",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "const c: ABC = 'c';",
+    "id": "prepend-multiple-11",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "prepend-multiple-2",
+      },
+      Object {
+        "id": "prepend-multiple-7",
+      },
+    ],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "prepend-multiple.md",
+    "tsOptions": Object {},
+  },
+]
+`;
+
+exports[`markdown should match snapshots: skip 1`] = `Array []`;

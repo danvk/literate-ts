@@ -149,12 +149,13 @@ export function extractTypeAssertions(
   const assertions = [] as TypeScriptTypeAssertion[];
 
   let appliesToPreviousLine = false;
+  let maybeContinuation = false;
   while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
     const token = scanner.getToken();
     if (token === ts.SyntaxKind.WhitespaceTrivia) continue; // ignore leading whitespace.
 
     if (token === ts.SyntaxKind.NewLineTrivia) {
-      // an assertion at thes tart of a line applies to the previous line.
+      // an assertion at the start of a line applies to the previous line.
       appliesToPreviousLine = true;
       continue;
     }
@@ -164,14 +165,19 @@ export function extractTypeAssertions(
 
     if (token === ts.SyntaxKind.SingleLineCommentTrivia) {
       const commentText = scanner.getTokenText();
-      const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
-      if (!type) continue;
+      if (maybeContinuation) {
+        assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
+      } else {
+        const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
+        if (!type) continue;
 
-      if (appliesToPreviousLine) line -= 1;
-
-      assertions.push({line, type});
+        if (appliesToPreviousLine) line -= 1;
+        assertions.push({line, type});
+        maybeContinuation = true;
+      }
     } else {
       appliesToPreviousLine = false;
+      maybeContinuation = false;
     }
   }
   return assertions;

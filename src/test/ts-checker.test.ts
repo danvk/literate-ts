@@ -292,6 +292,18 @@ describe('ts-checker', () => {
       ).toBe(true);
     });
 
+    test('multiline type assertions', () => {
+      expect(
+        checkAssertions(dedent`
+        const v = {x: 10, y: 20};
+        // type is {
+        //   x: number;
+        //   y: number;
+        // }
+      `),
+      ).toBe(true);
+    });
+
     // third-party type
     // test('type assertion on a third-party type', () => {
     //   expect(checkAssertions(dedent`

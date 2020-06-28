@@ -219,6 +219,10 @@ export function getNodeForType(node: ts.Node): ts.Node {
 }
 
 export function typesMatch(expected: string, actual: string) {
+  if (expected.endsWith('!')) {
+    expected = expected.slice(0, -1);
+  }
+
   if (expected === actual) {
     return true;
   }

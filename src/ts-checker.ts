@@ -161,7 +161,9 @@ export function extractTypeAssertions(
     }
 
     const pos = scanner.getTokenPos();
-    let {line, character} = source.getLineAndCharacterOfPosition(pos);
+    const lineChar = source.getLineAndCharacterOfPosition(pos);
+    let {line} = lineChar;
+    const {character} = lineChar;
 
     if (token === ts.SyntaxKind.SingleLineCommentTrivia) {
       const commentText = scanner.getTokenText();

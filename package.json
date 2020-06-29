@@ -1,6 +1,6 @@
 {
   "name": "literate-ts",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "Code samples that scale",
   "main": "dist/index.js",
   "repository": "https://github.com/danvk/literate-ts.git",

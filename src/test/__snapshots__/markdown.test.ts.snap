@@ -20,6 +20,45 @@ Array [
 ]
 `;
 
+exports[`markdown should match snapshots: multilinetype 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "const o = {x: 1, y: 2};
+// type is {
+//   x: number;
+//   y: number;
+// }",
+    "id": "multilinetype-3",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "multilinetype.md",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "function addWithExtras(a: number, b: number) {
+  const c = a + b;  // type is number
+  // ...
+  return c;
+}",
+    "id": "multilinetype-13",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "multilinetype.md",
+    "tsOptions": Object {},
+  },
+]
+`;
+
 exports[`markdown should match snapshots: noid 1`] = `
 Array [
   Object {

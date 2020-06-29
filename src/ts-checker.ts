@@ -149,7 +149,7 @@ export function extractTypeAssertions(
   const assertions = [] as TypeScriptTypeAssertion[];
 
   let appliesToPreviousLine = false;
-  let maybeContinuation = false;
+  let colForContinuation = null;
   while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
     const token = scanner.getToken();
     if (token === ts.SyntaxKind.WhitespaceTrivia) continue; // ignore leading whitespace.
@@ -161,11 +161,11 @@ export function extractTypeAssertions(
     }
 
     const pos = scanner.getTokenPos();
-    let {line} = source.getLineAndCharacterOfPosition(pos);
+    let {line, character} = source.getLineAndCharacterOfPosition(pos);
 
     if (token === ts.SyntaxKind.SingleLineCommentTrivia) {
       const commentText = scanner.getTokenText();
-      if (maybeContinuation) {
+      if (character === colForContinuation) {
         assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
       } else {
         const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
@@ -173,11 +173,11 @@ export function extractTypeAssertions(
 
         if (appliesToPreviousLine) line -= 1;
         assertions.push({line, type});
-        maybeContinuation = true;
+        colForContinuation = character;
       }
     } else {
       appliesToPreviousLine = false;
-      maybeContinuation = false;
+      colForContinuation = null;
     }
   }
   return assertions;

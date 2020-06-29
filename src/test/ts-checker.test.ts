@@ -207,6 +207,30 @@ describe('ts-checker', () => {
         type: '(elementId: string) => HTMLElement | null',
       },
     ]);
+
+    expect(
+      getAssertions(dedent`
+      const o = {x: 1, y: 2};
+      // type is {
+      //   x: number;
+      //   y: number;
+      // }
+      function addWithExtras(a: number, b: number) {
+        const c = a + b;  // type is number
+        // ...
+        return c;
+      }
+      `),
+    ).toEqual([
+      {
+        line: 0,
+        type: '{ x: number; y: number; }',
+      },
+      {
+        line: 6,
+        type: 'number',
+      },
+    ]);
   });
 
   describe('checkTypeAssertions', () => {

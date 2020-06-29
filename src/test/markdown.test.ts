@@ -7,7 +7,7 @@ describe('markdown', () => {
     const dir = './src/test/inputs';
 
     // TODO(danvk): use a glob here
-    const inputs = ['doc1', 'noid', 'prepend', 'prepend-multiple', 'skip'];
+    const inputs = ['doc1', 'noid', 'prepend', 'prepend-multiple', 'skip', 'multilinetype'];
 
     for (const input of inputs) {
       expect(

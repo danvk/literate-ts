@@ -20,6 +20,8 @@ Array [
 ]
 `;
 
+exports[`extractSamples snapshot: multilinetype 1`] = `Array []`;
+
 exports[`extractSamples snapshot: noid 1`] = `
 Array [
   Object {

@@ -2,7 +2,7 @@
 
 Literate TS statically checks TypeScript code samples in written text (blog posts, books, etc.).
 It was developed and used to type check [_Effective TypeScript_][ets] (O'Reilly 2019) as well
-as the companion blog, <effectivetypescript.com>.
+as the companion blog, [effectivetypescript.com][etsblog].
 
 ## Quickstart
 
@@ -27,6 +27,7 @@ Literate TS checks three sorts of things.
    ```
 
    Literate TS will verify that this error occurs in your code sample, _and no others_.
+   In other words, with no error annotations, literate-ts verifies that there are no errors.
 
 2. **Types**. To assert that the type of an expression is what you expect, use a comment starting with
    "type is":
@@ -54,6 +55,7 @@ Literate TS checks three sorts of things.
    ```
 
    Literate TS will convert your code sample to JavaScript, run it through Node and diff the output.
+   You can use this to create something like a unit test for your code samples.
 
 ## Why do this?
 
@@ -61,10 +63,10 @@ You ran your code samples through the TypeScript playground when you wrote them.
 Why bother spending the time writing just the right set of directives and comments to get them
 running through literate-ts?
 
-I wondered this myself while writing [_Effective TypeScript_][ets], but eventually this tool more
-than demonstrated its value many times over.
+I wondered this myself while writing [_Effective TypeScript_][ets], but eventually this tool
+demonstrated its value many times over.
 
-The arguments for using it are similar to those for writing tests or using TypeScript itself.
+The arguments for using it are similar to those for writing tests or using TypeScript itself:
 
 1. **Safe ~refactoring~ editing** Your code samples type checked when you wrote them. But then you,
    your co-author or your editor went and changed things. Maybe you renamed a variable or function
@@ -76,12 +78,12 @@ The arguments for using it are similar to those for writing tests or using TypeS
 2. **Damage control with new TypeScript releases** As Anders has said, semantic versioning in
    TypeScript is pretty meaningless because the whole _point_ of new releases is to break your code
    (or, rather, to reveal that it was already broken). When the next TypeScript release comes out,
-   are you going to re-run all your code samples through it? With Literate TS this is easy! For
+   are you going to re-run all your code samples through it? With Literate TS this is easy. For
    reference, TypeScript 3.8 broke two of the 600 samples in [_Effective TypeScript_][ets]. I fixed
    them and did a new release. Nothing broke with TypeScript 3.9. In both cases, it was a tremendous
    relief to know exactly what the damage was, or to know that there was no damage at all.
 
-3. **Comleteness**. You ran you code samples through TypeScript, but did you actually run all of
+3. **Comleteness**. You ran your code samples through TypeScript, but did you actually run all of
    them? Maybe you forgot one. Literate TS won't! Even the process of figuring out which code
    samples need to be prepended to others to form a valid compilation unit is helpful. If you can't
    create one, or the sequence is too elaborate, then something's probably wrong.
@@ -114,7 +116,7 @@ To give a code sample an ID, use an HTML comment starting with a `#`:
     type Point = [number, number];
     ```
 
-To give directive to the verifier, e.g. to tell it to concatenate sources, add an HTML comment
+To pass a directive to the verifier, e.g. to tell it to concatenate sources, add an HTML comment
 starting with `verifier:` immediately before the sample. For example:
 
     We can define a type using `interface`:
@@ -140,7 +142,7 @@ See below for a complete list of directives.
 [Asciidoc] is a bit like Markdown, but more flexible and complicated.
 In particular O'Reilly [uses it][atlas-asciidoc] in their [Atlas] publishing system.
 Any recent O'Reilly book (including [_Effective TypeScript_][ets]) is written in Asciidoc.
-GitHub also provides a rich display of Asciidoc source files.
+GitHub also provides a rich display for Asciidoc source files.
 
 In Asciidoc, code samples are marked with `----` or `....`. Samples must be marked
 with `[source,ts]` to be checked, or `[source,js]` to be run through Node.
@@ -168,40 +170,40 @@ See below for a complete list of directives.
 See above for how to give directive to literate-ts in your source format.
 
 <dl>
-  <dt>`verifier:skip`</dt>
+  <dt>verifier:skip</dt>
   <dd>Don't verify the next code sample.</dd>
-  <dt>`verifier:reset`</dt>
+  <dt>verifier:reset</dt>
   <dd>Reset everything, particularly the set of prefixes being prepended.</dd>
-  <dt>`verifier:prepend-to-following`</dt>
+  <dt>verifier:prepend-to-following</dt>
   <dd>
     In addition to verifying the next sample, prepend it to all following code samples
     (until a `reset`). If this is used on multiple code samples in sequence, they are prepended
     in the order they appear in the source file (i.e. the second sample comes after the first).
   </dd>
-  <dt>`verifier:prepend-subset-to-following:A-B`</dt>
+  <dt>verifier:prepend-subset-to-following:A-B</dt>
   <dd>
     In addition to verifying the next sample, prepend lines A-B from it (1-based)
     to the following samples. Useful if you want to define two things, A and B, in the first sample,
     then replace only B in the following sample.
   </dd>
-  <dt>`verifier:prepend-id-to-following:ID`</dt>
+  <dt>verifier:prepend-id-to-following:ID</dt>
   <dd>
     Start prepending a sample from earlier in the source file. Useful to reestablish some
     context after a `reset`.
   </dd>
-  <dt>`verifier:tsconfig:setting=value`</dt>
+  <dt>verifier:tsconfig:setting=value</dt>
   <dd>
     Set a tsconfig setting for the next code sample, e.g. `strictNullChecks=false`.
     These accumulate until the next `reset` directive.
   </dd>
-  <dt>`verifier:check-js`</dt>
+  <dt>verifier:check-js</dt>
   <dd>
     Run the following sample with lang=JS through `tsc`.
     This is mostly useful for samples using the `// @ts-check` directive.
   </dd>
-  <dt>`verifier:next-is-tsx`</dt>
+  <dt>verifier:next-is-tsx</dt>
   <dd>Put the next sample in a `.tsx` file, e.g. if it uses JSX syntax.</dd>
-  <dt>`include-node-module:module-name`</dt>
+  <dt>include-node-module:module-name</dt>
   <dd>
     Make `module-name` available during type checking for subsequent sample
     (until the next `reset`). This module must also be installed in the source file's
@@ -209,6 +211,41 @@ See above for how to give directive to literate-ts in your source format.
     `verifier:include-node-module:@types/lodash`.
   </dd>
 </dl>
+
+### Replacements
+
+Sometimes you don't want to show the full implementation of a function. For example:
+
+```ts
+function computeSHA512(text: string): number {
+  // ...
+}
+```
+
+The implementation is hidden, but unfortunately so is the `return` statement, which means that
+this won't type check (`tsc` complains that it returns `void` but is declared to return `number`).
+
+Literate TS supports this through "replacements": if you give the code sample an ID of `sha512`
+(see above for how to do this in Markdown and Asciidoc formats) then you can put something like
+this in a file called `sha512.ts`:
+
+```ts
+function computeSHA512(text: string): number {
+  // COMPRESS
+  return 0;
+  // END
+}
+```
+
+Obviously this isn't a real implementation but it will make the type checker happy. You tell
+Literate TS about this by passing a `replacements` directory via the `-r` flag:
+
+    $ literate-ts -r path/to/replacements path/to/posts/*.md
+
+The correspondence between replacements and their sources is checked and must be precise. In
+addition to `COMPRESS...END`, you can also use `HIDE...END` to completely remove code. Of course,
+be careful not to mislead the reader when you do this.
+(This syntax comes from [pyliterate][pylit-post].)
 
 ## Development
 
@@ -239,6 +276,7 @@ Publish a new version:
 - [Testing Types: An Introduction to dtslint][tsconf] (29m20s) -
   Talk I gave at tsconf 2019 which discusses an early version of literate-ts.
 - Brett Slatkin's [pyliterate], which was the inspiration for this tool.
+  See also his [post][pylit-post] on how pyliterate fit into his writing workflow.
 - [Literate Programming][lp] - A programming paradigm introduced by Don Knuth in which code is
   interspersed in text, rather than comments being interspersed in code.
 
@@ -250,3 +288,5 @@ Publish a new version:
 [tsconf]: https://www.youtube.com/watch?v=nygcFEwOG8w
 [pyliterate]: https://github.com/bslatkin/pyliterate
 [lp]: https://en.wikipedia.org/wiki/Literate_programming
+[etsblog]: https://effectivetypescript.com/
+[pylit-post]: https://www.onebigfluke.com/2014/07/how-im-writing-programming-book.html

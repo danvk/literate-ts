@@ -1,8 +1,8 @@
 {
   "name": "literate-ts",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Code samples that scale",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/danvk/literate-ts.git",
   "author": "Dan Vanderkam <danvdk@gmail.com>",
   "license": "MIT",
@@ -11,6 +11,9 @@
     "lint": "eslint 'src/**/*.ts'",
     "test": "jest"
   },
+  "bin": {
+    "literate-ts": "./bin/literate-ts"
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "fs-extra": "^8.1.0",
@@ -18,8 +21,10 @@
     "lodash": "^4.17.15",
     "ora": "^3.4.0",
     "tmp": "^0.1.0",
-    "typescript": "^3.6.2",
     "yargs": "^14.0.0"
+  },
+  "peerDependencies": {
+    "typescript": ">3.6"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.0",
@@ -38,6 +43,7 @@
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
   }
 }

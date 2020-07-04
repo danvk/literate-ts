@@ -1,18 +1,22 @@
 import fs from 'fs';
+import glob from 'glob';
+import path from 'path';
 
 import {extractSamples} from '../code-sample';
 
 describe('markdown', () => {
   it('should match snapshots', () => {
-    const dir = './src/test/inputs';
+    const inputFiles = glob.sync('./src/test/inputs/*.md');
 
-    // TODO(danvk): use a glob here
-    const inputs = ['doc1', 'noid', 'prepend', 'prepend-multiple', 'skip', 'multilinetype'];
-
-    for (const input of inputs) {
+    for (const inputFile of inputFiles) {
+      const {base, name} = path.parse(inputFile);
       expect(
-        extractSamples(fs.readFileSync(`${dir}/${input}.md`, 'utf8'), input, `${input}.md`),
-      ).toMatchSnapshot(input);
+        extractSamples(
+          fs.readFileSync(inputFile, 'utf8'),
+          name,
+          base,
+        ),
+      ).toMatchSnapshot(name);
     }
   });
 });

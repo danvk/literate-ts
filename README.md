@@ -135,6 +135,10 @@ starting with `verifier:` immediately before the sample. For example:
     const student: Student = { name: 'Bobby Droppers', age: 12 };
     ```
 
+You may also use `// #id` or `// verifier:directive` as an alternative form.
+This is primarily useful if you want to prepend a code sample that's hidden inside an
+HTML comment.
+
 See below for a complete list of directives.
 
 ### Asciidoc

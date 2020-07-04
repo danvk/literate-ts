@@ -1,5 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`extractSamples snapshot: commented-sample 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "function somethingDangerous() {}",
+    "id": "commented-sample-6",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "commented-sample.asciidoc",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "let val = null;  // Type is any
+try {
+  somethingDangerous();
+  val = 12;
+  val  // Type is number
+} catch (e) {
+  console.warn('alas!');
+}
+val  // Type is number | null",
+    "id": "commented-sample-12",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "commented-sample-6",
+      },
+    ],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "commented-sample.asciidoc",
+    "tsOptions": Object {},
+  },
+]
+`;
+
 exports[`extractSamples snapshot: doc1 1`] = `
 Array [
   Object {

@@ -1,4 +1,6 @@
 import fs from 'fs';
+import glob from 'glob';
+import path from 'path';
 
 import {dedent} from '../utils';
 import {extractSamples} from '../code-sample';
@@ -77,19 +79,11 @@ const a: AB = 'a';
 
 describe('extractSamples', () => {
   test('snapshot', () => {
-    const dir = './src/test/inputs';
+    const inputFiles = glob.sync('./src/test/inputs/*.asciidoc');
 
-    // TODO(danvk): use a glob here
-    const inputs = ['doc1', 'noid', 'prepend', 'prepend-multiple', 'skip', 'multilinetype'];
-
-    for (const input of inputs) {
-      expect(
-        extractSamples(
-          fs.readFileSync(`${dir}/${input}.asciidoc`, 'utf8'),
-          input,
-          `${input}.asciidoc`,
-        ),
-      ).toMatchSnapshot(input);
+    for (const inputFile of inputFiles) {
+      const {base, name} = path.parse(inputFile);
+      expect(extractSamples(fs.readFileSync(inputFile, 'utf8'), name, base)).toMatchSnapshot(name);
     }
   });
 

@@ -1,5 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`markdown should match snapshots: commented-sample 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "function somethingDangerous() {}",
+    "id": "commented-sample-5",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "commented-sample.md",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "let val = null;  // Type is any
+try {
+  somethingDangerous();
+  val = 12;
+  val  // Type is number
+} catch (e) {
+  console.warn('alas!');
+}
+val  // Type is number | null",
+    "id": "commented-sample-10",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "commented-sample-5",
+      },
+    ],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "commented-sample.md",
+    "tsOptions": Object {},
+  },
+]
+`;
+
 exports[`markdown should match snapshots: doc1 1`] = `
 Array [
   Object {

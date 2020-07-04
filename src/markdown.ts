@@ -3,6 +3,8 @@ import {Processor} from './code-sample';
 
 const EXTRACT_ID = /<!-- #([^ ]+) -->/;
 const EXTRACT_DIRECTIVE = /<!-- verifier:(.*) -->/;
+const ALT_EXTRACT_ID = /^\/\/ #([^ ]+)$/;
+const ALT_EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^#{1,3} (.*)$/;
 
 export function extractMarkdownSamples(text: string, p: Processor) {
@@ -10,9 +12,10 @@ export function extractMarkdownSamples(text: string, p: Processor) {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const id = matchAndExtract(EXTRACT_ID, line);
+    const id = matchAndExtract(EXTRACT_ID, line) || matchAndExtract(ALT_EXTRACT_ID, line);
     const header = matchAndExtract(TOP_HEADER, line);
-    const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
+    const directive =
+      matchAndExtract(EXTRACT_DIRECTIVE, line) || matchAndExtract(ALT_EXTRACT_DIRECTIVE, line);
 
     if (id) {
       p.setNextId(id);

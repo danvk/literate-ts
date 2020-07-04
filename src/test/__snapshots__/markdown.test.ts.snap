@@ -30,7 +30,11 @@ val  // Type is number | null",
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
-    "prefixes": Array [],
+    "prefixes": Array [
+      Object {
+        "id": "commented-sample-5",
+      },
+    ],
     "sectionHeader": null,
     "sectionId": null,
     "sourceFile": "commented-sample.md",

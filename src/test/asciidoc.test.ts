@@ -83,13 +83,7 @@ describe('extractSamples', () => {
 
     for (const inputFile of inputFiles) {
       const {base, name} = path.parse(inputFile);
-      expect(
-        extractSamples(
-          fs.readFileSync(inputFile, 'utf8'),
-          name,
-          base,
-        ),
-      ).toMatchSnapshot(name);
+      expect(extractSamples(fs.readFileSync(inputFile, 'utf8'), name, base)).toMatchSnapshot(name);
     }
   });
 

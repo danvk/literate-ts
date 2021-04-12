@@ -83,7 +83,7 @@ The arguments for using it are similar to those for writing tests or using TypeS
    them and did a new release. Nothing broke with TypeScript 3.9. In both cases, it was a tremendous
    relief to know exactly what the damage was, or to know that there was no damage at all.
 
-3. **Comleteness**. You ran your code samples through TypeScript, but did you actually run all of
+3. **Completeness**. You ran your code samples through TypeScript, but did you actually run all of
    them? Maybe you forgot one. Literate TS won't! Even the process of figuring out which code
    samples need to be prepended to others to form a valid compilation unit is helpful. If you can't
    create one, or the sequence is too elaborate, then something's probably wrong.

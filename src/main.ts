@@ -50,7 +50,7 @@ const argv = yargs
     'version',
     [
       `literate-ts version: ${require(packagePath).version}`,
-      `typescript version: ${ts.version}`,
+      `TypeScript version: ${ts.version}`,
     ].join('\n'),
   )
   .parse();

@@ -23,6 +23,8 @@ import {checkTs, ConfigBundle} from './ts-checker';
 import {CodeSample} from './types';
 import {getTempDir, writeTempFile, fileSlug} from './utils';
 
+const packagePath = path.join(__dirname, '../../package.json');
+
 const argv = yargs
   .strict()
   .demandCommand(1, 'Must specify path to at least one source file.')
@@ -44,6 +46,13 @@ const argv = yargs
       description: 'Log to stderr in addition to a log file',
     },
   })
+  .version(
+    'version',
+    [
+      `literate-ts version: ${require(packagePath).version}`,
+      `TypeScript version: ${ts.version}`,
+    ].join('\n'),
+  )
   .parse();
 
 const sourceFiles = argv._;

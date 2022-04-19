@@ -9,6 +9,19 @@ const TOP_HEADER = /^={1,3} (.*)$/;
 export function extractAsciidocSamples(text: string, p: Processor) {
   const lines = text.split('\n');
 
+  function extractCodeSample(i: number, until: string) {
+    i += 1;
+    const startLine = i;
+    p.setLineNum(startLine);
+
+    for (; lines[i] !== until; i++);
+
+    const content = lines.slice(startLine, i).join('\n');
+    p.addSample(content);
+
+    return i;
+  }
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const id = matchAndExtract(EXTRACT_ID, line);
@@ -25,16 +38,12 @@ export function extractAsciidocSamples(text: string, p: Processor) {
     } else if (directive) {
       p.setDirective(directive);
     } else {
-      if (line === '----') {
-        // This is a code sample. Extract it!
-        i += 1;
-        const startLine = i;
-        p.setLineNum(startLine);
-
-        for (; lines[i] !== '----'; i++);
-
-        const content = lines.slice(startLine, i).join('\n');
-        p.addSample(content);
+      const matches = /```(tsx|ts)/.exec(line);
+      if (matches) {
+        p.setNextLanguage(matches[1]);
+        i = extractCodeSample(i, '```');
+      } else if (line === '----') {
+        i = extractCodeSample(i, '----');
       }
 
       p.resetWithNormalLine();

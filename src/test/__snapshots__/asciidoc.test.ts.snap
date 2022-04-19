@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`extractSamples snapshot: backticks 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "function greet(who: string) {
+  console.log('Hello', who);
+}",
+    "id": "greet-ts",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "backticks.asciidoc",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "export const Example = () => <div />;",
+    "id": "greet-tsx",
+    "isTSX": false,
+    "language": "tsx",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "backticks.asciidoc",
+    "tsOptions": Object {},
+  },
+]
+`;
+
 exports[`extractSamples snapshot: commented-sample 1`] = `
 Array [
   Object {
@@ -63,7 +96,44 @@ Array [
 ]
 `;
 
-exports[`extractSamples snapshot: multilinetype 1`] = `Array []`;
+exports[`extractSamples snapshot: multilinetype 1`] = `
+Array [
+  Object {
+    "checkJS": false,
+    "content": "const o = {x: 1, y: 2};
+// type is {
+//   x: number;
+//   y: number;
+// }",
+    "id": "multilinetype-3",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "multilinetype.asciidoc",
+    "tsOptions": Object {},
+  },
+  Object {
+    "checkJS": false,
+    "content": "function addWithExtras(a: number, b: number) {
+  const c = a + b;  // type is number
+  // ...
+  return c;
+}",
+    "id": "multilinetype-13",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "multilinetype.asciidoc",
+    "tsOptions": Object {},
+  },
+]
+`;
 
 exports[`extractSamples snapshot: noid 1`] = `
 Array [

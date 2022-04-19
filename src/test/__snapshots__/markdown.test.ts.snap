@@ -60,6 +60,20 @@ Array [
     "sourceFile": "doc1.md",
     "tsOptions": Object {},
   },
+  Object {
+    "checkJS": false,
+    "content": "console.log(\\"end of file\\");
+",
+    "id": "doc1-19",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "doc1.md",
+    "tsOptions": Object {},
+  },
 ]
 `;
 

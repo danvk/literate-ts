@@ -15,3 +15,6 @@ function greet(who: string) {
 
 SyntaxError: Unexpected token :
 ```
+
+```ts
+console.log("end of file");

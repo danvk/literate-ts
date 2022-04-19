@@ -30,6 +30,19 @@ Array [
     "sourceFile": "backticks.asciidoc",
     "tsOptions": Object {},
   },
+  Object {
+    "checkJS": false,
+    "content": "console.log(\\"end of file\\");",
+    "id": "backticks-26",
+    "isTSX": false,
+    "language": "ts",
+    "nodeModules": Array [],
+    "prefixes": Array [],
+    "sectionHeader": null,
+    "sectionId": null,
+    "sourceFile": "backticks.asciidoc",
+    "tsOptions": Object {},
+  },
 ]
 `;
 

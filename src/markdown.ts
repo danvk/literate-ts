@@ -32,7 +32,7 @@ export function extractMarkdownSamples(text: string, p: Processor) {
         const startLine = i;
         p.setLineNum(startLine);
 
-        for (; lines[i] !== '```'; i++);
+        for (; i < lines.length && lines[i] !== '```'; i++);
 
         const content = lines.slice(startLine, i).join('\n');
         p.addSample(content);

@@ -11,7 +11,7 @@ export interface Processor {
   setLineNum(line: number): void;
   setHeader(header: string): void;
   setDirective(directive: string): void;
-  setNextId(idTemp: IdMetadata): void;
+  setNextId(idMetadata: IdMetadata): void;
   setNextLanguage(lang: string | null): void;
   addSample(code: string): void;
   resetWithNormalLine(): void;

@@ -15,7 +15,7 @@ export async function runNode(path: string): Promise<ExecErrorType> {
     const {stdout, stderr} = await util.promisify(exec)(`node ${path}`);
     return {code: 0, stderr, stdout};
   } catch (eIn) {
-    const e = eIn as ExecErrorType;
+    const e: ExecErrorType = eIn;
     const {code, stderr, stdout} = e;
     log(`Node exited with error ${e.code} on ${path}`);
     return {code, stderr, stdout};

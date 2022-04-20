@@ -7,7 +7,10 @@ Array [
     "content": "function greet(who: string) {
   console.log('Hello', who);
 }",
-    "id": "greet-ts",
+    "id": Object {
+      "descriptor": "./backticks.asciidoc:2",
+      "key": "greet-ts",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -20,7 +23,10 @@ Array [
   Object {
     "checkJS": false,
     "content": "export const Example = () => <div />;",
-    "id": "greet-tsx",
+    "id": Object {
+      "descriptor": "./backticks.asciidoc:11",
+      "key": "greet-tsx",
+    },
     "isTSX": false,
     "language": "tsx",
     "nodeModules": Array [],
@@ -33,7 +39,10 @@ Array [
   Object {
     "checkJS": false,
     "content": "console.log(\\"end of file\\");",
-    "id": "backticks-26",
+    "id": Object {
+      "descriptor": "./backticks.asciidoc:26",
+      "key": "backticks-26",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -51,7 +60,10 @@ Array [
   Object {
     "checkJS": false,
     "content": "function somethingDangerous() {}",
-    "id": "commented-sample-6",
+    "id": Object {
+      "descriptor": "./commented-sample.asciidoc:6",
+      "key": "commented-sample-6",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -72,13 +84,19 @@ try {
   console.warn('alas!');
 }
 val  // Type is number | null",
-    "id": "commented-sample-12",
+    "id": Object {
+      "descriptor": "./commented-sample.asciidoc:12",
+      "key": "commented-sample-12",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
     "prefixes": Array [
       Object {
-        "id": "commented-sample-6",
+        "id": Object {
+          "descriptor": "./commented-sample.asciidoc:6",
+          "key": "commented-sample-6",
+        },
       },
     ],
     "sectionHeader": null,
@@ -96,7 +114,10 @@ Array [
     "content": "function greet(who: string) {
   console.log('Hello', who);
 }",
-    "id": "greet-ts",
+    "id": Object {
+      "descriptor": "./doc1.asciidoc:2",
+      "key": "greet-ts",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -118,7 +139,10 @@ Array [
 //   x: number;
 //   y: number;
 // }",
-    "id": "multilinetype-3",
+    "id": Object {
+      "descriptor": "./multilinetype.asciidoc:3",
+      "key": "multilinetype-3",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -135,7 +159,10 @@ Array [
   // ...
   return c;
 }",
-    "id": "multilinetype-13",
+    "id": Object {
+      "descriptor": "./multilinetype.asciidoc:13",
+      "key": "multilinetype-13",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -153,7 +180,10 @@ Array [
   Object {
     "checkJS": false,
     "content": "console.log('Hello', 'TS');",
-    "id": "noid-9",
+    "id": Object {
+      "descriptor": "./noid.asciidoc:9",
+      "key": "noid-9",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -171,7 +201,10 @@ Array [
   Object {
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
-    "id": "prefix",
+    "id": Object {
+      "descriptor": "./prepend.asciidoc:1",
+      "key": "prefix",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -184,13 +217,19 @@ Array [
   Object {
     "checkJS": false,
     "content": "const a: AB = 'a';",
-    "id": "combined",
+    "id": Object {
+      "descriptor": "./prepend.asciidoc:7",
+      "key": "combined",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
     "prefixes": Array [
       Object {
-        "id": "prefix",
+        "id": Object {
+          "descriptor": "./prepend.asciidoc:1",
+          "key": "prefix",
+        },
       },
     ],
     "sectionHeader": null,
@@ -201,7 +240,10 @@ Array [
   Object {
     "checkJS": false,
     "content": "const a: AB = 'a';",
-    "id": "final",
+    "id": Object {
+      "descriptor": "./prepend.asciidoc:15",
+      "key": "final",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -219,7 +261,10 @@ Array [
   Object {
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
-    "id": "prepend-multiple-3",
+    "id": Object {
+      "descriptor": "./prepend-multiple.asciidoc:3",
+      "key": "prepend-multiple-3",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
@@ -232,13 +277,19 @@ Array [
   Object {
     "checkJS": false,
     "content": "type ABC = AB | 'c';",
-    "id": "prepend-multiple-9",
+    "id": Object {
+      "descriptor": "./prepend-multiple.asciidoc:9",
+      "key": "prepend-multiple-9",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
     "prefixes": Array [
       Object {
-        "id": "prepend-multiple-3",
+        "id": Object {
+          "descriptor": "./prepend-multiple.asciidoc:3",
+          "key": "prepend-multiple-3",
+        },
       },
     ],
     "sectionHeader": null,
@@ -249,16 +300,25 @@ Array [
   Object {
     "checkJS": false,
     "content": "const c: ABC = 'c';",
-    "id": "prepend-multiple-14",
+    "id": Object {
+      "descriptor": "./prepend-multiple.asciidoc:14",
+      "key": "prepend-multiple-14",
+    },
     "isTSX": false,
     "language": "ts",
     "nodeModules": Array [],
     "prefixes": Array [
       Object {
-        "id": "prepend-multiple-3",
+        "id": Object {
+          "descriptor": "./prepend-multiple.asciidoc:3",
+          "key": "prepend-multiple-3",
+        },
       },
       Object {
-        "id": "prepend-multiple-9",
+        "id": Object {
+          "descriptor": "./prepend-multiple.asciidoc:9",
+          "key": "prepend-multiple-9",
+        },
       },
     ],
     "sectionHeader": null,

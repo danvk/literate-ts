@@ -125,7 +125,7 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
     // Run the sample through Node and record the output.
     const path = writeTempFile(id + '.js', content);
     const output = await runNode(path);
-    idToSample[id].output = output;
+    idToSample[id.key].output = output;
 
     // It's OK for a JS sample to fail, but only if its output is in another sample.
     if (output.code !== 0 && !idToSample[id + '-output']) {
@@ -133,9 +133,9 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
     } else {
       log(`Node exited with code ${output.code}`);
     }
-  } else if (language === null && id.endsWith('-output')) {
+  } else if (language === null && id.key.endsWith('-output')) {
     // Verify the output of a previous code sample.
-    const inputId = id.split('-output')[0];
+    const inputId = id.key.split('-output')[0];
     const input = idToSample[inputId];
     if (!input) {
       fail(`No paired input: #${inputId}`);
@@ -165,20 +165,20 @@ async function processSourceFile(path: string, fileNum: number, outOf: number) {
 
   for (const sample of rawSamples) {
     const {id} = sample;
-    const source = sources[id];
+    const source = sources[id.descriptor];
     if (source) {
       checkSource(sample, source);
     }
   }
   const samples = applyPrefixes(rawSamples, sources);
 
-  const outputs = _.keyBy(samples, 'id');
+  const outputs = _.keyBy(samples, 'id.key');
   for (const [i, sample] of Object.entries(samples)) {
     const n = 1 + Number(i);
-    if (argv.filter && !sample.id.startsWith(argv.filter)) {
+    if (argv.filter && !sample.id.key.startsWith(argv.filter)) {
       continue;
     }
-    setStatus(`${fileStatus}: ${n}/${samples.length} ${sample.id}`);
+    setStatus(`${fileStatus}: ${n}/${samples.length} ${sample.id.key}`);
     await checkSample(sample, outputs);
   }
 

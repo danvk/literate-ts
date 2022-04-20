@@ -92,7 +92,10 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        id: 'greet-ts',
+        id: {
+          descriptor: './source.asciidoc:4',
+          key: 'greet-ts',
+        },
         content: dedent`
           function greet(who: string) {
             console.log('Hello', who);
@@ -107,7 +110,10 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        id: 'noid-10',
+        id: {
+          descriptor: './source.asciidoc:10',
+          key: 'noid-10',
+        },
         content: `console.log('Hello', 'TS');`,
       },
     ]);
@@ -145,7 +151,10 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        id: 'implicit-any',
+        id: {
+          descriptor: './source.asciidoc:2',
+          key: 'implicit-any',
+        },
         content: `const x: number = null;`,
         tsOptions: {
           noImplicitAny: false,
@@ -155,7 +164,10 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        id: 'strict',
+        id: {
+          descriptor: './source.asciidoc:10',
+          key: 'strict',
+        },
         content: `const x: number = null;`,
         tsOptions: {
           noImplicitAny: true,
@@ -188,9 +200,25 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        id: 'prepended-with-ids',
+        id: {
+          descriptor: './source.asciidoc:27',
+          key: 'prepended-with-ids',
+        },
         content: `console.log(a);`,
-        prefixes: [{id: 'prefix'}, {id: 'combined'}],
+        prefixes: [
+          {
+            id: {
+              descriptor: './source.asciidoc:20',
+              key: 'prefix',
+            },
+          },
+          {
+            id: {
+              descriptor: './source.asciidoc:20',
+              key: 'combined',
+            },
+          },
+        ],
       },
     ]);
   });
@@ -213,7 +241,10 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        id: 'tsx-example',
+        id: {
+          descriptor: './source.asciidoc:1',
+          key: 'tsx-example',
+        },
         content: `console.log(a);`,
         isTSX: true,
       },
@@ -244,15 +275,24 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
-        id: 'header-reset-4',
+        id: {
+          descriptor: './source.asciidoc:4',
+          key: 'header-reset-4',
+        },
         sectionHeader: 'Chapter 1',
         language: 'ts',
         content: `const x = 12;`,
       },
       {
         ...baseExtract,
-        id: 'header-reset-11',
-        sectionId: 'chapter-2',
+        id: {
+          descriptor: './source.asciidoc:11',
+          key: 'header-reset-11',
+        },
+        sectionId: {
+          descriptor: './source.asciidoc:7',
+          key: 'chapter-2',
+        },
         sectionHeader: 'Chapter 2',
         language: 'ts',
         content: `const x = 12;`,
@@ -281,20 +321,29 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
-        id: 'header-reset-4',
+        id: {
+          descriptor: './source.asciidoc:4',
+          key: 'header-reset-4',
+        },
         sectionHeader: 'Chapter 1',
         language: 'ts',
         content: `const x = 12;`,
       },
       {
         ...baseExtract,
-        id: 'header-reset-10',
+        id: {
+          descriptor: './source.asciidoc:10',
+          key: 'header-reset-10',
+        },
         sectionHeader: 'Chapter 1',
         language: 'ts',
         content: `const x = 12;`,
         prefixes: [
           {
-            id: 'header-reset-4',
+            id: {
+              descriptor: './source.asciidoc:4',
+              key: 'header-reset-4',
+            },
           },
         ],
       },

@@ -51,13 +51,19 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'ts',
-        id: 'prefix',
+        id: {
+          descriptor: './source.asciidoc:3',
+          key: 'prefix',
+        },
         content: `type AB = 'a' | 'b';`,
       },
       {
         ...baseSample,
         language: 'ts',
-        id: 'combined',
+        id: {
+          descriptor: './source.asciidoc:9',
+          key: 'combined',
+        },
         content: dedent`
           type AB = 'a' | 'b';
           const a: AB = 'a';`,
@@ -65,7 +71,10 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'ts',
-        id: 'final',
+        id: {
+          descriptor: './source.asciidoc:17',
+          key: 'final',
+        },
         content: `const a: AB = 'a';`,
       },
     ]);
@@ -78,13 +87,19 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'ts',
-        id: 'mpd-4',
+        id: {
+          descriptor: './source.asciidoc:4',
+          key: 'mpd-4',
+        },
         content: `type AB = 'a' | 'b';`,
       },
       {
         ...baseSample,
         language: 'ts',
-        id: 'mpd-10',
+        id: {
+          descriptor: './source.asciidoc:10',
+          key: 'mpd-10',
+        },
         content: dedent`
           type AB = 'a' | 'b';
           type ABC = AB | 'c';`,
@@ -92,7 +107,10 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'ts',
-        id: 'mpd-15',
+        id: {
+          descriptor: './source.asciidoc:15',
+          key: 'mpd-15',
+        },
         content: dedent`
           type AB = 'a' | 'b';
           type ABC = AB | 'c';
@@ -130,7 +148,10 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'ts',
-        id: 'a',
+        id: {
+          descriptor: './source.asciidoc:1',
+          key: 'a',
+        },
         content: dedent`
         interface Person {
           name: string;
@@ -140,7 +161,10 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'ts',
-        id: 'b',
+        id: {
+          descriptor: './source.asciidoc:10',
+          key: 'b',
+        },
         content: dedent`
         interface Person {
           name: string;
@@ -178,7 +202,10 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'js',
-        id: 'a',
+        id: {
+          descriptor: './source.asciidoc:1',
+          key: 'a',
+        },
         content: dedent`
           import _ from 'lodash';
           const p = {name: 'Bob'};
@@ -187,7 +214,10 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'ts',
-        id: 'b',
+        id: {
+          descriptor: './source.asciidoc:9',
+          key: 'b',
+        },
         content: dedent`
         import _ from 'lodash';
         const p = {name: 'Bob'};
@@ -222,13 +252,19 @@ describe('code-sample', () => {
       {
         ...baseSample,
         language: 'ts',
-        id: 'hello',
+        id: {
+          descriptor: './source.asciidoc:1',
+          key: 'hello',
+        },
         content: `console.log('Hello');`,
       },
       {
         ...baseSample,
         language: null,
-        id: 'hello-output',
+        id: {
+          descriptor: './source.asciidoc:8',
+          key: 'hello-output',
+        },
         content: 'Hello',
       },
     ]);

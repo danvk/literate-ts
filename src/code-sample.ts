@@ -1,16 +1,17 @@
 import _ from 'lodash';
 
-import {CodeSample, PrefixedCodeSample, Prefix} from './types';
+import {CodeSample, PrefixedCodeSample, Prefix, IdMetadata} from './types';
 import {log} from './logger';
 import {fail} from './test-tracker';
 import {extractAsciidocSamples} from './asciidoc';
 import {extractMarkdownSamples} from './markdown';
+import {generateId} from './ids';
 
 export interface Processor {
   setLineNum(line: number): void;
   setHeader(header: string): void;
   setDirective(directive: string): void;
-  setNextId(id: string): void;
+  setNextId(idTemp: IdMetadata): void;
   setNextLanguage(lang: string | null): void;
   addSample(code: string): void;
   resetWithNormalLine(): void;
@@ -20,14 +21,14 @@ function process(
   text: string,
   slug: string,
   sourceFile: string,
-  processor: (text: string, processor: Processor) => void,
+  processor: (filename: string, text: string, processor: Processor) => void,
 ): PrefixedCodeSample[] {
   const samples: PrefixedCodeSample[] = [];
 
   let lineNum = 0;
-  let lastSectionId: string | null = null;
+  let lastSectionId: IdMetadata | null = null;
   let lastSectionHeader: string | null = null;
-  let lastId: string | null = null;
+  let lastId: IdMetadata | null = null;
   let lastLanguage: string | null = null;
   let prefixes: readonly Prefix[] = [];
   let skipNext = false;
@@ -68,10 +69,14 @@ function process(
       } else if (directive.startsWith('prepend-id-to-following')) {
         prefixes = prefixes.concat([
           {
-            id: directive
-              .split(':')
-              .slice(1)
-              .join(':'),
+            id: generateId(
+              directive
+                .split(':')
+                .slice(1)
+                .join(':'),
+              sourceFile,
+              lineNum,
+            ),
           },
         ]);
       } else if (directive.startsWith('skip')) {
@@ -101,7 +106,7 @@ function process(
     addSample(content) {
       if (!lastId && (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))) {
         // TS samples get checked even without IDs.
-        lastId = slug + '-' + lineNum;
+        lastId = generateId(slug + '-' + lineNum, sourceFile, lineNum);
       }
       if (lastId) {
         if (!skipNext) {
@@ -140,7 +145,7 @@ function process(
     },
   };
 
-  processor(text, p);
+  processor(sourceFile, text, p);
 
   return samples;
 }
@@ -181,7 +186,7 @@ export function applyPrefixes(
   samples: PrefixedCodeSample[],
   sources: {[id: string]: string} = {},
 ): CodeSample[] {
-  const idToSample = _.keyBy(samples, 'id');
+  const idToSample = _.keyBy(samples, 'id.key');
   const sliceLines = (text: string, lines: number[] | undefined) =>
     lines
       ? text
@@ -190,10 +195,10 @@ export function applyPrefixes(
           .join('\n')
       : text;
   return samples.map(sample => {
-    const prefixes = sample.id.endsWith('-output') ? [] : sample.prefixes;
+    const prefixes = sample.id.key.endsWith('-output') ? [] : sample.prefixes;
     const content = prefixes
-      .map(({id, lines}) => sliceLines(sources[id] || idToSample[id].content, lines))
-      .concat([sources[sample.id] || sample.content])
+      .map(({id, lines}) => sliceLines(sources[id.key] || idToSample[id.key].content, lines))
+      .concat([sources[sample.id.key] || sample.content])
       .join('\n');
     return {
       id: sample.id,

@@ -186,7 +186,7 @@ export function applyPrefixes(
   samples: PrefixedCodeSample[],
   sources: {[id: string]: string} = {},
 ): CodeSample[] {
-  const idToSample = _.keyBy(samples, 'id.key');
+  const idToSample = _.keyBy(samples, sample => sample.id.key);
   const sliceLines = (text: string, lines: number[] | undefined) =>
     lines
       ? text

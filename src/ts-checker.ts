@@ -297,7 +297,7 @@ export async function checkTs(
   config: ConfigBundle,
 ) {
   const {id} = sample;
-  const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
+  const fileName = id.key + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
   const sampleDir = getTempDir();
   const nodeModulesPath = path.join(sampleDir, 'node_modules');

@@ -22,12 +22,12 @@ export function startSample(sampleId: IdMetadata) {
   currentSampleId = sampleId;
   results[currentFile][currentSampleId.key] = 0;
   sampleStartMs = Date.now();
-  log(`BEGIN #${sampleId}\n`);
+  log(`BEGIN #${sampleId.key}\n`);
 }
 
 export function finishSample() {
   const elapsedMs = Date.now() - sampleStartMs;
-  log(`\nEND #${currentSampleId} (${elapsedMs} ms)\n`);
+  log(`\nEND #${currentSampleId!.key} (${elapsedMs} ms)\n`);
   currentSampleId = undefined;
 }
 

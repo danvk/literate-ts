@@ -50,31 +50,25 @@ describe('code-sample', () => {
     expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND, 'prepend', 'source.asciidoc'))).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:3',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:3',
-          key: 'prefix',
-        },
+        id: 'prefix',
         content: `type AB = 'a' | 'b';`,
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:9',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:9',
-          key: 'combined',
-        },
+        id: 'combined',
         content: dedent`
           type AB = 'a' | 'b';
           const a: AB = 'a';`,
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:17',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:17',
-          key: 'final',
-        },
+        id: 'final',
         content: `const a: AB = 'a';`,
       },
     ]);
@@ -86,31 +80,25 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:4',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:4',
-          key: 'mpd-4',
-        },
+        id: 'mpd-4',
         content: `type AB = 'a' | 'b';`,
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:10',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:10',
-          key: 'mpd-10',
-        },
+        id: 'mpd-10',
         content: dedent`
           type AB = 'a' | 'b';
           type ABC = AB | 'c';`,
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:15',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:15',
-          key: 'mpd-15',
-        },
+        id: 'mpd-15',
         content: dedent`
           type AB = 'a' | 'b';
           type ABC = AB | 'c';
@@ -147,11 +135,9 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:1',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:1',
-          key: 'a',
-        },
+        id: 'a',
         content: dedent`
         interface Person {
           name: string;
@@ -160,11 +146,9 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:10',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:10',
-          key: 'b',
-        },
+        id: 'b',
         content: dedent`
         interface Person {
           name: string;
@@ -201,11 +185,9 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:1',
         language: 'js',
-        id: {
-          descriptor: './source.asciidoc:1',
-          key: 'a',
-        },
+        id: 'a',
         content: dedent`
           import _ from 'lodash';
           const p = {name: 'Bob'};
@@ -213,11 +195,9 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:9',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:9',
-          key: 'b',
-        },
+        id: 'b',
         content: dedent`
         import _ from 'lodash';
         const p = {name: 'Bob'};
@@ -251,20 +231,16 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:1',
         language: 'ts',
-        id: {
-          descriptor: './source.asciidoc:1',
-          key: 'hello',
-        },
+        id: 'hello',
         content: `console.log('Hello');`,
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:8',
         language: null,
-        id: {
-          descriptor: './source.asciidoc:8',
-          key: 'hello-output',
-        },
+        id: 'hello-output',
         content: 'Hello',
       },
     ]);

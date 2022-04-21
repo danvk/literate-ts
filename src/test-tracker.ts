@@ -1,8 +1,8 @@
 import {log, isLoggingToStderr} from './logger';
-import {IdMetadata} from './types';
+import {CodeSample} from './types';
 
 let currentFile: string;
-let currentSampleId: IdMetadata | undefined;
+let currentSample: CodeSample | undefined;
 let sampleStartMs: number;
 const results: {[file: string]: {[id: string]: number}} = {};
 
@@ -15,34 +15,34 @@ export function startFile(file: string) {
 export function finishFile() {
   log(`---- END FILE ${currentFile}\n`);
   currentFile = '';
-  currentSampleId = undefined;
+  currentSample = undefined;
 }
 
-export function startSample(sampleId: IdMetadata) {
-  currentSampleId = sampleId;
-  results[currentFile][currentSampleId.key] = 0;
+export function startSample(sample: CodeSample) {
+  currentSample = sample;
+  results[currentFile][sample.id] = 0;
   sampleStartMs = Date.now();
-  log(`BEGIN #${sampleId.key}\n`);
+  log(`BEGIN #${sample.id}\n`);
 }
 
 export function finishSample() {
   const elapsedMs = Date.now() - sampleStartMs;
-  log(`\nEND #${currentSampleId!.key} (${elapsedMs} ms)\n`);
-  currentSampleId = undefined;
+  log(`\nEND #${currentSample!.id} (${elapsedMs} ms)\n`);
+  currentSample = undefined;
 }
 
-export function fail(message: string, sampleId?: IdMetadata) {
-  if (sampleId === undefined) {
-    sampleId = currentSampleId;
+export function fail(message: string, sample?: CodeSample) {
+  if (sample === undefined) {
+    sample = currentSample;
   }
 
-  const fullMessage = `${currentSampleId?.descriptor}: ${message}`;
+  const fullMessage = `${currentSample?.descriptor}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error('\n' + fullMessage);
   }
   log(fullMessage);
   if (!(global as any).__TEST__) {
-    results[currentFile][currentSampleId!.key]++;
+    results[currentFile][currentSample!.id]++;
   }
 }
 

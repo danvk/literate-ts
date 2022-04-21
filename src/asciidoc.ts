@@ -1,6 +1,6 @@
 import {matchAndExtract} from './utils';
 import {Processor} from './code-sample';
-import {generateId} from './ids';
+import {generateIdMetadata} from './metadata';
 
 const EXTRACT_BACKTICKS = /```(tsx|ts)/;
 const EXTRACT_ID = /\[\[([^\]]*)\]\]/;
@@ -32,7 +32,7 @@ export function extractAsciidocSamples(sourceFile: string, text: string, p: Proc
     const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
 
     if (idRaw) {
-      p.setNextId(generateId(idRaw, sourceFile, i));
+      p.setNextId(generateIdMetadata(idRaw, sourceFile, i));
     } else if (language) {
       p.setNextLanguage(language);
     } else if (header) {

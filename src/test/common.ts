@@ -5,7 +5,6 @@ export const baseSample = {
   nodeModules: [],
   isTSX: false,
   checkJS: false,
-  sectionId: null,
   sectionHeader: null,
   sourceFile: 'source.asciidoc',
 };

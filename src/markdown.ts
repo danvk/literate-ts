@@ -1,6 +1,6 @@
 import {matchAndExtract} from './utils';
 import {Processor} from './code-sample';
-import {generateId} from './ids';
+import {generateIdMetadata} from './metadata';
 
 const EXTRACT_ID = /<!-- #([^ ]+) -->/;
 const EXTRACT_DIRECTIVE = /<!-- verifier:(.*) -->/;
@@ -19,7 +19,7 @@ export function extractMarkdownSamples(sourceFile: string, text: string, p: Proc
       matchAndExtract(EXTRACT_DIRECTIVE, line) || matchAndExtract(ALT_EXTRACT_DIRECTIVE, line);
 
     if (idRaw) {
-      p.setNextId(generateId(idRaw, sourceFile, i));
+      p.setNextId(generateIdMetadata(idRaw, sourceFile, i));
     } else if (header) {
       p.setHeader(header);
     } else if (directive) {

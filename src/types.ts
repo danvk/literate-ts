@@ -2,13 +2,13 @@ import {CompilerOptions} from 'typescript';
 
 export interface IdMetadata {
   descriptor: string;
-  key: string;
+  id: string;
 }
 
 export interface CodeSample {
+  descriptor: string;
   language: 'js' | 'ts' | null;
-  id: IdMetadata;
-  sectionId: IdMetadata | null;
+  id: string;
   sectionHeader: string | null;
   content: string;
   isTSX: boolean;
@@ -20,7 +20,7 @@ export interface CodeSample {
 }
 
 export interface Prefix {
-  id: IdMetadata;
+  id: string;
   lines?: number[];
 }
 

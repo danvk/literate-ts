@@ -26,13 +26,13 @@ export function extractAsciidocSamples(sourceFile: string, text: string, p: Proc
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const idRaw = matchAndExtract(EXTRACT_ID, line);
+    const id = matchAndExtract(EXTRACT_ID, line);
     const language = matchAndExtract(EXTRACT_SOURCE, line);
     const header = matchAndExtract(TOP_HEADER, line);
     const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
 
-    if (idRaw) {
-      p.setNextId(generateIdMetadata(idRaw, sourceFile, i));
+    if (id) {
+      p.setNextId(generateIdMetadata(id, sourceFile, i));
     } else if (language) {
       p.setNextLanguage(language);
     } else if (header) {

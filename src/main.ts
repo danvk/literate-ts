@@ -172,7 +172,7 @@ async function processSourceFile(path: string, fileNum: number, outOf: number) {
   }
   const samples = applyPrefixes(rawSamples, sources);
 
-  const outputs = _.keyBy(samples, sample => sample.id);
+  const outputs = _.keyBy(samples, 'id');
   for (const [i, sample] of Object.entries(samples)) {
     const n = 1 + Number(i);
     if (argv.filter && !sample.id.startsWith(argv.filter)) {

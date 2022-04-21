@@ -195,14 +195,7 @@ describe('extractSamples', () => {
         descriptor: './source.asciidoc:27',
         id: 'prepended-with-ids',
         content: `console.log(a);`,
-        prefixes: [
-          {
-            id: 'prefix',
-          },
-          {
-            id: 'combined',
-          },
-        ],
+        prefixes: [{id: 'prefix'}, {id: 'combined'}],
       },
     ]);
   });

@@ -4,7 +4,7 @@ import {CodeSample} from './types';
 let currentFile: string;
 let currentSample: CodeSample | undefined;
 let sampleStartMs: number;
-const results: {[file: string]: {[id: string]: number}} = {};
+const results: {[file: string]: {[descriptor: string]: number}} = {};
 
 export function startFile(file: string) {
   log(`---- BEGIN FILE ${file}\n`);
@@ -20,14 +20,14 @@ export function finishFile() {
 
 export function startSample(sample: CodeSample) {
   currentSample = sample;
-  results[currentFile][sample.id] = 0;
+  results[currentFile][sample.descriptor] = 0;
   sampleStartMs = Date.now();
-  log(`BEGIN #${sample.id}\n`);
+  log(`BEGIN #${sample.descriptor}\n`);
 }
 
 export function finishSample() {
   const elapsedMs = Date.now() - sampleStartMs;
-  log(`\nEND #${currentSample!.id} (${elapsedMs} ms)\n`);
+  log(`\nEND #${currentSample!.descriptor} (${elapsedMs} ms)\n`);
   currentSample = undefined;
 }
 
@@ -42,7 +42,7 @@ export function fail(message: string, sample?: CodeSample) {
   }
   log(fullMessage);
   if (!(global as any).__TEST__) {
-    results[currentFile][currentSample!.id]++;
+    results[currentFile][currentSample!.descriptor]++;
   }
 }
 

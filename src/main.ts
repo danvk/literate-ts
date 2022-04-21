@@ -154,7 +154,7 @@ function setStatus(status: string) {
 }
 
 async function processSourceFile(path: string, fileNum: number, outOf: number) {
-  const fileStatus = `${fileNum}/${outOf}: ${path}`;
+  const fileStatus = `${fileNum}/${outOf}: ./${path}`;
   setStatus(fileStatus);
   startFile(path);
 
@@ -178,7 +178,7 @@ async function processSourceFile(path: string, fileNum: number, outOf: number) {
     if (argv.filter && !sample.id.startsWith(argv.filter)) {
       continue;
     }
-    setStatus(`${fileStatus}: ${n}/${samples.length} ${sample.id}`);
+    setStatus(`${fileStatus}: ${n}/${samples.length} ${sample.descriptor}`);
     await checkSample(sample, outputs);
   }
 
@@ -198,7 +198,7 @@ export function main() {
 
     for (const [file, fileResults] of Object.entries(getTestResults())) {
       const numPassed = _.sum(_.map(fileResults, n => (n === 0 ? 1 : 0)));
-      console.log(file, `${numPassed}/${_.size(fileResults)} passed`);
+      console.log(`./${file}`, `${numPassed}/${_.size(fileResults)} passed`);
       for (const [id, failures] of Object.entries(fileResults)) {
         numTotal += 1;
         if (failures === 0) {

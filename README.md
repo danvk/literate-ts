@@ -33,7 +33,7 @@ Literate TS checks three sorts of things.
    "type is":
 
    ```ts
-   'four score'.split(' ');  // type is string[]
+   'four score'.split(' '); // type is string[]
    ```
 
    Literate TS will verify that the type is precisely what you specify textually, ala [dtslint][].
@@ -250,6 +250,14 @@ The correspondence between replacements and their sources is checked and must be
 addition to `COMPRESS...END`, you can also use `HIDE...END` to completely remove code. Of course,
 be careful not to mislead the reader when you do this.
 (This syntax comes from [pyliterate][pylit-post].)
+
+## Command-Line Options
+
+- `--help`: Show help.
+- `--version`: Show version numbers for `literate-ts` and `typescript`.=
+- `-f`/`--filter`: Only check IDs with the given prefix.
+- `-r`/`--replacements`: If specified, load `**/*.{ts,js,txt}` under this directory as additional sources.
+- `--alsologtostderr`: Log to stderr in addition to a log file.
 
 ## Development
 

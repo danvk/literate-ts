@@ -92,7 +92,8 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
   const tmpDir = getTempDir();
   const checkOutput = (actualOutput.stderr + actualOutput.stdout)
     .split('\n')
-    .filter(line => !line.startsWith('    at '))
+    .filter(line => !line.startsWith('    at ')) // prune stack traces to one line
+    .filter(line => !line.match(/^Node.js v\d+/)) // Newer versions of Node log a version number
     // Remove temp paths which vary from run to run.
     .map(line => (tmpDir ? line.replace('/private' + tmpDir, '').replace(tmpDir, '') : line))
     .join('\n')
@@ -111,6 +112,7 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
     log('----');
     log('Actual:');
     log(checkOutput);
+    log('----');
   }
 }
 
@@ -120,7 +122,7 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
   startSample(id);
 
   if (language === 'ts' || (language === 'js' && sample.checkJS)) {
-    await checkTs(content, sample, id + '-output' in idToSample, typeScriptBundle);
+    await checkTs(sample, id + '-output' in idToSample, typeScriptBundle);
   } else if (language === 'js') {
     // Run the sample through Node and record the output.
     const path = writeTempFile(id + '.js', content);
@@ -201,9 +203,7 @@ export function main() {
       console.log(file, `${numPassed}/${_.size(fileResults)} passed`);
       for (const [id, failures] of Object.entries(fileResults)) {
         numTotal += 1;
-        if (failures === 0) {
-          console.log(chalk.green(` ✓ ${id}`));
-        } else {
+        if (failures > 0) {
           console.log(chalk.red(` ✗ ${id}`));
           numFailures += 1;
         }

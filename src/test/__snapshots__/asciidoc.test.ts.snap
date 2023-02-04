@@ -46,6 +46,8 @@ Array [
 ]
 `;
 
+exports[`extractSamples snapshot: backticks-disabled 1`] = `Array []`;
+
 exports[`extractSamples snapshot: commented-sample 1`] = `
 Array [
   Object {

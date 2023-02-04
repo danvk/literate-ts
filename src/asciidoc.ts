@@ -1,5 +1,6 @@
 import {matchAndExtract} from './utils';
 import {Processor} from './code-sample';
+import {generateIdMetadata} from './metadata';
 
 const EXTRACT_BACKTICKS = /```(tsx|ts)/;
 const EXTRACT_ID = /\[\[([^\]]*)\]\]/;
@@ -7,7 +8,7 @@ const EXTRACT_SOURCE = /\[source,(ts|js)\]/;
 const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^={1,3} (.*)$/;
 
-export function extractAsciidocSamples(text: string, p: Processor) {
+export function extractAsciidocSamples(sourceFile: string, text: string, p: Processor) {
   let isIgnoringFencedCodeBlocks = false;
   const lines = text.split('\n');
 
@@ -32,7 +33,7 @@ export function extractAsciidocSamples(text: string, p: Processor) {
     const directive = matchAndExtract(EXTRACT_DIRECTIVE, line);
 
     if (id) {
-      p.setNextId(id);
+      p.setNextId(generateIdMetadata(id, sourceFile, i));
     } else if (language) {
       p.setNextLanguage(language);
     } else if (header) {

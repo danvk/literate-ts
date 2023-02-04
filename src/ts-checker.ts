@@ -290,13 +290,8 @@ export function checkTypeAssertions(
 }
 
 /** Verify that a TypeScript sample has the expected errors and no others. */
-export async function checkTs(
-  content: string,
-  sample: CodeSample,
-  runCode: boolean,
-  config: ConfigBundle,
-) {
-  const {id} = sample;
+export async function checkTs(sample: CodeSample, runCode: boolean, config: ConfigBundle) {
+  const {id, content} = sample;
   const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
   const sampleDir = getTempDir();

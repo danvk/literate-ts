@@ -1,5 +1,6 @@
 import {matchAndExtract} from './utils';
 import {Processor} from './code-sample';
+import {generateIdMetadata} from './metadata';
 
 const EXTRACT_ID = /<!-- #([^ ]+) -->/;
 const EXTRACT_DIRECTIVE = /<!-- verifier:(.*) -->/;
@@ -7,7 +8,7 @@ const ALT_EXTRACT_ID = /^\/\/ #([^ ]+)$/;
 const ALT_EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^#{1,3} (.*)$/;
 
-export function extractMarkdownSamples(text: string, p: Processor) {
+export function extractMarkdownSamples(sourceFile: string, text: string, p: Processor) {
   const lines = text.split('\n');
 
   for (let i = 0; i < lines.length; i++) {
@@ -18,7 +19,7 @@ export function extractMarkdownSamples(text: string, p: Processor) {
       matchAndExtract(EXTRACT_DIRECTIVE, line) || matchAndExtract(ALT_EXTRACT_DIRECTIVE, line);
 
     if (id) {
-      p.setNextId(id);
+      p.setNextId(generateIdMetadata(id, sourceFile, i));
     } else if (header) {
       p.setHeader(header);
     } else if (directive) {

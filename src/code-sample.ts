@@ -1,16 +1,17 @@
 import _ from 'lodash';
 
-import {CodeSample, PrefixedCodeSample, Prefix} from './types';
+import {CodeSample, PrefixedCodeSample, Prefix, IdMetadata} from './types';
 import {log} from './logger';
 import {fail} from './test-tracker';
 import {extractAsciidocSamples} from './asciidoc';
 import {extractMarkdownSamples} from './markdown';
+import {generateIdMetadata} from './metadata';
 
 export interface Processor {
   setLineNum(line: number): void;
   setHeader(header: string): void;
   setDirective(directive: string): void;
-  setNextId(id: string): void;
+  setNextId(idMetadata: IdMetadata): void;
   setNextLanguage(lang: string | null): void;
   addSample(code: string): void;
   resetWithNormalLine(): void;
@@ -20,14 +21,13 @@ function process(
   text: string,
   slug: string,
   sourceFile: string,
-  processor: (text: string, processor: Processor) => void,
+  processor: (filename: string, text: string, processor: Processor) => void,
 ): PrefixedCodeSample[] {
   const samples: PrefixedCodeSample[] = [];
 
   let lineNum = 0;
-  let lastSectionId: string | null = null;
   let lastSectionHeader: string | null = null;
-  let lastId: string | null = null;
+  let lastMetadata: IdMetadata | null = null;
   let lastLanguage: string | null = null;
   let prefixes: readonly Prefix[] = [];
   let skipNext = false;
@@ -44,9 +44,8 @@ function process(
     },
     setHeader(header) {
       p.setDirective('reset');
-      lastSectionId = lastId;
       lastSectionHeader = header;
-      lastId = null;
+      lastMetadata = null;
     },
     setDirective(directive) {
       if (directive === 'reset') {
@@ -93,21 +92,23 @@ function process(
       }
     },
     setNextId(id) {
-      lastId = id;
+      lastMetadata = id;
     },
     setNextLanguage(lang) {
       lastLanguage = lang;
     },
     addSample(content) {
-      if (!lastId && (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))) {
+      if (
+        !lastMetadata &&
+        (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))
+      ) {
         // TS samples get checked even without IDs.
-        lastId = slug + '-' + lineNum;
+        lastMetadata = generateIdMetadata(slug + '-' + lineNum, sourceFile, lineNum);
       }
-      if (lastId) {
+      if (lastMetadata) {
         if (!skipNext) {
           samples.push({
-            id: lastId,
-            sectionId: lastSectionId,
+            ...lastMetadata,
             sectionHeader: lastSectionHeader,
             language: lastLanguage as CodeSample['language'],
             content,
@@ -122,7 +123,7 @@ function process(
         if (prependNext) {
           prefixes = prefixes.concat([
             {
-              id: lastId,
+              id: lastMetadata.id,
               ...(prependLines ? {lines: prependLines} : {}),
             },
           ]);
@@ -132,7 +133,7 @@ function process(
       }
     },
     resetWithNormalLine() {
-      lastId = null;
+      lastMetadata = null;
       lastLanguage = null;
       skipNext = false;
       nextIsTSX = false;
@@ -140,7 +141,7 @@ function process(
     },
   };
 
-  processor(text, p);
+  processor(sourceFile, text, p);
 
   return samples;
 }
@@ -166,7 +167,7 @@ export function checkSource(sample: CodeSample, source: string) {
   // Strip out code behind HIDE..END markers
   const strippedSource = stripSource(source);
   if (sample.content.trim() !== strippedSource.trim()) {
-    fail('Inline sample does not match sample in source file', sample.id);
+    fail('Inline sample does not match sample in source file', sample);
     log('Inline sample:');
     log(sample.content.trim());
     log('----');
@@ -196,8 +197,8 @@ export function applyPrefixes(
       .concat([sources[sample.id] || sample.content])
       .join('\n');
     return {
+      descriptor: sample.descriptor,
       id: sample.id,
-      sectionId: sample.sectionId,
       sectionHeader: sample.sectionHeader,
       language: sample.language,
       tsOptions: sample.tsOptions,

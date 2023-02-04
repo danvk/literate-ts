@@ -92,6 +92,7 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
+        descriptor: './source.asciidoc:4',
         id: 'greet-ts',
         content: dedent`
           function greet(who: string) {
@@ -107,6 +108,7 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
+        descriptor: './source.asciidoc:10',
         id: 'noid-10',
         content: `console.log('Hello', 'TS');`,
       },
@@ -145,6 +147,7 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
+        descriptor: './source.asciidoc:2',
         id: 'implicit-any',
         content: `const x: number = null;`,
         tsOptions: {
@@ -155,6 +158,7 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
+        descriptor: './source.asciidoc:10',
         id: 'strict',
         content: `const x: number = null;`,
         tsOptions: {
@@ -188,6 +192,7 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
+        descriptor: './source.asciidoc:27',
         id: 'prepended-with-ids',
         content: `console.log(a);`,
         prefixes: [{id: 'prefix'}, {id: 'combined'}],
@@ -213,6 +218,7 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
+        descriptor: './source.asciidoc:1',
         id: 'tsx-example',
         content: `console.log(a);`,
         isTSX: true,
@@ -244,6 +250,7 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
+        descriptor: './source.asciidoc:4',
         id: 'header-reset-4',
         sectionHeader: 'Chapter 1',
         language: 'ts',
@@ -251,8 +258,8 @@ describe('extractSamples', () => {
       },
       {
         ...baseExtract,
+        descriptor: './source.asciidoc:11',
         id: 'header-reset-11',
-        sectionId: 'chapter-2',
         sectionHeader: 'Chapter 2',
         language: 'ts',
         content: `const x = 12;`,
@@ -281,6 +288,7 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
+        descriptor: './source.asciidoc:4',
         id: 'header-reset-4',
         sectionHeader: 'Chapter 1',
         language: 'ts',
@@ -288,6 +296,7 @@ describe('extractSamples', () => {
       },
       {
         ...baseExtract,
+        descriptor: './source.asciidoc:10',
         id: 'header-reset-10',
         sectionHeader: 'Chapter 1',
         language: 'ts',

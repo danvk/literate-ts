@@ -1,9 +1,14 @@
 import {CompilerOptions} from 'typescript';
 
+export interface IdMetadata {
+  descriptor: string;
+  id: string;
+}
+
 export interface CodeSample {
+  descriptor: string;
   language: 'js' | 'ts' | null;
   id: string;
-  sectionId: string | null;
   sectionHeader: string | null;
   content: string;
   isTSX: boolean;

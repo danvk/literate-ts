@@ -50,12 +50,14 @@ describe('code-sample', () => {
     expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND, 'prepend', 'source.asciidoc'))).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:3',
         language: 'ts',
         id: 'prefix',
         content: `type AB = 'a' | 'b';`,
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:9',
         language: 'ts',
         id: 'combined',
         content: dedent`
@@ -64,6 +66,7 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:17',
         language: 'ts',
         id: 'final',
         content: `const a: AB = 'a';`,
@@ -77,12 +80,14 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:4',
         language: 'ts',
         id: 'mpd-4',
         content: `type AB = 'a' | 'b';`,
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:10',
         language: 'ts',
         id: 'mpd-10',
         content: dedent`
@@ -91,6 +96,7 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:15',
         language: 'ts',
         id: 'mpd-15',
         content: dedent`
@@ -129,6 +135,7 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:1',
         language: 'ts',
         id: 'a',
         content: dedent`
@@ -139,6 +146,7 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:10',
         language: 'ts',
         id: 'b',
         content: dedent`
@@ -177,6 +185,7 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:1',
         language: 'js',
         id: 'a',
         content: dedent`
@@ -186,6 +195,7 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:9',
         language: 'ts',
         id: 'b',
         content: dedent`
@@ -221,12 +231,14 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
+        descriptor: './source.asciidoc:1',
         language: 'ts',
         id: 'hello',
         content: `console.log('Hello');`,
       },
       {
         ...baseSample,
+        descriptor: './source.asciidoc:8',
         language: null,
         id: 'hello-output',
         content: 'Hello',

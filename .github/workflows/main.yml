@@ -42,7 +42,7 @@ jobs:
         run: yarn lint
 
       - name: Prettier
-        run: yarn prettier
+        run: yarn format:check
 
       - name: Test
         run: yarn test --coverage

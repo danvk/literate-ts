@@ -29,13 +29,14 @@ jobs:
         uses: actions/setup-node@v3.6.0
         with:
           node-version: 18.x
-          # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
           cache: yarn
-          # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
           cache-dependency-path: yarn.lock
 
+      - name: Install dependencies
+        run: yarn
+
       - name: Log Versions
-        run: node --version && yarn --version && yarn tsc --version && yarn jest --version
+        run: yarn tsc --version && yarn jest --version
 
       - name: eslint
         run: yarn lint

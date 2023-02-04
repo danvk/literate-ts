@@ -92,7 +92,8 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
   const tmpDir = getTempDir();
   const checkOutput = (actualOutput.stderr + actualOutput.stdout)
     .split('\n')
-    .filter(line => !line.startsWith('    at '))
+    .filter(line => !line.startsWith('    at ')) // prune stack traces to one line
+    .filter(line => !line.match(/^Node.js v18.8.0/)) // Newer versions of Node log a version number
     // Remove temp paths which vary from run to run.
     .map(line => (tmpDir ? line.replace('/private' + tmpDir, '').replace(tmpDir, '') : line))
     .join('\n')
@@ -111,6 +112,7 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
     log('----');
     log('Actual:');
     log(checkOutput);
+    log('----');
   }
 }
 

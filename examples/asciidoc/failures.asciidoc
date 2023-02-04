@@ -109,6 +109,22 @@ Actual:
 Actual output matched expected.
 ----
 
+You can also use this to check for (expected) Node.js runtime failures:
+
+[[toupper-js]]
+[source,js]
+----
+let city = 'new york city';
+console.log(city.toUppercase());
+----
+
+will throw an error when you run it:
+
+[[toupper-js-output]]
+----
+TypeError: city.toUppercase is not a function
+----
+
 === Bad replacements
 
 When you use the `-r` / `--replacements` flag, literate-ts will load additional code samples from that directory. These will be used in place of identically-named code samples in the text.

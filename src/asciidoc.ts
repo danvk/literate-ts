@@ -9,6 +9,7 @@ const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^={1,3} (.*)$/;
 
 export function extractAsciidocSamples(sourceFile: string, text: string, p: Processor) {
+  let isIgnoringFencedCodeBlocks = false;
   const lines = text.split('\n');
 
   const extractCodeSample = (i: number, until: string) => {
@@ -38,12 +39,18 @@ export function extractAsciidocSamples(sourceFile: string, text: string, p: Proc
     } else if (header) {
       p.setHeader(header);
     } else if (directive) {
-      p.setDirective(directive);
+      if (directive === 'ignore-fenced-codeblocks') {
+        isIgnoringFencedCodeBlocks = true;
+      } else {
+        p.setDirective(directive);
+      }
     } else {
       const matches = matchAndExtract(EXTRACT_BACKTICKS, line);
       if (matches) {
-        p.setNextLanguage(matches);
-        i = extractCodeSample(i, '```');
+        if (!isIgnoringFencedCodeBlocks) {
+          p.setNextLanguage(matches);
+          i = extractCodeSample(i, '```');
+        }
       } else if (line === '----') {
         i = extractCodeSample(i, '----');
       }

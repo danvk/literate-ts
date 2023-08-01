@@ -31,6 +31,7 @@ const COMMENT_PAT = /^( *\/\/) /;
 const TILDE_PAT = / (~+)/g;
 const POST_TILDE_PAT = /\/\/ [~ ]+(?:(.*))?/;
 const TYPE_ASSERTION_PAT = /\/\/.*[tT]ype is (?:still )?(?:just )?(.*)\.?$/;
+const TWOSLASH_PAT = /\/\/ ( *)\^\?(.*)$/;
 
 export function extractExpectedErrors(content: string): TypeScriptError[] {
   const lines = content.split('\n');
@@ -139,7 +140,7 @@ function checkMatchingErrors(expectedErrorsIn: TypeScriptError[], actualErrors: 
 
 export function hasTypeAssertions(content: string) {
   const lines = content.split('\n');
-  return !!_.find(lines, line => TYPE_ASSERTION_PAT.exec(line));
+  return !!_.find(lines, line => TYPE_ASSERTION_PAT.exec(line) || TWOSLASH_PAT.exec(line));
 }
 
 export function extractTypeAssertions(

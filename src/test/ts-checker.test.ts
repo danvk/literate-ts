@@ -144,11 +144,19 @@ describe('ts-checker', () => {
     });
   });
 
-  test('hasTypeAssertions', () => {
+  test.only('hasTypeAssertions', () => {
     expect(
       hasTypeAssertions(dedent`
       for (const x of xs) {
         x;  // type is number
+      }`),
+    ).toBe(true);
+
+    expect(
+      hasTypeAssertions(dedent`
+      for (const xValue of xs) {
+        xValue;
+        // ^? const xValue: number
       }`),
     ).toBe(true);
 

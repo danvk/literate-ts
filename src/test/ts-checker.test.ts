@@ -331,7 +331,8 @@ describe('ts-checker', () => {
     test('type assertion with ellipsis', () => {
       expect(
         checkAssertions(dedent`
-        type T = keyof string[];  // type is number | "length" | "toString" | ...
+        const v = { foo: 0, bar: 1, baz: 2, quux: 3 };
+        type T = keyof typeof v;  // type is "foo" | "bar" | "baz" | ...
         `),
       ).toBe(true);
     });

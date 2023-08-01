@@ -122,7 +122,6 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
   if (language === 'ts' || (language === 'js' && sample.checkJS)) {
     const result = await checkTs(sample, id + '-output' in idToSample, typeScriptBundle);
     if (result.output !== undefined) {
-      console.log('saved output for', id);
       sample.output = result.output;
     }
   } else if (language === 'js') {

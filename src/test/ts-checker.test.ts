@@ -265,6 +265,35 @@ describe('ts-checker', () => {
         },
       ]);
     });
+
+    test('multiline twoslash assertion', () => {
+      expect(
+        getAssertions(dedent`
+        const o = {x: 1, y: 2};
+        //    ^? const o: {
+        //         x: number;
+        //         y: number;
+        //       }
+        function addWithExtras(a: number, b: number) {
+          const c = a + b;
+          //    ^? const c: number
+          // ...
+          return c;
+        }
+        `),
+      ).toEqual([
+        {
+          line: 0,
+          character: 6,
+          type: 'const o: { x: number; y: number; }',
+        },
+        {
+          line: 6,
+          character: 8,
+          type: 'const c: number',
+        },
+      ]);
+    });
   });
 
   describe('checkTypeAssertions', () => {

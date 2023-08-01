@@ -153,6 +153,7 @@ export function extractTypeAssertions(
 
   let appliesToPreviousLine = false;
   let colForContinuation = null;
+  let commentPrefixForContinuation = null; // expected whitespace after the "//" for twoslash
   while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
     const token = scanner.getToken();
     if (token === ts.SyntaxKind.WhitespaceTrivia) continue; // ignore leading whitespace.
@@ -170,7 +171,11 @@ export function extractTypeAssertions(
 
     if (token === ts.SyntaxKind.SingleLineCommentTrivia) {
       const commentText = scanner.getTokenText();
-      if (character === colForContinuation) {
+      if (
+        character === colForContinuation &&
+        (commentPrefixForContinuation === null ||
+          commentText.startsWith(commentPrefixForContinuation))
+      ) {
         assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
       } else {
         const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
@@ -187,14 +192,17 @@ export function extractTypeAssertions(
             throw new Error('Twoslash assertion must be first on line.');
           }
           line -= 1;
-          const twoslashCharacter = character + commentText.indexOf('^?');
+          const twoslashOffset = commentText.indexOf('^?');
+          const twoslashCharacter = character + twoslashOffset;
           assertions.push({line, type, character: twoslashCharacter});
           colForContinuation = character;
+          commentPrefixForContinuation = commentText.slice(0, twoslashOffset);
         }
       }
     } else {
       appliesToPreviousLine = false;
       colForContinuation = null;
+      commentPrefixForContinuation = null;
     }
   }
   return assertions;

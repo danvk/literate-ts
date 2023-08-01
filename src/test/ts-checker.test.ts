@@ -144,7 +144,7 @@ describe('ts-checker', () => {
     });
   });
 
-  test.only('hasTypeAssertions', () => {
+  test('hasTypeAssertions', () => {
     expect(
       hasTypeAssertions(dedent`
       for (const x of xs) {
@@ -244,6 +244,24 @@ describe('ts-checker', () => {
         {
           line: 6,
           type: 'number',
+        },
+      ]);
+    });
+  });
+
+  describe.only('extractTypeAssertions twoslash', () => {
+    test('simple twoslash assertion', () => {
+      expect(
+        getAssertions(dedent`
+        for (const xValue of xs) {
+          xValue;
+          // ^? const xValue: number
+        }`),
+      ).toEqual([
+        {
+          line: 1,
+          character: 5,
+          type: 'const xValue: number',
         },
       ]);
     });

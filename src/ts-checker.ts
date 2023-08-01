@@ -20,6 +20,8 @@ export interface TypeScriptError {
 export interface TypeScriptTypeAssertion {
   line: number;
   type: string;
+  /** If the assertion refers to a specific position (i.e. for twoslash) */
+  character?: number;
 }
 
 export interface ConfigBundle {
@@ -31,7 +33,7 @@ const COMMENT_PAT = /^( *\/\/) /;
 const TILDE_PAT = / (~+)/g;
 const POST_TILDE_PAT = /\/\/ [~ ]+(?:(.*))?/;
 const TYPE_ASSERTION_PAT = /\/\/.*[tT]ype is (?:still )?(?:just )?(.*)\.?$/;
-const TWOSLASH_PAT = /\/\/ ( *)\^\?(.*)$/;
+const TWOSLASH_PAT = /\/\/ (?: *)\^\? (.*)$/;
 
 export function extractExpectedErrors(content: string): TypeScriptError[] {
   const lines = content.split('\n');
@@ -147,7 +149,7 @@ export function extractTypeAssertions(
   scanner: ts.Scanner,
   source: ts.SourceFile,
 ): TypeScriptTypeAssertion[] {
-  const assertions = [] as TypeScriptTypeAssertion[];
+  const assertions: TypeScriptTypeAssertion[] = [];
 
   let appliesToPreviousLine = false;
   let colForContinuation = null;
@@ -172,11 +174,23 @@ export function extractTypeAssertions(
         assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
       } else {
         const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
-        if (!type) continue;
-
-        if (appliesToPreviousLine) line -= 1;
-        assertions.push({line, type});
-        colForContinuation = character;
+        if (type) {
+          if (appliesToPreviousLine) line -= 1;
+          assertions.push({line, type});
+          colForContinuation = character;
+        } else {
+          console.log(JSON.stringify(commentText));
+          const type = matchAndExtract(TWOSLASH_PAT, commentText);
+          console.log(type);
+          if (!type) continue;
+          if (!appliesToPreviousLine) {
+            throw new Error('Twoslash assertion must be first on line.');
+          }
+          line -= 1;
+          const twoslashCharacter = character + commentText.indexOf('^?');
+          assertions.push({line, type, character: twoslashCharacter});
+          colForContinuation = character;
+        }
       }
     } else {
       appliesToPreviousLine = false;

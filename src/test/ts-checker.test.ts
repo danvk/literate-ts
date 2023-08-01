@@ -454,6 +454,21 @@ describe('ts-checker', () => {
         `),
         ).toBe(true);
       });
+
+      test('type assertion on a multiline value', () => {
+        expect(
+          checkAssertions(dedent`
+          const o = {
+            //  ^? const o: { x: string; }
+            x: 'a',
+          };
+          console.log(o);
+          //          ^? const o: {
+          //               x: string;
+          //             }
+        `),
+        ).toBe(true);
+      });
     });
 
     // third-party type

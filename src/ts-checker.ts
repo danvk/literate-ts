@@ -204,7 +204,6 @@ export function extractTypeAssertions(
             throw new Error('Twoslash assertion must be first on line.');
           }
           const twoslashOffset = commentText.indexOf('^?');
-          // const twoslashCharacter = character + twoslashOffset;
           const commentIndex = pos; // position of the "//" in source file
           const caretIndex = commentIndex + twoslashOffset;
           // The position of interest is wherever the "^" (caret) is, but on the previous line.

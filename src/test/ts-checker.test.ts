@@ -424,6 +424,15 @@ describe('ts-checker', () => {
         `),
         ).toBe(true);
       });
+
+      test('failing assertion', () => {
+        expect(
+          checkAssertions(dedent`
+          const x = 2 + '3';
+          //    ^? const x: number
+          `),
+        ).toBe(false);
+      });
     });
 
     // third-party type

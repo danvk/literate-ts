@@ -80,3 +80,5 @@ export function sha256(message: string) {
     .update(message)
     .digest('hex');
 }
+
+export const tuple = <Args extends unknown[]>(...args: Args): Args => args;

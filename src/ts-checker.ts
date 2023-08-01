@@ -7,7 +7,7 @@ import ts from 'typescript';
 
 import {log} from './logger';
 import {fail} from './test-tracker';
-import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256} from './utils';
+import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils';
 import {CodeSample} from './types';
 import {ExecErrorType, runNode} from './node-runner';
 
@@ -456,7 +456,7 @@ function getCheckTsCacheKey(sample: CodeSample, runCode: boolean) {
       nodeJs: process.version,
     },
   };
-  return sha256(stableJsonStringify(key));
+  return tuple(sha256(stableJsonStringify(key)), key);
 }
 
 export async function checkTs(
@@ -464,17 +464,19 @@ export async function checkTs(
   runCode: boolean,
   config: ConfigBundle,
 ): Promise<CheckTsResult> {
-  const key = getCheckTsCacheKey(sample, runCode);
+  const [key, cacheKey] = getCheckTsCacheKey(sample, runCode);
   const tempFilePath = `/tmp/literate-ts-cache/${key}.json`;
   const hit = await fs.pathExists(tempFilePath);
   if (hit) {
     const result = await fs.readFile(tempFilePath, 'utf8');
     console.log('🎉 Cache hit!!!');
-    return JSON.parse(result) as CheckTsResult;
+    const {key: _, ...out} = JSON.parse(result);
+    return out;
   }
 
   const result = await uncachedCheckTs(sample, runCode, config);
-  await fs.writeFile(tempFilePath, JSON.stringify(result), 'utf8');
+
+  await fs.writeFile(tempFilePath, JSON.stringify({result, key: cacheKey}), 'utf8');
   return result;
 }
 

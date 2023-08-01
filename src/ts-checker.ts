@@ -445,7 +445,8 @@ export interface CheckTsResult {
   // TODO: include more details about errors
 }
 
-function getCheckTsCacheKey(sample: CodeSample, runCode: boolean) {
+function getCheckTsCacheKey(inSample: CodeSample, runCode: boolean) {
+  const {descriptor: _1, id: _2, sectionHeader: _3, sourceFile: _4, ...sample} = inSample;
   const key = {
     sample,
     runCode,

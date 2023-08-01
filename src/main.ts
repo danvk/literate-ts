@@ -23,7 +23,11 @@ import {checkTs, ConfigBundle} from './ts-checker';
 import {CodeSample} from './types';
 import {getTempDir, writeTempFile, fileSlug} from './utils';
 
-const packagePath = path.join(__dirname, '../../package.json');
+const packagePath = path.join(
+  __dirname,
+  // The path to package.json is slightly different when you run via ts-node
+  __dirname.includes('dist') ? '../../package.json' : '../package.json',
+);
 
 const argv = yargs
   .strict()

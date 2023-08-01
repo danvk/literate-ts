@@ -298,10 +298,12 @@ export function checkExpectTypeAssertions(
         const actualType = checker.typeToString(type, nodeForType);
 
         if (!typesMatch(assertion.type, actualType)) {
-          const testedText = node !== nodeForType ? ` (tested ${nodeForType.getText()})` : '';
-          fail(`Failed type assertion for ${node.getText()}${testedText}`);
-          log(`  Expected: ${assertion.type}`);
-          log(`    Actual: ${actualType}`);
+          const testedText = node !== nodeForType ? ` (tested \`${nodeForType.getText()}\`)` : '';
+          fail(
+            `Failed type assertion for \`${node.getText()}\`${testedText}\n` +
+              `  Expected: ${assertion.type}\n` +
+              `    Actual: ${actualType}`,
+          );
           anyFailures = true;
         } else {
           log(`Type assertion match: ${node.getText()} => ${assertion.type}`);
@@ -375,9 +377,11 @@ export function checkTwoslashAssertions(
     }
     const actual = qi.displayParts.map(dp => dp.text).join('');
     if (!matchModuloWhitespace(actual, type)) {
-      fail(`Failed type assertion for ${node.getText()}`);
-      log(`  Expected: ${assertion.type}`);
-      log(`    Actual: ${actual}`);
+      fail(
+        `Failed type assertion for \`${node.getText()}\`\n` +
+          `  Expected: ${assertion.type}\n` +
+          `    Actual: ${actual}`,
+      );
       anyFailures = true;
     }
   }

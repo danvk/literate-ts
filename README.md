@@ -38,6 +38,13 @@ Literate TS checks three sorts of things.
 
    Literate TS will verify that the type is precisely what you specify textually, ala [dtslint][].
 
+   You can also use [twoslash] syntax for type assertions:
+
+   ```ts
+   const parts = 'four score'.split(' ');
+   //    ^? const parts: string[]
+   ```
+
 3. **Output**. To assert the output of a code sample, give it an ID and include a paired one ending
    with `-output`. In Asciidoc, for example:
 
@@ -302,3 +309,4 @@ Publish a new version:
 [lp]: https://en.wikipedia.org/wiki/Literate_programming
 [etsblog]: https://effectivetypescript.com/
 [pylit-post]: https://www.onebigfluke.com/2014/07/how-im-writing-programming-book.html
+[twoslash]: https://shikijs.github.io/twoslash/

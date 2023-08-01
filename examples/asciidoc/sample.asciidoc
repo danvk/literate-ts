@@ -39,15 +39,17 @@ I will occasionally introduce no-op statements to indicate the type of a variabl
 
 [source,ts]
 ----
-function foo(x: string|string[]) {
-  if (Array.isArray(x)) {
-    x;  // type is string[]
+function foo(value: string|string[]) {
+  if (Array.isArray(value)) {
+    value;
+    // ^? (parameter) value: string[]
   } else {
-    x;  // type is string
+    value;
+    // ^? (parameter) value: string
   }
 }
 ----
 
-The `x;` lines are only there to demonstrate the type in each branch of the conditional. You don't need to (and shouldn't) include statements like this in your own code.
+The `value;` lines are only there to demonstrate the type in each branch of the conditional. You don't need to (and shouldn't) include statements like this in your own code.
 
 Unless it's otherwise noted or clear from context, code samples are intended to be checked with the `--strict` flag. All samples were verified using TypeScript 3.5.3.

@@ -21,7 +21,7 @@ import {
 } from './test-tracker';
 import {checkTs, ConfigBundle} from './ts-checker';
 import {CodeSample} from './types';
-import {getTempDir, writeTempFile, fileSlug} from './utils';
+import {writeTempFile, fileSlug} from './utils';
 import {VERSION} from './version';
 
 const argv = yargs
@@ -85,7 +85,7 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
   }
 
   // Remove stack traces from output
-  const tmpDir = getTempDir();
+  const tmpDir = path.dirname(actualOutput.path);
   const checkOutput = (actualOutput.stderr + actualOutput.stdout)
     .split('\n')
     .filter(line => !line.startsWith('    at ')) // prune stack traces to one line
@@ -109,6 +109,8 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
     log('Actual:');
     log(checkOutput);
     log('----');
+  } else {
+    log('Actual output matched expected.');
   }
 }
 
@@ -120,6 +122,7 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
   if (language === 'ts' || (language === 'js' && sample.checkJS)) {
     const result = await checkTs(sample, id + '-output' in idToSample, typeScriptBundle);
     if (result.output !== undefined) {
+      console.log('saved output for', id);
       sample.output = result.output;
     }
   } else if (language === 'js') {
@@ -142,7 +145,6 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
       fail(`No paired input: #${inputId}`);
     } else {
       checkOutput(content, input);
-      log('Actual output matched expected.');
     }
   }
   finishSample();

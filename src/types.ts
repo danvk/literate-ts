@@ -32,4 +32,5 @@ export interface SampleOutput {
   code: number;
   stdout: string;
   stderr: string;
+  path: string;
 }

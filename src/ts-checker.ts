@@ -470,14 +470,13 @@ export async function checkTs(
   const hit = await fs.pathExists(tempFilePath);
   if (hit) {
     const result = await fs.readFile(tempFilePath, 'utf8');
-    console.log('🎉 Cache hit!!!');
     const {key: _, ...out} = JSON.parse(result);
     return out;
   }
 
   const result = await uncachedCheckTs(sample, runCode, config);
 
-  await fs.writeFile(tempFilePath, JSON.stringify({result, key: cacheKey}), 'utf8');
+  await fs.writeFile(tempFilePath, JSON.stringify({...result, key: cacheKey}), 'utf8');
   return result;
 }
 

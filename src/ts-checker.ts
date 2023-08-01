@@ -1,14 +1,15 @@
 import fs from 'fs-extra';
 
-import _ from 'lodash';
+import stableJsonStringify from 'fast-json-stable-stringify';
+import _, {VERSION} from 'lodash';
 import path from 'path';
 import ts from 'typescript';
 
 import {log} from './logger';
 import {fail} from './test-tracker';
-import {writeTempFile, matchAndExtract, getTempDir, matchAll} from './utils';
+import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256} from './utils';
 import {CodeSample} from './types';
-import {runNode} from './node-runner';
+import {ExecErrorType, runNode} from './node-runner';
 
 export interface TypeScriptError {
   line: number;
@@ -438,8 +439,51 @@ export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceH
   };
 }
 
+export interface CheckTsResult {
+  passed: boolean;
+  output?: ExecErrorType;
+  // TODO: include more details about errors
+}
+
+function getCheckTsCacheKey(sample: CodeSample, runCode: boolean) {
+  const key = {
+    sample,
+    runCode,
+    // `config` has compiler options but these are already in `sample`
+    versions: {
+      typeScript: ts.version,
+      literateTs: VERSION,
+      nodeJs: process.version,
+    },
+  };
+  return sha256(stableJsonStringify(key));
+}
+
+export async function checkTs(
+  sample: CodeSample,
+  runCode: boolean,
+  config: ConfigBundle,
+): Promise<CheckTsResult> {
+  const key = getCheckTsCacheKey(sample, runCode);
+  const tempFilePath = `/tmp/literate-ts-cache/${key}.json`;
+  const hit = await fs.pathExists(tempFilePath);
+  if (hit) {
+    const result = await fs.readFile(tempFilePath, 'utf8');
+    console.log('🎉 Cache hit!!!');
+    return JSON.parse(result) as CheckTsResult;
+  }
+
+  const result = await uncachedCheckTs(sample, runCode, config);
+  await fs.writeFile(tempFilePath, JSON.stringify(result), 'utf8');
+  return result;
+}
+
 /** Verify that a TypeScript sample has the expected errors and no others. */
-export async function checkTs(sample: CodeSample, runCode: boolean, config: ConfigBundle) {
+async function uncachedCheckTs(
+  sample: CodeSample,
+  runCode: boolean,
+  config: ConfigBundle,
+): Promise<CheckTsResult> {
   const {id, content} = sample;
   const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
@@ -469,7 +513,7 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
     if (!match) {
       fail(`Could not find requested node_module ${nodeModule}. See logs for details.`);
       log('Looked in:\n  ' + candidates.join('\n  '));
-      return;
+      return {passed: false};
     }
     fs.copySync(match, path.join(nodeModulesPath, nodeModule));
   }
@@ -486,7 +530,7 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
   const source = program.getSourceFile(tsFile);
   if (!source) {
     fail('Unable to load TS source file');
-    return;
+    return {passed: false};
   }
 
   let diagnostics = ts.getPreEmitDiagnostics(program);
@@ -497,7 +541,7 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
 
     if (emitResult.emitSkipped) {
       fail('Failed to emit JavaScript for TypeScript sample.');
-      return;
+      return {passed: false};
     }
   }
 
@@ -548,13 +592,14 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
     log(`tsconfig options: ${JSON.stringify(options)}`);
   }
 
-  if (!runCode) return;
+  if (!runCode) return {passed: ok};
 
   const jsFile = tsFile.replace(/\.ts$/, '.js');
   if (!fs.existsSync(jsFile)) {
     fail(`Did not produce JS output in expected place: ${jsFile}`);
-    return;
+    return {passed: false};
   }
 
-  sample.output = await runNode(jsFile);
+  const output = await runNode(jsFile);
+  return {passed: false, output};
 }

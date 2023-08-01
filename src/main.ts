@@ -22,12 +22,7 @@ import {
 import {checkTs, ConfigBundle} from './ts-checker';
 import {CodeSample} from './types';
 import {getTempDir, writeTempFile, fileSlug} from './utils';
-
-const packagePath = path.join(
-  __dirname,
-  // The path to package.json is slightly different when you run via ts-node
-  __dirname.includes('dist') ? '../../package.json' : '../package.json',
-);
+import {VERSION} from './version';
 
 const argv = yargs
   .strict()
@@ -52,10 +47,7 @@ const argv = yargs
   })
   .version(
     'version',
-    [
-      `literate-ts version: ${require(packagePath).version}`,
-      `TypeScript version: ${ts.version}`,
-    ].join('\n'),
+    [`literate-ts version: ${VERSION}`, `TypeScript version: ${ts.version}`].join('\n'),
   )
   .parse();
 
@@ -126,7 +118,10 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
   startSample(sample);
 
   if (language === 'ts' || (language === 'js' && sample.checkJS)) {
-    await checkTs(sample, id + '-output' in idToSample, typeScriptBundle);
+    const result = await checkTs(sample, id + '-output' in idToSample, typeScriptBundle);
+    if (result.output !== undefined) {
+      sample.output = result.output;
+    }
   } else if (language === 'js') {
     // Run the sample through Node and record the output.
     const path = writeTempFile(id + '.js', content);

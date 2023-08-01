@@ -1,3 +1,4 @@
+import {createHash} from 'crypto';
 import fs from 'fs';
 import tmp from 'tmp';
 import {basename} from 'path';
@@ -72,4 +73,10 @@ export function dedent(strings: TemplateStringsArray, ...values: (string | numbe
     fullString = fullString.replace(regexp, '');
   }
   return fullString;
+}
+
+export function sha256(message: string) {
+  return createHash('sha256')
+    .update(message)
+    .digest('hex');
 }

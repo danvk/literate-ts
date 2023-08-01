@@ -8,6 +8,7 @@ import {
   extractTypeAssertions,
   checkTypeAssertions,
   getLanguageServiceHost,
+  matchModuloWhitespace,
 } from '../ts-checker';
 import {dedent} from '../utils';
 
@@ -490,5 +491,19 @@ describe('ts-checker', () => {
     //     foo  // type is number
     //   `)).toBe(true);
     // });
+  });
+
+  describe('matchModuloWhitespace', () => {
+    it('should normalize whitespace around parens', () => {
+      const expected =
+        'type T = <T extends object, K extends keyof T>( obj: T, ...keys: K[] ) => Pick<T, K>';
+      const actual =
+        'type T = <T extends object, K extends keyof T>(obj: T, ...keys: K[]) => Pick<T, K>';
+      expect(matchModuloWhitespace(actual, expected)).toBe(true);
+    });
+
+    it('should flag different types', () => {
+      expect(matchModuloWhitespace('string', 'number')).toBe(false);
+    });
   });
 });

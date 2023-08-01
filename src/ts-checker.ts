@@ -342,6 +342,14 @@ function getNodeAtPosition(sourceFile: ts.SourceFile, position: number): ts.Node
   return candidate;
 }
 
+function matchModuloWhitespace(actual: string, expected: string): boolean {
+  // TODO: it's much easier to normalize actual based on the displayParts
+  //       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
+  const normActual = actual.replace(/[\n\r ]+/g, ' ').trim();
+  const normExpected = expected.replace(/[\n\r ]+/g, ' ').trim();
+  return normActual === normExpected;
+}
+
 export function checkTwoslashAssertions(
   source: ts.SourceFile,
   languageService: ts.LanguageService,
@@ -367,7 +375,7 @@ export function checkTwoslashAssertions(
       continue;
     }
     const actual = qi.displayParts.map(dp => dp.text).join('');
-    if (actual !== type) {
+    if (!matchModuloWhitespace(actual, type)) {
       fail(`Failed type assertion for ${node.getText()}`);
       log(`  Expected: ${assertion.type}`);
       log(`    Actual: ${actual}`);

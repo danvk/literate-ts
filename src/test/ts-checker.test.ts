@@ -442,6 +442,18 @@ describe('ts-checker', () => {
         `),
         ).toBe(true);
       });
+
+      test('type assertion on a nested value', () => {
+        expect(
+          checkAssertions(dedent`
+          const object = { x: 'a' };
+          object;
+          // ^? const object: { x: string; }
+          object.x;
+          //     ^? (property) x: string
+        `),
+        ).toBe(true);
+      });
     });
 
     // third-party type

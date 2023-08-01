@@ -1,21 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`markdown should match snapshots: commented-sample 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "function somethingDangerous() {}",
     "descriptor": "./commented-sample.md:5",
     "id": "commented-sample-5",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "commented-sample.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "let val = null;  // Type is any
 try {
@@ -30,22 +30,22 @@ val  // Type is number | null",
     "id": "commented-sample-10",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [
-      Object {
+    "nodeModules": [],
+    "prefixes": [
+      {
         "id": "commented-sample-5",
       },
     ],
     "sectionHeader": null,
     "sourceFile": "commented-sample.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`markdown should match snapshots: doc1 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "function greet(who: string) {
   console.log('Hello', who);
@@ -54,32 +54,32 @@ Array [
     "id": "greet-ts",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "doc1.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
-    "content": "console.log(\\"end of file\\");
+    "content": "console.log("end of file");
 ",
     "descriptor": "./doc1.md:19",
     "id": "doc1-19",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "doc1.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`markdown should match snapshots: multilinetype 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "const o = {x: 1, y: 2};
 // type is {
@@ -90,13 +90,13 @@ Array [
     "id": "multilinetype-3",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "multilinetype.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "function addWithExtras(a: number, b: number) {
   const c = a + b;  // type is number
@@ -107,134 +107,134 @@ Array [
     "id": "multilinetype-13",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "multilinetype.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`markdown should match snapshots: noid 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "console.log('Hello', 'TS');",
     "descriptor": "./noid.md:7",
     "id": "noid-7",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "noid.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`markdown should match snapshots: prepend 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend.md:1",
     "id": "prefix",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "prepend.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "const a: AB = 'a';",
     "descriptor": "./prepend.md:6",
     "id": "combined",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [
-      Object {
+    "nodeModules": [],
+    "prefixes": [
+      {
         "id": "prefix",
       },
     ],
     "sectionHeader": null,
     "sourceFile": "prepend.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "const a: AB = 'a';",
     "descriptor": "./prepend.md:13",
     "id": "final",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "prepend.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`markdown should match snapshots: prepend-multiple 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend-multiple.md:2",
     "id": "prepend-multiple-2",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "prepend-multiple.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "type ABC = AB | 'c';",
     "descriptor": "./prepend-multiple.md:7",
     "id": "prepend-multiple-7",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [
-      Object {
+    "nodeModules": [],
+    "prefixes": [
+      {
         "id": "prepend-multiple-2",
       },
     ],
     "sectionHeader": null,
     "sourceFile": "prepend-multiple.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "const c: ABC = 'c';",
     "descriptor": "./prepend-multiple.md:11",
     "id": "prepend-multiple-11",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [
-      Object {
+    "nodeModules": [],
+    "prefixes": [
+      {
         "id": "prepend-multiple-2",
       },
-      Object {
+      {
         "id": "prepend-multiple-7",
       },
     ],
     "sectionHeader": null,
     "sourceFile": "prepend-multiple.md",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
-exports[`markdown should match snapshots: skip 1`] = `Array []`;
+exports[`markdown should match snapshots: skip 1`] = `[]`;

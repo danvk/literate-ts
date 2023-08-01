@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`extractSamples snapshot: backticks 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "function greet(who: string) {
   console.log('Hello', who);
@@ -11,59 +11,59 @@ Array [
     "id": "greet-ts",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "backticks.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "export const Example = () => <div />;",
     "descriptor": "./backticks.asciidoc:11",
     "id": "greet-tsx",
     "isTSX": false,
     "language": "tsx",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "backticks.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
-    "content": "console.log(\\"end of file\\");",
+    "content": "console.log("end of file");",
     "descriptor": "./backticks.asciidoc:26",
     "id": "backticks-26",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "backticks.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
-exports[`extractSamples snapshot: backticks-disabled 1`] = `Array []`;
+exports[`extractSamples snapshot: backticks-disabled 1`] = `[]`;
 
 exports[`extractSamples snapshot: commented-sample 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "function somethingDangerous() {}",
     "descriptor": "./commented-sample.asciidoc:6",
     "id": "commented-sample-6",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "commented-sample.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "let val = null;  // Type is any
 try {
@@ -78,22 +78,22 @@ val  // Type is number | null",
     "id": "commented-sample-12",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [
-      Object {
+    "nodeModules": [],
+    "prefixes": [
+      {
         "id": "commented-sample-6",
       },
     ],
     "sectionHeader": null,
     "sourceFile": "commented-sample.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`extractSamples snapshot: doc1 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "function greet(who: string) {
   console.log('Hello', who);
@@ -102,18 +102,18 @@ Array [
     "id": "greet-ts",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "doc1.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`extractSamples snapshot: multilinetype 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "const o = {x: 1, y: 2};
 // type is {
@@ -124,13 +124,13 @@ Array [
     "id": "multilinetype-3",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "multilinetype.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "function addWithExtras(a: number, b: number) {
   const c = a + b;  // type is number
@@ -141,134 +141,134 @@ Array [
     "id": "multilinetype-13",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "multilinetype.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`extractSamples snapshot: noid 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "console.log('Hello', 'TS');",
     "descriptor": "./noid.asciidoc:9",
     "id": "noid-9",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "noid.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`extractSamples snapshot: prepend 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend.asciidoc:1",
     "id": "prefix",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "prepend.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "const a: AB = 'a';",
     "descriptor": "./prepend.asciidoc:7",
     "id": "combined",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [
-      Object {
+    "nodeModules": [],
+    "prefixes": [
+      {
         "id": "prefix",
       },
     ],
     "sectionHeader": null,
     "sourceFile": "prepend.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "const a: AB = 'a';",
     "descriptor": "./prepend.asciidoc:15",
     "id": "final",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "prepend.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
 exports[`extractSamples snapshot: prepend-multiple 1`] = `
-Array [
-  Object {
+[
+  {
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend-multiple.asciidoc:3",
     "id": "prepend-multiple-3",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [],
+    "nodeModules": [],
+    "prefixes": [],
     "sectionHeader": null,
     "sourceFile": "prepend-multiple.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "type ABC = AB | 'c';",
     "descriptor": "./prepend-multiple.asciidoc:9",
     "id": "prepend-multiple-9",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [
-      Object {
+    "nodeModules": [],
+    "prefixes": [
+      {
         "id": "prepend-multiple-3",
       },
     ],
     "sectionHeader": null,
     "sourceFile": "prepend-multiple.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
-  Object {
+  {
     "checkJS": false,
     "content": "const c: ABC = 'c';",
     "descriptor": "./prepend-multiple.asciidoc:14",
     "id": "prepend-multiple-14",
     "isTSX": false,
     "language": "ts",
-    "nodeModules": Array [],
-    "prefixes": Array [
-      Object {
+    "nodeModules": [],
+    "prefixes": [
+      {
         "id": "prepend-multiple-3",
       },
-      Object {
+      {
         "id": "prepend-multiple-9",
       },
     ],
     "sectionHeader": null,
     "sourceFile": "prepend-multiple.asciidoc",
-    "tsOptions": Object {},
+    "tsOptions": {},
   },
 ]
 `;
 
-exports[`extractSamples snapshot: skip 1`] = `Array []`;
+exports[`extractSamples snapshot: skip 1`] = `[]`;

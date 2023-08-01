@@ -306,7 +306,9 @@ export function checkExpectTypeAssertions(
           );
           anyFailures = true;
         } else {
-          log(`Type assertion match: ${node.getText()} => ${assertion.type}`);
+          log(`Type assertion match:`);
+          log(`  Expected: ${assertion.type}`);
+          log(`    Actual: ${actualType}`);
           matchedAssertions++;
         }
 
@@ -357,6 +359,7 @@ export function checkTwoslashAssertions(
   assertions: TwoslashAssertion[],
 ): boolean {
   let anyFailures = false;
+  let matchedAssertions = 0;
   for (const assertion of assertions) {
     const {position, type} = assertion;
     if (position === -1) {
@@ -383,8 +386,18 @@ export function checkTwoslashAssertions(
           `    Actual: ${actual}`,
       );
       anyFailures = true;
+    } else {
+      log(`Twoslash type assertion match:`);
+      log(`  Expected: ${assertion.type}`);
+      log(`    Actual: ${actual}`);
+      matchedAssertions++;
     }
   }
+
+  if (assertions.length) {
+    log(`  ${matchedAssertions}/${assertions.length} twoslash type assertions matched.`);
+  }
+
   return !anyFailures;
 }
 

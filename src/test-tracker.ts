@@ -36,7 +36,7 @@ export function fail(message: string, sample?: CodeSample) {
     sample = currentSample;
   }
 
-  const fullMessage = `${currentSample?.descriptor}: ${message}`;
+  const fullMessage = `💥 ${currentSample?.descriptor}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error('\n' + fullMessage);
   }

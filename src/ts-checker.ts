@@ -6,7 +6,7 @@ import path from 'path';
 import ts from 'typescript';
 
 import {log} from './logger';
-import {fail} from './test-tracker';
+import {fail, getLastFailReason} from './test-tracker';
 import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils';
 import {CodeSample} from './types';
 import {ExecErrorType, runNode} from './node-runner';
@@ -441,6 +441,7 @@ export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceH
 
 export interface CheckTsResult {
   passed: boolean;
+  failReason?: string;
   output?: ExecErrorType;
   // TODO: include more details about errors
 }
@@ -470,11 +471,17 @@ export async function checkTs(
   const hit = await fs.pathExists(tempFilePath);
   if (hit) {
     const result = await fs.readFile(tempFilePath, 'utf8');
-    const {key: _, ...out} = JSON.parse(result);
+    const {key: _, ...out} = JSON.parse(result) as CheckTsResult & {key: unknown};
+    if (out.failReason) {
+      fail(out.failReason);
+    }
     return out;
   }
 
   const result = await uncachedCheckTs(sample, runCode, config);
+  if (result.passed === false) {
+    result.failReason = getLastFailReason() ?? undefined;
+  }
 
   await fs.writeFile(tempFilePath, JSON.stringify({...result, key: cacheKey}), 'utf8');
   return result;

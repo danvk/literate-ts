@@ -337,80 +337,82 @@ describe('ts-checker', () => {
       return checkTypeAssertions(sourceFile, program.getTypeChecker(), languageService, assertions);
     };
 
-    test('type assertion on a value', () => {
-      expect(
-        checkAssertions(dedent`
-        const x = 2 + '3';  // ok, x's type is string
-        const y = '2' + 3;  // ok, y's type is string
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion on a type', () => {
-      expect(
-        checkAssertions(dedent`
-        type T = typeof document.getElementById;
-        // type is (elementId: string) => HTMLElement | null
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion on a nested value', () => {
-      expect(
-        checkAssertions(dedent`
-        const o = { x: 'a' };
-        o;  // type is { x: string; }
-        o.x;  // type is string
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion on a multiline value', () => {
-      expect(
-        checkAssertions(dedent`
-        const o = {
-          x: 'a',
-        };  // type is { x: string; }
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion on a call expression', () => {
-      expect(
-        checkAssertions(dedent`
-        const double = (n: number) => ('' + n * n);
-        double(10);  // type is string
-      `),
-      ).toBe(true);
-    });
-
-    test('multiline type assertions', () => {
-      expect(
-        checkAssertions(dedent`
-        const v = {x: 10, y: 20};
-        // type is {
-        //   x: number;
-        //   y: number;
-        // }
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion with ellipsis', () => {
-      expect(
-        checkAssertions(dedent`
-        const v = { foo: 0, bar: 1, baz: 2, quux: 3 };
-        type T = keyof typeof v;  // type is "foo" | "bar" | "baz" | ...
+    describe('ExpectType-style assertions', () => {
+      test('type assertion on a value', () => {
+        expect(
+          checkAssertions(dedent`
+          const x = 2 + '3';  // ok, x's type is string
+          const y = '2' + 3;  // ok, y's type is string
         `),
-      ).toBe(true);
-    });
+        ).toBe(true);
+      });
 
-    test('type assertion with excitement', () => {
-      expect(
-        checkAssertions(dedent`
-        type T = ['a', 'b'][number];  // type is "a" | "b"!
+      test('type assertion on a type', () => {
+        expect(
+          checkAssertions(dedent`
+          type T = typeof document.getElementById;
+          // type is (elementId: string) => HTMLElement | null
         `),
-      ).toBe(true);
+        ).toBe(true);
+      });
+
+      test('type assertion on a nested value', () => {
+        expect(
+          checkAssertions(dedent`
+          const o = { x: 'a' };
+          o;  // type is { x: string; }
+          o.x;  // type is string
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion on a multiline value', () => {
+        expect(
+          checkAssertions(dedent`
+          const o = {
+            x: 'a',
+          };  // type is { x: string; }
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion on a call expression', () => {
+        expect(
+          checkAssertions(dedent`
+          const double = (n: number) => ('' + n * n);
+          double(10);  // type is string
+        `),
+        ).toBe(true);
+      });
+
+      test('multiline type assertions', () => {
+        expect(
+          checkAssertions(dedent`
+          const v = {x: 10, y: 20};
+          // type is {
+          //   x: number;
+          //   y: number;
+          // }
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion with ellipsis', () => {
+        expect(
+          checkAssertions(dedent`
+          const v = { foo: 0, bar: 1, baz: 2, quux: 3 };
+          type T = keyof typeof v;  // type is "foo" | "bar" | "baz" | ...
+          `),
+        ).toBe(true);
+      });
+
+      test('type assertion with excitement', () => {
+        expect(
+          checkAssertions(dedent`
+          type T = ['a', 'b'][number];  // type is "a" | "b"!
+          `),
+        ).toBe(true);
+      });
     });
 
     describe('twoslash assertions', () => {

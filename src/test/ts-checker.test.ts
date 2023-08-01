@@ -433,6 +433,15 @@ describe('ts-checker', () => {
           `),
         ).toBe(false);
       });
+
+      test('type assertion on a type', () => {
+        expect(
+          checkAssertions(dedent`
+          type T = typeof document.getElementById;
+          //   ^? type T = (elementId: string) => HTMLElement | null
+        `),
+        ).toBe(true);
+      });
     });
 
     // third-party type

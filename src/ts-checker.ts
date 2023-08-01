@@ -2,7 +2,7 @@ import fs from 'fs-extra';
 
 import _ from 'lodash';
 import path from 'path';
-import ts, {isToken} from 'typescript';
+import ts from 'typescript';
 
 import {log} from './logger';
 import {fail} from './test-tracker';
@@ -374,7 +374,7 @@ export function checkTwoslashAssertions(
       anyFailures = true;
     }
   }
-  return anyFailures;
+  return !anyFailures;
 }
 
 export function checkTypeAssertions(
@@ -386,10 +386,10 @@ export function checkTypeAssertions(
   const [twoslashAssertions, expectTypeAssertions] = _.partition(assertions, isTwoslashAssertion);
   let ok = true;
   if (expectTypeAssertions.length) {
-    ok = ok || checkExpectTypeAssertions(source, checker, expectTypeAssertions);
+    ok = ok && checkExpectTypeAssertions(source, checker, expectTypeAssertions);
   }
   if (twoslashAssertions.length) {
-    ok = ok || checkTwoslashAssertions(source, languageService, twoslashAssertions);
+    ok = ok && checkTwoslashAssertions(source, languageService, twoslashAssertions);
   }
 
   return ok;

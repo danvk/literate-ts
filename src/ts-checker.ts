@@ -17,10 +17,21 @@ export interface TypeScriptError {
   message: string;
 }
 
-export interface TypeScriptTypeAssertion {
+export interface ExpectTypeAssertion {
   line: number;
   type: string;
 }
+
+export interface TwoslashAssertion {
+  /** Position in the source file that the twoslash assertion points at */
+  position: number;
+  line: number;
+  character: number;
+  /** The expected type in the twoslash comment */
+  type: string;
+}
+
+export type TypeScriptTypeAssertion = ExpectTypeAssertion | TwoslashAssertion;
 
 export interface ConfigBundle {
   options: ts.CompilerOptions;
@@ -31,6 +42,11 @@ const COMMENT_PAT = /^( *\/\/) /;
 const TILDE_PAT = / (~+)/g;
 const POST_TILDE_PAT = /\/\/ [~ ]+(?:(.*))?/;
 const TYPE_ASSERTION_PAT = /\/\/.*[tT]ype is (?:still )?(?:just )?(.*)\.?$/;
+const TWOSLASH_PAT = /\/\/ (?: *)\^\? (.*)$/;
+
+function isTwoslashAssertion(a: TypeScriptTypeAssertion): a is TwoslashAssertion {
+  return 'position' in a;
+}
 
 export function extractExpectedErrors(content: string): TypeScriptError[] {
   const lines = content.split('\n');
@@ -139,17 +155,19 @@ function checkMatchingErrors(expectedErrorsIn: TypeScriptError[], actualErrors: 
 
 export function hasTypeAssertions(content: string) {
   const lines = content.split('\n');
-  return !!_.find(lines, line => TYPE_ASSERTION_PAT.exec(line));
+  return !!_.find(lines, line => TYPE_ASSERTION_PAT.exec(line) || TWOSLASH_PAT.exec(line));
 }
 
 export function extractTypeAssertions(
   scanner: ts.Scanner,
   source: ts.SourceFile,
 ): TypeScriptTypeAssertion[] {
-  const assertions = [] as TypeScriptTypeAssertion[];
+  const assertions: TypeScriptTypeAssertion[] = [];
+  const lineStarts = source.getLineStarts();
 
   let appliesToPreviousLine = false;
   let colForContinuation = null;
+  let commentPrefixForContinuation = null; // expected whitespace after the "//" for twoslash
   while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
     const token = scanner.getToken();
     if (token === ts.SyntaxKind.WhitespaceTrivia) continue; // ignore leading whitespace.
@@ -167,19 +185,40 @@ export function extractTypeAssertions(
 
     if (token === ts.SyntaxKind.SingleLineCommentTrivia) {
       const commentText = scanner.getTokenText();
-      if (character === colForContinuation) {
+      if (
+        character === colForContinuation &&
+        (commentPrefixForContinuation === null ||
+          commentText.startsWith(commentPrefixForContinuation))
+      ) {
         assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
       } else {
         const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
-        if (!type) continue;
-
-        if (appliesToPreviousLine) line -= 1;
-        assertions.push({line, type});
-        colForContinuation = character;
+        if (type) {
+          if (appliesToPreviousLine) line -= 1;
+          assertions.push({line, type});
+          colForContinuation = character;
+        } else {
+          const type = matchAndExtract(TWOSLASH_PAT, commentText);
+          if (!type) continue;
+          if (!appliesToPreviousLine) {
+            throw new Error('Twoslash assertion must be first on line.');
+          }
+          const twoslashOffset = commentText.indexOf('^?');
+          const commentIndex = pos; // position of the "//" in source file
+          const caretIndex = commentIndex + twoslashOffset;
+          // The position of interest is wherever the "^" (caret) is, but on the previous line.
+          const position = caretIndex - (lineStarts[line] - lineStarts[line - 1]);
+          const lineAndChar = source.getLineAndCharacterOfPosition(position);
+          // line and char aren't strictly needed but they make the tests much more readable.
+          assertions.push({position, type, ...lineAndChar});
+          colForContinuation = character;
+          commentPrefixForContinuation = commentText.slice(0, twoslashOffset);
+        }
       }
     } else {
       appliesToPreviousLine = false;
       colForContinuation = null;
+      commentPrefixForContinuation = null;
     }
   }
   return assertions;
@@ -232,11 +271,11 @@ export function typesMatch(expected: string, actual: string) {
   return expected.endsWith('...') && actual.slice(0, n - 3) === expected.slice(0, n - 3);
 }
 
-export function checkTypeAssertions(
+export function checkExpectTypeAssertions(
   source: ts.SourceFile,
   checker: ts.TypeChecker,
-  assertions: TypeScriptTypeAssertion[],
-) {
+  assertions: ExpectTypeAssertion[],
+): boolean {
   const numAssertions = assertions.length;
   let matchedAssertions = 0;
   let anyFailures = false;
@@ -259,13 +298,17 @@ export function checkTypeAssertions(
         const actualType = checker.typeToString(type, nodeForType);
 
         if (!typesMatch(assertion.type, actualType)) {
-          const testedText = node !== nodeForType ? ` (tested ${nodeForType.getText()})` : '';
-          fail(`Failed type assertion for ${node.getText()}${testedText}`);
-          log(`  Expected: ${assertion.type}`);
-          log(`    Actual: ${actualType}`);
+          const testedText = node !== nodeForType ? ` (tested \`${nodeForType.getText()}\`)` : '';
+          fail(
+            `Failed type assertion for \`${node.getText()}\`${testedText}\n` +
+              `  Expected: ${assertion.type}\n` +
+              `    Actual: ${actualType}`,
+          );
           anyFailures = true;
         } else {
-          log(`Type assertion match: ${node.getText()} => ${assertion.type}`);
+          log(`Type assertion match:`);
+          log(`  Expected: ${assertion.type}`);
+          log(`    Actual: ${actualType}`);
           matchedAssertions++;
         }
 
@@ -287,6 +330,112 @@ export function checkTypeAssertions(
   }
 
   return !anyFailures;
+}
+
+function getNodeAtPosition(sourceFile: ts.SourceFile, position: number): ts.Node | undefined {
+  let candidate: ts.Node | undefined = undefined;
+  ts.forEachChild(sourceFile, function iterate(node) {
+    const start = node.getStart();
+    const end = node.getEnd();
+    if (position >= start && position <= end) {
+      candidate = node;
+      ts.forEachChild(node, iterate);
+    }
+  });
+  return candidate;
+}
+
+function matchModuloWhitespace(actual: string, expected: string): boolean {
+  // TODO: it's much easier to normalize actual based on the displayParts
+  //       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
+  const normActual = actual.replace(/[\n\r ]+/g, ' ').trim();
+  const normExpected = expected.replace(/[\n\r ]+/g, ' ').trim();
+  return normActual === normExpected;
+}
+
+export function checkTwoslashAssertions(
+  source: ts.SourceFile,
+  languageService: ts.LanguageService,
+  assertions: TwoslashAssertion[],
+): boolean {
+  let anyFailures = false;
+  let matchedAssertions = 0;
+  for (const assertion of assertions) {
+    const {position, type} = assertion;
+    if (position === -1) {
+      // special case for a twoslash assertion on line 1.
+      fail(`Twoslash assertion on first line: ${type}`);
+      continue;
+    }
+    const node = getNodeAtPosition(source, position);
+    if (!node) {
+      fail(`Unable to find matching node for twoslash assertion: ${type}`);
+      continue;
+    }
+
+    const qi = languageService.getQuickInfoAtPosition(source.fileName, node.getStart());
+    if (!qi?.displayParts) {
+      fail(`Unable to get quickinfo for twoslash assertion ${type}`);
+      continue;
+    }
+    const actual = qi.displayParts.map(dp => dp.text).join('');
+    if (!matchModuloWhitespace(actual, type)) {
+      fail(
+        `Failed type assertion for \`${node.getText()}\`\n` +
+          `  Expected: ${assertion.type}\n` +
+          `    Actual: ${actual}`,
+      );
+      anyFailures = true;
+    } else {
+      log(`Twoslash type assertion match:`);
+      log(`  Expected: ${assertion.type}`);
+      log(`    Actual: ${actual}`);
+      matchedAssertions++;
+    }
+  }
+
+  if (assertions.length) {
+    log(`  ${matchedAssertions}/${assertions.length} twoslash type assertions matched.`);
+  }
+
+  return !anyFailures;
+}
+
+export function checkTypeAssertions(
+  source: ts.SourceFile,
+  checker: ts.TypeChecker,
+  languageService: ts.LanguageService,
+  assertions: TypeScriptTypeAssertion[],
+) {
+  const [twoslashAssertions, expectTypeAssertions] = _.partition(assertions, isTwoslashAssertion);
+  let ok = true;
+  if (expectTypeAssertions.length) {
+    ok = ok && checkExpectTypeAssertions(source, checker, expectTypeAssertions);
+  }
+  if (twoslashAssertions.length) {
+    ok = ok && checkTwoslashAssertions(source, languageService, twoslashAssertions);
+  }
+
+  return ok;
+}
+
+// See https://github.com/JoshuaKGoldberg/eslint-plugin-expect-type/blob/a55413/src/rules/expect.ts#L506-L521
+export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceHost {
+  return {
+    getCompilationSettings: () => program.getCompilerOptions(),
+    getCurrentDirectory: () => program.getCurrentDirectory(),
+    getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
+    getScriptFileNames: () => program.getSourceFiles().map(sourceFile => sourceFile.fileName),
+    getScriptSnapshot: name =>
+      ts.ScriptSnapshot.fromString(program.getSourceFile(name)?.text ?? ''),
+    getScriptVersion: () => '1',
+    // NB: We can't check `program` for files, it won't contain valid files like package.json
+    fileExists: ts.sys.fileExists,
+    readFile: ts.sys.readFile,
+    readDirectory: ts.sys.readDirectory,
+    directoryExists: ts.sys.directoryExists,
+    getDirectories: ts.sys.getDirectories,
+  };
 }
 
 /** Verify that a TypeScript sample has the expected errors and no others. */
@@ -388,7 +537,10 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
     const checker = program.getTypeChecker();
 
     const assertions = extractTypeAssertions(scanner, source);
-    ok = ok && checkTypeAssertions(source, checker, assertions);
+    if (assertions.length) {
+      const languageService = ts.createLanguageService(getLanguageServiceHost(program));
+      ok = ok && checkTypeAssertions(source, checker, languageService, assertions);
+    }
   }
 
   if (!ok) {

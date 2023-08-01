@@ -7,6 +7,7 @@ import {
   hasTypeAssertions,
   extractTypeAssertions,
   checkTypeAssertions,
+  getLanguageServiceHost,
 } from '../ts-checker';
 import {dedent} from '../utils';
 
@@ -154,83 +155,149 @@ describe('ts-checker', () => {
 
     expect(
       hasTypeAssertions(dedent`
+      for (const xValue of xs) {
+        xValue;
+        // ^? const xValue: number
+      }`),
+    ).toBe(true);
+
+    expect(
+      hasTypeAssertions(dedent`
       for (const x of xs) {
         x;  // number
       }`),
     ).toBe(false);
   });
 
-  test('extractTypeAssertions', () => {
-    const getAssertions = (text: string) => {
-      const testFile = ts.createSourceFile('test.ts', text, ts.ScriptTarget.ES2015);
-      const scanner = ts.createScanner(
-        ts.ScriptTarget.ES2015,
-        false,
-        testFile.languageVariant,
-        testFile.getFullText(),
-      );
-      return extractTypeAssertions(scanner, testFile);
-    };
+  const getAssertions = (text: string) => {
+    const testFile = ts.createSourceFile('test.ts', text, ts.ScriptTarget.ES2015);
+    const scanner = ts.createScanner(
+      ts.ScriptTarget.ES2015,
+      false,
+      testFile.languageVariant,
+      testFile.getFullText(),
+    );
+    return extractTypeAssertions(scanner, testFile);
+  };
 
-    expect(
-      getAssertions(dedent`
-      for (const x of xs) {
-        x;  // type is number
-      }`),
-    ).toEqual([
-      {
-        line: 1,
-        type: 'number',
-      },
-    ]);
+  describe('extractTypeAssertions', () => {
+    test('simple same-line assertion', () => {
+      expect(
+        getAssertions(dedent`
+        for (const x of xs) {
+          x;  // type is number
+        }`),
+      ).toEqual([
+        {
+          line: 1,
+          type: 'number',
+        },
+      ]);
+    });
 
-    expect(
-      getAssertions(dedent`
-      for (const x of xs) {
-        x;  // type is just number
-      }`),
-    ).toEqual([
-      {
-        line: 1,
-        type: 'number',
-      },
-    ]);
+    test('assertion with an adjective', () => {
+      expect(
+        getAssertions(dedent`
+        for (const x of xs) {
+          x;  // type is just number
+        }`),
+      ).toEqual([
+        {
+          line: 1,
+          type: 'number',
+        },
+      ]);
+    });
 
-    expect(
-      getAssertions(dedent`
-      type T = typeof document.getElementById;
-        // type is (elementId: string) => HTMLElement | null
-      `),
-    ).toEqual([
-      {
-        line: 0,
-        type: '(elementId: string) => HTMLElement | null',
-      },
-    ]);
+    test('assertion on on next line', () => {
+      expect(
+        getAssertions(dedent`
+        type T = typeof document.getElementById;
+          // type is (elementId: string) => HTMLElement | null
+        `),
+      ).toEqual([
+        {
+          line: 0,
+          type: '(elementId: string) => HTMLElement | null',
+        },
+      ]);
+    });
 
-    expect(
-      getAssertions(dedent`
-      const o = {x: 1, y: 2};
-      // type is {
-      //   x: number;
-      //   y: number;
-      // }
-      function addWithExtras(a: number, b: number) {
-        const c = a + b;  // type is number
-        // ...
-        return c;
-      }
-      `),
-    ).toEqual([
-      {
-        line: 0,
-        type: '{ x: number; y: number; }',
-      },
-      {
-        line: 6,
-        type: 'number',
-      },
-    ]);
+    test('multiline assertion', () => {
+      expect(
+        getAssertions(dedent`
+        const o = {x: 1, y: 2};
+        // type is {
+        //   x: number;
+        //   y: number;
+        // }
+        function addWithExtras(a: number, b: number) {
+          const c = a + b;  // type is number
+          // ...
+          return c;
+        }
+        `),
+      ).toEqual([
+        {
+          line: 0,
+          type: '{ x: number; y: number; }',
+        },
+        {
+          line: 6,
+          type: 'number',
+        },
+      ]);
+    });
+  });
+
+  describe('extractTypeAssertions twoslash', () => {
+    test('simple twoslash assertion', () => {
+      expect(
+        getAssertions(dedent`
+        for (const xValue of xs) {
+          xValue;
+          // ^? const xValue: number
+        }`),
+      ).toEqual([
+        {
+          line: 1,
+          character: 5,
+          position: 32,
+          type: 'const xValue: number',
+        },
+      ]);
+    });
+
+    test('multiline twoslash assertion', () => {
+      expect(
+        getAssertions(dedent`
+        const o = {x: 1, y: 2};
+        //    ^? const o: {
+        //         x: number;
+        //         y: number;
+        //       }
+        function addWithExtras(a: number, b: number) {
+          const c = a + b;
+          //    ^? const c: number
+          // ...
+          return c;
+        }
+        `),
+      ).toEqual([
+        {
+          line: 0,
+          character: 6,
+          position: 6,
+          type: 'const o: { x: number; y: number; }',
+        },
+        {
+          line: 6,
+          character: 8,
+          position: 154,
+          type: 'const c: number',
+        },
+      ]);
+    });
   });
 
   describe('checkTypeAssertions', () => {
@@ -266,83 +333,144 @@ describe('ts-checker', () => {
       );
 
       const assertions = extractTypeAssertions(scanner, sourceFile);
-      return checkTypeAssertions(sourceFile, program.getTypeChecker(), assertions);
+      const languageService = ts.createLanguageService(getLanguageServiceHost(program));
+      return checkTypeAssertions(sourceFile, program.getTypeChecker(), languageService, assertions);
     };
 
-    test('type assertion on a value', () => {
-      expect(
-        checkAssertions(dedent`
-        const x = 2 + '3';  // ok, x's type is string
-        const y = '2' + 3;  // ok, y's type is string
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion on a type', () => {
-      expect(
-        checkAssertions(dedent`
-        type T = typeof document.getElementById;
-        // type is (elementId: string) => HTMLElement | null
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion on a nested value', () => {
-      expect(
-        checkAssertions(dedent`
-        const o = { x: 'a' };
-        o;  // type is { x: string; }
-        o.x;  // type is string
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion on a multiline value', () => {
-      expect(
-        checkAssertions(dedent`
-        const o = {
-          x: 'a',
-        };  // type is { x: string; }
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion on a call expression', () => {
-      expect(
-        checkAssertions(dedent`
-        const double = (n: number) => ('' + n * n);
-        double(10);  // type is string
-      `),
-      ).toBe(true);
-    });
-
-    test('multiline type assertions', () => {
-      expect(
-        checkAssertions(dedent`
-        const v = {x: 10, y: 20};
-        // type is {
-        //   x: number;
-        //   y: number;
-        // }
-      `),
-      ).toBe(true);
-    });
-
-    test('type assertion with ellipsis', () => {
-      expect(
-        checkAssertions(dedent`
-        const v = { foo: 0, bar: 1, baz: 2, quux: 3 };
-        type T = keyof typeof v;  // type is "foo" | "bar" | "baz" | ...
+    describe('ExpectType-style assertions', () => {
+      test('type assertion on a value', () => {
+        expect(
+          checkAssertions(dedent`
+          const x = 2 + '3';  // ok, x's type is string
+          const y = '2' + 3;  // ok, y's type is string
         `),
-      ).toBe(true);
+        ).toBe(true);
+      });
+
+      test('type assertion on a type', () => {
+        expect(
+          checkAssertions(dedent`
+          type T = typeof document.getElementById;
+          // type is (elementId: string) => HTMLElement | null
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion on a nested value', () => {
+        expect(
+          checkAssertions(dedent`
+          const o = { x: 'a' };
+          o;  // type is { x: string; }
+          o.x;  // type is string
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion on a multiline value', () => {
+        expect(
+          checkAssertions(dedent`
+          const o = {
+            x: 'a',
+          };  // type is { x: string; }
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion on a call expression', () => {
+        expect(
+          checkAssertions(dedent`
+          const double = (n: number) => ('' + n * n);
+          double(10);  // type is string
+        `),
+        ).toBe(true);
+      });
+
+      test('multiline type assertions', () => {
+        expect(
+          checkAssertions(dedent`
+          const v = {x: 10, y: 20};
+          // type is {
+          //   x: number;
+          //   y: number;
+          // }
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion with ellipsis', () => {
+        expect(
+          checkAssertions(dedent`
+          const v = { foo: 0, bar: 1, baz: 2, quux: 3 };
+          type T = keyof typeof v;  // type is "foo" | "bar" | "baz" | ...
+          `),
+        ).toBe(true);
+      });
+
+      test('type assertion with excitement', () => {
+        expect(
+          checkAssertions(dedent`
+          type T = ['a', 'b'][number];  // type is "a" | "b"!
+          `),
+        ).toBe(true);
+      });
     });
 
-    test('type assertion with excitement', () => {
-      expect(
-        checkAssertions(dedent`
-        type T = ['a', 'b'][number];  // type is "a" | "b"!
+    describe('twoslash assertions', () => {
+      test('simple assertions', () => {
+        expect(
+          checkAssertions(dedent`
+          const x = 2 + '3';
+          //    ^? const x: string
+          const y = '2' + 3;
+          //    ^? const y: string
         `),
-      ).toBe(true);
+        ).toBe(true);
+      });
+
+      test('failing assertion', () => {
+        expect(
+          checkAssertions(dedent`
+          const x = 2 + '3';
+          //    ^? const x: number
+          `),
+        ).toBe(false);
+      });
+
+      test('type assertion on a type', () => {
+        expect(
+          checkAssertions(dedent`
+          type T = typeof document.getElementById;
+          //   ^? type T = (elementId: string) => HTMLElement | null
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion on a nested value', () => {
+        expect(
+          checkAssertions(dedent`
+          const object = { x: 'a' };
+          object;
+          // ^? const object: { x: string; }
+          object.x;
+          //     ^? (property) x: string
+        `),
+        ).toBe(true);
+      });
+
+      test('type assertion on a multiline value', () => {
+        expect(
+          checkAssertions(dedent`
+          const o = {
+            //  ^? const o: { x: string; }
+            x: 'a',
+          };
+          console.log(o);
+          //          ^? const o: {
+          //               x: string;
+          //             }
+        `),
+        ).toBe(true);
+      });
     });
 
     // third-party type

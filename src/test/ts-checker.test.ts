@@ -7,6 +7,7 @@ import {
   hasTypeAssertions,
   extractTypeAssertions,
   checkTypeAssertions,
+  getLanguageServiceHost,
 } from '../ts-checker';
 import {dedent} from '../utils';
 
@@ -332,7 +333,8 @@ describe('ts-checker', () => {
       );
 
       const assertions = extractTypeAssertions(scanner, sourceFile);
-      return checkTypeAssertions(sourceFile, program.getTypeChecker(), assertions);
+      const languageService = ts.createLanguageService(getLanguageServiceHost(program));
+      return checkTypeAssertions(sourceFile, program.getTypeChecker(), languageService, assertions);
     };
 
     test('type assertion on a value', () => {

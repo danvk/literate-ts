@@ -2,7 +2,7 @@ import fs from 'fs-extra';
 
 import _ from 'lodash';
 import path from 'path';
-import ts from 'typescript';
+import ts, {isToken} from 'typescript';
 
 import {log} from './logger';
 import {fail} from './test-tracker';
@@ -43,6 +43,10 @@ const TILDE_PAT = / (~+)/g;
 const POST_TILDE_PAT = /\/\/ [~ ]+(?:(.*))?/;
 const TYPE_ASSERTION_PAT = /\/\/.*[tT]ype is (?:still )?(?:just )?(.*)\.?$/;
 const TWOSLASH_PAT = /\/\/ (?: *)\^\? (.*)$/;
+
+function isTwoslashAssertion(a: TypeScriptTypeAssertion): a is TwoslashAssertion {
+  return 'position' in a;
+}
 
 export function extractExpectedErrors(content: string): TypeScriptError[] {
   const lines = content.split('\n');
@@ -268,11 +272,11 @@ export function typesMatch(expected: string, actual: string) {
   return expected.endsWith('...') && actual.slice(0, n - 3) === expected.slice(0, n - 3);
 }
 
-export function checkTypeAssertions(
+export function checkExpectTypeAssertions(
   source: ts.SourceFile,
   checker: ts.TypeChecker,
-  assertions: TypeScriptTypeAssertion[],
-) {
+  assertions: ExpectTypeAssertion[],
+): boolean {
   const numAssertions = assertions.length;
   let matchedAssertions = 0;
   let anyFailures = false;
@@ -323,6 +327,91 @@ export function checkTypeAssertions(
   }
 
   return !anyFailures;
+}
+
+function getNodeAtPosition(sourceFile: ts.SourceFile, position: number): ts.Node | undefined {
+  let candidate: ts.Node | undefined = undefined;
+  ts.forEachChild(sourceFile, function iterate(node) {
+    const start = node.getStart();
+    const end = node.getEnd();
+    if (position >= start && position <= end) {
+      candidate = node;
+      ts.forEachChild(node, iterate);
+    }
+  });
+  return candidate;
+}
+
+export function checkTwoslashAssertions(
+  source: ts.SourceFile,
+  languageService: ts.LanguageService,
+  assertions: TwoslashAssertion[],
+): boolean {
+  let anyFailures = false;
+  for (const assertion of assertions) {
+    const {position, type} = assertion;
+    if (position === -1) {
+      // special case for a twoslash assertion on line 1.
+      fail(`Twoslash assertion on first line: ${type}`);
+      continue;
+    }
+    const node = getNodeAtPosition(source, position);
+    if (!node) {
+      fail(`Unable to find matching node for twoslash assertion: ${type}`);
+      continue;
+    }
+
+    const qi = languageService.getQuickInfoAtPosition(source.fileName, node.getStart());
+    if (!qi?.displayParts) {
+      fail(`Unable to get quickinfo for twoslash assertion ${type}`);
+      continue;
+    }
+    const actual = qi.displayParts.map(dp => dp.text).join('');
+    if (actual !== type) {
+      fail(`Failed type assertion for ${node.getText()}`);
+      log(`  Expected: ${assertion.type}`);
+      log(`    Actual: ${actual}`);
+      anyFailures = true;
+    }
+  }
+  return anyFailures;
+}
+
+export function checkTypeAssertions(
+  source: ts.SourceFile,
+  checker: ts.TypeChecker,
+  languageService: ts.LanguageService,
+  assertions: TypeScriptTypeAssertion[],
+) {
+  const [twoslashAssertions, expectTypeAssertions] = _.partition(assertions, isTwoslashAssertion);
+  let ok = true;
+  if (expectTypeAssertions.length) {
+    ok = ok || checkExpectTypeAssertions(source, checker, expectTypeAssertions);
+  }
+  if (twoslashAssertions.length) {
+    ok = ok || checkTwoslashAssertions(source, languageService, twoslashAssertions);
+  }
+
+  return ok;
+}
+
+// See https://github.com/JoshuaKGoldberg/eslint-plugin-expect-type/blob/a55413/src/rules/expect.ts#L506-L521
+export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceHost {
+  return {
+    getCompilationSettings: () => program.getCompilerOptions(),
+    getCurrentDirectory: () => program.getCurrentDirectory(),
+    getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
+    getScriptFileNames: () => program.getSourceFiles().map(sourceFile => sourceFile.fileName),
+    getScriptSnapshot: name =>
+      ts.ScriptSnapshot.fromString(program.getSourceFile(name)?.text ?? ''),
+    getScriptVersion: () => '1',
+    // NB: We can't check `program` for files, it won't contain valid files like package.json
+    fileExists: ts.sys.fileExists,
+    readFile: ts.sys.readFile,
+    readDirectory: ts.sys.readDirectory,
+    directoryExists: ts.sys.directoryExists,
+    getDirectories: ts.sys.getDirectories,
+  };
 }
 
 /** Verify that a TypeScript sample has the expected errors and no others. */
@@ -424,7 +513,10 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
     const checker = program.getTypeChecker();
 
     const assertions = extractTypeAssertions(scanner, source);
-    ok = ok && checkTypeAssertions(source, checker, assertions);
+    if (assertions.length) {
+      const languageService = ts.createLanguageService(getLanguageServiceHost(program));
+      ok = ok && checkTypeAssertions(source, checker, languageService, assertions);
+    }
   }
 
   if (!ok) {

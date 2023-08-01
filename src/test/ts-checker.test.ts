@@ -249,7 +249,7 @@ describe('ts-checker', () => {
     });
   });
 
-  describe.only('extractTypeAssertions twoslash', () => {
+  describe('extractTypeAssertions twoslash', () => {
     test('simple twoslash assertion', () => {
       expect(
         getAssertions(dedent`
@@ -261,6 +261,7 @@ describe('ts-checker', () => {
         {
           line: 1,
           character: 5,
+          position: 32,
           type: 'const xValue: number',
         },
       ]);
@@ -285,11 +286,13 @@ describe('ts-checker', () => {
         {
           line: 0,
           character: 6,
+          position: 6,
           type: 'const o: { x: number; y: number; }',
         },
         {
           line: 6,
           character: 8,
+          position: 154,
           type: 'const c: number',
         },
       ]);
@@ -406,6 +409,19 @@ describe('ts-checker', () => {
         type T = ['a', 'b'][number];  // type is "a" | "b"!
         `),
       ).toBe(true);
+    });
+
+    describe('twoslash assertions', () => {
+      test('simple assertions', () => {
+        expect(
+          checkAssertions(dedent`
+          const x = 2 + '3';
+          //    ^? const x: string
+          const y = '2' + 3;
+          //    ^? const y: string
+        `),
+        ).toBe(true);
+      });
     });
 
     // third-party type

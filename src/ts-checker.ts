@@ -17,12 +17,21 @@ export interface TypeScriptError {
   message: string;
 }
 
-export interface TypeScriptTypeAssertion {
+export interface ExpectTypeAssertion {
   line: number;
   type: string;
-  /** If the assertion refers to a specific position (i.e. for twoslash) */
-  character?: number;
 }
+
+export interface TwoslashAssertion {
+  /** Position in the source file that the twoslash assertion points at */
+  position: number;
+  line: number;
+  character: number;
+  /** The expected type in the twoslash comment */
+  type: string;
+}
+
+export type TypeScriptTypeAssertion = ExpectTypeAssertion | TwoslashAssertion;
 
 export interface ConfigBundle {
   options: ts.CompilerOptions;
@@ -150,6 +159,7 @@ export function extractTypeAssertions(
   source: ts.SourceFile,
 ): TypeScriptTypeAssertion[] {
   const assertions: TypeScriptTypeAssertion[] = [];
+  const lineStarts = source.getLineStarts();
 
   let appliesToPreviousLine = false;
   let colForContinuation = null;
@@ -184,17 +194,20 @@ export function extractTypeAssertions(
           assertions.push({line, type});
           colForContinuation = character;
         } else {
-          console.log(JSON.stringify(commentText));
           const type = matchAndExtract(TWOSLASH_PAT, commentText);
-          console.log(type);
           if (!type) continue;
           if (!appliesToPreviousLine) {
             throw new Error('Twoslash assertion must be first on line.');
           }
-          line -= 1;
           const twoslashOffset = commentText.indexOf('^?');
-          const twoslashCharacter = character + twoslashOffset;
-          assertions.push({line, type, character: twoslashCharacter});
+          // const twoslashCharacter = character + twoslashOffset;
+          const commentIndex = pos; // position of the "//" in source file
+          const caretIndex = commentIndex + twoslashOffset;
+          // The position of interest is wherever the "^" (caret) is, but on the previous line.
+          const position = caretIndex - (lineStarts[line] - lineStarts[line - 1]);
+          const lineAndChar = source.getLineAndCharacterOfPosition(position);
+          // line and char aren't strictly needed but they make the tests much more readable.
+          assertions.push({position, type, ...lineAndChar});
           colForContinuation = character;
           commentPrefixForContinuation = commentText.slice(0, twoslashOffset);
         }

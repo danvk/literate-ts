@@ -44,6 +44,10 @@ const argv = yargs
       type: 'boolean',
       description: 'Log to stderr in addition to a log file',
     },
+    nocache: {
+      type: 'boolean',
+      description: `Don't read previous results from cache.`,
+    },
   })
   .version(
     'version',
@@ -120,7 +124,9 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
   startSample(sample);
 
   if (language === 'ts' || (language === 'js' && sample.checkJS)) {
-    const result = await checkTs(sample, id + '-output' in idToSample, typeScriptBundle);
+    const result = await checkTs(sample, id + '-output' in idToSample, typeScriptBundle, {
+      skipCache: !!argv.nocache,
+    });
     if (result.output !== undefined) {
       sample.output = result.output;
     }

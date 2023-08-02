@@ -471,11 +471,12 @@ export async function checkTs(
   sample: CodeSample,
   runCode: boolean,
   config: ConfigBundle,
+  options: {skipCache: boolean},
 ): Promise<CheckTsResult> {
   const [key, cacheKey] = getCheckTsCacheKey(sample, runCode);
   const tempFilePath = `/tmp/literate-ts-cache/${key}.json`;
   const hit = await fs.pathExists(tempFilePath);
-  if (hit) {
+  if (hit && !options.skipCache) {
     const result = await fs.readFile(tempFilePath, 'utf8');
     const {key: _, ...out} = JSON.parse(result) as CheckTsResult & {key: unknown};
     if (out.failReason) {
@@ -489,7 +490,9 @@ export async function checkTs(
     result.failReason = getLastFailReason() ?? undefined;
   }
 
-  await fs.writeFile(tempFilePath, JSON.stringify({...result, key: cacheKey}), 'utf8');
+  if (!options.skipCache) {
+    await fs.writeFile(tempFilePath, JSON.stringify({...result, key: cacheKey}), 'utf8');
+  }
   return result;
 }
 

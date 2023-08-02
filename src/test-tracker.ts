@@ -39,11 +39,7 @@ export function fail(message: string, sample?: CodeSample) {
   }
   lastFailReason = message;
 
-  let id = sample?.descriptor;
-  if (sample?.id !== sample?.descriptor) {
-    id += ` (${sample?.id})`;
-  }
-  const fullMessage = `💥 ${id}: ${message}`;
+  const fullMessage = `💥 ${sample?.descriptor}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error('\n' + fullMessage);
   }

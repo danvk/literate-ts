@@ -9,6 +9,7 @@ import {
   checkTypeAssertions,
   getLanguageServiceHost,
   matchModuloWhitespace,
+  sortUnions,
 } from '../ts-checker';
 import {dedent} from '../utils';
 
@@ -504,6 +505,27 @@ describe('ts-checker', () => {
 
     it('should flag different types', () => {
       expect(matchModuloWhitespace('string', 'number')).toBe(false);
+    });
+
+    it('should allow differing orders for unions', () => {
+      expect(matchModuloWhitespace('B | A', 'A|B')).toBe(true);
+    });
+  });
+
+  describe('sortUnions', () => {
+    it('should sort unions', () => {
+      expect(sortUnions('C | B | A')).toEqual('A | B | C');
+      expect(sortUnions('string | Date | number')).toEqual('Date | number | string');
+    });
+
+    it('should ignore unions inside types', () => {
+      expect(sortUnions(`{x:C|B|A}`)).toEqual(`{x:C|B|A}`);
+      expect(sortUnions(`(x:C|B|A)=>void`)).toEqual(`(x:C|B|A)=>void`);
+      expect(sortUnions(`Partial<C|B|A>`)).toEqual(`Partial<C|B|A>`);
+    });
+
+    it('should sort unions of complex types', () => {
+      expect(sortUnions(`{foo:B|A} | {bar:C|D}`)).toEqual(`{bar:C|D} | {foo:B|A}`);
     });
   });
 });

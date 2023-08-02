@@ -346,11 +346,35 @@ function getNodeAtPosition(sourceFile: ts.SourceFile, position: number): ts.Node
   return candidate;
 }
 
+/** Normalize "B | A" -> "A | B" */
+export function sortUnions(type: string): string {
+  let level = 0;
+  const topLevelPipes: number[] = [];
+  for (let i = 0; i < type.length; i++) {
+    const c = type.charAt(i);
+    if (c === '|' && level === 0) {
+      topLevelPipes.push(i);
+    } else if (c === '{' || c === '(' || c === '<') {
+      level += 1;
+    } else if (c === '}' || c === '}' || c === '>') {
+      level -= 1;
+    }
+    // TODO: quotes
+  }
+
+  if (level !== 0 || topLevelPipes.length === 0) {
+    return type; // do no harm if we don't understand the type.
+  }
+  topLevelPipes.splice(0, 0, -1);
+  const parts = topLevelPipes.map((idx, i) => type.slice(idx + 1, topLevelPipes[i + 1]).trim());
+  return _.sortBy(parts).join(' | ');
+}
+
 export function matchModuloWhitespace(actual: string, expected: string): boolean {
   // TODO: it's much easier to normalize actual based on the displayParts
   //       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
   const normalize = (input: string) =>
-    input
+    sortUnions(input)
       .replace(/[\n\r ]+/g, ' ')
       .replace(/\( */g, '(')
       .replace(/ *\)/, ')')

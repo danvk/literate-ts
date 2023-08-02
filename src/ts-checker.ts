@@ -373,12 +373,15 @@ export function sortUnions(type: string): string {
 export function matchModuloWhitespace(actual: string, expected: string): boolean {
   // TODO: it's much easier to normalize actual based on the displayParts
   //       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
-  const normalize = (input: string) =>
-    sortUnions(input)
+  const normalize = (input: string) => {
+    const [name, type] = input.split(/[:=]/, 2);
+    const normType = sortUnions(type)
       .replace(/[\n\r ]+/g, ' ')
       .replace(/\( */g, '(')
       .replace(/ *\)/, ')')
       .trim();
+    return `${name}: ${normType}`;
+  };
   const normActual = normalize(actual);
   const normExpected = normalize(expected);
   return normActual === normExpected;

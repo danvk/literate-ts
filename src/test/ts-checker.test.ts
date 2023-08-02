@@ -504,11 +504,11 @@ describe('ts-checker', () => {
     });
 
     it('should flag different types', () => {
-      expect(matchModuloWhitespace('string', 'number')).toBe(false);
+      expect(matchModuloWhitespace('const x: string', 'const x: number')).toBe(false);
     });
 
     it('should allow differing orders for unions', () => {
-      expect(matchModuloWhitespace('B | A', 'A|B')).toBe(true);
+      expect(matchModuloWhitespace('const ab: B | A', 'const ab: A|B')).toBe(true);
     });
   });
 

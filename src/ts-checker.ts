@@ -2,7 +2,7 @@ import fs from 'fs-extra';
 import findCacheDirectory from 'find-cache-dir';
 
 import stableJsonStringify from 'fast-json-stable-stringify';
-import _, {VERSION} from 'lodash';
+import _ from 'lodash';
 import path from 'path';
 import ts from 'typescript';
 
@@ -11,6 +11,7 @@ import {fail, getLastFailReason} from './test-tracker.js';
 import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils.js';
 import {CodeSample} from './types.js';
 import {ExecErrorType, runNode} from './node-runner.js';
+import {VERSION} from './version.js';
 
 export interface TypeScriptError {
   line: number;
@@ -495,7 +496,7 @@ function getCheckTsCacheKey(inSample: CodeSample, runCode: boolean) {
   return tuple(sha256(stableJsonStringify(key)), key);
 }
 
-const CACHE_DIR = findCacheDirectory({name: 'literate-ts'})!;
+export const CACHE_DIR = findCacheDirectory({name: 'literate-ts', create: true})!;
 if (!CACHE_DIR) {
   throw new Error(`Unable to find cache dir`);
 }

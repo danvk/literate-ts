@@ -19,7 +19,7 @@ import {
   finishSample,
   startSample,
 } from './test-tracker.js';
-import {checkTs, ConfigBundle} from './ts-checker.js';
+import {CACHE_DIR, checkTs, ConfigBundle} from './ts-checker.js';
 import {CodeSample} from './types.js';
 import {writeTempFile, fileSlug} from './utils.js';
 import {VERSION} from './version.js';
@@ -74,6 +74,11 @@ const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).confi
 const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
 
 console.log('Verifying with TypeScript', ts.version);
+if (!argv.nocache) {
+  console.log('Cache dir:', CACHE_DIR);
+} else {
+  console.log(chalk.yellow('Skipping cache (--nocache specified)'));
+}
 const spinner = argv.alsologtostderr ? null : ora('Initializing').start();
 
 const typeScriptBundle: ConfigBundle = {

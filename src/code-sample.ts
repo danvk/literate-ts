@@ -1,12 +1,10 @@
 import _ from 'lodash';
 
 import {CodeSample, PrefixedCodeSample, Prefix, IdMetadata} from './types.js';
-import {log} from './logger.js';
 import {fail} from './test-tracker.js';
 import {extractAsciidocSamples} from './asciidoc.js';
 import {extractMarkdownSamples} from './markdown.js';
 import {generateIdMetadata} from './metadata.js';
-import {dedent} from './utils.js';
 
 export interface Processor {
   setLineNum(line: number): void;
@@ -32,6 +30,7 @@ function process(
   let lastLanguage: string | null = null;
   let prefixes: readonly Prefix[] = [];
   let skipNext = false;
+  let skipRemaining = false;
   let prependNext = false;
   let prependLines: number[] | null = null;
   let nodeModules: readonly string[] = [];
@@ -53,6 +52,7 @@ function process(
         prefixes = [];
         prependNext = false;
         skipNext = false;
+        skipRemaining = false;
         tsOptions = {};
         nodeModules = [];
         nextIsTSX = false;
@@ -76,6 +76,8 @@ function process(
         ]);
       } else if (directive.startsWith('skip')) {
         skipNext = true;
+      } else if (directive.startsWith('done-with-file')) {
+        skipRemaining = true;
       } else if (directive.startsWith('tsconfig:')) {
         const [key, value] = directive.split(':', 2)[1].split('=', 2);
         tsOptions[key] = value === 'true' ? true : value === 'false' ? false : value;
@@ -107,7 +109,7 @@ function process(
         lastMetadata = generateIdMetadata(slug + '-' + lineNum, sourceFile, lineNum);
       }
       if (lastMetadata) {
-        if (!skipNext) {
+        if (!skipNext && !skipRemaining) {
           samples.push({
             ...lastMetadata,
             sectionHeader: lastSectionHeader,

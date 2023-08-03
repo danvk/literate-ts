@@ -221,6 +221,10 @@ See above for how to give directive to literate-ts in your source format.
     `node_modules` directory. Particularly useful with `@types`, e.g.
     `verifier:include-node-module:@types/lodash`.
   </dd>
+  <dt>verifier:done-with-file</dt>
+  <dd>
+    Stop verifying any code samples until the end of this file. Useful if you have some unstructured comments at the end of a file that happen to contain code samples.
+  </dd>
 </dl>
 
 ### Replacements

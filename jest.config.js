@@ -1,4 +1,6 @@
 export default {
+  preset: "ts-jest/presets/default-esm",
+  testEnvironment: "node",
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
@@ -16,8 +18,11 @@ export default {
       },
     ],
   },
+  testPathIgnorePatterns: [
+    "dist",
+  ],
   // moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   globals: {
-    __TEST__: true
+    __TEST__: true,
   }
 }

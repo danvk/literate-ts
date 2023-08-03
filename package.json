@@ -12,7 +12,7 @@
     "format": "prettier --write 'src/**/*.ts'",
     "format:check": "prettier --check 'src/**/*.ts'",
     "lint": "eslint 'src/**/*.ts'",
-    "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "bin": {
     "literate-ts": "./bin/literate-ts"

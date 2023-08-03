@@ -1,14 +1,15 @@
 import fs from 'fs-extra';
 
-import _ from 'lodash';
+import stableJsonStringify from 'fast-json-stable-stringify';
+import _, {VERSION} from 'lodash';
 import path from 'path';
 import ts from 'typescript';
 
 import {log} from './logger';
-import {fail} from './test-tracker';
-import {writeTempFile, matchAndExtract, getTempDir, matchAll} from './utils';
+import {fail, getLastFailReason} from './test-tracker';
+import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils';
 import {CodeSample} from './types';
-import {runNode} from './node-runner';
+import {ExecErrorType, runNode} from './node-runner';
 
 export interface TypeScriptError {
   line: number;
@@ -345,11 +346,44 @@ function getNodeAtPosition(sourceFile: ts.SourceFile, position: number): ts.Node
   return candidate;
 }
 
-function matchModuloWhitespace(actual: string, expected: string): boolean {
+/** Normalize "B | A" -> "A | B" */
+export function sortUnions(type: string): string {
+  let level = 0;
+  const topLevelPipes: number[] = [];
+  for (let i = 0; i < type.length; i++) {
+    const c = type.charAt(i);
+    if (c === '|' && level === 0) {
+      topLevelPipes.push(i);
+    } else if (c === '{' || c === '(' || c === '<') {
+      level += 1;
+    } else if (c === '}' || c === '}' || c === '>') {
+      level -= 1;
+    }
+    // TODO: quotes
+  }
+
+  if (level !== 0 || topLevelPipes.length === 0) {
+    return type; // do no harm if we don't understand the type.
+  }
+  topLevelPipes.splice(0, 0, -1);
+  const parts = topLevelPipes.map((idx, i) => type.slice(idx + 1, topLevelPipes[i + 1]).trim());
+  return _.sortBy(parts).join(' | ');
+}
+
+export function matchModuloWhitespace(actual: string, expected: string): boolean {
   // TODO: it's much easier to normalize actual based on the displayParts
   //       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
-  const normActual = actual.replace(/[\n\r ]+/g, ' ').trim();
-  const normExpected = expected.replace(/[\n\r ]+/g, ' ').trim();
+  const normalize = (input: string) => {
+    const [name, type] = input.split(/[:=]/, 2);
+    const normType = sortUnions(type)
+      .replace(/[\n\r ]+/g, ' ')
+      .replace(/\( */g, '(')
+      .replace(/ *\)/, ')')
+      .trim();
+    return `${name}: ${normType}`;
+  };
+  const normActual = normalize(actual);
+  const normExpected = normalize(expected);
   return normActual === normExpected;
 }
 
@@ -438,8 +472,63 @@ export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceH
   };
 }
 
+export interface CheckTsResult {
+  passed: boolean;
+  failReason?: string;
+  output?: ExecErrorType;
+  // TODO: include more details about errors
+}
+
+function getCheckTsCacheKey(inSample: CodeSample, runCode: boolean) {
+  const {descriptor: _1, id: _2, sectionHeader: _3, sourceFile: _4, ...sample} = inSample;
+  const key = {
+    sample,
+    runCode,
+    // `config` has compiler options but these are already in `sample`
+    versions: {
+      typeScript: ts.version,
+      literateTs: VERSION,
+      nodeJs: process.version,
+    },
+  };
+  return tuple(sha256(stableJsonStringify(key)), key);
+}
+
+export async function checkTs(
+  sample: CodeSample,
+  runCode: boolean,
+  config: ConfigBundle,
+  options: {skipCache: boolean},
+): Promise<CheckTsResult> {
+  const [key, cacheKey] = getCheckTsCacheKey(sample, runCode);
+  const tempFilePath = `/tmp/literate-ts-cache/${key}.json`;
+  const hit = await fs.pathExists(tempFilePath);
+  if (hit && !options.skipCache) {
+    const result = await fs.readFile(tempFilePath, 'utf8');
+    const {key: _, ...out} = JSON.parse(result) as CheckTsResult & {key: unknown};
+    if (out.failReason) {
+      fail(out.failReason);
+    }
+    return out;
+  }
+
+  const result = await uncachedCheckTs(sample, runCode, config);
+  if (result.passed === false) {
+    result.failReason = getLastFailReason() ?? undefined;
+  }
+
+  if (!options.skipCache) {
+    await fs.writeFile(tempFilePath, JSON.stringify({...result, key: cacheKey}), 'utf8');
+  }
+  return result;
+}
+
 /** Verify that a TypeScript sample has the expected errors and no others. */
-export async function checkTs(sample: CodeSample, runCode: boolean, config: ConfigBundle) {
+async function uncachedCheckTs(
+  sample: CodeSample,
+  runCode: boolean,
+  config: ConfigBundle,
+): Promise<CheckTsResult> {
   const {id, content} = sample;
   const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
@@ -469,7 +558,7 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
     if (!match) {
       fail(`Could not find requested node_module ${nodeModule}. See logs for details.`);
       log('Looked in:\n  ' + candidates.join('\n  '));
-      return;
+      return {passed: false};
     }
     fs.copySync(match, path.join(nodeModulesPath, nodeModule));
   }
@@ -486,7 +575,7 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
   const source = program.getSourceFile(tsFile);
   if (!source) {
     fail('Unable to load TS source file');
-    return;
+    return {passed: false};
   }
 
   let diagnostics = ts.getPreEmitDiagnostics(program);
@@ -497,7 +586,7 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
 
     if (emitResult.emitSkipped) {
       fail('Failed to emit JavaScript for TypeScript sample.');
-      return;
+      return {passed: false};
     }
   }
 
@@ -548,13 +637,14 @@ export async function checkTs(sample: CodeSample, runCode: boolean, config: Conf
     log(`tsconfig options: ${JSON.stringify(options)}`);
   }
 
-  if (!runCode) return;
+  if (!runCode) return {passed: ok};
 
   const jsFile = tsFile.replace(/\.ts$/, '.js');
   if (!fs.existsSync(jsFile)) {
     fail(`Did not produce JS output in expected place: ${jsFile}`);
-    return;
+    return {passed: false};
   }
 
-  sample.output = await runNode(jsFile);
+  const output = await runNode(jsFile);
+  return {passed: false, output};
 }

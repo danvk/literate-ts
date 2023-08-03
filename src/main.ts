@@ -21,13 +21,8 @@ import {
 } from './test-tracker';
 import {checkTs, ConfigBundle} from './ts-checker';
 import {CodeSample} from './types';
-import {getTempDir, writeTempFile, fileSlug} from './utils';
-
-const packagePath = path.join(
-  __dirname,
-  // The path to package.json is slightly different when you run via ts-node
-  __dirname.includes('dist') ? '../../package.json' : '../package.json',
-);
+import {writeTempFile, fileSlug} from './utils';
+import {VERSION} from './version';
 
 const argv = yargs
   .strict()
@@ -49,13 +44,14 @@ const argv = yargs
       type: 'boolean',
       description: 'Log to stderr in addition to a log file',
     },
+    nocache: {
+      type: 'boolean',
+      description: `Don't read previous results from cache.`,
+    },
   })
   .version(
     'version',
-    [
-      `literate-ts version: ${require(packagePath).version}`,
-      `TypeScript version: ${ts.version}`,
-    ].join('\n'),
+    [`literate-ts version: ${VERSION}`, `TypeScript version: ${ts.version}`].join('\n'),
   )
   .parse();
 
@@ -93,7 +89,7 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
   }
 
   // Remove stack traces from output
-  const tmpDir = getTempDir();
+  const tmpDir = path.dirname(actualOutput.path);
   const checkOutput = (actualOutput.stderr + actualOutput.stdout)
     .split('\n')
     .filter(line => !line.startsWith('    at ')) // prune stack traces to one line
@@ -117,6 +113,8 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
     log('Actual:');
     log(checkOutput);
     log('----');
+  } else {
+    log('Actual output matched expected.');
   }
 }
 
@@ -126,7 +124,12 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
   startSample(sample);
 
   if (language === 'ts' || (language === 'js' && sample.checkJS)) {
-    await checkTs(sample, id + '-output' in idToSample, typeScriptBundle);
+    const result = await checkTs(sample, id + '-output' in idToSample, typeScriptBundle, {
+      skipCache: !!argv.nocache,
+    });
+    if (result.output !== undefined) {
+      sample.output = result.output;
+    }
   } else if (language === 'js') {
     // Run the sample through Node and record the output.
     const path = writeTempFile(id + '.js', content);
@@ -147,7 +150,6 @@ async function checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSa
       fail(`No paired input: #${inputId}`);
     } else {
       checkOutput(content, input);
-      log('Actual output matched expected.');
     }
   }
   finishSample();

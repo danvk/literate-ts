@@ -8,6 +8,8 @@ import {
   extractTypeAssertions,
   checkTypeAssertions,
   getLanguageServiceHost,
+  matchModuloWhitespace,
+  sortUnions,
 } from '../ts-checker';
 import {dedent} from '../utils';
 
@@ -490,5 +492,40 @@ describe('ts-checker', () => {
     //     foo  // type is number
     //   `)).toBe(true);
     // });
+  });
+
+  describe('matchModuloWhitespace', () => {
+    it('should normalize whitespace around parens', () => {
+      const expected =
+        'type T = <T extends object, K extends keyof T>( obj: T, ...keys: K[] ) => Pick<T, K>';
+      const actual =
+        'type T = <T extends object, K extends keyof T>(obj: T, ...keys: K[]) => Pick<T, K>';
+      expect(matchModuloWhitespace(actual, expected)).toBe(true);
+    });
+
+    it('should flag different types', () => {
+      expect(matchModuloWhitespace('const x: string', 'const x: number')).toBe(false);
+    });
+
+    it('should allow differing orders for unions', () => {
+      expect(matchModuloWhitespace('const ab: B | A', 'const ab: A|B')).toBe(true);
+    });
+  });
+
+  describe('sortUnions', () => {
+    it('should sort unions', () => {
+      expect(sortUnions('C | B | A')).toEqual('A | B | C');
+      expect(sortUnions('string | Date | number')).toEqual('Date | number | string');
+    });
+
+    it('should ignore unions inside types', () => {
+      expect(sortUnions(`{x:C|B|A}`)).toEqual(`{x:C|B|A}`);
+      expect(sortUnions(`(x:C|B|A)=>void`)).toEqual(`(x:C|B|A)=>void`);
+      expect(sortUnions(`Partial<C|B|A>`)).toEqual(`Partial<C|B|A>`);
+    });
+
+    it('should sort unions of complex types', () => {
+      expect(sortUnions(`{foo:B|A} | {bar:C|D}`)).toEqual(`{bar:C|D} | {foo:B|A}`);
+    });
   });
 });

@@ -6,6 +6,7 @@ import {fail} from './test-tracker';
 import {extractAsciidocSamples} from './asciidoc';
 import {extractMarkdownSamples} from './markdown';
 import {generateIdMetadata} from './metadata';
+import {dedent} from './utils';
 
 export interface Processor {
   setLineNum(line: number): void;
@@ -167,12 +168,18 @@ export function checkSource(sample: CodeSample, source: string) {
   // Strip out code behind HIDE..END markers
   const strippedSource = stripSource(source);
   if (sample.content.trim() !== strippedSource.trim()) {
-    fail('Inline sample does not match sample in source file', sample);
-    log('Inline sample:');
-    log(sample.content.trim());
-    log('----');
-    log('Stripped source file sample:');
-    log(strippedSource.trim() + '\n');
+    fail(
+      `
+Inline sample for ${sample.id} does not match sample in source file
+Inline sample:
+${sample.content.trim()}
+----
+Stripped source file sample:
+${strippedSource.trim()}
+----
+      `.trimStart(),
+      sample,
+    );
     return false;
   }
   return true;

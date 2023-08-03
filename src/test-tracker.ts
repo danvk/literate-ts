@@ -29,21 +29,28 @@ export function finishSample() {
   const elapsedMs = Date.now() - sampleStartMs;
   log(`\nEND #${currentSample!.descriptor} (${elapsedMs} ms)\n`);
   currentSample = undefined;
+  lastFailReason = null;
 }
 
+let lastFailReason: string | null = null;
 export function fail(message: string, sample?: CodeSample) {
   if (sample === undefined) {
     sample = currentSample;
   }
+  lastFailReason = message;
 
-  const fullMessage = `💥 ${currentSample?.descriptor}: ${message}`;
+  const fullMessage = `💥 ${sample?.descriptor}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error('\n' + fullMessage);
   }
   log(fullMessage);
   if (!(global as any).__TEST__) {
-    results[currentFile][currentSample!.descriptor]++;
+    results[currentFile][sample!.descriptor]++;
   }
+}
+
+export function getLastFailReason(): string | null {
+  return lastFailReason;
 }
 
 export function getTestResults() {

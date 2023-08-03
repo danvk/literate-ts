@@ -1,12 +1,12 @@
 import _ from 'lodash';
 
-import {CodeSample, PrefixedCodeSample, Prefix, IdMetadata} from './types';
-import {log} from './logger';
-import {fail} from './test-tracker';
-import {extractAsciidocSamples} from './asciidoc';
-import {extractMarkdownSamples} from './markdown';
-import {generateIdMetadata} from './metadata';
-import {dedent} from './utils';
+import {CodeSample, PrefixedCodeSample, Prefix, IdMetadata} from './types.js';
+import {log} from './logger.js';
+import {fail} from './test-tracker.js';
+import {extractAsciidocSamples} from './asciidoc.js';
+import {extractMarkdownSamples} from './markdown.js';
+import {generateIdMetadata} from './metadata.js';
+import {dedent} from './utils.js';
 
 export interface Processor {
   setLineNum(line: number): void;

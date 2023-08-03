@@ -2,9 +2,9 @@ import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 
-import {dedent} from '../utils';
-import {extractSamples} from '../code-sample';
-import {baseExtract} from './common';
+import {dedent} from '../utils.js';
+import {extractSamples} from '../code-sample.js';
+import {baseExtract} from './common.js';
 
 const ASCII_DOC1 = `
 

@@ -1,15 +1,16 @@
 import fs from 'fs-extra';
+import findCacheDirectory from 'find-cache-dir';
 
 import stableJsonStringify from 'fast-json-stable-stringify';
 import _, {VERSION} from 'lodash';
 import path from 'path';
 import ts from 'typescript';
 
-import {log} from './logger';
-import {fail, getLastFailReason} from './test-tracker';
-import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils';
-import {CodeSample} from './types';
-import {ExecErrorType, runNode} from './node-runner';
+import {log} from './logger.js';
+import {fail, getLastFailReason} from './test-tracker.js';
+import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils.js';
+import {CodeSample} from './types.js';
+import {ExecErrorType, runNode} from './node-runner.js';
 
 export interface TypeScriptError {
   line: number;
@@ -494,6 +495,11 @@ function getCheckTsCacheKey(inSample: CodeSample, runCode: boolean) {
   return tuple(sha256(stableJsonStringify(key)), key);
 }
 
+const CACHE_DIR = findCacheDirectory({name: 'literate-ts'})!;
+if (!CACHE_DIR) {
+  throw new Error(`Unable to find cache dir`);
+}
+
 export async function checkTs(
   sample: CodeSample,
   runCode: boolean,
@@ -501,7 +507,7 @@ export async function checkTs(
   options: {skipCache: boolean},
 ): Promise<CheckTsResult> {
   const [key, cacheKey] = getCheckTsCacheKey(sample, runCode);
-  const tempFilePath = `/tmp/literate-ts-cache/${key}.json`;
+  const tempFilePath = path.join(CACHE_DIR, `${key}.json`);
   const hit = await fs.pathExists(tempFilePath);
   if (hit && !options.skipCache) {
     const result = await fs.readFile(tempFilePath, 'utf8');

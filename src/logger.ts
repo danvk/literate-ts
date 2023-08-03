@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import {getTempDir} from './utils';
+import {getTempDir} from './utils.js';
 
 let logHandle: number | null = null;
 let _alsoStderr = false;

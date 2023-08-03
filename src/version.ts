@@ -1,10 +1,3 @@
-import path from 'path';
+import {readPackageUpSync} from 'read-pkg-up';
 
-// TODO: use https://www.npmjs.com/package/read-pkg-up instead
-const packagePath = path.join(
-  __dirname,
-  // The path to package.json is slightly different when you run via ts-node
-  __dirname.includes('dist') ? '../../package.json' : '../package.json',
-);
-
-export const VERSION = require(packagePath).version;
+export const VERSION = readPackageUpSync({cwd: __dirname})?.packageJson.version ?? '?.?.?';

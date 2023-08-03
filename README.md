@@ -265,6 +265,7 @@ be careful not to mislead the reader when you do this.
 - `-f`/`--filter`: Only check IDs with the given prefix.
 - `-r`/`--replacements`: If specified, load `**/*.{ts,js,txt}` under this directory as additional sources.
 - `--alsologtostderr`: Log to stderr in addition to a log file.
+- `--nocache`: Disable reading and writing from on-disk cache. If this results in different behavior, please file an issue. The cache is in `node_modules/.cache/literate-ts`. Delete this directory to clear the cache.
 
 ## Development
 

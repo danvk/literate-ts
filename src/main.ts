@@ -8,9 +8,9 @@ import ora from 'ora';
 import ts from 'typescript';
 import yargs from 'yargs';
 
-import {checkSource, applyPrefixes, extractSamples} from './code-sample';
-import {startLog, log, flushLog, logFile} from './logger';
-import {runNode} from './node-runner';
+import {checkSource, applyPrefixes, extractSamples} from './code-sample.js';
+import {startLog, log, flushLog, logFile} from './logger.js';
+import {runNode} from './node-runner.js';
 import {
   getTestResults,
   startFile,
@@ -18,11 +18,11 @@ import {
   finishFile,
   finishSample,
   startSample,
-} from './test-tracker';
-import {checkTs, ConfigBundle} from './ts-checker';
-import {CodeSample} from './types';
-import {writeTempFile, fileSlug} from './utils';
-import {VERSION} from './version';
+} from './test-tracker.js';
+import {checkTs, ConfigBundle} from './ts-checker.js';
+import {CodeSample} from './types.js';
+import {writeTempFile, fileSlug} from './utils.js';
+import {VERSION} from './version.js';
 
 const argv = yargs
   .strict()

@@ -1,6 +1,6 @@
-import {stripSource, applyPrefixes, extractSamples} from '../code-sample';
-import {dedent} from '../utils';
-import {baseSample} from './common';
+import {stripSource, applyPrefixes, extractSamples} from '../code-sample.js';
+import {dedent} from '../utils.js';
+import {baseSample} from './common.js';
 
 const ASCIIDOC_PREPEND = `
 

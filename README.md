@@ -158,6 +158,17 @@ GitHub also provides a rich display for Asciidoc source files.
 In Asciidoc, code samples are marked with `----` or `....`. Samples must be marked
 with `[source,ts]` to be checked, or `[source,js]` to be run through Node.
 
+Code samples can be given an identifier using `[[id]]`:
+
+    This sample has an ID of `point`:
+
+    [[point]]
+    [source,ts]
+    ----
+    type Point = [number, number];
+    //   ^? type Point = [number, number]
+    ----
+
 Directives begin with `// verifier`. For example:
 
     // verifier:prepend-to-following
@@ -184,7 +195,10 @@ See above for how to give directive to literate-ts in your source format.
   <dt>verifier:skip</dt>
   <dd>Don't verify the next code sample.</dd>
   <dt>verifier:reset</dt>
-  <dd>Reset everything, particularly the set of prefixes being prepended.</dd>
+  <dd>
+    Reset everything, particularly the set of prefixes being prepended.
+    This happens automatically for headings level 1-3.
+  </dd>
   <dt>verifier:prepend-to-following</dt>
   <dd>
     In addition to verifying the next sample, prepend it to all following code samples
@@ -224,7 +238,7 @@ See above for how to give directive to literate-ts in your source format.
   </dd>
   <dt>verifier:done-with-file</dt>
   <dd>
-    Stop verifying any code samples until the end of this file. Useful if you have some unstructured comments at the end of a file that happen to contain code samples.
+    Stop verifying any code samples until the end of this file. Useful if you have some unstructured comments at the end of a file that happen to contain code samples. This will be reset by the next `verifier:reset` directive or by the next top-level header (header level 1–3).
   </dd>
 </dl>
 

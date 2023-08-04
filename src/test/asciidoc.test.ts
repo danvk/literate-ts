@@ -345,5 +345,36 @@ describe('extractSamples', () => {
         ],
       },
     ]);
+
+    expect(
+      extractSamples(
+        dedent`
+      == Chapter 1
+      // verifier:done-with-file
+      [source,ts]
+      ----
+      const x = 12;
+      ----
+
+      == Chapter 2
+      [source,ts]
+      ----
+      const x = 12;
+      ----
+    `,
+        'header-reset-done-with-file',
+        'source.asciidoc',
+      ),
+    ).toEqual([
+      {
+        ...baseExtract,
+        descriptor: './source.asciidoc:10',
+        id: 'header-reset-done-with-file-10',
+        sectionHeader: 'Chapter 2',
+        language: 'ts',
+        content: `const x = 12;`,
+        prefixes: [],
+      },
+    ]);
   });
 });

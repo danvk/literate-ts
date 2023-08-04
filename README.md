@@ -205,7 +205,8 @@ See above for how to give directive to literate-ts in your source format.
   <dt>verifier:tsconfig:setting=value</dt>
   <dd>
     Set a tsconfig setting for the next code sample, e.g. `strictNullChecks=false`.
-    These accumulate until the next `reset` directive.
+    These accumulate until the next `reset` directive. By default, literate-ts will
+    use whatever settings are in your `tsconfig.json` file.
   </dd>
   <dt>verifier:check-js</dt>
   <dd>

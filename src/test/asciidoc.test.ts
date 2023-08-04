@@ -226,6 +226,43 @@ describe('extractSamples', () => {
     ]);
   });
 
+  test('done-with-file', () => {
+    expect(
+      extractSamples(
+        dedent`
+    // verifier:done-with-file
+    [source,ts]
+    ----
+    console.log(a);
+    ----
+
+    and:
+    [source,ts]
+    ----
+    const x = 12;
+    ----
+
+    // verifier:reset
+    [[back-in-business]]
+    [source,ts]
+    ----
+    const backInBusiness = 23;
+    ----
+    `,
+        'done-with-file',
+        'source.asciidoc',
+      ).slice(-1),
+    ).toEqual([
+      {
+        ...baseExtract,
+        language: 'ts',
+        descriptor: './source.asciidoc:13',
+        id: 'back-in-business',
+        content: `const backInBusiness = 23;`,
+      },
+    ]);
+  });
+
   test('header resets', () => {
     expect(
       extractSamples(

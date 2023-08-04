@@ -1,4 +1,4 @@
-import {matchAndExtract, sha256} from '../utils';
+import {matchAndExtract, sha256} from '../utils.js';
 
 describe('utils', () => {
   test('matchAndExtract', () => {

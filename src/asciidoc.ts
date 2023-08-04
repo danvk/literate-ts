@@ -1,6 +1,6 @@
-import {matchAndExtract} from './utils';
-import {Processor} from './code-sample';
-import {generateIdMetadata} from './metadata';
+import {matchAndExtract} from './utils.js';
+import {Processor} from './code-sample.js';
+import {generateIdMetadata} from './metadata.js';
 
 const EXTRACT_BACKTICKS = /```(tsx|ts)/;
 const EXTRACT_ID = /\[\[([^\]]*)\]\]/;

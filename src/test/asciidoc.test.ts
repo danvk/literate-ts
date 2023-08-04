@@ -2,9 +2,9 @@ import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 
-import {dedent} from '../utils';
-import {extractSamples} from '../code-sample';
-import {baseExtract} from './common';
+import {dedent} from '../utils.js';
+import {extractSamples} from '../code-sample.js';
+import {baseExtract} from './common.js';
 
 const ASCII_DOC1 = `
 
@@ -226,6 +226,43 @@ describe('extractSamples', () => {
     ]);
   });
 
+  test('done-with-file', () => {
+    expect(
+      extractSamples(
+        dedent`
+    // verifier:done-with-file
+    [source,ts]
+    ----
+    console.log(a);
+    ----
+
+    and:
+    [source,ts]
+    ----
+    const x = 12;
+    ----
+
+    // verifier:reset
+    [[back-in-business]]
+    [source,ts]
+    ----
+    const backInBusiness = 23;
+    ----
+    `,
+        'done-with-file',
+        'source.asciidoc',
+      ).slice(-1),
+    ).toEqual([
+      {
+        ...baseExtract,
+        language: 'ts',
+        descriptor: './source.asciidoc:13',
+        id: 'back-in-business',
+        content: `const backInBusiness = 23;`,
+      },
+    ]);
+  });
+
   test('header resets', () => {
     expect(
       extractSamples(
@@ -306,6 +343,37 @@ describe('extractSamples', () => {
             id: 'header-reset-4',
           },
         ],
+      },
+    ]);
+
+    expect(
+      extractSamples(
+        dedent`
+      == Chapter 1
+      // verifier:done-with-file
+      [source,ts]
+      ----
+      const x = 12;
+      ----
+
+      == Chapter 2
+      [source,ts]
+      ----
+      const x = 12;
+      ----
+    `,
+        'header-reset-done-with-file',
+        'source.asciidoc',
+      ),
+    ).toEqual([
+      {
+        ...baseExtract,
+        descriptor: './source.asciidoc:10',
+        id: 'header-reset-done-with-file-10',
+        sectionHeader: 'Chapter 2',
+        language: 'ts',
+        content: `const x = 12;`,
+        prefixes: [],
       },
     ]);
   });

@@ -1,7 +1,7 @@
 import {exec} from 'child_process';
 import util from 'util';
 
-import {log} from './logger';
+import {log} from './logger.js';
 
 export interface ExecErrorType {
   code: number;

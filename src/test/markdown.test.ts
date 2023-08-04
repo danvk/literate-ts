@@ -2,7 +2,7 @@ import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 
-import {extractSamples} from '../code-sample';
+import {extractSamples} from '../code-sample.js';
 
 describe('markdown', () => {
   it('should match snapshots', () => {

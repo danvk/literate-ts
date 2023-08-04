@@ -8,9 +8,9 @@ import ora from 'ora';
 import ts from 'typescript';
 import yargs from 'yargs';
 
-import {checkSource, applyPrefixes, extractSamples} from './code-sample';
-import {startLog, log, flushLog, logFile} from './logger';
-import {runNode} from './node-runner';
+import {checkSource, applyPrefixes, extractSamples} from './code-sample.js';
+import {startLog, log, flushLog, logFile} from './logger.js';
+import {runNode} from './node-runner.js';
 import {
   getTestResults,
   startFile,
@@ -18,11 +18,11 @@ import {
   finishFile,
   finishSample,
   startSample,
-} from './test-tracker';
-import {checkTs, ConfigBundle} from './ts-checker';
-import {CodeSample} from './types';
-import {writeTempFile, fileSlug} from './utils';
-import {VERSION} from './version';
+} from './test-tracker.js';
+import {CACHE_DIR, checkTs, ConfigBundle} from './ts-checker.js';
+import {CodeSample} from './types.js';
+import {writeTempFile, fileSlug} from './utils.js';
+import {VERSION} from './version.js';
 
 const argv = yargs
   .strict()
@@ -74,6 +74,11 @@ const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).confi
 const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
 
 console.log('Verifying with TypeScript', ts.version);
+if (!argv.nocache) {
+  console.log('Cache dir:', CACHE_DIR);
+} else {
+  console.log(chalk.yellow('Skipping cache (--nocache specified)'));
+}
 const spinner = argv.alsologtostderr ? null : ora('Initializing').start();
 
 const typeScriptBundle: ConfigBundle = {

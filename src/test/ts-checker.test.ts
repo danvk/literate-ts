@@ -10,8 +10,8 @@ import {
   getLanguageServiceHost,
   matchModuloWhitespace,
   sortUnions,
-} from '../ts-checker';
-import {dedent} from '../utils';
+} from '../ts-checker.js';
+import {dedent} from '../utils.js';
 
 describe('ts-checker', () => {
   describe('extractExpectedErrors', () => {

@@ -2,7 +2,8 @@
   "name": "literate-ts",
   "version": "1.3.0",
   "description": "Code samples that scale",
-  "main": "dist/index.js",
+  "exports": "./dist/index.js",
+  "type": "module",
   "repository": "https://github.com/danvk/literate-ts.git",
   "author": "Dan Vanderkam <danvdk@gmail.com>",
   "license": "MIT",
@@ -11,18 +12,20 @@
     "format": "prettier --write 'src/**/*.ts'",
     "format:check": "prettier --check 'src/**/*.ts'",
     "lint": "eslint 'src/**/*.ts'",
-    "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "bin": {
     "literate-ts": "./bin/literate-ts"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^5.3.0",
     "fast-json-stable-stringify": "^2.1.0",
+    "find-cache-dir": "^4.0.0",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",
+    "read-pkg-up": "^10.0.0",
     "tmp": "^0.1.0",
     "yargs": "^14.0.0"
   },
@@ -30,11 +33,12 @@
     "typescript": ">4.1"
   },
   "devDependencies": {
+    "@types/find-cache-dir": "^3.2.1",
     "@types/fs-extra": "^8.0.0",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.18",
     "@types/lodash": "^4.14.138",
-    "@types/node": "^12.7.4",
+    "@types/node": "16",
     "@types/ora": "^3.2.0",
     "@types/tmp": "^0.1.0",
     "@types/yargs": "^13.0.2",

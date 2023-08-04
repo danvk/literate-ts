@@ -1,5 +1,5 @@
-import {log, isLoggingToStderr} from './logger';
-import {CodeSample} from './types';
+import {log, isLoggingToStderr} from './logger.js';
+import {CodeSample} from './types.js';
 
 let currentFile: string;
 let currentSample: CodeSample | undefined;

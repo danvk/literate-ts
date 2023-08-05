@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path from 'path';
+import path, {isAbsolute} from 'path';
 
 import chalk from 'chalk';
 import glob from 'glob';
@@ -167,7 +167,8 @@ function setStatus(status: string) {
 }
 
 async function processSourceFile(path: string, fileNum: number, outOf: number) {
-  const fileStatus = `${fileNum}/${outOf}: ./${path}`;
+  const displayPath = isAbsolute(path) ? path : `./${path}`;
+  const fileStatus = `${fileNum}/${outOf}: ${displayPath}`;
   setStatus(fileStatus);
   startFile(path);
 

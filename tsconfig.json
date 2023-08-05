@@ -61,5 +61,10 @@
   },
   "exclude": [
     "examples",
-  ]
+  ],
+  "ts-node": {
+    // See https://stackoverflow.com/a/65163089/388951
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
 }

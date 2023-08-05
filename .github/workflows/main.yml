@@ -52,5 +52,8 @@ jobs:
 
       - uses: codecov/codecov-action@v3
 
+      - name: Type Check
+        run: yarn tsc --noEmit
+
       - name: Integration Test
         run: yarn check:asciidoc

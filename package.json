@@ -37,7 +37,7 @@
     "@types/find-cache-dir": "^3.2.1",
     "@types/fs-extra": "^8.0.0",
     "@types/glob": "^8.0.0",
-    "@types/jest": "^24.0.18",
+    "@types/jest": "^29.0.0",
     "@types/lodash": "^4.14.138",
     "@types/node": "16",
     "@types/ora": "^3.2.0",

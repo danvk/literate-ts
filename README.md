@@ -5,16 +5,16 @@ It was developed and used to type check [_Effective TypeScript_][ets] (O'Reilly 
 as the companion blog, [effectivetypescript.com][etsblog].
 
 <p align="center">
-	<a href="https://codecov.io/gh/danvk/literate-ts" target="_blank">
-		<img alt="Codecov Test Coverage" src="https://codecov.io/gh/danvk/literate-ts/branch/master/graph/badge.svg?token=EF5OX198BL"/>
-	</a>
-	<a href="https://github.com/danvk/literate-ts/blob/master/LICENSE" target="_blank">
+  <a href="https://codecov.io/gh/danvk/literate-ts" target="_blank">
+    <img alt="Codecov Test Coverage" src="https://codecov.io/gh/danvk/literate-ts/branch/master/graph/badge.svg?token=EF5OX198BL"/>
+  </a>
+  <a href="https://github.com/danvk/literate-ts/blob/master/LICENSE" target="_blank">
     <img alt="License: Apache2 📝" src="https://img.shields.io/github/license/danvk/literate-ts">
   </a>
-	<a href="https://github.com/sponsors/danvk" target="_blank">
+  <a href="https://github.com/sponsors/danvk" target="_blank">
     <img alt="Sponsor: On GitHub 💸" src="https://img.shields.io/badge/sponsor-on_github_💸-21bb42.svg" />
   </a>
-	<img alt="Style: Prettier 🧹" src="https://img.shields.io/badge/style-prettier_🧹-21bb42.svg" />
+  <img alt="Style: Prettier 🧹" src="https://img.shields.io/badge/style-prettier_🧹-21bb42.svg" />
   <img alt="TypeScript: Strict 💪" src="https://img.shields.io/badge/typescript-strict_💪-21bb42.svg" />
 </p>
 

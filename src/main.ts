@@ -211,8 +211,9 @@ export function main() {
     if (spinner) spinner.stop();
 
     for (const [file, fileResults] of Object.entries(getTestResults())) {
+      const displayPath = isAbsolute(file) ? path : `./${file}`;
       const numPassed = _.sum(_.map(fileResults, n => (n === 0 ? 1 : 0)));
-      console.log(`./${file}`, `${numPassed}/${_.size(fileResults)} passed`);
+      console.log(`./${displayPath}`, `${numPassed}/${_.size(fileResults)} passed`);
       for (const [id, failures] of Object.entries(fileResults)) {
         numTotal += 1;
         if (failures > 0) {

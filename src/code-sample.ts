@@ -61,17 +61,11 @@ function process(
         prependNext = true;
       } else if (directive.startsWith('prepend-subset-to-following:')) {
         prependNext = true;
-        prependLines = directive
-          .split(':', 2)[1]
-          .split('-')
-          .map(Number);
+        prependLines = directive.split(':', 2)[1].split('-').map(Number);
       } else if (directive.startsWith('prepend-id-to-following')) {
         prefixes = prefixes.concat([
           {
-            id: directive
-              .split(':')
-              .slice(1)
-              .join(':'),
+            id: directive.split(':').slice(1).join(':'),
           },
         ]);
       } else if (directive.startsWith('skip')) {

@@ -28,7 +28,7 @@
     "ora": "^7.0.0",
     "read-pkg-up": "^10.0.0",
     "tmp": "^0.2.0",
-    "yargs": "^14.0.0"
+    "yargs": "^17.0.0"
   },
   "peerDependencies": {
     "typescript": ">4.1"
@@ -42,7 +42,7 @@
     "@types/node": "18",
     "@types/ora": "^3.2.0",
     "@types/tmp": "^0.2.0",
-    "@types/yargs": "^13.0.2",
+    "@types/yargs": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "eslint": "^6.3.0",

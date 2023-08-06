@@ -24,7 +24,7 @@ import {CodeSample} from './types.js';
 import {writeTempFile, fileSlug} from './utils.js';
 import {VERSION} from './version.js';
 
-const argv = yargs
+const argv = yargs(process.argv.slice(2))
   .strict()
   .demandCommand(1, 'Must specify path to at least one source file.')
   .options({
@@ -53,9 +53,9 @@ const argv = yargs
     'version',
     [`literate-ts version: ${VERSION}`, `TypeScript version: ${ts.version}`].join('\n'),
   )
-  .parse();
+  .parseSync();
 
-const sourceFiles = argv._;
+const sourceFiles = argv._.map(String);
 startLog(!!argv.alsologtostderr);
 
 const sources: {[id: string]: string} = {};

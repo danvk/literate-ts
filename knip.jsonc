@@ -4,7 +4,7 @@
 		"index.ts"
 	],
 	"ignore": [
-		"bin"
+		"bin/**"
 	],
 	"ignoreBinaries": [],
 	"ignoreDependencies": [],

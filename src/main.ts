@@ -2,7 +2,7 @@ import fs from 'fs';
 import path, {isAbsolute} from 'path';
 
 import chalk from 'chalk';
-import glob from 'glob';
+import glob from 'fast-glob';
 import _ from 'lodash';
 import ora from 'ora';
 import ts from 'typescript';

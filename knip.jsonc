@@ -3,7 +3,9 @@
 	"entry": [
 		"index.ts"
 	],
-	"ignore": [],
+	"ignore": [
+		"bin"
+	],
 	"ignoreBinaries": [],
 	"ignoreDependencies": [],
 	"ignoreExportsUsedInFile": true,

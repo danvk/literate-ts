@@ -3,9 +3,7 @@
 	"entry": [
 		"index.ts"
 	],
-	"ignore": [
-		"bin/literate-ts.js"
-	],
+	"ignore": [],
 	"ignoreBinaries": [],
 	"ignoreDependencies": [],
 	"ignoreExportsUsedInFile": true,

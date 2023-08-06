@@ -44,16 +44,17 @@ jobs:
       - name: Prettier
         run: yarn format:check
 
-      - name: Knip
-        run: yarn knip
-
       - name: Test
         run: yarn test --coverage
 
       - uses: codecov/codecov-action@v3
 
       - name: Type Check
-        run: yarn tsc --noEmit
+        run: yarn tsc
+
+      # knip runs after tsc so that files can reference the `dist` dir.
+      - name: Knip
+        run: yarn knip
 
       - name: Integration Test
         run: yarn check:asciidoc

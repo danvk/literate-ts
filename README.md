@@ -300,6 +300,40 @@ be careful not to mislead the reader when you do this.
 - `--alsologtostderr`: Log to stderr in addition to a log file.
 - `--nocache`: Disable reading and writing from on-disk cache. If this results in different behavior, please file an issue. The cache is in `node_modules/.cache/literate-ts`. Delete this directory to clear the cache.
 
+## VS Code Integration
+
+It's extremely convenient to run literate-ts as a task in VS Code since it will show errors inline in your document. You need to set up a task with an appropriate `problemMatcher` to make this work. Add the following to your `tasks.json` (change `yarn` to another package manager as needed):
+
+```jsonc
+{
+  "label": "Run file through literate-ts",
+  "command": "yarn",
+  "args": [
+      "literate-ts",
+      "${file}",
+  ],
+  "presentation": {
+      "echo": true,
+      "reveal": "never",
+      "revealProblems": "onProblem",
+      "close": true,
+      "panel": "shared",
+      "showReuseMessage": true,
+      "clear": false
+  },
+  "problemMatcher": {
+      "owner": "literate-ts",
+      "fileLocation": "absolute",
+      "pattern": {
+        "regexp": "^💥 (.*?):(\\d+): (.*)$",
+        "file": 1,
+        "line": 2,
+        "message": 3
+      }
+  },
+}
+```
+
 ## Development
 
 Quickstart:

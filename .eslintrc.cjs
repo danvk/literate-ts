@@ -13,5 +13,7 @@ module.exports =  {
     '@typescript-eslint/no-use-before-define': 'off',
     // Let tsc handle these
     '@typescript-eslint/no-unused-vars': 'off',
+    // sometimes any is just really convenient
+    '@typescript-eslint/no-explicit-any': 'warn'
   }
 };

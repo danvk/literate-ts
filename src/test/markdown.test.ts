@@ -1,5 +1,5 @@
 import fs from 'fs';
-import glob from 'glob';
+import glob from 'fast-glob';
 import path from 'path';
 
 import {extractSamples} from '../code-sample.js';

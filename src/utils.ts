@@ -76,9 +76,7 @@ export function dedent(strings: TemplateStringsArray, ...values: (string | numbe
 }
 
 export function sha256(message: string) {
-  return createHash('sha256')
-    .update(message)
-    .digest('hex');
+  return createHash('sha256').update(message).digest('hex');
 }
 
 export const tuple = <Args extends unknown[]>(...args: Args): Args => args;

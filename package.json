@@ -16,7 +16,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "bin": {
-    "literate-ts": "./bin/literate-ts"
+    "literate-ts": "./bin/literate-ts.js"
   },
   "dependencies": {
     "chalk": "^5.3.0",

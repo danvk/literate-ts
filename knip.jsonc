@@ -4,7 +4,7 @@
 		"index.ts"
 	],
 	"ignore": [
-		"bin/**"
+		"bin/literate-ts.js"
 	],
 	"ignoreBinaries": [],
 	"ignoreDependencies": [],

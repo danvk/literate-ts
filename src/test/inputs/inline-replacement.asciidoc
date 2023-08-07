@@ -1,0 +1,31 @@
+You can also define replacements inline in your file, presumably hidden away in a comment. This is done using the `replace-with-id` directive. Here's an example of that in action.
+
+// verifier:replace-with-id:calculate-age-replacement
+[source,ts]
+----
+function calculateAge(birthDate: Date): number {
+  // ...
+}
+----
+
+////
+[[calculate-age-replacement]]
+[source,ts]
+----
+function calculateAge(birthDate: Date): number {
+  // COMPRESS
+  return 0;
+  // END
+}
+----
+////
+
+And here's an example of that failing to match. Note that the replacement and the original may be defined in either order.
+
+// verifier:replace-with-id:calculate-age-replacement
+[source,ts]
+----
+function calculateAge(birthDate: string): number {
+  // ...
+}
+----

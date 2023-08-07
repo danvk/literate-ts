@@ -85,7 +85,7 @@ function process(
         nextShouldCheckJs = true;
         tsOptions['allowJs'] = true; // convenience, it's useless without this!
         tsOptions['noEmit'] = true;
-      } else if (directive === 'replace-with-id') {
+      } else if (directive.startsWith('replace-with-id')) {
         nextIsReplaced = directive.split(':', 2)[1];
       } else {
         throw new Error(`Unknown directive: ${directive}`);

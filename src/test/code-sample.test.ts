@@ -323,44 +323,68 @@ describe('applyReplacements', () => {
     id: 'foo',
     content: '',
   };
+
+  const compressed = dedent`
+  function foo() {
+    // ...
+  }
+  const x = foo();`;
+  const full = dedent`
+  function foo() {
+    // COMPRESS
+    return 1 + 2 + 3;
+    // END
+  }
+  const x = foo();`;
+
   it('should apply external replacements', () => {
     expect(
       applyReplacements(
         [
           {
             ...foo,
-            content: dedent`
-        function foo() {
-          // ...
-        }
-        const x = foo();`,
+            content: compressed,
           },
         ],
         {
-          foo: dedent`
-        function foo() {
-          // COMPRESS
-          return 1 + 2 + 3;
-          // END
-        }
-        const x = foo();`,
+          foo: full,
         },
       ),
     ).toEqual([
       {
         ...foo,
-        content: dedent`
-        function foo() {
-          // COMPRESS
-          return 1 + 2 + 3;
-          // END
-        }
-        const x = foo();`,
+        content: full,
       },
     ]);
   });
 
   it('should apply inline replacements', () => {
-    expect(true).toBeTruthy();
+    expect(
+      applyReplacements(
+        [
+          {
+            ...foo,
+            content: compressed,
+            replacementId: 'replace',
+          },
+          {
+            ...foo,
+            id: 'replace',
+            content: full,
+          },
+        ],
+        {},
+      ),
+    ).toEqual([
+      {
+        ...foo,
+        content: full,
+      },
+      {
+        ...foo,
+        id: 'replace',
+        content: full,
+      },
+    ]);
   });
 });

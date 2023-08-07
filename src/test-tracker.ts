@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {log, isLoggingToStderr} from './logger.js';
 import {CodeSample} from './types.js';
 
@@ -32,14 +33,36 @@ export function finishSample() {
   lastFailReason = null;
 }
 
-let lastFailReason: string | null = null;
-export function fail(message: string, sample?: CodeSample) {
+export interface FailureLocation {
+  line: number;
+  start: number;
+  end: number;
+}
+
+export interface FailureContext {
+  sample?: CodeSample;
+  location?: FailureLocation;
+}
+
+let lastFailReason: {message: string; location?: FailureLocation} | null = null;
+export function fail(message: string, context: FailureContext = {}) {
+  let {sample} = context;
   if (sample === undefined) {
     sample = currentSample;
   }
-  lastFailReason = message;
+  lastFailReason = {message, location: context.location};
 
-  const fullMessage = `💥 ${sample?.descriptor}: ${message}`;
+  let {location} = context;
+  if (location && sample) {
+    // Change to a location in the source file. The +1 is for 1-based line numbers.
+    location = {...location, line: location.line + sample.lineNumber - sample.prefixesLength + 1};
+  }
+
+  const fullMessage = location
+    ? `💥 ${sample?.sourceFile}:${location.line}:${1 + location.start}-${
+        1 + location.end
+      }: ${message}`
+    : `💥 ${sample?.descriptor}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error('\n' + fullMessage);
   }
@@ -49,7 +72,7 @@ export function fail(message: string, sample?: CodeSample) {
   }
 }
 
-export function getLastFailReason(): string | null {
+export function getLastFailReason() {
   return lastFailReason;
 }
 

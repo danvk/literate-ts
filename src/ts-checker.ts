@@ -7,7 +7,7 @@ import path from 'path';
 import ts from 'typescript';
 
 import {log} from './logger.js';
-import {fail, getLastFailReason} from './test-tracker.js';
+import {FailureContext, FailureLocation, fail, getLastFailReason} from './test-tracker.js';
 import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils.js';
 import {CodeSample} from './types.js';
 import {ExecErrorType, runNode} from './node-runner.js';
@@ -136,14 +136,14 @@ function checkMatchingErrors(expectedErrorsIn: TypeScriptError[], actualErrors: 
       }
     } else {
       const {line, start, end, message} = error;
-      fail(`Unexpected TypeScript error: ${line}:${start}-${end}: ${message}`);
+      fail(`Unexpected TypeScript error: ${message}`, {location: {line, start, end}});
       anyFailures = true;
     }
   }
 
   for (const error of expectedErrors) {
     const {line, start, end, message} = error;
-    fail(`Expected TypeScript error was not produced: ${line}:${start}-${end}: ${message}`);
+    fail(`Expected TypeScript error was not produced: ${message}`, {location: {line, start, end}});
     anyFailures = true;
   }
 
@@ -301,11 +301,20 @@ export function checkExpectTypeAssertions(
         const actualType = checker.typeToString(type, nodeForType);
 
         if (!typesMatch(assertion.type, actualType)) {
+          const {character: start} = source.getLineAndCharacterOfPosition(nodeForType.getStart());
+          const {character: end} = source.getLineAndCharacterOfPosition(nodeForType.getEnd());
           const testedText = node !== nodeForType ? ` (tested \`${nodeForType.getText()}\`)` : '';
           fail(
             `Failed type assertion for \`${node.getText()}\`${testedText}\n` +
               `  Expected: ${assertion.type}\n` +
               `    Actual: ${actualType}`,
+            {
+              location: {
+                line,
+                start,
+                end,
+              },
+            },
           );
           anyFailures = true;
         } else {
@@ -476,7 +485,7 @@ export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceH
 
 export interface CheckTsResult {
   passed: boolean;
-  failReason?: string;
+  failure?: {message: string; location?: FailureLocation};
   output?: ExecErrorType;
   // TODO: include more details about errors
 }
@@ -513,15 +522,16 @@ export async function checkTs(
   if (hit && !options.skipCache) {
     const result = await fs.readFile(tempFilePath, 'utf8');
     const {key: _, ...out} = JSON.parse(result) as CheckTsResult & {key: unknown};
-    if (out.failReason) {
-      fail(out.failReason);
+    if (out.failure) {
+      const {message, ...context} = out.failure;
+      fail(message, context);
     }
     return out;
   }
 
   const result = await uncachedCheckTs(sample, runCode, config);
   if (result.passed === false) {
-    result.failReason = getLastFailReason() ?? undefined;
+    result.failure = getLastFailReason() ?? undefined;
   }
 
   if (!options.skipCache) {

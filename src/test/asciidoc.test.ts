@@ -92,7 +92,8 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        descriptor: './source.asciidoc:4',
+        descriptor: './source.asciidoc:5',
+        lineNumber: 7,
         id: 'greet-ts',
         content: dedent`
           function greet(who: string) {
@@ -108,8 +109,9 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
         id: 'noid-10',
+        lineNumber: 10,
         content: `console.log('Hello', 'TS');`,
       },
     ]);
@@ -147,7 +149,8 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        descriptor: './source.asciidoc:2',
+        descriptor: './source.asciidoc:3',
+        lineNumber: 5,
         id: 'implicit-any',
         content: `const x: number = null;`,
         tsOptions: {
@@ -158,7 +161,8 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
+        lineNumber: 13,
         id: 'strict',
         content: `const x: number = null;`,
         tsOptions: {
@@ -192,7 +196,8 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        descriptor: './source.asciidoc:27',
+        descriptor: './source.asciidoc:28',
+        lineNumber: 30,
         id: 'prepended-with-ids',
         content: `console.log(a);`,
         prefixes: [{id: 'prefix'}, {id: 'combined'}],
@@ -223,7 +228,8 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
+        lineNumber: 10,
         id: 'prepend-subset-of-id-10',
         content: `function foo(abc: ABC) {}`,
         prefixes: [{id: 'type-and-func', lines: [1, 1]}],
@@ -249,7 +255,8 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        descriptor: './source.asciidoc:1',
+        descriptor: './source.asciidoc:2',
+        lineNumber: 4,
         id: 'tsx-example',
         content: `console.log(a);`,
         isTSX: true,
@@ -287,7 +294,8 @@ describe('extractSamples', () => {
       {
         ...baseExtract,
         language: 'ts',
-        descriptor: './source.asciidoc:13',
+        descriptor: './source.asciidoc:14',
+        lineNumber: 16,
         id: 'back-in-business',
         content: `const backInBusiness = 23;`,
       },
@@ -318,7 +326,8 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:4',
+        descriptor: './source.asciidoc:5',
+        lineNumber: 4,
         id: 'header-reset-4',
         sectionHeader: 'Chapter 1',
         language: 'ts',
@@ -326,8 +335,9 @@ describe('extractSamples', () => {
       },
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:11',
+        descriptor: './source.asciidoc:12',
         id: 'header-reset-11',
+        lineNumber: 11,
         sectionHeader: 'Chapter 2',
         language: 'ts',
         content: `const x = 12;`,
@@ -356,7 +366,8 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:4',
+        descriptor: './source.asciidoc:5',
+        lineNumber: 4,
         id: 'header-reset-4',
         sectionHeader: 'Chapter 1',
         language: 'ts',
@@ -364,8 +375,9 @@ describe('extractSamples', () => {
       },
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
         id: 'header-reset-10',
+        lineNumber: 10,
         sectionHeader: 'Chapter 1',
         language: 'ts',
         content: `const x = 12;`,
@@ -399,7 +411,8 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
+        lineNumber: 10,
         id: 'header-reset-done-with-file-10',
         sectionHeader: 'Chapter 2',
         language: 'ts',

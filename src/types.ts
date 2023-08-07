@@ -15,7 +15,10 @@ export interface CodeSample {
   checkJS: boolean;
   tsOptions: CompilerOptions;
   sourceFile: string;
+  lineNumber: number;
   nodeModules: readonly string[];
+  /** Combined length of prefixes, for offsetting error messages */
+  prefixesLength: number;
   output?: SampleOutput;
 }
 

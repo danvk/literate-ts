@@ -7,6 +7,7 @@ export const baseSample = {
   checkJS: false,
   sectionHeader: null,
   sourceFile: 'source.asciidoc',
+  prefixesLength: 0,
 };
 
 export const baseExtract = {

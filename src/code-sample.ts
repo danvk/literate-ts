@@ -7,6 +7,7 @@ import {extractMarkdownSamples} from './markdown.js';
 import {generateIdMetadata} from './metadata.js';
 
 export interface Processor {
+  /** Let the processor know about the current line number (0-based). */
   setLineNum(line: number): void;
   setHeader(header: string): void;
   setDirective(directive: string): void;
@@ -122,7 +123,9 @@ function process(
             isTSX: nextIsTSX,
             checkJS: nextShouldCheckJs,
             sourceFile,
+            lineNumber: lineNum,
             tsOptions: {...tsOptions},
+            prefixesLength: 0,
           });
         }
         if (prependNext) {
@@ -183,7 +186,7 @@ Stripped source file sample:
 ${strippedSource.trim()}
 ----
       `.trimStart(),
-      sample,
+      {sample},
     );
     return false;
   }
@@ -205,10 +208,10 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       throw new Error(`Logic error: sample {sample.id} was not replaced.`);
     }
     const prefixes = sample.id.endsWith('-output') ? [] : sample.prefixes;
-    const content = prefixes
-      .map(({id, lines}) => sliceLines(idToSample[id].content, lines))
-      .concat([sample.content])
-      .join('\n');
+    const combinedPrefixes = prefixes.map(({id, lines}) =>
+      sliceLines(idToSample[id].content, lines),
+    );
+    const content = combinedPrefixes.concat([sample.content]).join('\n');
     return {
       descriptor: sample.descriptor,
       id: sample.id,
@@ -219,6 +222,8 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       isTSX: sample.isTSX,
       checkJS: sample.checkJS,
       sourceFile: sample.sourceFile,
+      lineNumber: sample.lineNumber,
+      prefixesLength: _.sum(combinedPrefixes.map(p => p.split('\n').length)),
       content,
     };
   });

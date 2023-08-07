@@ -9,9 +9,6 @@
       "command": "yarn ts-node index.ts ${file}",
       "problemMatcher": [
         {
-          "base": "$tsc-watch"
-        },
-        {
           "owner": "literate-ts",
           "fileLocation": "absolute",
           "pattern": [

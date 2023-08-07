@@ -331,7 +331,22 @@ It's extremely convenient to run literate-ts as a task in VS Code since it will 
       "showReuseMessage": true,
       "clear": false
   },
-  "problemMatcher": {
+  "problemMatcher": [
+    {
+      "owner": "literate-ts",
+      "fileLocation": "absolute",
+      "pattern": [
+        {
+          "regexp": "^💥 (.*?):(\\d+):(\\d+)-(\\d+): (.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "endColumn": 4,
+          "message": 5,
+        }
+      ]
+    },
+    {
       "owner": "literate-ts",
       "fileLocation": "absolute",
       "pattern": {
@@ -340,7 +355,8 @@ It's extremely convenient to run literate-ts as a task in VS Code since it will 
         "line": 2,
         "message": 3
       }
-  },
+    }
+  ]
 }
 ```
 

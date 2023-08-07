@@ -51,14 +51,17 @@ describe('code-sample', () => {
     expect(applyPrefixes(extractSamples(ASCIIDOC_PREPEND, 'prepend', 'source.asciidoc'))).toEqual([
       {
         ...baseSample,
-        descriptor: './source.asciidoc:3',
+        descriptor: './source.asciidoc:4',
+        lineNumber: 6,
         language: 'ts',
         id: 'prefix',
         content: `type AB = 'a' | 'b';`,
       },
       {
         ...baseSample,
-        descriptor: './source.asciidoc:9',
+        descriptor: './source.asciidoc:10',
+        lineNumber: 12,
+        prefixesLength: 1,
         language: 'ts',
         id: 'combined',
         content: dedent`
@@ -67,7 +70,8 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
-        descriptor: './source.asciidoc:17',
+        descriptor: './source.asciidoc:18',
+        lineNumber: 20,
         language: 'ts',
         id: 'final',
         content: `const a: AB = 'a';`,
@@ -81,14 +85,16 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
-        descriptor: './source.asciidoc:4',
+        descriptor: './source.asciidoc:5',
+        lineNumber: 4,
         language: 'ts',
         id: 'mpd-4',
         content: `type AB = 'a' | 'b';`,
       },
       {
         ...baseSample,
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
+        lineNumber: 10,
         language: 'ts',
         id: 'mpd-10',
         content: dedent`
@@ -97,7 +103,9 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
-        descriptor: './source.asciidoc:15',
+        descriptor: './source.asciidoc:16',
+        lineNumber: 15,
+        prefixesLength: 2,
         language: 'ts',
         id: 'mpd-15',
         content: dedent`
@@ -147,9 +155,11 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
+        lineNumber: 13,
         language: 'ts',
         id: 'b',
+        prefixesLenth: 3,
         content: dedent`
         interface Person {
           name: string;
@@ -186,7 +196,8 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
-        descriptor: './source.asciidoc:1',
+        descriptor: './source.asciidoc:2',
+        lineNumber: 1,
         language: 'js',
         id: 'a',
         content: dedent`

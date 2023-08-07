@@ -69,6 +69,10 @@ function process(
             id: directive.split(':', 2)[1],
           },
         ]);
+      } else if (directive.startsWith('prepend-subset-of-id-to-following')) {
+        const [, id, lineRange] = directive.split(':');
+        const lines = lineRange.split('-').map(Number);
+        prefixes = prefixes.concat([{id, lines}]);
       } else if (directive.startsWith('skip')) {
         skipNext = true;
       } else if (directive.startsWith('done-with-file')) {

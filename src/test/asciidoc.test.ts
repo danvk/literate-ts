@@ -200,6 +200,37 @@ describe('extractSamples', () => {
     ]);
   });
 
+  test('prepend-subset-of-id', () => {
+    const samples = extractSamples(
+      dedent`
+  [[type-and-func]]
+  [source,ts]
+  ----
+  type ABC = 'A' | 'B' | 'C';
+  function foo() {}
+  ----
+
+  // verifier:prepend-subset-of-id-to-following:type-and-func:1-1
+  [source,ts]
+  ----
+  function foo(abc: ABC) {}
+  ----
+  `,
+      'prepend-subset-of-id',
+      'source.asciidoc',
+    );
+    expect(samples.slice(-1)).toEqual([
+      {
+        ...baseExtract,
+        language: 'ts',
+        descriptor: './source.asciidoc:10',
+        id: 'prepend-subset-of-id-10',
+        content: `function foo(abc: ABC) {}`,
+        prefixes: [{id: 'type-and-func', lines: [1, 1]}],
+      },
+    ]);
+  });
+
   test('next-is-tsx', () => {
     expect(
       extractSamples(

@@ -32,14 +32,32 @@ export function finishSample() {
   lastFailReason = null;
 }
 
+interface FailureContext {
+  sample?: CodeSample;
+  location?: {
+    line: number;
+    start: number;
+    end: number;
+  };
+}
+
 let lastFailReason: string | null = null;
-export function fail(message: string, sample?: CodeSample) {
+export function fail(message: string, context: FailureContext = {}) {
+  let {sample} = context;
   if (sample === undefined) {
     sample = currentSample;
   }
   lastFailReason = message;
 
-  const fullMessage = `💥 ${sample?.descriptor}: ${message}`;
+  const {location} = context;
+  if (location && sample) {
+    // Change to a location in the source file. The +1 is for 1-based line numbers.
+    location.line += sample.lineNumber - sample.prefixesLength + 1;
+  }
+
+  const fullMessage = location
+    ? `💥 ${sample?.sourceFile}:${location.line}:${location.start}-${location.end}: ${message}`
+    : `💥 ${sample?.descriptor}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error('\n' + fullMessage);
   }

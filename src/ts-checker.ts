@@ -136,14 +136,14 @@ function checkMatchingErrors(expectedErrorsIn: TypeScriptError[], actualErrors: 
       }
     } else {
       const {line, start, end, message} = error;
-      fail(`Unexpected TypeScript error: ${line}:${start}-${end}: ${message}`);
+      fail(`Unexpected TypeScript error: ${message}`, {location: {line, start, end}});
       anyFailures = true;
     }
   }
 
   for (const error of expectedErrors) {
     const {line, start, end, message} = error;
-    fail(`Expected TypeScript error was not produced: ${line}:${start}-${end}: ${message}`);
+    fail(`Expected TypeScript error was not produced: ${message}`, {location: {line, start, end}});
     anyFailures = true;
   }
 
@@ -301,11 +301,20 @@ export function checkExpectTypeAssertions(
         const actualType = checker.typeToString(type, nodeForType);
 
         if (!typesMatch(assertion.type, actualType)) {
+          const {character: start} = source.getLineAndCharacterOfPosition(nodeForType.getStart());
+          const {character: end} = source.getLineAndCharacterOfPosition(nodeForType.getEnd());
           const testedText = node !== nodeForType ? ` (tested \`${nodeForType.getText()}\`)` : '';
           fail(
             `Failed type assertion for \`${node.getText()}\`${testedText}\n` +
               `  Expected: ${assertion.type}\n` +
               `    Actual: ${actualType}`,
+            {
+              location: {
+                line,
+                start,
+                end,
+              },
+            },
           );
           anyFailures = true;
         } else {

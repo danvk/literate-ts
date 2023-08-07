@@ -322,6 +322,8 @@ describe('applyReplacements', () => {
     descriptor: './source.asciidoc:4',
     id: 'foo',
     content: '',
+    prefixesLength: 0,
+    lineNumber: 4,
   };
 
   const compressed = dedent`

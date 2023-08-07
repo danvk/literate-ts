@@ -33,6 +33,7 @@ function process(
   let skipRemaining = false;
   let prependNext = false;
   let prependLines: number[] | null = null;
+  let nextIsReplaced: string | null = null;
   let nodeModules: readonly string[] = [];
   let tsOptions: {[key: string]: string | boolean} = {};
   let nextIsTSX = false;
@@ -65,7 +66,7 @@ function process(
       } else if (directive.startsWith('prepend-id-to-following')) {
         prefixes = prefixes.concat([
           {
-            id: directive.split(':').slice(1).join(':'),
+            id: directive.split(':', 2)[1],
           },
         ]);
       } else if (directive.startsWith('skip')) {
@@ -84,6 +85,8 @@ function process(
         nextShouldCheckJs = true;
         tsOptions['allowJs'] = true; // convenience, it's useless without this!
         tsOptions['noEmit'] = true;
+      } else if (directive.startsWith('replace-with-id')) {
+        nextIsReplaced = directive.split(':', 2)[1];
       } else {
         throw new Error(`Unknown directive: ${directive}`);
       }
@@ -110,6 +113,7 @@ function process(
             language: lastLanguage as CodeSample['language'],
             content,
             prefixes,
+            replacementId: nextIsReplaced ?? undefined,
             nodeModules,
             isTSX: nextIsTSX,
             checkJS: nextShouldCheckJs,
@@ -135,6 +139,7 @@ function process(
       skipNext = false;
       nextIsTSX = false;
       nextShouldCheckJs = false;
+      nextIsReplaced = null;
     },
   };
 
@@ -181,10 +186,8 @@ ${strippedSource.trim()}
   return true;
 }
 
-export function applyPrefixes(
-  samples: PrefixedCodeSample[],
-  sources: {[id: string]: string} = {},
-): CodeSample[] {
+/** Combine a code sample with all active prefixes to form a standalone code sample. */
+export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
   const idToSample = _.keyBy(samples, 'id');
   const sliceLines = (text: string, lines: number[] | undefined) =>
     lines
@@ -194,10 +197,13 @@ export function applyPrefixes(
           .join('\n')
       : text;
   return samples.map(sample => {
+    if (sample.replacementId) {
+      throw new Error(`Logic error: sample {sample.id} was not replaced.`);
+    }
     const prefixes = sample.id.endsWith('-output') ? [] : sample.prefixes;
     const content = prefixes
-      .map(({id, lines}) => sliceLines(sources[id] || idToSample[id].content, lines))
-      .concat([sources[sample.id] || sample.content])
+      .map(({id, lines}) => sliceLines(idToSample[id].content, lines))
+      .concat([sample.content])
       .join('\n');
     return {
       descriptor: sample.descriptor,
@@ -212,6 +218,44 @@ export function applyPrefixes(
       content,
     };
   });
+}
+
+export function applyReplacements(
+  rawSamples: readonly Readonly<PrefixedCodeSample>[],
+  externalReplacements: {[id: string]: string} = {},
+): PrefixedCodeSample[] {
+  const samples = _.cloneDeep(rawSamples) as PrefixedCodeSample[];
+  const idToSample = _.keyBy(samples, 'id');
+
+  // First check the external replacements
+  for (const sample of samples) {
+    const {id} = sample;
+    const source = externalReplacements[id];
+    if (source) {
+      checkSource(sample, source);
+      sample.content = source;
+    }
+  }
+  // TODO: flag unused replacements
+
+  // Next do the inline replacements
+  for (const sample of samples) {
+    const {replacementId} = sample;
+    if (!replacementId) {
+      continue;
+    }
+
+    const replacementSample = idToSample[replacementId];
+    if (!replacementSample) {
+      fail(`No sample with ID ${replacementId} to replace ${sample.id}.`);
+    } else {
+      checkSource(sample, replacementSample.content);
+      sample.content = replacementSample.content;
+      delete sample.replacementId;
+    }
+  }
+
+  return samples;
 }
 
 export function extractSamples(text: string, slug: string, sourceFile: string) {

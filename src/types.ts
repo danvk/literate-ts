@@ -26,6 +26,7 @@ export interface Prefix {
 
 export interface PrefixedCodeSample extends CodeSample {
   prefixes: readonly Prefix[];
+  replacementId?: string;
 }
 
 export interface SampleOutput {

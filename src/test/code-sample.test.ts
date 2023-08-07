@@ -1,6 +1,7 @@
-import {stripSource, applyPrefixes, extractSamples} from '../code-sample.js';
+import {stripSource, applyPrefixes, extractSamples, applyReplacements} from '../code-sample.js';
+import {PrefixedCodeSample} from '../types.js';
 import {dedent} from '../utils.js';
-import {baseSample} from './common.js';
+import {baseExtract, baseSample} from './common.js';
 
 const ASCIIDOC_PREPEND = `
 
@@ -311,5 +312,79 @@ describe('stripSource', () => {
     ).toEqual(dedent`
       function foo() { /* ... */ }
       const x = foo();`);
+  });
+});
+
+describe('applyReplacements', () => {
+  const foo: PrefixedCodeSample = {
+    ...baseExtract,
+    language: 'ts',
+    descriptor: './source.asciidoc:4',
+    id: 'foo',
+    content: '',
+  };
+
+  const compressed = dedent`
+  function foo() {
+    // ...
+  }
+  const x = foo();`;
+  const full = dedent`
+  function foo() {
+    // COMPRESS
+    return 1 + 2 + 3;
+    // END
+  }
+  const x = foo();`;
+
+  it('should apply external replacements', () => {
+    expect(
+      applyReplacements(
+        [
+          {
+            ...foo,
+            content: compressed,
+          },
+        ],
+        {
+          foo: full,
+        },
+      ),
+    ).toEqual([
+      {
+        ...foo,
+        content: full,
+      },
+    ]);
+  });
+
+  it('should apply inline replacements', () => {
+    expect(
+      applyReplacements(
+        [
+          {
+            ...foo,
+            content: compressed,
+            replacementId: 'replace',
+          },
+          {
+            ...foo,
+            id: 'replace',
+            content: full,
+          },
+        ],
+        {},
+      ),
+    ).toEqual([
+      {
+        ...foo,
+        content: full,
+      },
+      {
+        ...foo,
+        id: 'replace',
+        content: full,
+      },
+    ]);
   });
 });

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {log, isLoggingToStderr} from './logger.js';
 import {CodeSample} from './types.js';
 
@@ -32,27 +33,29 @@ export function finishSample() {
   lastFailReason = null;
 }
 
-interface FailureContext {
-  sample?: CodeSample;
-  location?: {
-    line: number;
-    start: number;
-    end: number;
-  };
+export interface FailureLocation {
+  line: number;
+  start: number;
+  end: number;
 }
 
-let lastFailReason: string | null = null;
+export interface FailureContext {
+  sample?: CodeSample;
+  location?: FailureLocation;
+}
+
+let lastFailReason: {message: string; location?: FailureLocation} | null = null;
 export function fail(message: string, context: FailureContext = {}) {
   let {sample} = context;
   if (sample === undefined) {
     sample = currentSample;
   }
-  lastFailReason = message;
+  lastFailReason = {message, location: context.location};
 
-  const {location} = context;
+  let {location} = context;
   if (location && sample) {
     // Change to a location in the source file. The +1 is for 1-based line numbers.
-    location.line += sample.lineNumber - sample.prefixesLength + 1;
+    location = {...location, line: location.line + sample.lineNumber - sample.prefixesLength + 1};
   }
 
   const fullMessage = location
@@ -69,7 +72,7 @@ export function fail(message: string, context: FailureContext = {}) {
   }
 }
 
-export function getLastFailReason(): string | null {
+export function getLastFailReason() {
   return lastFailReason;
 }
 

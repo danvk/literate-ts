@@ -6,18 +6,27 @@
     {
       "label": "Run file through literate-ts",
       "type": "shell",
-      "command": "yarn ts-node index.ts --nocache ${file}",
+      "command": "yarn ts-node index.ts ${file}",
       "problemMatcher": [
         {
           "owner": "literate-ts",
           "fileLocation": "absolute",
-          "pattern": {
+          "pattern": [{
             "regexp": "^💥 (.*?):(\\d+):(\\d+)-(\\d+): (.*)$",
             "file": 1,
             "line": 2,
             "column": 3,
             "endColumn": 4,
             "message": 5
+          }]
+        },
+        {
+          "owner": "literate-ts",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "^ *(Expected|Actual): (.*)$",
+            "message": 2,
+            "loop": true
           }
         },
         {

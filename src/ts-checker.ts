@@ -7,7 +7,7 @@ import path from 'path';
 import ts from 'typescript';
 
 import {log} from './logger.js';
-import {fail, getLastFailReason} from './test-tracker.js';
+import {FailureContext, FailureLocation, fail, getLastFailReason} from './test-tracker.js';
 import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils.js';
 import {CodeSample} from './types.js';
 import {ExecErrorType, runNode} from './node-runner.js';
@@ -485,7 +485,7 @@ export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceH
 
 export interface CheckTsResult {
   passed: boolean;
-  failReason?: string;
+  failure?: {message: string; location?: FailureLocation};
   output?: ExecErrorType;
   // TODO: include more details about errors
 }
@@ -522,15 +522,16 @@ export async function checkTs(
   if (hit && !options.skipCache) {
     const result = await fs.readFile(tempFilePath, 'utf8');
     const {key: _, ...out} = JSON.parse(result) as CheckTsResult & {key: unknown};
-    if (out.failReason) {
-      fail(out.failReason);
+    if (out.failure) {
+      const {message, ...context} = out.failure;
+      fail(message, context);
     }
     return out;
   }
 
   const result = await uncachedCheckTs(sample, runCode, config);
   if (result.passed === false) {
-    result.failReason = getLastFailReason() ?? undefined;
+    result.failure = getLastFailReason() ?? undefined;
   }
 
   if (!options.skipCache) {

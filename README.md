@@ -230,6 +230,10 @@ See above for how to give directive to literate-ts in your source format.
     Start prepending a sample from earlier in the source file. Useful to reestablish some
     context after a `reset`.
   </dd>
+  <dt>verifier:prepend-subset-of-id-to-following:ID:A-B</dt>
+  <dd>
+    Combination of the previous two directives. This is often if a code sample introduces a type and a function, then a subsequent code sample wants to use the type but re-define the function.
+  </dd>
   <dt>verifier:replace-with-id:ID</dt>
   <dd>
     Replace this code sample with another one. The two samples have to match in a very precise way for this to work, see [replacements](#replacements).

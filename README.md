@@ -230,6 +230,10 @@ See above for how to give directive to literate-ts in your source format.
     Start prepending a sample from earlier in the source file. Useful to reestablish some
     context after a `reset`.
   </dd>
+  <dt>verifier:replace-with-id:ID</dt>
+  <dd>
+    Replace this code sample with another one. The two samples have to match in a very precise way for this to work, see [replacements](#replacements).
+  </dd>
   <dt>verifier:tsconfig:setting=value</dt>
   <dd>
     Set a tsconfig setting for the next code sample, e.g. `strictNullChecks=false`.
@@ -290,6 +294,8 @@ The correspondence between replacements and their sources is checked and must be
 addition to `COMPRESS...END`, you can also use `HIDE...END` to completely remove code. Of course,
 be careful not to mislead the reader when you do this.
 (This syntax comes from [pyliterate][pylit-post].)
+
+If you'd like to keep your source files self-contained, you can put the replacement in a code block and reference it with a `replace-with-id` directive. See [this sample file](/examples/asciidoc/failures.asciidoc) for examples.
 
 ## Command-Line Options
 

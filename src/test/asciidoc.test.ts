@@ -326,8 +326,8 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:4',
-        lineNumber: 5,
+        descriptor: './source.asciidoc:5',
+        lineNumber: 4,
         id: 'header-reset-4',
         sectionHeader: 'Chapter 1',
         language: 'ts',
@@ -335,9 +335,9 @@ describe('extractSamples', () => {
       },
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:11',
+        descriptor: './source.asciidoc:12',
         id: 'header-reset-11',
-        lineNumber: 12,
+        lineNumber: 11,
         sectionHeader: 'Chapter 2',
         language: 'ts',
         content: `const x = 12;`,
@@ -375,9 +375,9 @@ describe('extractSamples', () => {
       },
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
         id: 'header-reset-10',
-        lineNumber: 11,
+        lineNumber: 10,
         sectionHeader: 'Chapter 1',
         language: 'ts',
         content: `const x = 12;`,
@@ -411,7 +411,8 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
-        descriptor: './source.asciidoc:10',
+        descriptor: './source.asciidoc:11',
+        lineNumber: 10,
         id: 'header-reset-done-with-file-10',
         sectionHeader: 'Chapter 2',
         language: 'ts',

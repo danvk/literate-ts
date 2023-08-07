@@ -97,6 +97,7 @@ describe('code-sample', () => {
         lineNumber: 10,
         language: 'ts',
         id: 'mpd-10',
+        prefixesLength: 1,
         content: dedent`
           type AB = 'a' | 'b';
           type ABC = AB | 'c';`,
@@ -144,7 +145,8 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
-        descriptor: './source.asciidoc:1',
+        descriptor: './source.asciidoc:2',
+        lineNumber: 4,
         language: 'ts',
         id: 'a',
         content: dedent`
@@ -159,7 +161,7 @@ describe('code-sample', () => {
         lineNumber: 13,
         language: 'ts',
         id: 'b',
-        prefixesLenth: 3,
+        prefixesLength: 3,
         content: dedent`
         interface Person {
           name: string;
@@ -197,7 +199,7 @@ describe('code-sample', () => {
       {
         ...baseSample,
         descriptor: './source.asciidoc:2',
-        lineNumber: 1,
+        lineNumber: 4,
         language: 'js',
         id: 'a',
         content: dedent`
@@ -207,9 +209,11 @@ describe('code-sample', () => {
       },
       {
         ...baseSample,
-        descriptor: './source.asciidoc:9',
+        descriptor: './source.asciidoc:10',
+        lineNumber: 12,
         language: 'ts',
         id: 'b',
+        prefixesLength: 2,
         content: dedent`
         import _ from 'lodash';
         const p = {name: 'Bob'};
@@ -243,14 +247,16 @@ describe('code-sample', () => {
     ).toEqual([
       {
         ...baseSample,
-        descriptor: './source.asciidoc:1',
+        descriptor: './source.asciidoc:2',
+        lineNumber: 4,
         language: 'ts',
         id: 'hello',
         content: `console.log('Hello');`,
       },
       {
         ...baseSample,
-        descriptor: './source.asciidoc:8',
+        descriptor: './source.asciidoc:9',
+        lineNumber: 10,
         language: null,
         id: 'hello-output',
         content: 'Hello',

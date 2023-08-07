@@ -181,10 +181,8 @@ ${strippedSource.trim()}
   return true;
 }
 
-export function applyPrefixes(
-  samples: PrefixedCodeSample[],
-  sources: {[id: string]: string} = {},
-): CodeSample[] {
+/** Combine a code sample with all active prefixes to form a standalone code sample. */
+export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
   const idToSample = _.keyBy(samples, 'id');
   const sliceLines = (text: string, lines: number[] | undefined) =>
     lines
@@ -196,8 +194,8 @@ export function applyPrefixes(
   return samples.map(sample => {
     const prefixes = sample.id.endsWith('-output') ? [] : sample.prefixes;
     const content = prefixes
-      .map(({id, lines}) => sliceLines(sources[id] || idToSample[id].content, lines))
-      .concat([sources[sample.id] || sample.content])
+      .map(({id, lines}) => sliceLines(idToSample[id].content, lines))
+      .concat([sample.content])
       .join('\n');
     return {
       descriptor: sample.descriptor,
@@ -212,6 +210,42 @@ export function applyPrefixes(
       content,
     };
   });
+}
+
+export function applyReplacements(
+  rawSamples: readonly Readonly<PrefixedCodeSample>[],
+  externalReplacements: {[id: string]: string} = {},
+): PrefixedCodeSample[] {
+  const samples = _.cloneDeep(rawSamples) as PrefixedCodeSample[];
+  const idToSample = _.keyBy(samples, 'id');
+
+  // First check the external replacements
+  for (const sample of samples) {
+    const {id} = sample;
+    const source = externalReplacements[id];
+    if (source) {
+      checkSource(sample, source);
+      sample.content = source;
+    }
+  }
+  // TODO: flag unused replacements
+
+  // Next do the inline replacements
+  for (const sample of rawSamples) {
+    const {id} = sample;
+    if (id.endsWith('-replacement')) {
+      const originalId = id.replace(/-replacement$/, '');
+      const source = idToSample[originalId];
+      if (!source) {
+        fail(`No sample with ID ${originalId} for ${id} to replace.`);
+      } else {
+        checkSource(source, sample.content);
+        source.content = sample.content;
+      }
+    }
+  }
+
+  return samples;
 }
 
 export function extractSamples(text: string, slug: string, sourceFile: string) {

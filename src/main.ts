@@ -3,12 +3,12 @@ import path, {isAbsolute} from 'path';
 
 import chalk from 'chalk';
 import glob from 'fast-glob';
-import _ from 'lodash';
+import _, {replace} from 'lodash';
 import ora from 'ora';
 import ts from 'typescript';
 import yargs from 'yargs';
 
-import {checkSource, applyPrefixes, extractSamples} from './code-sample.js';
+import {checkSource, applyPrefixes, extractSamples, applyReplacements} from './code-sample.js';
 import {startLog, log, flushLog, logFile} from './logger.js';
 import {runNode} from './node-runner.js';
 import {
@@ -32,7 +32,7 @@ const argv = yargs(process.argv.slice(2))
       type: 'string',
       description:
         'If specified, load **/*.{ts,js,txt} under this directory' +
-        'as additional sources. See README for details on how to use these.',
+        'as additional sources. See README.md for details on how to use these.',
       alias: 'r',
     },
     filter: {
@@ -177,14 +177,8 @@ async function processSourceFile(path: string, fileNum: number, outOf: number) {
   const rawSamples = extractSamples(text, fileSlug(path), path);
   log(`Found ${rawSamples.length} code samples in ${path}`);
 
-  for (const sample of rawSamples) {
-    const {id} = sample;
-    const source = sources[id];
-    if (source) {
-      checkSource(sample, source);
-    }
-  }
-  const samples = applyPrefixes(rawSamples, sources);
+  const replacedSamples = applyReplacements(rawSamples, sources);
+  const samples = applyPrefixes(replacedSamples);
 
   const outputs = _.keyBy(samples, 'id');
   for (const [i, sample] of Object.entries(samples)) {

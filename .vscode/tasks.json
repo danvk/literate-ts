@@ -9,25 +9,27 @@
       "command": "yarn ts-node index.ts ${file}",
       "problemMatcher": [
         {
-          "owner": "literate-ts",
-          "fileLocation": "absolute",
-          "pattern": [{
-            "regexp": "^💥 (.*?):(\\d+):(\\d+)-(\\d+): (.*)$",
-            "file": 1,
-            "line": 2,
-            "column": 3,
-            "endColumn": 4,
-            "message": 5
-          }]
+          "base": "$tsc-watch"
         },
         {
           "owner": "literate-ts",
           "fileLocation": "absolute",
-          "pattern": {
-            "regexp": "^ *(Expected|Actual): (.*)$",
-            "message": 2,
-            "loop": true
-          }
+          "pattern": [
+            {
+              "regexp": "^💥 (.*?):(\\d+):(\\d+)-(\\d+): (.*)$",
+              "file": 1,
+              "line": 2,
+              "column": 3,
+              "endColumn": 4,
+              "message": 5,
+            },
+            // This doesn't work, see https://github.com/microsoft/vscode/issues/9635
+            // {
+            //   "regexp": "^ *(?:Expected|Actual): (.*)$",
+            //   "message": 1,
+            //   "loop": true
+            // }
+          ]
         },
         {
           "owner": "literate-ts",

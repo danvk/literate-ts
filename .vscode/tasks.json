@@ -1,0 +1,36 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run file through literate-ts",
+      "type": "shell",
+      "command": "yarn ts-node index.ts --nocache ${file}",
+      "problemMatcher": [
+        {
+          "owner": "literate-ts",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "^💥 (.*?):(\\d+):(\\d+)-(\\d+): (.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "endColumn": 4,
+            "message": 5
+          }
+        },
+        {
+          "owner": "literate-ts",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "^💥 (.*?):(\\d+): (.*)$",
+            "file": 1,
+            "line": 2,
+            "message": 3
+          }
+        }
+      ]
+    }
+  ]
+}

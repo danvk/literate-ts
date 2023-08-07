@@ -56,7 +56,9 @@ export function fail(message: string, context: FailureContext = {}) {
   }
 
   const fullMessage = location
-    ? `💥 ${sample?.sourceFile}:${location.line}:${location.start}-${location.end}: ${message}`
+    ? `💥 ${sample?.sourceFile}:${location.line}:${1 + location.start}-${
+        1 + location.end
+      }: ${message}`
     : `💥 ${sample?.descriptor}: ${message}`;
   if (!isLoggingToStderr()) {
     console.error('\n' + fullMessage);

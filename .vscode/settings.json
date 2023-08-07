@@ -9,5 +9,8 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "[typescript]": {
     "editor.formatOnSave": true,
-  }
+  },
+  "cSpell.words": [
+    "nums"
+  ]
 }

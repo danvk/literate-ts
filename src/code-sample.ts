@@ -33,6 +33,7 @@ function process(
   let skipRemaining = false;
   let prependNext = false;
   let prependLines: number[] | null = null;
+  let nextIsReplaced: string | null = null;
   let nodeModules: readonly string[] = [];
   let tsOptions: {[key: string]: string | boolean} = {};
   let nextIsTSX = false;
@@ -65,7 +66,7 @@ function process(
       } else if (directive.startsWith('prepend-id-to-following')) {
         prefixes = prefixes.concat([
           {
-            id: directive.split(':').slice(1).join(':'),
+            id: directive.split(':', 2)[1],
           },
         ]);
       } else if (directive.startsWith('skip')) {
@@ -84,6 +85,8 @@ function process(
         nextShouldCheckJs = true;
         tsOptions['allowJs'] = true; // convenience, it's useless without this!
         tsOptions['noEmit'] = true;
+      } else if (directive === 'replace-with-id') {
+        nextIsReplaced = directive.split(':', 2)[1];
       } else {
         throw new Error(`Unknown directive: ${directive}`);
       }
@@ -110,6 +113,7 @@ function process(
             language: lastLanguage as CodeSample['language'],
             content,
             prefixes,
+            replacementId: nextIsReplaced ?? undefined,
             nodeModules,
             isTSX: nextIsTSX,
             checkJS: nextShouldCheckJs,
@@ -135,6 +139,7 @@ function process(
       skipNext = false;
       nextIsTSX = false;
       nextShouldCheckJs = false;
+      nextIsReplaced = null;
     },
   };
 
@@ -192,6 +197,9 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
           .join('\n')
       : text;
   return samples.map(sample => {
+    if (sample.replacementId) {
+      throw new Error(`Logic error: sample {sample.id} was not replaced.`);
+    }
     const prefixes = sample.id.endsWith('-output') ? [] : sample.prefixes;
     const content = prefixes
       .map(({id, lines}) => sliceLines(idToSample[id].content, lines))
@@ -231,17 +239,19 @@ export function applyReplacements(
   // TODO: flag unused replacements
 
   // Next do the inline replacements
-  for (const sample of rawSamples) {
-    const {id} = sample;
-    if (id.endsWith('-replacement')) {
-      const originalId = id.replace(/-replacement$/, '');
-      const source = idToSample[originalId];
-      if (!source) {
-        fail(`No sample with ID ${originalId} for ${id} to replace.`);
-      } else {
-        checkSource(source, sample.content);
-        source.content = sample.content;
-      }
+  for (const sample of samples) {
+    const {replacementId} = sample;
+    if (!replacementId) {
+      continue;
+    }
+
+    const replacementSample = idToSample[replacementId];
+    if (!replacementSample) {
+      fail(`No sample with ID ${replacementId} to replace ${sample.id}.`);
+    } else {
+      checkSource(sample, replacementSample.content);
+      sample.content = replacementSample.content;
+      delete sample.replacementId;
     }
   }
 

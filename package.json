@@ -22,7 +22,7 @@
     "chalk": "^5.3.0",
     "fast-glob": "^3.3.1",
     "fast-json-stable-stringify": "^2.1.0",
-    "find-cache-dir": "^4.0.0",
+    "find-cache-dir": "^5.0.0",
     "fs-extra": "^11.0.0",
     "lodash": "^4.17.15",
     "ora": "^7.0.0",

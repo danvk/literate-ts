@@ -385,7 +385,12 @@ export function matchModuloWhitespace(actual: string, expected: string): boolean
   // TODO: it's much easier to normalize actual based on the displayParts
   //       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
   const normalize = (input: string) => {
-    const [name, type] = input.split(/[:=]/, 2);
+    const parts = input.split(/[:=]/, 2);
+    if (parts.length !== 2) {
+      // this might be a typo, e.g. missing the ":" or "=" in a type assertion.
+      return input;
+    }
+    const [name, type] = parts;
     const normType = sortUnions(type)
       .replace(/[\n\r ]+/g, ' ')
       .replace(/\( */g, '(')

@@ -510,6 +510,12 @@ describe('ts-checker', () => {
     it('should allow differing orders for unions', () => {
       expect(matchModuloWhitespace('const ab: B | A', 'const ab: A|B')).toBe(true);
     });
+
+    it('should not crash on a typo', () => {
+      expect(
+        matchModuloWhitespace('BoundingBox | undefined', 'const box: BoundingBox | undefined'),
+      ).toBe(false);
+    });
   });
 
   describe('sortUnions', () => {

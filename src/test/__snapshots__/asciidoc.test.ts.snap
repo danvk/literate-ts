@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`checker asciidoc checker snapshots: ./src/test/inputs/commented-sample-with-error.asciidoc 1`] = `
+exports[`checker asciidoc checker snapshots "./src/test/inputs/commented-sample-with-error.asciidoc": ./src/test/inputs/commented-sample-with-error.asciidoc 1`] = `
 {
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/commented-sample-with-error.asciidoc
@@ -31,6 +31,61 @@ END #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--- ms)
     "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc",
     "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc: 1/2 ././src/test/inputs/commented-sample-with-error.asciidoc:7",
     "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc: 2/2 ././src/test/inputs/commented-sample-with-error.asciidoc:17",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/president.asciidoc": ./src/test/inputs/president.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/president.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/president.asciidoc",
+    "BEGIN #././src/test/inputs/president.asciidoc:7 (id for --filter: president-7)
+",
+    "Code passed type checker.",
+    "💥 ./src/test/inputs/president.asciidoc:9:7-16: Failed type assertion for \`president\`
+  Expected: const president: { first: string; last: string; middle?: string; }
+    Actual: const president: {
+    middle?: string | undefined;
+    first: string;
+    last: string;
+}",
+    "  0/1 twoslash type assertions matched.",
+    "declare let hasMiddle: boolean;
+const firstLast = {first: 'Harry', last: 'Truman'};
+const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
+//    ^? const president: {
+//         first: string;
+//         last: string;
+//         middle?: string;
+//       }",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/president.asciidoc:7 (--- ms)
+",
+    "BEGIN #././src/test/inputs/president.asciidoc:21 (id for --filter: president-21)
+",
+    "Code passed type checker.",
+    "💥 ./src/test/inputs/president.asciidoc:23:7-16: Failed type assertion for \`const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};\` (tested \`president\`)
+  Expected: { first: string; last: string; middle?: string; }
+    Actual: { middle?: string | undefined; first: string; last: string; }",
+    "  0/1 type assertions matched.",
+    "declare let hasMiddle: boolean;
+const firstLast = {first: 'Harry', last: 'Truman'};
+const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
+// Type is { first: string; last: string; middle?: string; }",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/president.asciidoc:21 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/president.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/president.asciidoc",
+    "1/1: ././src/test/inputs/president.asciidoc: 1/2 ././src/test/inputs/president.asciidoc:7",
+    "1/1: ././src/test/inputs/president.asciidoc: 2/2 ././src/test/inputs/president.asciidoc:21",
   ],
 }
 `;
@@ -449,6 +504,53 @@ exports[`extractSamples snapshot: prepend-multiple 1`] = `
     "replacementId": undefined,
     "sectionHeader": null,
     "sourceFile": "prepend-multiple.asciidoc",
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: president 1`] = `
+[
+  {
+    "checkJS": false,
+    "content": "declare let hasMiddle: boolean;
+const firstLast = {first: 'Harry', last: 'Truman'};
+const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
+//    ^? const president: {
+//         first: string;
+//         last: string;
+//         middle?: string;
+//       }",
+    "descriptor": "./president.asciidoc:7",
+    "id": "president-7",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 6,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "president.asciidoc",
+    "tsOptions": {},
+  },
+  {
+    "checkJS": false,
+    "content": "declare let hasMiddle: boolean;
+const firstLast = {first: 'Harry', last: 'Truman'};
+const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
+// Type is { first: string; last: string; middle?: string; }",
+    "descriptor": "./president.asciidoc:21",
+    "id": "president-21",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 20,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "president.asciidoc",
     "tsOptions": {},
   },
 ]

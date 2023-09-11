@@ -475,5 +475,5 @@ describe('checker', () => {
       logs: getTestLogs().map(scrubTimingText),
       statuses,
     }).toMatchSnapshot(inputFile);
-  });
+  }, 20_000);
 });

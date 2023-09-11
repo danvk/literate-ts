@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`checker asciidoc checker snapshots: ./src/test/inputs/commented-sample-with-error.asciidoc 1`] = `
+{
+  "./src/test/inputs/commented-sample-with-error.asciidoc": {
+    "././src/test/inputs/commented-sample-with-error.asciidoc:17": 0,
+    "././src/test/inputs/commented-sample-with-error.asciidoc:7": 0,
+  },
+}
+`;
+
 exports[`extractSamples snapshot: backticks 1`] = `
 [
   {

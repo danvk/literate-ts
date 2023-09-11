@@ -462,6 +462,6 @@ describe('checker', () => {
         console.log(status);
       },
     );
-    expect(getTestResults()).toMatchInlineSnapshot();
+    expect(getTestResults()).toMatchSnapshot(inputFile);
   });
 });

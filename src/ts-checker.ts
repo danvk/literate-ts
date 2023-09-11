@@ -3,7 +3,7 @@ import findCacheDirectory from 'find-cache-dir';
 
 import stableJsonStringify from 'fast-json-stable-stringify';
 import _ from 'lodash';
-import path from 'path';
+import path, {resolve} from 'path';
 import ts from 'typescript';
 
 import {log} from './logger.js';
@@ -12,6 +12,7 @@ import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} fro
 import {CodeSample} from './types.js';
 import {ExecErrorType, runNode} from './node-runner.js';
 import {VERSION} from './version.js';
+import {PackageJson, readPackageUpSync} from 'read-pkg-up';
 
 export interface TypeScriptError {
   line: number;
@@ -566,32 +567,45 @@ async function uncachedCheckTs(
   const sampleDir = getTempDir();
   const nodeModulesPath = path.join(sampleDir, 'node_modules');
   fs.emptyDirSync(nodeModulesPath);
-  for (const nodeModule of sample.nodeModules) {
-    // For each requested module, look for node_modules in the same directory as the source file
-    // and then march up directories until we find it.
-    // There's probably a better way to do this.
-    let match;
-    const candidates = [];
-    let dir = path.dirname(path.resolve(process.cwd(), sample.sourceFile));
-    while (true) {
-      const candidate = path.join(dir, 'node_modules', nodeModule);
-      candidates.push(candidate);
-      if (fs.pathExistsSync(candidate)) {
-        match = candidate;
-        break;
-      }
-      const parent = path.dirname(dir);
-      if (parent === dir) {
-        break;
-      }
-      dir = parent;
+
+  const allModules = [...sample.nodeModules];
+  const sourceFileAbsPath = path.resolve(process.cwd(), sample.sourceFile);
+  const copiedModules = new Set();
+  let nodeModule;
+  while ((nodeModule = allModules.shift()) !== undefined) {
+    if (copiedModules.has(nodeModule)) {
+      continue; // already resolved
     }
-    if (!match) {
-      fail(`Could not find requested node_module ${nodeModule}. See logs for details.`);
-      log('Looked in:\n  ' + candidates.join('\n  '));
+    // Use the TypeScript API to resolve a location for this module relative to the source file.
+    // Copy it over and add any transitive dependencies to the list.
+    const {resolvedModule} = ts.resolveModuleName(
+      nodeModule,
+      sourceFileAbsPath,
+      config.options,
+      ts.sys,
+    );
+    if (!resolvedModule) {
+      fail(
+        `Could not find requested (or transitive) node_module ${nodeModule}. See logs for details.`,
+      );
       return {passed: false};
     }
-    fs.copySync(match, path.join(nodeModulesPath, nodeModule));
+    const {resolvedFileName} = resolvedModule;
+    const pkg = readPackageUpSync({cwd: resolvedFileName});
+    if (!pkg) {
+      fail(`Could not find package.json from ${resolvedFileName}.`);
+      return {passed: false};
+    }
+    const nodeModuleDir = path.dirname(pkg.path);
+    const nodeModuleDirRelative = nodeModuleDir.replace(/^.*?\/node_modules\//, '');
+    const dest = path.join(nodeModulesPath, nodeModuleDirRelative);
+    fs.copySync(nodeModuleDir, dest);
+    log(`Copied ${nodeModuleDir} -> ${dest}`);
+    copiedModules.add(nodeModule);
+
+    for (const dep of Object.keys(pkg.packageJson.dependencies ?? {})) {
+      allModules.push(dep); // no need to de-dupe here, it's done at the top of the loop.
+    }
   }
 
   const options: ts.CompilerOptions = {

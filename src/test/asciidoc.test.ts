@@ -433,44 +433,50 @@ describe('checker', () => {
 
   const scrubTimingText = (line: string) => line.replace(/(\d+) ms/, '--- ms');
 
-  test('asciidoc checker snapshots', async () => {
-    const config = ts.parseJsonConfigFileContent(
-      {
-        compilerOptions: {
-          strictNullChecks: true,
-          module: 'commonjs',
+  const config = ts.parseJsonConfigFileContent(
+    {
+      compilerOptions: {
+        strictNullChecks: true,
+        module: 'commonjs',
+      },
+    },
+    ts.sys,
+    process.cwd(),
+  );
+  const host = ts.createCompilerHost(config.options, true);
+
+  test.each([
+    './src/test/inputs/commented-sample-with-error.asciidoc',
+    './src/test/inputs/president.asciidoc',
+  ])(
+    'asciidoc checker snapshots %p',
+    async inputFile => {
+      const statuses: string[] = [];
+
+      const processor = new Processor(
+        {
+          alsologtostderr: false,
+          filter: undefined,
+          nocache: true,
+          replacements: undefined,
+          _: [],
+          $0: 'test',
         },
-      },
-      ts.sys,
-      process.cwd(),
-    );
-    const host = ts.createCompilerHost(config.options, true);
-
-    const inputFile = './src/test/inputs/commented-sample-with-error.asciidoc';
-    const statuses: string[] = [];
-
-    const processor = new Processor(
-      {
-        alsologtostderr: false,
-        filter: undefined,
-        nocache: true,
-        replacements: undefined,
-        _: [],
-        $0: 'test',
-      },
-      {
-        host,
-        options: config.options,
-      },
-      {},
-    );
-    processor.onSetStatus(status => {
-      statuses.push(status);
-    });
-    await processor.processSourceFile(inputFile, 1, 1);
-    expect({
-      logs: getTestLogs().map(scrubTimingText),
-      statuses,
-    }).toMatchSnapshot(inputFile);
-  }, 20_000);
+        {
+          host,
+          options: config.options,
+        },
+        {},
+      );
+      processor.onSetStatus(status => {
+        statuses.push(status);
+      });
+      await processor.processSourceFile(inputFile, 1, 1);
+      expect({
+        logs: getTestLogs().map(scrubTimingText),
+        statuses,
+      }).toMatchSnapshot(inputFile);
+    },
+    20_000,
+  );
 });

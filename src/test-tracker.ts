@@ -54,15 +54,8 @@ export function fail(message: string, context: FailureContext = {}) {
 
   let {location} = context;
   if (location && sample) {
-    // Change to a location in the source file.
-    // If this is outside the code sample then fall back to reporting the error at the start.
-    const offset = location.line - sample.prefixesLength;
-    if (offset >= 0) {
-      // The +1 is for 1-based line numbers.
-      location = {...location, line: sample.lineNumber + offset + 1};
-    } else {
-      location = undefined;
-    }
+    // Change to a location in the source file. The +1 is for 1-based line numbers.
+    location = {...location, line: location.line + sample.lineNumber - sample.prefixesLength + 1};
   }
 
   const fullMessage = location
@@ -74,7 +67,7 @@ export function fail(message: string, context: FailureContext = {}) {
     console.error('\n' + fullMessage);
   }
   log(fullMessage);
-  if (!(global as any).__TEST__) {
+  if (!global.__TEST__) {
     results[currentFile][sample!.descriptor]++;
   }
 }

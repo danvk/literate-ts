@@ -106,6 +106,48 @@ val  // Type is number | null",
 ]
 `;
 
+exports[`extractSamples snapshot: commented-sample-with-error 1`] = `
+[
+  {
+    "checkJS": false,
+    "content": "const value: number = "123";",
+    "descriptor": "./commented-sample-with-error.asciidoc:7",
+    "id": "commented-sample-with-error-6",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 6,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "commented-sample-with-error.asciidoc",
+    "tsOptions": {},
+  },
+  {
+    "checkJS": false,
+    "content": "console.log(value);
+//          ^? const value: number",
+    "descriptor": "./commented-sample-with-error.asciidoc:17",
+    "id": "commented-sample-with-error-16",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 16,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "commented-sample-with-error-6",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "commented-sample-with-error.asciidoc",
+    "tsOptions": {},
+  },
+]
+`;
+
 exports[`extractSamples snapshot: doc1 1`] = `
 [
   {

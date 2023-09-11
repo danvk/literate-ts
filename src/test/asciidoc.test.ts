@@ -5,6 +5,9 @@ import path from 'path';
 import {dedent} from '../utils.js';
 import {extractSamples} from '../code-sample.js';
 import {baseExtract} from './common.js';
+import {getTestResults} from '../test-tracker.js';
+import {processSourceFile} from '../processor.js';
+import ts from 'typescript';
 
 const ASCII_DOC1 = `
 
@@ -420,5 +423,45 @@ describe('extractSamples', () => {
         prefixes: [],
       },
     ]);
+  });
+});
+
+describe('checker', () => {
+  test('asciidoc checker snapshots', async () => {
+    const config = ts.parseJsonConfigFileContent(
+      {
+        compilerOptions: {
+          strictNullChecks: true,
+          module: 'commonjs',
+        },
+      },
+      ts.sys,
+      process.cwd(),
+    );
+    const host = ts.createCompilerHost(config.options, true);
+
+    const inputFile = './src/test/inputs/commented-sample-with-error.asciidoc';
+    await processSourceFile(
+      inputFile,
+      1,
+      1,
+      {
+        alsologtostderr: false,
+        filter: undefined,
+        nocache: true,
+        replacements: undefined,
+        _: [],
+        $0: 'test',
+      },
+      {
+        host,
+        options: config.options,
+      },
+      {},
+      (status: string) => {
+        console.log(status);
+      },
+    );
+    expect(getTestResults()).toMatchInlineSnapshot();
   });
 });

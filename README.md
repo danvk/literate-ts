@@ -305,7 +305,7 @@ If you'd like to keep your source files self-contained, you can put the replacem
 
 - `--help`: Show help.
 - `--version`: Show version numbers for `literate-ts` and `typescript`.=
-- `-f`/`--filter`: Only check IDs with the given prefix.
+- `-f`/`--filter`: Only check IDs with the given prefix. This is either the ID you explicitly give the sample, or `file-line`, e.g. `explicit-id-1234` or `filename-no-ext-1234`. (The exact IDs are in the "detailed logs".)
 - `-r`/`--replacements`: If specified, load `**/*.{ts,js,txt}` under this directory as additional sources.
 - `--alsologtostderr`: Log to stderr in addition to a log file.
 - `--nocache`: Disable reading and writing from on-disk cache. If this results in different behavior, please file an issue. The cache is in `node_modules/.cache/literate-ts`. Delete this directory to clear the cache.

@@ -88,7 +88,7 @@ describe('code-sample', () => {
         descriptor: './source.asciidoc:5',
         lineNumber: 4,
         language: 'ts',
-        id: 'mpd-4',
+        id: 'mpd-5',
         content: `type AB = 'a' | 'b';`,
       },
       {
@@ -96,7 +96,7 @@ describe('code-sample', () => {
         descriptor: './source.asciidoc:11',
         lineNumber: 10,
         language: 'ts',
-        id: 'mpd-10',
+        id: 'mpd-11',
         prefixesLength: 1,
         content: dedent`
           type AB = 'a' | 'b';
@@ -108,7 +108,7 @@ describe('code-sample', () => {
         lineNumber: 15,
         prefixesLength: 2,
         language: 'ts',
-        id: 'mpd-15',
+        id: 'mpd-16',
         content: dedent`
           type AB = 'a' | 'b';
           type ABC = AB | 'c';

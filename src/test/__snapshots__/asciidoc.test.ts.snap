@@ -6,7 +6,7 @@ exports[`checker asciidoc checker snapshots: ./src/test/inputs/commented-sample-
     "---- BEGIN FILE ./src/test/inputs/commented-sample-with-error.asciidoc
 ",
     "Found 2 code samples in ./src/test/inputs/commented-sample-with-error.asciidoc",
-    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:7
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:7 (id for --filter: commented-sample-with-error-7)
 ",
     "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:7:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
     "const value: number = "123";",
@@ -14,7 +14,7 @@ exports[`checker asciidoc checker snapshots: ./src/test/inputs/commented-sample-
     "
 END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
 ",
-    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17 (id for --filter: commented-sample-with-error-17)
 ",
     "💥 ././src/test/inputs/commented-sample-with-error.asciidoc:17: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
     "const value: number = "123";
@@ -75,7 +75,7 @@ exports[`extractSamples snapshot: backticks 1`] = `
     "checkJS": false,
     "content": "console.log("end of file");",
     "descriptor": "./backticks.asciidoc:27",
-    "id": "backticks-26",
+    "id": "backticks-27",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 26,
@@ -98,7 +98,7 @@ exports[`extractSamples snapshot: commented-sample 1`] = `
     "checkJS": false,
     "content": "function somethingDangerous() {}",
     "descriptor": "./commented-sample.asciidoc:7",
-    "id": "commented-sample-6",
+    "id": "commented-sample-7",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 6,
@@ -122,14 +122,14 @@ try {
 }
 val  // Type is number | null",
     "descriptor": "./commented-sample.asciidoc:13",
-    "id": "commented-sample-12",
+    "id": "commented-sample-13",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 12,
     "nodeModules": [],
     "prefixes": [
       {
-        "id": "commented-sample-6",
+        "id": "commented-sample-7",
       },
     ],
     "prefixesLength": 0,
@@ -147,7 +147,7 @@ exports[`extractSamples snapshot: commented-sample-with-error 1`] = `
     "checkJS": false,
     "content": "const value: number = "123";",
     "descriptor": "./commented-sample-with-error.asciidoc:7",
-    "id": "commented-sample-with-error-6",
+    "id": "commented-sample-with-error-7",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 6,
@@ -164,14 +164,14 @@ exports[`extractSamples snapshot: commented-sample-with-error 1`] = `
     "content": "console.log(value);
 //          ^? const value: number",
     "descriptor": "./commented-sample-with-error.asciidoc:17",
-    "id": "commented-sample-with-error-16",
+    "id": "commented-sample-with-error-17",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 16,
     "nodeModules": [],
     "prefixes": [
       {
-        "id": "commented-sample-with-error-6",
+        "id": "commented-sample-with-error-7",
       },
     ],
     "prefixesLength": 0,
@@ -214,7 +214,7 @@ exports[`extractSamples snapshot: inline-replacement 1`] = `
   // ...
 }",
     "descriptor": "./inline-replacement.asciidoc:6",
-    "id": "inline-replacement-5",
+    "id": "inline-replacement-6",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 5,
@@ -252,7 +252,7 @@ exports[`extractSamples snapshot: inline-replacement 1`] = `
   // ...
 }",
     "descriptor": "./inline-replacement.asciidoc:28",
-    "id": "inline-replacement-27",
+    "id": "inline-replacement-28",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 27,
@@ -277,7 +277,7 @@ exports[`extractSamples snapshot: multilinetype 1`] = `
 //   y: number;
 // }",
     "descriptor": "./multilinetype.asciidoc:4",
-    "id": "multilinetype-3",
+    "id": "multilinetype-4",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 3,
@@ -297,7 +297,7 @@ exports[`extractSamples snapshot: multilinetype 1`] = `
   return c;
 }",
     "descriptor": "./multilinetype.asciidoc:14",
-    "id": "multilinetype-13",
+    "id": "multilinetype-14",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 13,
@@ -318,7 +318,7 @@ exports[`extractSamples snapshot: noid 1`] = `
     "checkJS": false,
     "content": "console.log('Hello', 'TS');",
     "descriptor": "./noid.asciidoc:10",
-    "id": "noid-9",
+    "id": "noid-10",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 9,
@@ -396,7 +396,7 @@ exports[`extractSamples snapshot: prepend-multiple 1`] = `
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend-multiple.asciidoc:4",
-    "id": "prepend-multiple-3",
+    "id": "prepend-multiple-4",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 3,
@@ -412,14 +412,14 @@ exports[`extractSamples snapshot: prepend-multiple 1`] = `
     "checkJS": false,
     "content": "type ABC = AB | 'c';",
     "descriptor": "./prepend-multiple.asciidoc:10",
-    "id": "prepend-multiple-9",
+    "id": "prepend-multiple-10",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 9,
     "nodeModules": [],
     "prefixes": [
       {
-        "id": "prepend-multiple-3",
+        "id": "prepend-multiple-4",
       },
     ],
     "prefixesLength": 0,
@@ -432,17 +432,17 @@ exports[`extractSamples snapshot: prepend-multiple 1`] = `
     "checkJS": false,
     "content": "const c: ABC = 'c';",
     "descriptor": "./prepend-multiple.asciidoc:15",
-    "id": "prepend-multiple-14",
+    "id": "prepend-multiple-15",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 14,
     "nodeModules": [],
     "prefixes": [
       {
-        "id": "prepend-multiple-3",
+        "id": "prepend-multiple-4",
       },
       {
-        "id": "prepend-multiple-9",
+        "id": "prepend-multiple-10",
       },
     ],
     "prefixesLength": 0,

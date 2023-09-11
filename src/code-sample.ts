@@ -108,7 +108,7 @@ function process(
         (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))
       ) {
         // TS samples get checked even without IDs.
-        lastMetadata = generateIdMetadata(slug + '-' + lineNum, sourceFile, lineNum);
+        lastMetadata = generateIdMetadata(slug + '-' + (1 + lineNum), sourceFile, lineNum);
       }
       if (lastMetadata) {
         if (!skipNext && !skipRemaining) {

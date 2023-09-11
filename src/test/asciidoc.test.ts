@@ -432,6 +432,8 @@ describe('checker', () => {
     flushLog();
   });
 
+  const scrubTimingText = (line: string) => line.replace(/(\d+) ms/, '--- ms');
+
   test('asciidoc checker snapshots', async () => {
     const config = ts.parseJsonConfigFileContent(
       {
@@ -446,6 +448,8 @@ describe('checker', () => {
     const host = ts.createCompilerHost(config.options, true);
 
     const inputFile = './src/test/inputs/commented-sample-with-error.asciidoc';
+    const statuses: string[] = [];
+
     await processSourceFile(
       inputFile,
       1,
@@ -464,9 +468,12 @@ describe('checker', () => {
       },
       {},
       (status: string) => {
-        console.log(status);
+        statuses.push(status);
       },
     );
-    expect(getTestLogs()).toMatchSnapshot(inputFile);
+    expect({
+      logs: getTestLogs().map(scrubTimingText),
+      statuses,
+    }).toMatchSnapshot(inputFile);
   });
 });

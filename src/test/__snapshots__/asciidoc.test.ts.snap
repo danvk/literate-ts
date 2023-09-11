@@ -1,31 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`checker asciidoc checker snapshots: ./src/test/inputs/commented-sample-with-error.asciidoc 1`] = `
-[
-  "---- BEGIN FILE ./src/test/inputs/commented-sample-with-error.asciidoc
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/commented-sample-with-error.asciidoc
 ",
-  "Found 2 code samples in ./src/test/inputs/commented-sample-with-error.asciidoc",
-  "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:7
+    "Found 2 code samples in ./src/test/inputs/commented-sample-with-error.asciidoc",
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:7
 ",
-  "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:7:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
-  "const value: number = "123";",
-  "tsconfig options: {"strictNullChecks":true,"module":1}",
-  "
-END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (1998 ms)
+    "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:7:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
+    "const value: number = "123";",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
 ",
-  "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17
 ",
-  "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:16:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
-  "const value: number = "123";
+    "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:16:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
+    "const value: number = "123";
 console.log(value);
 //          ^? const value: number",
-  "tsconfig options: {"strictNullChecks":true,"module":1}",
-  "
-END #././src/test/inputs/commented-sample-with-error.asciidoc:17 (1780 ms)
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--- ms)
 ",
-  "---- END FILE ./src/test/inputs/commented-sample-with-error.asciidoc
+    "---- END FILE ./src/test/inputs/commented-sample-with-error.asciidoc
 ",
-]
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc",
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc: 1/2 ././src/test/inputs/commented-sample-with-error.asciidoc:7",
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc: 2/2 ././src/test/inputs/commented-sample-with-error.asciidoc:17",
+  ],
+}
 `;
 
 exports[`extractSamples snapshot: backticks 1`] = `

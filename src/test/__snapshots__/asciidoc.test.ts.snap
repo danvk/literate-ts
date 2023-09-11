@@ -44,7 +44,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/president.asciido
     "BEGIN #././src/test/inputs/president.asciidoc:7 (id for --filter: president-7)
 ",
     "Code passed type checker.",
-    "💥 ././src/test/inputs/president.asciidoc:7: Failed type assertion for \`president\`
+    "💥 ./src/test/inputs/president.asciidoc:9:7-16: Failed type assertion for \`president\`
   Expected: const president: { first: string; last: string; middle?: string; }
     Actual: const president: {
     middle?: string | undefined;

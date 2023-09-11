@@ -430,10 +430,19 @@ export function checkTwoslashAssertions(
     }
     const actual = qi.displayParts.map(dp => dp.text).join('');
     if (!matchModuloWhitespace(actual, type)) {
+      const {line, character: start} = source.getLineAndCharacterOfPosition(node.getStart());
+      const {character: end} = source.getLineAndCharacterOfPosition(node.getEnd());
       fail(
         `Failed type assertion for \`${node.getText()}\`\n` +
           `  Expected: ${assertion.type}\n` +
           `    Actual: ${actual}`,
+        {
+          location: {
+            line,
+            start,
+            end,
+          },
+        },
       );
       anyFailures = true;
     } else {

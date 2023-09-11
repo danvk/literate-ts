@@ -5,6 +5,11 @@ import {getTempDir} from './utils.js';
 let logHandle: number | null = null;
 let _alsoStderr = false;
 
+declare global {
+  // eslint-disable-next-line no-var
+  var __TEST__: boolean;
+}
+
 export let logFile: string | null = null;
 
 export function startLog(alsoLogToStderr: boolean) {
@@ -18,9 +23,12 @@ export function isLoggingToStderr() {
   return _alsoStderr;
 }
 
+let logsForTest: string[] = [];
+
 export function log(message: string) {
   // TODO(danvk): figure out how to use a jest mock
-  if ((global as any).__TEST__) {
+  if (global.__TEST__) {
+    logsForTest.push(message);
     console.log(message);
     return;
   }
@@ -36,7 +44,15 @@ export function log(message: string) {
 }
 
 export function flushLog() {
+  if (global.__TEST__) {
+    logsForTest = [];
+  }
+
   if (logHandle !== null) {
     fs.closeSync(logHandle);
   }
+}
+
+export function getTestLogs() {
+  return logsForTest;
 }

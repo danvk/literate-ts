@@ -5,6 +5,9 @@ import path from 'path';
 import {dedent} from '../utils.js';
 import {extractSamples} from '../code-sample.js';
 import {baseExtract} from './common.js';
+import {Processor} from '../processor.js';
+import ts from 'typescript';
+import {flushLog, getTestLogs} from '../logger.js';
 
 const ASCII_DOC1 = `
 
@@ -421,4 +424,53 @@ describe('extractSamples', () => {
       },
     ]);
   });
+});
+
+describe('checker', () => {
+  afterEach(() => {
+    flushLog();
+  });
+
+  const scrubTimingText = (line: string) => line.replace(/(\d+) ms/, '--- ms');
+
+  test('asciidoc checker snapshots', async () => {
+    const config = ts.parseJsonConfigFileContent(
+      {
+        compilerOptions: {
+          strictNullChecks: true,
+          module: 'commonjs',
+        },
+      },
+      ts.sys,
+      process.cwd(),
+    );
+    const host = ts.createCompilerHost(config.options, true);
+
+    const inputFile = './src/test/inputs/commented-sample-with-error.asciidoc';
+    const statuses: string[] = [];
+
+    const processor = new Processor(
+      {
+        alsologtostderr: false,
+        filter: undefined,
+        nocache: true,
+        replacements: undefined,
+        _: [],
+        $0: 'test',
+      },
+      {
+        host,
+        options: config.options,
+      },
+      {},
+    );
+    processor.onSetStatus(status => {
+      statuses.push(status);
+    });
+    await processor.processSourceFile(inputFile, 1, 1);
+    expect({
+      logs: getTestLogs().map(scrubTimingText),
+      statuses,
+    }).toMatchSnapshot(inputFile);
+  }, 20_000);
 });

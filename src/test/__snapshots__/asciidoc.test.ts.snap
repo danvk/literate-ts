@@ -1,5 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`checker asciidoc checker snapshots: ./src/test/inputs/commented-sample-with-error.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/commented-sample-with-error.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/commented-sample-with-error.asciidoc",
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:7
+",
+    "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:7:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
+    "const value: number = "123";",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
+",
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17
+",
+    "💥 ././src/test/inputs/commented-sample-with-error.asciidoc:17: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
+    "const value: number = "123";
+console.log(value);
+//          ^? const value: number",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/commented-sample-with-error.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc",
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc: 1/2 ././src/test/inputs/commented-sample-with-error.asciidoc:7",
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc: 2/2 ././src/test/inputs/commented-sample-with-error.asciidoc:17",
+  ],
+}
+`;
+
 exports[`extractSamples snapshot: backticks 1`] = `
 [
   {
@@ -101,6 +136,48 @@ val  // Type is number | null",
     "replacementId": undefined,
     "sectionHeader": null,
     "sourceFile": "commented-sample.asciidoc",
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: commented-sample-with-error 1`] = `
+[
+  {
+    "checkJS": false,
+    "content": "const value: number = "123";",
+    "descriptor": "./commented-sample-with-error.asciidoc:7",
+    "id": "commented-sample-with-error-6",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 6,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "commented-sample-with-error.asciidoc",
+    "tsOptions": {},
+  },
+  {
+    "checkJS": false,
+    "content": "console.log(value);
+//          ^? const value: number",
+    "descriptor": "./commented-sample-with-error.asciidoc:17",
+    "id": "commented-sample-with-error-16",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 16,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "commented-sample-with-error-6",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "commented-sample-with-error.asciidoc",
     "tsOptions": {},
   },
 ]

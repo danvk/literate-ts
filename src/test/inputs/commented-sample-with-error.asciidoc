@@ -1,0 +1,19 @@
+This code sample is commented out but has a type error:
+
+////
+// verifier:prepend-to-following
+[source,ts]
+----
+const value: number = "123";
+----
+////
+
+It's prepended to the next code block, where it also produces a surprise error, but the error spans should be clamped so that they don't appear on random text elsewhere in the doc.
+
+Here you go:
+
+[source,ts]
+----
+console.log(value);
+//          ^? const value: number
+----

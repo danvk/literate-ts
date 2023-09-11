@@ -16,7 +16,7 @@ END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
 ",
     "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17
 ",
-    "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:16:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
+    "💥 ././src/test/inputs/commented-sample-with-error.asciidoc:17: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
     "const value: number = "123";
 console.log(value);
 //          ^? const value: number",

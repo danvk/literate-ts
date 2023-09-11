@@ -10,7 +10,7 @@ import ts from 'typescript';
 import {startLog, flushLog, logFile} from './logger.js';
 import {getTestResults} from './test-tracker.js';
 import {CACHE_DIR, ConfigBundle} from './ts-checker.js';
-import {processSourceFile} from './processor.js';
+import {Processor} from './processor.js';
 import {argSchema} from './args.js';
 
 const argv = argSchema.parseSync(process.argv.slice(2));
@@ -53,20 +53,15 @@ function setStatus(status: string) {
 }
 
 export function main() {
+  const processor = new Processor(argv, typeScriptBundle, sources);
+  processor.onSetStatus(setStatus);
+
   (async () => {
     let n = 0;
     let numFailures = 0;
     let numTotal = 0;
     for (const sourceFile of sourceFiles) {
-      await processSourceFile(
-        sourceFile,
-        ++n,
-        sourceFiles.length,
-        argv,
-        typeScriptBundle,
-        sources,
-        setStatus,
-      );
+      await processor.processSourceFile(sourceFile, ++n, sourceFiles.length);
     }
 
     if (spinner) spinner.stop();

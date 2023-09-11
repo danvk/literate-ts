@@ -5,8 +5,7 @@ import path from 'path';
 import {dedent} from '../utils.js';
 import {extractSamples} from '../code-sample.js';
 import {baseExtract} from './common.js';
-import {getTestResults} from '../test-tracker.js';
-import {processSourceFile} from '../processor.js';
+import {Processor} from '../processor.js';
 import ts from 'typescript';
 import {flushLog, getTestLogs} from '../logger.js';
 
@@ -450,10 +449,7 @@ describe('checker', () => {
     const inputFile = './src/test/inputs/commented-sample-with-error.asciidoc';
     const statuses: string[] = [];
 
-    await processSourceFile(
-      inputFile,
-      1,
-      1,
+    const processor = new Processor(
       {
         alsologtostderr: false,
         filter: undefined,
@@ -467,10 +463,11 @@ describe('checker', () => {
         options: config.options,
       },
       {},
-      (status: string) => {
-        statuses.push(status);
-      },
     );
+    processor.onSetStatus(status => {
+      statuses.push(status);
+    });
+    await processor.processSourceFile(inputFile, 1, 1);
     expect({
       logs: getTestLogs().map(scrubTimingText),
       statuses,

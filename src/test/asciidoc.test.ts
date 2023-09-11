@@ -8,6 +8,7 @@ import {baseExtract} from './common.js';
 import {getTestResults} from '../test-tracker.js';
 import {processSourceFile} from '../processor.js';
 import ts from 'typescript';
+import {flushLog, getTestLogs} from '../logger.js';
 
 const ASCII_DOC1 = `
 
@@ -427,6 +428,10 @@ describe('extractSamples', () => {
 });
 
 describe('checker', () => {
+  afterEach(() => {
+    flushLog();
+  });
+
   test('asciidoc checker snapshots', async () => {
     const config = ts.parseJsonConfigFileContent(
       {
@@ -462,6 +467,6 @@ describe('checker', () => {
         console.log(status);
       },
     );
-    expect(getTestResults()).toMatchSnapshot(inputFile);
+    expect(getTestLogs()).toMatchSnapshot(inputFile);
   });
 });

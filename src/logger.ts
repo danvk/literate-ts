@@ -23,9 +23,12 @@ export function isLoggingToStderr() {
   return _alsoStderr;
 }
 
+let logsForTest: string[] = [];
+
 export function log(message: string) {
   // TODO(danvk): figure out how to use a jest mock
   if (global.__TEST__) {
+    logsForTest.push(message);
     console.log(message);
     return;
   }
@@ -41,7 +44,15 @@ export function log(message: string) {
 }
 
 export function flushLog() {
+  if (global.__TEST__) {
+    logsForTest = [];
+  }
+
   if (logHandle !== null) {
     fs.closeSync(logHandle);
   }
+}
+
+export function getTestLogs() {
+  return logsForTest;
 }

@@ -10,12 +10,12 @@ import path, {resolve} from 'path';
 import ts from 'typescript';
 
 import {log} from './logger.js';
-import {FailureContext, FailureLocation, fail, getLastFailReason} from './test-tracker.js';
+import {FailureLocation, fail, getLastFailReason} from './test-tracker.js';
 import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils.js';
 import {CodeSample} from './types.js';
 import {ExecErrorType, runNode} from './node-runner.js';
 import {VERSION} from './version.js';
-import {PackageJson, readPackageUpSync} from 'read-pkg-up';
+import {readPackageUpSync} from 'read-pkg-up';
 
 export interface TypeScriptError {
   line: number;
@@ -784,6 +784,7 @@ export async function checkProgramListing(
   });
 
   if (!_.isEqual(replOutput, expectedOutputs)) {
+    // TODO: report exact mismatched spans
     fail(`Node session did not match program listing.`);
     log('Expected:');
     log(expectedOutputs.join('\n'));

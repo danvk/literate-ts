@@ -415,7 +415,26 @@ describe('applyReplacements', () => {
 });
 
 describe('addResolvedChecks', () => {
-  it('should leave most code samples alone', () => {});
+  it('should leave most code samples alone', () => {
+    const sample = applyPrefixes(
+      extractSamples(
+        dedent`
+          [source,ts]
+          ----
+          interface Point {
+            x: number;
+            y: number;
+          }
+          type T = keyof Point;
+          //   ^? type T = keyof Point
+          ----
+          `,
+        'equivalent-assertion',
+        'source.asciidoc',
+      ),
+    );
+    expect(addResolvedChecks(sample[0])).toEqual(sample[0]);
+  });
 
   it('should patch a code sample with an "equivalent to" assertion', () => {
     const sample = applyPrefixes(

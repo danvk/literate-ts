@@ -46,7 +46,7 @@ const COMMENT_PAT = /^( *\/\/) /;
 const TILDE_PAT = / (~+)/g;
 const POST_TILDE_PAT = /\/\/ [~ ]+(?:(.*))?/;
 const TYPE_ASSERTION_PAT = /\/\/.*[tT]ype is (?:still )?(?:just )?(.*)\.?$/;
-const TWOSLASH_PAT = /\/\/ (?: *)\^\? (.*)$/;
+const TWOSLASH_PAT = /\/\/ (?: *)\^\? ?(.*)$/;
 
 function isTwoslashAssertion(a: TypeScriptTypeAssertion): a is TwoslashAssertion {
   return 'position' in a;
@@ -203,7 +203,7 @@ export function extractTypeAssertions(
           colForContinuation = character;
         } else {
           const type = matchAndExtract(TWOSLASH_PAT, commentText);
-          if (!type) continue;
+          if (type === null) continue;
           if (!appliesToPreviousLine) {
             throw new Error('Twoslash assertion must be first on line.');
           }

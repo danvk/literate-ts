@@ -44,6 +44,21 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.as
     "BEGIN #././src/test/inputs/empty-twoslash.asciidoc:7 (id for --filter: empty-twoslash-7)
 ",
     "Code passed type checker.",
+    "💥 ./src/test/inputs/empty-twoslash.asciidoc:15:1-13: Failed type assertion for \`fetchANumber\`
+  Expected: 
+    Actual: function fetchANumber(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<number>",
+    "  0/1 twoslash type assertions matched.",
+    "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
+  const response = await fetch(...args);
+  const num = Number(await response.text());
+  if (isNaN(num)) {
+    throw new Error(\`Response was not a number.\`);
+  }
+  return num;
+}
+fetchANumber
+// ^?",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
     "
 END #././src/test/inputs/empty-twoslash.asciidoc:7 (--- ms)
 ",

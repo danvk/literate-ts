@@ -6,7 +6,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/commented-sample-
     "---- BEGIN FILE ./src/test/inputs/commented-sample-with-error.asciidoc
 ",
     "Found 2 code samples in ./src/test/inputs/commented-sample-with-error.asciidoc",
-    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:7 (id for --filter: commented-sample-with-error-7)
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--filter commented-sample-with-error-7)
 ",
     "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:7:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
     "const value: number = "123";",
@@ -14,7 +14,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/commented-sample-
     "
 END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
 ",
-    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17 (id for --filter: commented-sample-with-error-17)
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--filter commented-sample-with-error-17)
 ",
     "💥 ././src/test/inputs/commented-sample-with-error.asciidoc:17: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
     "const value: number = "123";
@@ -41,7 +41,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.as
     "---- BEGIN FILE ./src/test/inputs/empty-twoslash.asciidoc
 ",
     "Found 1 code samples in ./src/test/inputs/empty-twoslash.asciidoc",
-    "BEGIN #././src/test/inputs/empty-twoslash.asciidoc:7 (id for --filter: empty-twoslash-7)
+    "BEGIN #././src/test/inputs/empty-twoslash.asciidoc:7 (--filter empty-twoslash-7)
 ",
     "Code passed type checker.",
     "💥 ./src/test/inputs/empty-twoslash.asciidoc:15:1-13: Failed type assertion for \`fetchANumber\`
@@ -72,13 +72,118 @@ END #././src/test/inputs/empty-twoslash.asciidoc:7 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/equivalent.asciidoc": ./src/test/inputs/equivalent.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/equivalent.asciidoc
+",
+    "Found 4 code samples in ./src/test/inputs/equivalent.asciidoc",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:8 (--filter equivalent-8)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "  1/1 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/equivalent.asciidoc:8 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:23 (--filter equivalent-23)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type T2 = keyof Point",
+    "    Actual: type T2 = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type SynthT2 = "x" | "y"",
+    "    Actual: type SynthT2 = "x" | "y"",
+    "  3/3 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/equivalent.asciidoc:23 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:31 (--filter equivalent-31)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type T2 = keyof Point",
+    "    Actual: type T2 = keyof Point",
+    "💥 ./src/test/inputs/equivalent.asciidoc:34:6-13: Failed type assertion for \`SynthT2\`
+  Expected: type SynthT2 = "x" | "y" | "z"
+    Actual: type SynthT2 = "x" | "y"",
+    "  2/3 twoslash type assertions matched.",
+    "interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthT2 = Resolve<T2>;
+//   ^? type SynthT2 = "x" | "y" | "z"
+",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/equivalent.asciidoc:31 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:39 (--filter equivalent-39)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type T2 = keyof Point",
+    "    Actual: type T2 = keyof Point",
+    "💥 ./src/test/inputs/equivalent.asciidoc:42:6-13: Failed type assertion for \`SynthT2\`
+  Expected: type SynthT2 = "x" | "y" | "z"
+    Actual: type SynthT2 = "x" | "y"",
+    "  2/3 twoslash type assertions matched.",
+    "interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthT2 = Resolve<T2>;
+//   ^? type SynthT2 = "x" | "y" | "z"
+",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/equivalent.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/equivalent.asciidoc",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 1/4 ././src/test/inputs/equivalent.asciidoc:8",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 2/4 ././src/test/inputs/equivalent.asciidoc:23",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 3/4 ././src/test/inputs/equivalent.asciidoc:31",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 4/4 ././src/test/inputs/equivalent.asciidoc:39",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/president.asciidoc": ./src/test/inputs/president.asciidoc 1`] = `
 {
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/president.asciidoc
 ",
     "Found 2 code samples in ./src/test/inputs/president.asciidoc",
-    "BEGIN #././src/test/inputs/president.asciidoc:7 (id for --filter: president-7)
+    "BEGIN #././src/test/inputs/president.asciidoc:7 (--filter president-7)
 ",
     "Code passed type checker.",
     "💥 ./src/test/inputs/president.asciidoc:9:7-16: Failed type assertion for \`president\`
@@ -101,7 +206,7 @@ const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
     "
 END #././src/test/inputs/president.asciidoc:7 (--- ms)
 ",
-    "BEGIN #././src/test/inputs/president.asciidoc:21 (id for --filter: president-21)
+    "BEGIN #././src/test/inputs/president.asciidoc:21 (--filter president-21)
 ",
     "Code passed type checker.",
     "💥 ./src/test/inputs/president.asciidoc:23:7-16: Failed type assertion for \`const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};\` (tested \`president\`)
@@ -323,6 +428,97 @@ fetchANumber
     "replacementId": undefined,
     "sectionHeader": null,
     "sourceFile": "empty-twoslash.asciidoc",
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: equivalent 1`] = `
+[
+  {
+    "checkJS": false,
+    "content": "interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point",
+    "descriptor": "./equivalent.asciidoc:8",
+    "id": "equivalent-8",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 7,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "equivalent.asciidoc",
+    "tsOptions": {},
+  },
+  {
+    "checkJS": false,
+    "content": "type T2 = keyof Point;
+//   ^? type T2 = keyof Point (equivalent to "x" | "y")",
+    "descriptor": "./equivalent.asciidoc:23",
+    "id": "equivalent-23",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 22,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "equivalent-8",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "equivalent.asciidoc",
+    "tsOptions": {},
+  },
+  {
+    "checkJS": false,
+    "content": "type T2 = keyof Point;
+//   ^? type T2 = keyof Point (equivalent to "x" | "y" | "z")",
+    "descriptor": "./equivalent.asciidoc:31",
+    "id": "equivalent-31",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 30,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "equivalent-8",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "equivalent.asciidoc",
+    "tsOptions": {},
+  },
+  {
+    "checkJS": false,
+    "content": "type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+//      (equivalent to "x" | "y" | "z")",
+    "descriptor": "./equivalent.asciidoc:39",
+    "id": "equivalent-39",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 38,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "equivalent-8",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "equivalent.asciidoc",
     "tsOptions": {},
   },
 ]

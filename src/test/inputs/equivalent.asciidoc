@@ -1,0 +1,42 @@
+See https://github.com/danvk/literate-ts/issues/132 for context.
+
+As of TS 4.2, `keyof` expressions resolve in an opaque and not very useful way:
+
+// verifier:prepend-to-following
+[source,ts]
+----
+interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+----
+
+You can use some https://effectivetypescript.com/2022/02/25/gentips-4-display/[machinery] to inline the type, but this usually distracts from the point of the text.
+
+There's a special "equivalent to" syntax that quietly inserts some helper code to resolve the type behind the scenes:
+
+[source,ts]
+----
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point (equivalent to "x" | "y")
+----
+
+Errors should be reported though probably not in a relevant location:
+
+[source,ts]
+----
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point (equivalent to "x" | "y" | "z")
+----
+
+You can also split the assertion onto another line:
+
+[source,ts]
+----
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+//      (equivalent to "x" | "y" | "z")
+----

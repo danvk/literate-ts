@@ -528,4 +528,32 @@ describe('addResolvedChecks', () => {
       //   ^? type SynthPointKeys = "x" | "y"
       `);
   });
+
+  it('should patch a type assertion split across lines', () => {
+    const sample = applyPrefixes(
+      extractSamples(
+        dedent`
+          You can also split the assertion onto another line:
+
+          [source,ts]
+          ----
+          type T2 = keyof Point;
+          //   ^? type T2 = keyof Point
+          //      (equivalent to "x" | "y")
+          ----
+        `,
+        'equivalent-assertion',
+        'source.asciidoc',
+      ),
+    );
+
+    expect(addResolvedChecks(sample[0]).content).toEqual(dedent`
+      type T2 = keyof Point;
+      //   ^? type T2 = keyof Point
+      //      (equivalent to "x" | "y")
+      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+      type SynthT2 = Resolve<T2>;
+      //   ^? type SynthT2 = "x" | "y"
+      `);
+  });
 });

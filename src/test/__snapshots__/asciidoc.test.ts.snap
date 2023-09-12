@@ -35,6 +35,28 @@ END #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.asciidoc": ./src/test/inputs/empty-twoslash.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/empty-twoslash.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/empty-twoslash.asciidoc",
+    "BEGIN #././src/test/inputs/empty-twoslash.asciidoc:7 (id for --filter: empty-twoslash-7)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/empty-twoslash.asciidoc:7 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/empty-twoslash.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/empty-twoslash.asciidoc",
+    "1/1: ././src/test/inputs/empty-twoslash.asciidoc: 1/1 ././src/test/inputs/empty-twoslash.asciidoc:7",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/president.asciidoc": ./src/test/inputs/president.asciidoc 1`] = `
 {
   "logs": [
@@ -256,6 +278,36 @@ exports[`extractSamples snapshot: doc1 1`] = `
     "replacementId": undefined,
     "sectionHeader": null,
     "sourceFile": "doc1.asciidoc",
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: empty-twoslash 1`] = `
+[
+  {
+    "checkJS": false,
+    "content": "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
+  const response = await fetch(...args);
+  const num = Number(await response.text());
+  if (isNaN(num)) {
+    throw new Error(\`Response was not a number.\`);
+  }
+  return num;
+}
+fetchANumber
+// ^?",
+    "descriptor": "./empty-twoslash.asciidoc:7",
+    "id": "empty-twoslash-7",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 6,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "empty-twoslash.asciidoc",
     "tsOptions": {},
   },
 ]

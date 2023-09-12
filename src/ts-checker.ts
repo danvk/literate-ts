@@ -738,14 +738,13 @@ export async function checkProgramListing(
   }
 
   console.log('listing', listing);
-  const [rawInputs, outputs] = _.partition(listing.split('\n'), line => line.startsWith('> '));
+  const [rawInputs, expectedOutputs] = _.partition(listing.trim().split('\n'), line =>
+    line.startsWith('> '),
+  );
   let inputs = rawInputs.map(input => input.slice(2));
   if (jsPreambleFile) {
     inputs = [`.load ${jsPreambleFile}`, '"--reset--"', ...inputs];
   }
-
-  console.log('inputs', inputs);
-  console.log('outputs', outputs);
 
   const inputStream = new Readable();
   for (const input of inputs) {
@@ -771,11 +770,8 @@ export async function checkProgramListing(
   });
   const replOutput = await new Promise<string[]>((resolve, reject) => {
     inputStream.push(null);
-    server.addListener('exit', () => {
-      console.log('exit');
-    });
+    server.addListener('exit', () => {});
     server.addListener('close', () => {
-      console.log('close');
       outputStream.end();
       let finalOutputs = [];
       for (const output of capturedOutputs) {
@@ -790,14 +786,18 @@ export async function checkProgramListing(
     });
   });
 
-  if (!_.isEqual(replOutput, outputs)) {
+  console.log('replOutput:', replOutput);
+
+  if (!_.isEqual(replOutput, expectedOutputs)) {
     fail(`Node session did not match program listing.`);
-    log('Expected:');
-    log(outputs.join('\n'));
+    log('Expected: ' + expectedOutputs.length);
+    log(expectedOutputs.join('\n'));
     log('----');
-    log('Actual:');
+    log('Actual:' + replOutput.length);
     log(replOutput.join('\n'));
     log('----');
+    console.log('expected:', JSON.stringify(expectedOutputs));
+    console.log('actual:', JSON.stringify(replOutput));
     return {passed: false};
   }
   log('Node session matched program listing.');

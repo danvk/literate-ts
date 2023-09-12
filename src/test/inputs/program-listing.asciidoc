@@ -6,8 +6,7 @@ This is a "program listing" that can be run through Node.js:
 &gt; <strong>x[[1, 2, 3]] = 2</strong>
 2
 &gt; <strong>x</strong>
-{ '1,2,3': 2 }
-</pre>
+{ '1,2,3': 2 }</pre>
 ++++
 
 Here's one that requires prefixing a code sample:
@@ -23,8 +22,9 @@ you have created an _alias_. Changes to properties on the alias will be visible 
 
 ++++
 <pre data-type="programlisting">&gt; <strong>loc[0] = 0;</strong>
+0
 &gt; <strong>place.latLng</strong>
-[0, -73.979]</pre>
+[ 0, -73.979 ]</pre>
 ++++
 
 This is a program listing that should not be run through Node:

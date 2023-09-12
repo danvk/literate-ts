@@ -1,0 +1,19 @@
+This is a regression test for https://github.com/danvk/literate-ts/issues/125
+
+The empty assertion on the last line should fail.
+
+[source,ts]
+----
+async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
+  const response = await fetch(...args);
+  const num = Number(await response.text());
+  if (isNaN(num)) {
+    throw new Error(`Response was not a number.`);
+  }
+  return num;
+}
+fetchANumber
+// ^?
+----
+
+But does it fail?

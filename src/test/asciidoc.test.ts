@@ -449,6 +449,7 @@ describe('checker', () => {
     './src/test/inputs/commented-sample-with-error.asciidoc',
     './src/test/inputs/president.asciidoc',
     './src/test/inputs/equivalent.asciidoc',
+    './src/test/inputs/empty-twoslash.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

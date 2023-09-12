@@ -1,4 +1,10 @@
-import {stripSource, applyPrefixes, extractSamples, applyReplacements} from '../code-sample.js';
+import {
+  stripSource,
+  applyPrefixes,
+  extractSamples,
+  applyReplacements,
+  addResolvedChecks,
+} from '../code-sample.js';
 import {PrefixedCodeSample} from '../types.js';
 import {dedent} from '../utils.js';
 import {baseExtract, baseSample} from './common.js';
@@ -405,5 +411,47 @@ describe('applyReplacements', () => {
         content: full,
       },
     ]);
+  });
+});
+
+describe('addResolvedChecks', () => {
+  it('should leave most code samples alone', () => {});
+
+  it('should patch a code sample with an "equivalent to" assertion', () => {
+    const sample = applyPrefixes(
+      extractSamples(
+        dedent`
+          [source,ts]
+          ----
+          interface Point {
+            x: number;
+            y: number;
+          }
+          type T = keyof Point;
+          //   ^? type T = keyof Point (equivalent to "x" | "y")
+          ----
+          `,
+        'equivalent-assertion',
+        'source.asciidoc',
+      ),
+    );
+    expect(addResolvedChecks(sample[0])).toEqual({
+      ...baseSample,
+      descriptor: './source.asciidoc:3',
+      lineNumber: 2,
+      language: 'ts',
+      id: 'equivalent-assertion-3',
+      content: dedent`
+      interface Point {
+        x: number;
+        y: number;
+      }
+      type T = keyof Point;
+      //   ^? type T = keyof Point
+      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+      type SynthT = Resolve<T>;
+      //   ^? type SynthT = "x" | "y"
+      `,
+    });
   });
 });

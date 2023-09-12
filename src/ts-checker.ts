@@ -555,16 +555,7 @@ export async function checkTs(
   return result;
 }
 
-/** Verify that a TypeScript sample has the expected errors and no others. */
-async function uncachedCheckTs(
-  sample: CodeSample,
-  runCode: boolean,
-  config: ConfigBundle,
-): Promise<CheckTsResult> {
-  const {id, content} = sample;
-  const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
-  const tsFile = writeTempFile(fileName, content);
-  const sampleDir = getTempDir();
+function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.CompilerOptions) {
   const nodeModulesPath = path.join(sampleDir, 'node_modules');
   fs.emptyDirSync(nodeModulesPath);
 
@@ -578,12 +569,7 @@ async function uncachedCheckTs(
     }
     // Use the TypeScript API to resolve a location for this module relative to the source file.
     // Copy it over and add any transitive dependencies to the list.
-    const {resolvedModule} = ts.resolveModuleName(
-      nodeModule,
-      sourceFileAbsPath,
-      config.options,
-      ts.sys,
-    );
+    const {resolvedModule} = ts.resolveModuleName(nodeModule, sourceFileAbsPath, options, ts.sys);
     if (!resolvedModule) {
       fail(
         `Could not find requested (or transitive) node_module ${nodeModule}. See logs for details.`,
@@ -607,11 +593,25 @@ async function uncachedCheckTs(
       allModules.push(dep); // no need to de-dupe here, it's done at the top of the loop.
     }
   }
+}
+
+/** Verify that a TypeScript sample has the expected errors and no others. */
+async function uncachedCheckTs(
+  sample: CodeSample,
+  runCode: boolean,
+  config: ConfigBundle,
+): Promise<CheckTsResult> {
+  const {id, content} = sample;
+  const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
+  const tsFile = writeTempFile(fileName, content);
+  const sampleDir = getTempDir();
 
   const options: ts.CompilerOptions = {
     ...config.options,
     ...sample.tsOptions,
   };
+
+  setupNodeModules(sample, sampleDir, options);
   if (!_.isEmpty(sample.nodeModules)) {
     options.typeRoots = [path.join(sampleDir, 'node_modules', '@types')];
   }

@@ -23,7 +23,7 @@ export function startSample(sample: CodeSample) {
   currentSample = sample;
   results[currentFile][sample.descriptor] = 0;
   sampleStartMs = Date.now();
-  log(`BEGIN #${sample.descriptor} (id for --filter: ${sample.id})\n`);
+  log(`BEGIN #${sample.descriptor} (--filter ${sample.id})\n`);
 }
 
 export function finishSample() {

@@ -1,7 +1,12 @@
 import fs from 'fs';
 import {dirname, isAbsolute} from 'path';
 
-import {applyPrefixes, extractSamples, applyReplacements} from './code-sample.js';
+import {
+  applyPrefixes,
+  extractSamples,
+  applyReplacements,
+  addResolvedChecks,
+} from './code-sample.js';
 import {fileSlug, writeTempFile} from './utils.js';
 import {log} from './logger.js';
 import {startFile, fail, finishFile, finishSample, startSample} from './test-tracker.js';
@@ -77,7 +82,7 @@ export class Processor {
     log(`Found ${rawSamples.length} code samples in ${path}`);
 
     const replacedSamples = applyReplacements(rawSamples, this.sources);
-    const samples = applyPrefixes(replacedSamples);
+    const samples = applyPrefixes(replacedSamples).map(addResolvedChecks);
 
     const outputs = _.keyBy(samples, 'id');
     for (const [i, sample] of Object.entries(samples)) {

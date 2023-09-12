@@ -448,6 +448,7 @@ describe('checker', () => {
   test.each([
     './src/test/inputs/commented-sample-with-error.asciidoc',
     './src/test/inputs/president.asciidoc',
+    './src/test/inputs/equivalent.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

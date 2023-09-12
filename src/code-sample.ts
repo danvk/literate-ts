@@ -267,6 +267,38 @@ export function applyReplacements(
   return samples;
 }
 
+const EQUIVALENT_RE = /\^\? type ([A-Za-z0-9_]+) = (.*)( \(equivalent to (.*)\))$/m;
+const EQUIVALENT_MULTILINE_RE =
+  /\^\? type ([A-Za-z0-9_]+) = (.*)(\n\s*\/\/ +\(equivalent to (.*)\))$/m;
+
+/** Patch the code sample to test "equivalent to" types */
+export function addResolvedChecks(sample: CodeSample): CodeSample {
+  const {content} = sample;
+  if (!content.includes('equivalent to')) {
+    return sample;
+  }
+
+  const m = EQUIVALENT_RE.exec(content) || EQUIVALENT_MULTILINE_RE.exec(content);
+  if (!m) {
+    return sample;
+  }
+
+  const [, typeName, _raw, equivClause, equivType] = m;
+
+  // Strip the "equivalent to" bit, add Resolve<T> helper and secondary type assertion.
+  // See https://github.com/danvk/literate-ts/issues/132 and
+  // https://effectivetypescript.com/2022/02/25/gentips-4-display/
+  let newContent = content.replace(equivClause, '');
+  newContent += '\ntype Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};';
+  newContent += `\ntype Synth${typeName} = Resolve<${typeName}>;`;
+  newContent += `\n//   ^? type Synth${typeName} = ${equivType}\n`;
+
+  return {
+    ...sample,
+    content: newContent,
+  };
+}
+
 export function extractSamples(text: string, slug: string, sourceFile: string) {
   let processor;
   if (sourceFile.endsWith('.asciidoc')) {

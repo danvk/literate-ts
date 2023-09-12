@@ -11,7 +11,7 @@ import {log} from './logger.js';
 import {FailureContext, FailureLocation, fail, getLastFailReason} from './test-tracker.js';
 import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils.js';
 import {CodeSample} from './types.js';
-import {ExecErrorType, runNode, runNodeRepl} from './node-runner.js';
+import {ExecErrorType, runNode} from './node-runner.js';
 import {VERSION} from './version.js';
 import {PackageJson, readPackageUpSync} from 'read-pkg-up';
 
@@ -698,26 +698,108 @@ async function uncachedCheckTs(
 import repl from 'node:repl';
 import {Readable, Writable} from 'node:stream';
 
-function streamToString(stream: Writable) {
-  const chunks: Buffer[] = [];
-  return new Promise<string>((resolve, reject) => {
-    stream.on('data', chunk => chunks.push(Buffer.from(chunk)));
-    stream.on('error', err => reject(err));
-    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
-  });
-}
+export async function checkProgramListing(
+  sample: CodeSample,
+  config: ConfigBundle,
+): Promise<CheckTsResult> {
+  // The bit before the `<pre>` is presumably prepended material.
+  // We need to convert this to JS and load it separately.
+  const [preamble, listingHTML] = sample.content.split('<pre ');
+  console.log(preamble);
+  const listing = htmlToText('<pre ' + listingHTML);
 
-export async function checkProgramListing(sample: CodeSample): Promise<CheckTsResult> {
-  const listing = htmlToText(sample.content);
+  let jsPreambleFile;
+  if (preamble) {
+    // Note: some copying of uncachedCheckTs() here.
+    const tsFile = writeTempFile('programlisting-premable.ts', preamble);
+    const options: ts.CompilerOptions = {
+      ...config.options,
+      ...sample.tsOptions,
+    };
+    const program = ts.createProgram([tsFile], options, config.host);
+    const source = program.getSourceFile(tsFile);
+    if (!source) {
+      fail('Unable to load TS source file');
+      return {passed: false};
+    }
+    let diagnostics = ts.getPreEmitDiagnostics(program);
+    const emitResult = program.emit();
+    diagnostics = diagnostics.concat(emitResult.diagnostics);
+    jsPreambleFile = tsFile.replace(/\.ts$/, '.js');
+    if (!fs.existsSync(jsPreambleFile)) {
+      fail(`Did not produce JS output in expected place: ${jsPreambleFile}`);
+      return {passed: false};
+    }
+
+    if (emitResult.emitSkipped) {
+      fail('Failed to emit JavaScript for TypeScript sample.');
+      return {passed: false};
+    }
+  }
+
   console.log('listing', listing);
   const [rawInputs, outputs] = _.partition(listing.split('\n'), line => line.startsWith('> '));
-  const inputs = rawInputs.map(input => input.slice(2));
+  let inputs = rawInputs.map(input => input.slice(2));
+  if (jsPreambleFile) {
+    inputs = [`.load ${jsPreambleFile}`, '"--reset--"', ...inputs];
+  }
 
   console.log('inputs', inputs);
   console.log('outputs', outputs);
-  const result = runNodeRepl(inputs);
-  console.log('result', result);
-  const outputLines = result.stdout.split('\n');
-  console.log('outputLines', outputLines);
-  return {passed: _.isEqual(outputs, outputLines)};
+
+  const inputStream = new Readable();
+  for (const input of inputs) {
+    inputStream.push(input); // the string you want
+    inputStream.push('\n');
+  }
+  inputStream.push(null); // indicates end-of-file basically - the end of the stream
+
+  const capturedOutputs: string[] = [];
+
+  class CaptureStream extends Writable {
+    _write(chunk: any, enc: string, next: () => void) {
+      const s = chunk.toString();
+      capturedOutputs.push(s);
+      next();
+    }
+  }
+  const outputStream = new CaptureStream();
+
+  const server = repl.start({
+    input: inputStream,
+    output: outputStream,
+  });
+  const replOutput = await new Promise<string[]>((resolve, reject) => {
+    inputStream.push(null);
+    server.addListener('exit', () => {
+      console.log('exit');
+    });
+    server.addListener('close', () => {
+      console.log('close');
+      outputStream.end();
+      let finalOutputs = [];
+      for (const output of capturedOutputs) {
+        if (output === '> ') continue;
+        if (output.trim() === `'--reset--'`) {
+          finalOutputs = [];
+        } else {
+          finalOutputs.push(output.trim());
+        }
+      }
+      resolve(finalOutputs);
+    });
+  });
+
+  if (!_.isEqual(replOutput, outputs)) {
+    fail(`Node session did not match program listing.`);
+    log('Expected:');
+    log(outputs.join('\n'));
+    log('----');
+    log('Actual:');
+    log(replOutput.join('\n'));
+    log('----');
+    return {passed: false};
+  }
+  log('Node session matched program listing.');
+  return {passed: true};
 }

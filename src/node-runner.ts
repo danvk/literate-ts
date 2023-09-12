@@ -22,16 +22,3 @@ export async function runNode(path: string): Promise<ExecErrorType> {
     return {code, stderr, stdout, path};
   }
 }
-
-export function runNodeRepl(commands: string[]): ExecErrorType {
-  const result = spawnSync('node', ['--interactive'], {input: commands.join('\n')});
-  if (result.error) {
-    console.error(result.error);
-  }
-  return {
-    code: result.status!,
-    stdout: result.stdout.toString('utf-8'),
-    stderr: result.stderr.toString('utf-8'),
-    path: '',
-  };
-}

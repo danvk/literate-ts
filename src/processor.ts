@@ -125,7 +125,7 @@ export class Processor {
       }
     } else if (language === 'node') {
       // Node.js CLI "program listing"
-      await checkProgramListing(sample);
+      await checkProgramListing(sample, this.typeScriptBundle);
     } else if (language === null && id.endsWith('-output')) {
       // Verify the output of a previous code sample.
       const inputId = id.split('-output')[0];

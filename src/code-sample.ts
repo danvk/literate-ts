@@ -206,7 +206,7 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       : text;
   return samples.map(sample => {
     if (sample.replacementId) {
-      throw new Error(`Logic error: sample {sample.id} was not replaced.`);
+      throw new Error(`Logic error: sample ${sample.id} was not replaced.`);
     }
     const prefixes = sample.id.endsWith('-output') ? [] : sample.prefixes;
     const combinedPrefixes = prefixes.map(({id, lines}) =>

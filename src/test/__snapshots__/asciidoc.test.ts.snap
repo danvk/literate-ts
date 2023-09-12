@@ -45,7 +45,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.as
 ",
     "Code passed type checker.",
     "💥 ./src/test/inputs/empty-twoslash.asciidoc:15:1-13: Failed type assertion for \`fetchANumber\`
-  Expected:
+  Expected: 
     Actual: function fetchANumber(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<number>",
     "  0/1 twoslash type assertions matched.",
     "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
@@ -271,6 +271,21 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/program-listing.a
     "Found 3 code samples in ./src/test/inputs/program-listing.asciidoc",
     "BEGIN #././src/test/inputs/program-listing.asciidoc:4 (--filter program-listing-4)
 ",
+    "💥 ././src/test/inputs/program-listing.asciidoc:4: Node session did not match program listing.",
+    "Expected:",
+    "{}
+2
+{ '1,2,3': 2 }
+",
+    "----",
+    "Actual:",
+    "{}
+
+2
+
+{ '1,2,3': 2 }
+",
+    "----",
     "
 END #././src/test/inputs/program-listing.asciidoc:4 (--- ms)
 ",
@@ -282,6 +297,18 @@ END #././src/test/inputs/program-listing.asciidoc:18 (--- ms)
 ",
     "BEGIN #././src/test/inputs/program-listing.asciidoc:25 (--filter program-listing-25)
 ",
+    "💥 ././src/test/inputs/program-listing.asciidoc:25: Node session did not match program listing.",
+    "Expected:",
+    "[0, -73.979]",
+    "----",
+    "Actual:",
+    "'--reset--'
+
+0
+
+[ 0, -74.2692 ]
+",
+    "----",
     "
 END #././src/test/inputs/program-listing.asciidoc:25 (--- ms)
 ",

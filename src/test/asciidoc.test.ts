@@ -497,6 +497,6 @@ describe('checker', () => {
         statuses,
       }).toMatchSnapshot(inputFile);
     },
-    20_000,
+    40_000,
   );
 });

@@ -106,7 +106,10 @@ END #././src/test/inputs/equivalent.asciidoc:31 (--- ms)
     "💥 ./src/test/inputs/equivalent.asciidoc:39:6-8: Failed type assertion for \`T2\`
   Expected: type T2 = keyof Point (equivalent to "x" | "y" | "z")
     Actual: type T2 = keyof Point",
-    "  1/2 twoslash type assertions matched.",
+    "💥 ./src/test/inputs/equivalent.asciidoc:43:6-13: Failed type assertion for \`SynthT2\`
+  Expected: type SynthT2 = "x" | "y" | "z"
+    Actual: type SynthT2 = "x" | "y"",
+    "  1/3 twoslash type assertions matched.",
     "interface Point {
   x: number;
   y: number;
@@ -116,7 +119,11 @@ type T = keyof Point;
 //   ^? type T = keyof Point
 type T2 = keyof Point;
 //   ^? type T2 = keyof Point
-//      (equivalent to "x" | "y" | "z")",
+//      (equivalent to "x" | "y" | "z")
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthT2 = Resolve<T2>;
+//   ^? type SynthT2 = "x" | "y" | "z"
+",
     "tsconfig options: {"strictNullChecks":true,"module":1}",
     "
 END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)

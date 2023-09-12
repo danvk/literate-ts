@@ -121,7 +121,11 @@ describe('extractSamples', () => {
   });
 
   test('skip directive', () => {
-    expect(extractSamples(ASCIIDOC_SKIP, 'skip', 'source.asciidoc')).toEqual([]);
+    expect(extractSamples(ASCIIDOC_SKIP, 'skip', 'source.asciidoc')).toMatchObject([
+      {
+        skip: true,
+      },
+    ]);
   });
 
   test('tsconfig directive', () => {
@@ -414,6 +418,17 @@ describe('extractSamples', () => {
     ).toEqual([
       {
         ...baseExtract,
+        content: 'const x = 12;',
+        descriptor: './source.asciidoc:5',
+        id: 'header-reset-done-with-file-5',
+        language: 'ts',
+        lineNumber: 4,
+        replacementId: undefined,
+        sectionHeader: 'Chapter 1',
+        skip: true,
+      },
+      {
+        ...baseExtract,
         descriptor: './source.asciidoc:11',
         lineNumber: 10,
         id: 'header-reset-done-with-file-11',
@@ -421,6 +436,7 @@ describe('extractSamples', () => {
         language: 'ts',
         content: `const x = 12;`,
         prefixes: [],
+        skip: false,
       },
     ]);
   });
@@ -450,6 +466,7 @@ describe('checker', () => {
     './src/test/inputs/president.asciidoc',
     './src/test/inputs/equivalent.asciidoc',
     './src/test/inputs/empty-twoslash.asciidoc',
+    './src/test/inputs/prepend-and-skip.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

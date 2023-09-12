@@ -1,0 +1,17 @@
+Regression test for https://github.com/danvk/literate-ts/issues/42
+
+// verifier:skip
+// verifier:prepend-to-following
+```ts
+// a.ts
+const shared = "Cher";
+//    ~~~~~~
+// Cannot redeclare block-scoped variable 'shared'.
+```
+
+```ts
+// b.ts
+const shared = "Cher";
+//    ~~~~~~
+// Cannot redeclare block-scoped variable 'shared'.
+```

@@ -111,23 +111,22 @@ function process(
         lastMetadata = generateIdMetadata(slug + '-' + (1 + lineNum), sourceFile, lineNum);
       }
       if (lastMetadata) {
-        if (!skipNext && !skipRemaining) {
-          samples.push({
-            ...lastMetadata,
-            sectionHeader: lastSectionHeader,
-            language: lastLanguage as CodeSample['language'],
-            content,
-            prefixes,
-            replacementId: nextIsReplaced ?? undefined,
-            nodeModules,
-            isTSX: nextIsTSX,
-            checkJS: nextShouldCheckJs,
-            sourceFile,
-            lineNumber: lineNum,
-            tsOptions: {...tsOptions},
-            prefixesLength: 0,
-          });
-        }
+        samples.push({
+          ...lastMetadata,
+          sectionHeader: lastSectionHeader,
+          language: lastLanguage as CodeSample['language'],
+          content,
+          prefixes,
+          replacementId: nextIsReplaced ?? undefined,
+          nodeModules,
+          isTSX: nextIsTSX,
+          checkJS: nextShouldCheckJs,
+          sourceFile,
+          lineNumber: lineNum,
+          tsOptions: {...tsOptions},
+          prefixesLength: 0,
+          skip: skipNext || skipRemaining,
+        });
         if (prependNext) {
           prefixes = prefixes.concat([
             {
@@ -223,6 +222,7 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       checkJS: sample.checkJS,
       sourceFile: sample.sourceFile,
       lineNumber: sample.lineNumber,
+      skip: sample.skip,
       prefixesLength: _.sum(combinedPrefixes.map(p => p.split('\n').length)),
       content,
     };

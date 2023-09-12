@@ -97,9 +97,11 @@ export class Processor {
     finishFile();
   }
 
-  async checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSample}) {
-    const {id, language} = sample;
-    const {content} = sample;
+  async checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSample}): Promise<void> {
+    const {id, language, content, skip} = sample;
+    if (skip) {
+      return;
+    }
     startSample(sample);
 
     if (language === 'ts' || (language === 'js' && sample.checkJS)) {

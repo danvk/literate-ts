@@ -708,6 +708,34 @@ exports[`extractSamples snapshot: prepend 1`] = `
 ]
 `;
 
+exports[`extractSamples snapshot: prepend-and-skip 1`] = `
+[
+  {
+    "checkJS": false,
+    "content": "// b.ts
+const shared = "Cher";
+//    ~~~~~~
+// Cannot redeclare block-scoped variable 'shared'.",
+    "descriptor": "./prepend-and-skip.asciidoc:13",
+    "id": "prepend-and-skip-13",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 12,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "prepend-and-skip-6",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "sourceFile": "prepend-and-skip.asciidoc",
+    "tsOptions": {},
+  },
+]
+`;
+
 exports[`extractSamples snapshot: prepend-multiple 1`] = `
 [
   {

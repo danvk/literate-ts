@@ -11,7 +11,7 @@ import {log} from './logger.js';
 import {FailureContext, FailureLocation, fail, getLastFailReason} from './test-tracker.js';
 import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils.js';
 import {CodeSample} from './types.js';
-import {ExecErrorType, runNode} from './node-runner.js';
+import {ExecErrorType, runNode, runNodeRepl} from './node-runner.js';
 import {VERSION} from './version.js';
 import {PackageJson, readPackageUpSync} from 'read-pkg-up';
 
@@ -709,40 +709,15 @@ function streamToString(stream: Writable) {
 
 export async function checkProgramListing(sample: CodeSample): Promise<CheckTsResult> {
   const listing = htmlToText(sample.content);
-  const [rawInputs, outputs] = _.partition(listing, line => line.startsWith('> '));
+  console.log('listing', listing);
+  const [rawInputs, outputs] = _.partition(listing.split('\n'), line => line.startsWith('> '));
   const inputs = rawInputs.map(input => input.slice(2));
 
-  const inputStream = new Readable();
-  for (const input of inputs) {
-    inputStream.push(input); // the string you want
-  }
-  inputStream.push(null); // indicates end-of-file basically - the end of the stream
-
-  class CaptureStream extends Writable {
-    _write(chunk: any, enc: string, next: () => void) {
-      const s = chunk.toString();
-      console.log(s);
-      next();
-    }
-  }
-  const outputStream = new CaptureStream();
-
-  const server = repl.start({
-    input: inputStream,
-    output: outputStream,
-  });
-  return new Promise((resolve, reject) => {
-    inputStream.push(null);
-    server.addListener('exit', () => {
-      console.log('exit');
-    });
-    server.addListener('close', () => {
-      console.log('close');
-      outputStream.end();
-      resolve({passed: true});
-    });
-    server.addListener('line', line => {
-      console.log('line', line);
-    });
-  });
+  console.log('inputs', inputs);
+  console.log('outputs', outputs);
+  const result = runNodeRepl(inputs);
+  console.log('result', result);
+  const outputLines = result.stdout.split('\n');
+  console.log('outputLines', outputLines);
+  return {passed: _.isEqual(outputs, outputLines)};
 }

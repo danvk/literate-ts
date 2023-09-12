@@ -33,3 +33,12 @@ This is a program listing that should not be run through Node:
 <pre data-type="programlisting">$ <strong>npm install --save-dev @types/geojson</strong>
 + @types/geojson@7946.0.7</pre>
 ++++
+
+Here's another one with a failure:
+
+++++
+<pre data-type="programlisting" data-code-language="javascript">&gt; <strong> RegExp.prototype.monkey = 'Capuchin'</strong>
+"Capuchin"
+&gt; <strong>/123/.monkey</strong>
+"Capuchi"</pre>
+++++

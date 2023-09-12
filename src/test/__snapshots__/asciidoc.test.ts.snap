@@ -268,7 +268,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/program-listing.a
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/program-listing.asciidoc
 ",
-    "Found 3 code samples in ./src/test/inputs/program-listing.asciidoc",
+    "Found 4 code samples in ./src/test/inputs/program-listing.asciidoc",
     "BEGIN #././src/test/inputs/program-listing.asciidoc:4 (--filter program-listing-4)
 ",
     "Node session matched program listing.",
@@ -295,14 +295,29 @@ END #././src/test/inputs/program-listing.asciidoc:17 (--- ms)
     "
 END #././src/test/inputs/program-listing.asciidoc:24 (--- ms)
 ",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:40 (--filter program-listing-40)
+",
+    "💥 ././src/test/inputs/program-listing.asciidoc:40: Node session did not match program listing.",
+    "Expected:",
+    ""Capuchin"
+"Capuchi"",
+    "----",
+    "Actual:",
+    "'Capuchin'
+'Capuchin'",
+    "----",
+    "
+END #././src/test/inputs/program-listing.asciidoc:40 (--- ms)
+",
     "---- END FILE ./src/test/inputs/program-listing.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/program-listing.asciidoc",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 1/3 ././src/test/inputs/program-listing.asciidoc:4",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 2/3 ././src/test/inputs/program-listing.asciidoc:17",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 3/3 ././src/test/inputs/program-listing.asciidoc:24",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 1/4 ././src/test/inputs/program-listing.asciidoc:4",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 2/4 ././src/test/inputs/program-listing.asciidoc:17",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 3/4 ././src/test/inputs/program-listing.asciidoc:24",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 4/4 ././src/test/inputs/program-listing.asciidoc:40",
   ],
 }
 `;
@@ -1023,6 +1038,30 @@ const loc = place.latLng;",
     "isTSX": false,
     "language": "node",
     "lineNumber": 23,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "program-listing-17",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "program-listing.asciidoc",
+    "tsOptions": {},
+  },
+  {
+    "checkJS": false,
+    "content": "<pre data-type="programlisting" data-code-language="javascript">&gt; <strong> RegExp.prototype.monkey = 'Capuchin'</strong>
+"Capuchin"
+&gt; <strong>/123/.monkey</strong>
+"Capuchi"</pre>",
+    "descriptor": "./program-listing.asciidoc:40",
+    "id": "program-listing-40",
+    "isTSX": false,
+    "language": "node",
+    "lineNumber": 39,
     "nodeModules": [],
     "prefixes": [
       {

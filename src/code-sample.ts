@@ -267,7 +267,7 @@ export function applyReplacements(
   return samples;
 }
 
-const EQUIVALENT_RE = /\^\? type ([A-Za-z0-9_]+) = (.*)( \(equivalent to (.*)\))$/;
+const EQUIVALENT_RE = /\^\? type ([A-Za-z0-9_]+) = (.*)( \(equivalent to (.*)\))$/m;
 
 /** Patch the code sample to test "equivalent to" types */
 export function addResolvedChecks(sample: CodeSample): CodeSample {

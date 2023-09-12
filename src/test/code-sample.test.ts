@@ -454,13 +454,8 @@ describe('addResolvedChecks', () => {
         'source.asciidoc',
       ),
     );
-    expect(addResolvedChecks(sample[0])).toEqual({
-      ...baseSample,
-      descriptor: './source.asciidoc:3',
-      lineNumber: 2,
-      language: 'ts',
-      id: 'equivalent-assertion-3',
-      content: dedent`
+    expect(addResolvedChecks(sample[0]).content).toEqual(
+      dedent`
       interface Point {
         x: number;
         y: number;
@@ -471,6 +466,66 @@ describe('addResolvedChecks', () => {
       type SynthT = Resolve<T>;
       //   ^? type SynthT = "x" | "y"
       `,
-    });
+    );
+  });
+
+  it('should patch a type assertion in a larger code sample', () => {
+    const sample = applyPrefixes(
+      extractSamples(
+        dedent`
+          This is also a helpful mindset with finite sets, such as the ones you might get from
+          \`keyof T\`, which returns type for just the keys of an object type:
+
+          // verifier:reset
+          [[sort-by]]
+          [source,ts]
+          ----
+          interface Point {
+            x: number;
+            y: number;
+          }
+          type PointKeys = keyof Point;
+          //   ^? type PointKeys = keyof Point (equivalent to "x" | "y")
+
+          function sortBy<K extends keyof T, T>(vals: T[], key: K): T[] {
+            // ...
+          }
+          const pts: Point[] = [{x: 1, y: 1}, {x: 2, y: 0}];
+          sortBy(pts, 'x');  // OK, 'x' extends 'x'|'y' (aka keyof T)
+          sortBy(pts, 'y');  // OK, 'y' extends 'x'|'y'
+          sortBy(pts, Math.random() < 0.5 ? 'x' : 'y');  // OK, 'x'|'y' extends 'x'|'y'
+          sortBy(pts, 'z');
+                   // ~~~ Type '"z"' is not assignable to parameter of type '"x" | "y"
+          ----
+
+          The set interpretation also makes more sense when you have types whose relationship
+          isn't strictly hierarchical.
+        `,
+        'equivalent-assertion',
+        'source.asciidoc',
+      ),
+    );
+
+    expect(addResolvedChecks(sample[0]).content).toEqual(dedent`
+      interface Point {
+        x: number;
+        y: number;
+      }
+      type PointKeys = keyof Point;
+      //   ^? type PointKeys = keyof Point
+
+      function sortBy<K extends keyof T, T>(vals: T[], key: K): T[] {
+        // ...
+      }
+      const pts: Point[] = [{x: 1, y: 1}, {x: 2, y: 0}];
+      sortBy(pts, 'x');  // OK, 'x' extends 'x'|'y' (aka keyof T)
+      sortBy(pts, 'y');  // OK, 'y' extends 'x'|'y'
+      sortBy(pts, Math.random() < 0.5 ? 'x' : 'y');  // OK, 'x'|'y' extends 'x'|'y'
+      sortBy(pts, 'z');
+               // ~~~ Type '"z"' is not assignable to parameter of type '"x" | "y"
+      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+      type SynthPointKeys = Resolve<PointKeys>;
+      //   ^? type SynthPointKeys = "x" | "y"
+      `);
   });
 });

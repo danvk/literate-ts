@@ -271,40 +271,29 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/program-listing.a
     "Found 3 code samples in ./src/test/inputs/program-listing.asciidoc",
     "BEGIN #././src/test/inputs/program-listing.asciidoc:4 (--filter program-listing-4)
 ",
-    "💥 ././src/test/inputs/program-listing.asciidoc:4: Node session did not match program listing.",
-    "Expected: 4",
-    "{}
-2
-{ '1,2,3': 2 }
-",
-    "----",
-    "Actual:3",
-    "{}
-2
-{ '1,2,3': 2 }",
-    "----",
+    "Node session matched program listing.",
     "
 END #././src/test/inputs/program-listing.asciidoc:4 (--- ms)
 ",
-    "BEGIN #././src/test/inputs/program-listing.asciidoc:18 (--filter program-listing-18)
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:17 (--filter program-listing-17)
 ",
     "Code passed type checker.",
     "
-END #././src/test/inputs/program-listing.asciidoc:18 (--- ms)
+END #././src/test/inputs/program-listing.asciidoc:17 (--- ms)
 ",
-    "BEGIN #././src/test/inputs/program-listing.asciidoc:25 (--filter program-listing-25)
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:24 (--filter program-listing-24)
 ",
-    "💥 ././src/test/inputs/program-listing.asciidoc:25: Node session did not match program listing.",
-    "Expected: 2",
+    "💥 ././src/test/inputs/program-listing.asciidoc:24: Node session did not match program listing.",
+    "Expected:",
     "0
-[0, -73.979]",
+[ 0, -73.979 ]",
     "----",
-    "Actual:2",
+    "Actual:",
     "0
 [ 0, -74.2692 ]",
     "----",
     "
-END #././src/test/inputs/program-listing.asciidoc:25 (--- ms)
+END #././src/test/inputs/program-listing.asciidoc:24 (--- ms)
 ",
     "---- END FILE ./src/test/inputs/program-listing.asciidoc
 ",
@@ -312,8 +301,8 @@ END #././src/test/inputs/program-listing.asciidoc:25 (--- ms)
   "statuses": [
     "1/1: ././src/test/inputs/program-listing.asciidoc",
     "1/1: ././src/test/inputs/program-listing.asciidoc: 1/3 ././src/test/inputs/program-listing.asciidoc:4",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 2/3 ././src/test/inputs/program-listing.asciidoc:18",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 3/3 ././src/test/inputs/program-listing.asciidoc:25",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 2/3 ././src/test/inputs/program-listing.asciidoc:17",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 3/3 ././src/test/inputs/program-listing.asciidoc:24",
   ],
 }
 `;
@@ -990,8 +979,7 @@ exports[`extractSamples snapshot: program-listing 1`] = `
 &gt; <strong>x[[1, 2, 3]] = 2</strong>
 2
 &gt; <strong>x</strong>
-{ '1,2,3': 2 }
-</pre>",
+{ '1,2,3': 2 }</pre>",
     "descriptor": "./program-listing.asciidoc:4",
     "id": "program-listing-4",
     "isTSX": false,
@@ -1010,11 +998,11 @@ exports[`extractSamples snapshot: program-listing 1`] = `
     "checkJS": false,
     "content": "const place = {name: 'New York', latLng: [41.6868, -74.2692]};
 const loc = place.latLng;",
-    "descriptor": "./program-listing.asciidoc:18",
-    "id": "program-listing-18",
+    "descriptor": "./program-listing.asciidoc:17",
+    "id": "program-listing-17",
     "isTSX": false,
     "language": "ts",
-    "lineNumber": 17,
+    "lineNumber": 16,
     "nodeModules": [],
     "prefixes": [],
     "prefixesLength": 0,
@@ -1029,16 +1017,16 @@ const loc = place.latLng;",
     "content": "<pre data-type="programlisting">&gt; <strong>loc[0] = 0;</strong>
 0
 &gt; <strong>place.latLng</strong>
-[0, -73.979]</pre>",
-    "descriptor": "./program-listing.asciidoc:25",
-    "id": "program-listing-25",
+[ 0, -73.979 ]</pre>",
+    "descriptor": "./program-listing.asciidoc:24",
+    "id": "program-listing-24",
     "isTSX": false,
     "language": "node",
-    "lineNumber": 24,
+    "lineNumber": 23,
     "nodeModules": [],
     "prefixes": [
       {
-        "id": "program-listing-18",
+        "id": "program-listing-17",
       },
     ],
     "prefixesLength": 0,

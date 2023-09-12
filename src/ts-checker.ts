@@ -1,6 +1,8 @@
 import fs from 'fs-extra';
 import findCacheDirectory from 'find-cache-dir';
 import {convert as htmlToText} from 'html-to-text';
+import repl from 'node:repl';
+import {Readable, Writable} from 'node:stream';
 
 import stableJsonStringify from 'fast-json-stable-stringify';
 import _ from 'lodash';
@@ -695,9 +697,6 @@ async function uncachedCheckTs(
   return {passed: false, output};
 }
 
-import repl from 'node:repl';
-import {Readable, Writable} from 'node:stream';
-
 export async function checkProgramListing(
   sample: CodeSample,
   config: ConfigBundle,
@@ -705,7 +704,6 @@ export async function checkProgramListing(
   // The bit before the `<pre>` is presumably prepended material.
   // We need to convert this to JS and load it separately.
   const [preamble, listingHTML] = sample.content.split('<pre ');
-  console.log(preamble);
   const listing = htmlToText('<pre ' + listingHTML);
 
   let jsPreambleFile;
@@ -737,7 +735,6 @@ export async function checkProgramListing(
     }
   }
 
-  console.log('listing', listing);
   const [rawInputs, expectedOutputs] = _.partition(listing.trim().split('\n'), line =>
     line.startsWith('> '),
   );
@@ -756,7 +753,7 @@ export async function checkProgramListing(
   const capturedOutputs: string[] = [];
 
   class CaptureStream extends Writable {
-    _write(chunk: any, enc: string, next: () => void) {
+    _write(chunk: Buffer, enc: string, next: () => void) {
       const s = chunk.toString();
       capturedOutputs.push(s);
       next();
@@ -786,18 +783,16 @@ export async function checkProgramListing(
     });
   });
 
-  console.log('replOutput:', replOutput);
-
   if (!_.isEqual(replOutput, expectedOutputs)) {
     fail(`Node session did not match program listing.`);
-    log('Expected: ' + expectedOutputs.length);
+    log('Expected:');
     log(expectedOutputs.join('\n'));
     log('----');
-    log('Actual:' + replOutput.length);
+    log('Actual:');
     log(replOutput.join('\n'));
     log('----');
-    console.log('expected:', JSON.stringify(expectedOutputs));
-    console.log('actual:', JSON.stringify(replOutput));
+    // console.log('expected:', JSON.stringify(expectedOutputs));
+    // console.log('actual:', JSON.stringify(replOutput));
     return {passed: false};
   }
   log('Node session matched program listing.');

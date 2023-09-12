@@ -1,0 +1,35 @@
+This is a "program listing" that can be run through Node.js:
+
+++++
+<pre data-type="programlisting">&gt; <strong>x = {}</strong>
+{}
+&gt; <strong>x[[1, 2, 3]] = 2</strong>
+2
+&gt; <strong>x</strong>
+{ '1,2,3': 2 }
+</pre>
+++++
+
+Here's one that requires prefixing a code sample:
+
+// verifier:prepend-to-following
+[source,ts]
+----
+const place = {name: 'New York', latLng: [41.6868, -74.2692]};
+const loc = place.latLng;
+----
+
+you have created an _alias_. Changes to properties on the alias will be visible on the original value as well:
+
+++++
+<pre data-type="programlisting">&gt; <strong>loc[0] = 0;</strong>
+&gt; <strong>place.latLng</strong>
+[0, -73.979]</pre>
+++++
+
+This is a program listing that should not be run through Node:
+
+++++
+<pre data-type="programlisting">$ <strong>npm install --save-dev @types/geojson</strong>
++ @types/geojson@7946.0.7</pre>
+++++

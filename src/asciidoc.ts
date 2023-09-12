@@ -20,6 +20,9 @@ export function extractAsciidocSamples(sourceFile: string, text: string, p: Proc
     for (; i < lines.length && lines[i] !== until; i++);
 
     const content = lines.slice(startLine, i).join('\n');
+    if (until === '++++' && content.includes(`<pre data-type="programlisting">&gt; `)) {
+      p.setNextLanguage('node');
+    }
     p.addSample(content);
 
     return i;
@@ -53,6 +56,8 @@ export function extractAsciidocSamples(sourceFile: string, text: string, p: Proc
         }
       } else if (line === '----') {
         i = extractCodeSample(i, '----');
+      } else if (line === '++++') {
+        i = extractCodeSample(i, '++++');
       }
 
       p.resetWithNormalLine();

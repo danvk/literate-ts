@@ -105,7 +105,9 @@ function process(
     addSample(content) {
       if (
         !lastMetadata &&
-        (lastLanguage === 'ts' || (lastLanguage === 'js' && nextShouldCheckJs))
+        (lastLanguage === 'ts' ||
+          (lastLanguage === 'js' && nextShouldCheckJs) ||
+          lastLanguage === 'node')
       ) {
         // TS samples get checked even without IDs.
         lastMetadata = generateIdMetadata(slug + '-' + (1 + lineNum), sourceFile, lineNum);

@@ -8,7 +8,7 @@ export interface IdMetadata {
 export interface CodeSample {
   /** file.ext:line for this code sample */
   descriptor: string;
-  language: 'js' | 'ts' | null;
+  language: 'js' | 'ts' | 'node' | null;
   /** either user-supplied sample ID or file-line */
   id: string;
   sectionHeader: string | null;

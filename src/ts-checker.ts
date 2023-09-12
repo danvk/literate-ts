@@ -785,13 +785,17 @@ export async function checkProgramListing(
 
   if (!_.isEqual(replOutput, expectedOutputs)) {
     // TODO: report exact mismatched spans
-    fail(`Node session did not match program listing.`);
-    log('Expected:');
-    log(expectedOutputs.join('\n'));
-    log('----');
-    log('Actual:');
-    log(replOutput.join('\n'));
-    log('----');
+    let message = `Node session did not match program listing.`;
+    if (replOutput.length === expectedOutputs.length) {
+      for (const [expected, actual] of _.zip(expectedOutputs, replOutput)) {
+        message += `\n  - ${expected}\n  + ${actual}`;
+      }
+    } else {
+      const expected = expectedOutputs.join('\n');
+      const actual = replOutput.join('\n');
+      message += `\nExpected:\n${expected}\nActual:\n${actual}`;
+    }
+    fail(message);
     // console.log('expected:', JSON.stringify(expectedOutputs));
     // console.log('actual:', JSON.stringify(replOutput));
     return {passed: false};

@@ -283,29 +283,21 @@ END #././src/test/inputs/program-listing.asciidoc:17 (--- ms)
 ",
     "BEGIN #././src/test/inputs/program-listing.asciidoc:24 (--filter program-listing-24)
 ",
-    "💥 ././src/test/inputs/program-listing.asciidoc:24: Node session did not match program listing.",
-    "Expected:",
-    "0
-[ 0, -73.979 ]",
-    "----",
-    "Actual:",
-    "0
-[ 0, -74.2692 ]",
-    "----",
+    "💥 ././src/test/inputs/program-listing.asciidoc:24: Node session did not match program listing.
+  - 0
+  + 0
+  - [ 0, -73.979 ]
+  + [ 0, -74.2692 ]",
     "
 END #././src/test/inputs/program-listing.asciidoc:24 (--- ms)
 ",
     "BEGIN #././src/test/inputs/program-listing.asciidoc:40 (--filter program-listing-40)
 ",
-    "💥 ././src/test/inputs/program-listing.asciidoc:40: Node session did not match program listing.",
-    "Expected:",
-    ""Capuchin"
-"Capuchi"",
-    "----",
-    "Actual:",
-    "'Capuchin'
-'Capuchin'",
-    "----",
+    "💥 ././src/test/inputs/program-listing.asciidoc:40: Node session did not match program listing.
+  - "Capuchin"
+  + 'Capuchin'
+  - "Capuchi"
+  + 'Capuchin'",
     "
 END #././src/test/inputs/program-listing.asciidoc:40 (--- ms)
 ",

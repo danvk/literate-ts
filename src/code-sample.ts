@@ -281,6 +281,8 @@ export function addResolvedChecks(sample: CodeSample): CodeSample {
   console.log(typeName, raw, equivClause, equivType);
 
   // Strip the "equivalent to" bit, add Resolve<T> helper and secondary type assertion.
+  // See https://github.com/danvk/literate-ts/issues/132 and
+  // https://effectivetypescript.com/2022/02/25/gentips-4-display/
   let newContent = content.replace(equivClause, '');
   newContent += '\ntype Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};';
   newContent += `\ntype Synth${typeName} = Resolve<${typeName}>;`;

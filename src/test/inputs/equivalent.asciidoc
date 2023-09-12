@@ -31,3 +31,12 @@ Errors should be reported though probably not in a relevant location:
 type T2 = keyof Point;
 //   ^? type T2 = keyof Point (equivalent to "x" | "y" | "z")
 ----
+
+You can also split the assertion onto another line:
+
+[source,ts]
+----
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+//      (equivalent to "x" | "y" | "z")
+----

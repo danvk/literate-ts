@@ -301,6 +301,29 @@ be careful not to mislead the reader when you do this.
 
 If you'd like to keep your source files self-contained, you can put the replacement in a code block and reference it with a `replace-with-id` directive. See [this sample file](/examples/asciidoc/failures.asciidoc) for examples.
 
+## Equivalent types
+
+Sometimes TypeScript's type display can be a bit opaque, particularly with `keyof` expressions:
+
+```ts
+interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+```
+
+While correct and faithful to what you see in Quick Info, this isn't very useful. You can add an "equivalent to" clause to the type assertion to get some more resolution on the type (and clarify what it is for your readers):
+
+```ts
+type T = keyof Point;
+//   ^? type T = keyof Point (equivalent to "x" | "y")
+```
+
+When it sees this sort of assertion, literate-ts will quietly insert some [machinery] to resolve the type and check both the raw and resolved types.
+
 ## Command-Line Options
 
 - `--help`: Show help.
@@ -404,3 +427,4 @@ Publish a new version:
 [etsblog]: https://effectivetypescript.com/
 [pylit-post]: https://www.onebigfluke.com/2014/07/how-im-writing-programming-book.html
 [twoslash]: https://shikijs.github.io/twoslash/
+[machinery]: https://effectivetypescript.com/2022/02/25/gentips-4-display/

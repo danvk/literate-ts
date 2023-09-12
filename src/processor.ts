@@ -11,7 +11,7 @@ import {fileSlug, writeTempFile} from './utils.js';
 import {log} from './logger.js';
 import {startFile, fail, finishFile, finishSample, startSample} from './test-tracker.js';
 import {CodeSample} from './types.js';
-import {ConfigBundle, checkTs} from './ts-checker.js';
+import {ConfigBundle, checkProgramListing, checkTs} from './ts-checker.js';
 import {runNode} from './node-runner.js';
 import {Args} from './args.js';
 import _ from 'lodash';
@@ -123,6 +123,9 @@ export class Processor {
       } else {
         log(`Node exited with code ${output.code}`);
       }
+    } else if (language === 'node') {
+      // Node.js CLI "program listing"
+      await checkProgramListing(sample);
     } else if (language === null && id.endsWith('-output')) {
       // Verify the output of a previous code sample.
       const inputId = id.split('-output')[0];

@@ -45,7 +45,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.as
 ",
     "Code passed type checker.",
     "💥 ./src/test/inputs/empty-twoslash.asciidoc:15:1-13: Failed type assertion for \`fetchANumber\`
-  Expected: 
+  Expected:
     Actual: function fetchANumber(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<number>",
     "  0/1 twoslash type assertions matched.",
     "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
@@ -259,6 +259,40 @@ END #././src/test/inputs/president.asciidoc:21 (--- ms)
     "1/1: ././src/test/inputs/president.asciidoc",
     "1/1: ././src/test/inputs/president.asciidoc: 1/2 ././src/test/inputs/president.asciidoc:7",
     "1/1: ././src/test/inputs/president.asciidoc: 2/2 ././src/test/inputs/president.asciidoc:21",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/program-listing.asciidoc": ./src/test/inputs/program-listing.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/program-listing.asciidoc
+",
+    "Found 3 code samples in ./src/test/inputs/program-listing.asciidoc",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:4 (--filter program-listing-4)
+",
+    "
+END #././src/test/inputs/program-listing.asciidoc:4 (--- ms)
+",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:18 (--filter program-listing-18)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/program-listing.asciidoc:18 (--- ms)
+",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:25 (--filter program-listing-25)
+",
+    "
+END #././src/test/inputs/program-listing.asciidoc:25 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/program-listing.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/program-listing.asciidoc",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 1/3 ././src/test/inputs/program-listing.asciidoc:4",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 2/3 ././src/test/inputs/program-listing.asciidoc:18",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 3/3 ././src/test/inputs/program-listing.asciidoc:25",
   ],
 }
 `;

@@ -467,6 +467,7 @@ describe('checker', () => {
     './src/test/inputs/equivalent.asciidoc',
     './src/test/inputs/empty-twoslash.asciidoc',
     './src/test/inputs/prepend-and-skip.asciidoc',
+    './src/test/inputs/program-listing.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

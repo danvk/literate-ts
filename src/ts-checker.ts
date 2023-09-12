@@ -1,5 +1,6 @@
 import fs from 'fs-extra';
 import findCacheDirectory from 'find-cache-dir';
+import {convert as htmlToText} from 'html-to-text';
 
 import stableJsonStringify from 'fast-json-stable-stringify';
 import _ from 'lodash';
@@ -692,4 +693,56 @@ async function uncachedCheckTs(
 
   const output = await runNode(jsFile);
   return {passed: false, output};
+}
+
+import repl from 'node:repl';
+import {Readable, Writable} from 'node:stream';
+
+function streamToString(stream: Writable) {
+  const chunks: Buffer[] = [];
+  return new Promise<string>((resolve, reject) => {
+    stream.on('data', chunk => chunks.push(Buffer.from(chunk)));
+    stream.on('error', err => reject(err));
+    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+  });
+}
+
+export async function checkProgramListing(sample: CodeSample): Promise<CheckTsResult> {
+  const listing = htmlToText(sample.content);
+  const [rawInputs, outputs] = _.partition(listing, line => line.startsWith('> '));
+  const inputs = rawInputs.map(input => input.slice(2));
+
+  const inputStream = new Readable();
+  for (const input of inputs) {
+    inputStream.push(input); // the string you want
+  }
+  inputStream.push(null); // indicates end-of-file basically - the end of the stream
+
+  class CaptureStream extends Writable {
+    _write(chunk: any, enc: string, next: () => void) {
+      const s = chunk.toString();
+      console.log(s);
+      next();
+    }
+  }
+  const outputStream = new CaptureStream();
+
+  const server = repl.start({
+    input: inputStream,
+    output: outputStream,
+  });
+  return new Promise((resolve, reject) => {
+    inputStream.push(null);
+    server.addListener('exit', () => {
+      console.log('exit');
+    });
+    server.addListener('close', () => {
+      console.log('close');
+      outputStream.end();
+      resolve({passed: true});
+    });
+    server.addListener('line', line => {
+      console.log('line', line);
+    });
+  });
 }

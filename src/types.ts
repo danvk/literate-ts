@@ -21,6 +21,7 @@ export interface CodeSample {
   nodeModules: readonly string[];
   /** Combined length of prefixes, for offsetting error messages */
   prefixesLength: number;
+  skip: boolean;
   output?: SampleOutput;
 }
 

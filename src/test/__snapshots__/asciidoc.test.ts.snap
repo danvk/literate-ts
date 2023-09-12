@@ -177,6 +177,49 @@ END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/prepend-and-skip.asciidoc": ./src/test/inputs/prepend-and-skip.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/prepend-and-skip.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/prepend-and-skip.asciidoc",
+    "BEGIN #././src/test/inputs/prepend-and-skip.asciidoc:6 (--filter prepend-and-skip-6)
+",
+    "💥 ./src/test/inputs/prepend-and-skip.asciidoc:7:7-13: Expected TypeScript error was not produced:  Cannot redeclare block-scoped variable 'shared'.",
+    "Matched 0/1 errors.",
+    "// a.ts
+const shared = "Cher";
+//    ~~~~~~
+// Cannot redeclare block-scoped variable 'shared'.",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/prepend-and-skip.asciidoc:6 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-and-skip.asciidoc:13 (--filter prepend-and-skip-13)
+",
+    "matched errors:",
+    "  expected:  Cannot redeclare block-scoped variable 'shared'. b.ts",
+    "    actual: Cannot redeclare block-scoped variable 'shared'.",
+    "  error messages could not be matched!",
+    "matched errors:",
+    "  expected:  Cannot redeclare block-scoped variable 'shared'.",
+    "    actual: Cannot redeclare block-scoped variable 'shared'.",
+    "  error messages could not be matched!",
+    "Matched 2/2 errors.",
+    "
+END #././src/test/inputs/prepend-and-skip.asciidoc:13 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/prepend-and-skip.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/prepend-and-skip.asciidoc",
+    "1/1: ././src/test/inputs/prepend-and-skip.asciidoc: 1/2 ././src/test/inputs/prepend-and-skip.asciidoc:6",
+    "1/1: ././src/test/inputs/prepend-and-skip.asciidoc: 2/2 ././src/test/inputs/prepend-and-skip.asciidoc:13",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/president.asciidoc": ./src/test/inputs/president.asciidoc 1`] = `
 {
   "logs": [

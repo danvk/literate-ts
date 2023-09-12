@@ -8,6 +8,7 @@ export const baseSample = {
   sectionHeader: null,
   sourceFile: 'source.asciidoc',
   prefixesLength: 0,
+  skip: false,
 };
 
 export const baseExtract = {

@@ -7,6 +7,7 @@ const EXTRACT_ID = /\[\[([^\]]*)\]\]/;
 const EXTRACT_SOURCE = /\[source,(ts|js)\]/;
 const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^={1,3} (.*)$/;
+const NODE_PROGRAM_LISTING = /<pre data-type="programlisting".*>&gt; /;
 
 export function extractAsciidocSamples(sourceFile: string, text: string, p: Processor) {
   let isIgnoringFencedCodeBlocks = false;
@@ -20,6 +21,9 @@ export function extractAsciidocSamples(sourceFile: string, text: string, p: Proc
     for (; i < lines.length && lines[i] !== until; i++);
 
     const content = lines.slice(startLine, i).join('\n');
+    if (until === '++++' && NODE_PROGRAM_LISTING.exec(content)) {
+      p.setNextLanguage('node');
+    }
     p.addSample(content);
 
     return i;
@@ -53,6 +57,8 @@ export function extractAsciidocSamples(sourceFile: string, text: string, p: Proc
         }
       } else if (line === '----') {
         i = extractCodeSample(i, '----');
+      } else if (line === '++++') {
+        i = extractCodeSample(i, '++++');
       }
 
       p.resetWithNormalLine();

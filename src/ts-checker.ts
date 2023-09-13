@@ -1,5 +1,8 @@
 import fs from 'fs-extra';
 import findCacheDirectory from 'find-cache-dir';
+import {convert as htmlToText} from 'html-to-text';
+import repl from 'node:repl';
+import {Readable, Writable} from 'node:stream';
 
 import stableJsonStringify from 'fast-json-stable-stringify';
 import _ from 'lodash';
@@ -7,12 +10,12 @@ import path, {resolve} from 'path';
 import ts from 'typescript';
 
 import {log} from './logger.js';
-import {FailureContext, FailureLocation, fail, getLastFailReason} from './test-tracker.js';
+import {FailureLocation, fail, getLastFailReason} from './test-tracker.js';
 import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} from './utils.js';
 import {CodeSample} from './types.js';
 import {ExecErrorType, runNode} from './node-runner.js';
 import {VERSION} from './version.js';
-import {PackageJson, readPackageUpSync} from 'read-pkg-up';
+import {readPackageUpSync} from 'read-pkg-up';
 
 export interface TypeScriptError {
   line: number;
@@ -692,4 +695,111 @@ async function uncachedCheckTs(
 
   const output = await runNode(jsFile);
   return {passed: false, output};
+}
+
+export async function checkProgramListing(
+  sample: CodeSample,
+  config: ConfigBundle,
+): Promise<CheckTsResult> {
+  // The bit before the `<pre>` is presumably prepended material.
+  // We need to convert this to JS and load it separately.
+  const [preamble, listingHTML] = sample.content.split('<pre ');
+  const listing = htmlToText('<pre ' + listingHTML);
+
+  let jsPreambleFile;
+  if (preamble) {
+    // Note: some copying of uncachedCheckTs() here.
+    const tsFile = writeTempFile('programlisting-premable.ts', preamble);
+    const options: ts.CompilerOptions = {
+      ...config.options,
+      ...sample.tsOptions,
+    };
+    const program = ts.createProgram([tsFile], options, config.host);
+    const source = program.getSourceFile(tsFile);
+    if (!source) {
+      fail('Unable to load TS source file');
+      return {passed: false};
+    }
+    let diagnostics = ts.getPreEmitDiagnostics(program);
+    const emitResult = program.emit();
+    diagnostics = diagnostics.concat(emitResult.diagnostics);
+    jsPreambleFile = tsFile.replace(/\.ts$/, '.js');
+    if (!fs.existsSync(jsPreambleFile)) {
+      fail(`Did not produce JS output in expected place: ${jsPreambleFile}`);
+      return {passed: false};
+    }
+
+    if (emitResult.emitSkipped) {
+      fail('Failed to emit JavaScript for TypeScript sample.');
+      return {passed: false};
+    }
+  }
+
+  const [rawInputs, expectedOutputs] = _.partition(listing.trim().split('\n'), line =>
+    line.startsWith('> '),
+  );
+  let inputs = rawInputs.map(input => input.slice(2));
+  if (jsPreambleFile) {
+    inputs = [`.load ${jsPreambleFile}`, '"--reset--"', ...inputs];
+  }
+
+  const inputStream = new Readable();
+  for (const input of inputs) {
+    inputStream.push(input); // the string you want
+    inputStream.push('\n');
+  }
+  inputStream.push(null); // indicates end-of-file basically - the end of the stream
+
+  const capturedOutputs: string[] = [];
+
+  class CaptureStream extends Writable {
+    _write(chunk: Buffer, enc: string, next: () => void) {
+      const s = chunk.toString();
+      capturedOutputs.push(s);
+      next();
+    }
+  }
+  const outputStream = new CaptureStream();
+
+  const server = repl.start({
+    input: inputStream,
+    output: outputStream,
+  });
+  const replOutput = await new Promise<string[]>((resolve, reject) => {
+    inputStream.push(null);
+    server.addListener('exit', () => {});
+    server.addListener('close', () => {
+      outputStream.end();
+      let finalOutputs = [];
+      for (const output of capturedOutputs) {
+        if (output === '> ') continue;
+        if (output.trim() === `'--reset--'`) {
+          finalOutputs = [];
+        } else {
+          finalOutputs.push(output.trim());
+        }
+      }
+      resolve(finalOutputs);
+    });
+  });
+
+  if (!_.isEqual(replOutput, expectedOutputs)) {
+    // TODO: report exact mismatched spans
+    let message = `Node session did not match program listing.`;
+    if (replOutput.length === expectedOutputs.length) {
+      for (const [expected, actual] of _.zip(expectedOutputs, replOutput)) {
+        message += `\n  - ${expected}\n  + ${actual}`;
+      }
+    } else {
+      const expected = expectedOutputs.join('\n');
+      const actual = replOutput.join('\n');
+      message += `\nExpected:\n${expected}\nActual:\n${actual}`;
+    }
+    fail(message);
+    // console.log('expected:', JSON.stringify(expectedOutputs));
+    // console.log('actual:', JSON.stringify(replOutput));
+    return {passed: false};
+  }
+  log('Node session matched program listing.');
+  return {passed: true};
 }

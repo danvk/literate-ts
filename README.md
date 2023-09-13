@@ -324,6 +324,31 @@ type T = keyof Point;
 
 When it sees this sort of assertion, literate-ts will quietly insert some [machinery] to resolve the type and check both the raw and resolved types.
 
+This only works for twoslash-style assertions.
+
+## Program Listings
+
+literate-ts will also try to verify "program listings". These look like they've been copy/pasted from the Node REPL:
+
+    > 1 + 2
+    3
+
+When it sees one of these, literate-ts will run the lines starting with `>` through Node and verify that the response lines come back out. If you have prepend directives active when literate-ts hits a program listing, the compiled JS for those will be run through Node as a "preamble".
+
+This is only supported for Asciidoc. Here's what it looks like:
+
+```asciidoc
+++++
+<pre data-type="programlisting">&gt; <strong>x = {}</strong>
+{}
+&gt; <strong>x[[1, 2, 3]] = 2</strong>
+2
+&gt; <strong>x</strong>
+{ '1,2,3': 2 }
+</pre>
+++++
+```
+
 ## Command-Line Options
 
 - `--help`: Show help.

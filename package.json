@@ -25,6 +25,7 @@
     "find-cache-dir": "^5.0.0",
     "fs-extra": "^11.0.0",
     "html-to-text": "^9.0.5",
+    "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.15",
     "ora": "^7.0.0",
     "read-pkg-up": "^10.0.0",

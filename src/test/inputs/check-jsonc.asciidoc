@@ -1,0 +1,27 @@
+This is valid JSONC:
+
+[source,json]
+----
+// data.json
+{
+  "year": 2023,
+  "months": [
+    "Jan",
+    "Feb",
+    /* ... */
+    "Dec"
+  ]
+}
+----
+
+This is invalid JSONC:
+
+[source,json]
+----
+{
+  year: 2023,
+  months": [
+    "Jan",
+  ]
+}
+----

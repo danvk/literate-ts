@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/check-jsonc.asciidoc": ./src/test/inputs/check-jsonc.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/check-jsonc.asciidoc
+",
+    "Found 0 code samples in ./src/test/inputs/check-jsonc.asciidoc",
+    "---- END FILE ./src/test/inputs/check-jsonc.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/check-jsonc.asciidoc",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/commented-sample-with-error.asciidoc": ./src/test/inputs/commented-sample-with-error.asciidoc 1`] = `
 {
   "logs": [
@@ -213,7 +228,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/prepend-as-file.a
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/prepend-as-file.asciidoc
 ",
-    "Found 2 code samples in ./src/test/inputs/prepend-as-file.asciidoc",
+    "Found 3 code samples in ./src/test/inputs/prepend-as-file.asciidoc",
     "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:10 (--filter prepend-as-file-10)
 ",
     "Code passed type checker.",
@@ -231,13 +246,26 @@ END #././src/test/inputs/prepend-as-file.asciidoc:10 (--- ms)
     "
 END #././src/test/inputs/prepend-as-file.asciidoc:21 (--- ms)
 ",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:52 (--filter prepend-as-file-52)
+",
+    "💥 ./src/test/inputs/prepend-as-file.asciidoc:52:18-31: Unexpected TypeScript error: Cannot find module './data.json' or its corresponding type declarations.",
+    "import data from './data.json';
+console.log(data.year);
+//               ^? (property) data.year: string
+console.log(data.months);
+//               ^? (property) data.months: string[]",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"resolveJsonModule":true}",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:52 (--- ms)
+",
     "---- END FILE ./src/test/inputs/prepend-as-file.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/prepend-as-file.asciidoc",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/2 ././src/test/inputs/prepend-as-file.asciidoc:10",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/2 ././src/test/inputs/prepend-as-file.asciidoc:21",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/3 ././src/test/inputs/prepend-as-file.asciidoc:10",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/3 ././src/test/inputs/prepend-as-file.asciidoc:21",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 3/3 ././src/test/inputs/prepend-as-file.asciidoc:52",
   ],
 }
 `;
@@ -413,6 +441,8 @@ exports[`extractSamples snapshot: backticks 1`] = `
 `;
 
 exports[`extractSamples snapshot: backticks-disabled 1`] = `[]`;
+
+exports[`extractSamples snapshot: check-jsonc 1`] = `[]`;
 
 exports[`extractSamples snapshot: commented-sample 1`] = `
 [
@@ -997,6 +1027,31 @@ const pt: Point = {
     "sourceFile": "prepend-as-file.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "import data from './data.json';
+console.log(data.year);
+//               ^? (property) data.year: string
+console.log(data.months);
+//               ^? (property) data.months: string[]",
+    "descriptor": "./prepend-as-file.asciidoc:52",
+    "id": "prepend-as-file-52",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 51,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "prepend-as-file.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "resolveJsonModule": true,
+    },
   },
 ]
 `;

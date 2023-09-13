@@ -608,6 +608,10 @@ async function uncachedCheckTs(
   const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
   const sampleDir = getTempDir();
+  for (const auxFile of sample.auxiliaryFiles) {
+    const destFile = sampleDir + '/' + auxFile.filename;
+    fs.writeFileSync(destFile, auxFile.content, 'utf-8');
+  }
 
   const options: ts.CompilerOptions = {
     ...config.options,

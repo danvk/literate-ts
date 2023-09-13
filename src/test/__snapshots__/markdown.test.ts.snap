@@ -3,6 +3,7 @@
 exports[`markdown should match snapshots: commented-sample 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function somethingDangerous() {}",
     "descriptor": "./commented-sample.md:6",
@@ -17,9 +18,11 @@ exports[`markdown should match snapshots: commented-sample 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "commented-sample.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "let val = null;  // Type is any
 try {
@@ -46,6 +49,7 @@ val  // Type is number | null",
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "commented-sample.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -54,6 +58,7 @@ val  // Type is number | null",
 exports[`markdown should match snapshots: doc1 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function greet(who: string) {
   console.log('Hello', who);
@@ -70,9 +75,11 @@ exports[`markdown should match snapshots: doc1 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "doc1.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "console.log("end of file");
 ",
@@ -88,6 +95,7 @@ exports[`markdown should match snapshots: doc1 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "doc1.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -96,6 +104,7 @@ exports[`markdown should match snapshots: doc1 1`] = `
 exports[`markdown should match snapshots: multilinetype 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const o = {x: 1, y: 2};
 // type is {
@@ -114,9 +123,11 @@ exports[`markdown should match snapshots: multilinetype 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "multilinetype.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function addWithExtras(a: number, b: number) {
   const c = a + b;  // type is number
@@ -135,6 +146,7 @@ exports[`markdown should match snapshots: multilinetype 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "multilinetype.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -143,6 +155,7 @@ exports[`markdown should match snapshots: multilinetype 1`] = `
 exports[`markdown should match snapshots: noid 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "console.log('Hello', 'TS');",
     "descriptor": "./noid.md:8",
@@ -157,6 +170,7 @@ exports[`markdown should match snapshots: noid 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "noid.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -165,6 +179,7 @@ exports[`markdown should match snapshots: noid 1`] = `
 exports[`markdown should match snapshots: prepend 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend.md:2",
@@ -179,9 +194,11 @@ exports[`markdown should match snapshots: prepend 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const a: AB = 'a';",
     "descriptor": "./prepend.md:7",
@@ -200,9 +217,11 @@ exports[`markdown should match snapshots: prepend 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const a: AB = 'a';",
     "descriptor": "./prepend.md:14",
@@ -217,6 +236,7 @@ exports[`markdown should match snapshots: prepend 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -225,6 +245,7 @@ exports[`markdown should match snapshots: prepend 1`] = `
 exports[`markdown should match snapshots: prepend-multiple 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend-multiple.md:3",
@@ -239,9 +260,11 @@ exports[`markdown should match snapshots: prepend-multiple 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend-multiple.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type ABC = AB | 'c';",
     "descriptor": "./prepend-multiple.md:8",
@@ -260,9 +283,11 @@ exports[`markdown should match snapshots: prepend-multiple 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend-multiple.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const c: ABC = 'c';",
     "descriptor": "./prepend-multiple.md:12",
@@ -284,6 +309,7 @@ exports[`markdown should match snapshots: prepend-multiple 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend-multiple.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -292,6 +318,7 @@ exports[`markdown should match snapshots: prepend-multiple 1`] = `
 exports[`markdown should match snapshots: skip 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "keyof A&B = (keyof A) | (keyof B)",
     "descriptor": "./skip.md:3",
@@ -306,6 +333,7 @@ exports[`markdown should match snapshots: skip 1`] = `
     "sectionHeader": null,
     "skip": true,
     "sourceFile": "skip.md",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]

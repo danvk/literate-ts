@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/check-jsonc.asciidoc": ./src/test/inputs/check-jsonc.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/check-jsonc.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/check-jsonc.asciidoc",
+    "BEGIN #././src/test/inputs/check-jsonc.asciidoc:5 (--filter check-jsonc-5)
+",
+    "
+END #././src/test/inputs/check-jsonc.asciidoc:5 (--- ms)
+",
+    "BEGIN #././src/test/inputs/check-jsonc.asciidoc:21 (--filter check-jsonc-21)
+",
+    "💥 ././src/test/inputs/check-jsonc.asciidoc:21: Invalid JSONC: InvalidSymbol,PropertyNameExpected,ValueExpected,InvalidSymbol,UnexpectedEndOfString,ColonExpected,PropertyNameExpected,ValueExpected",
+    "
+END #././src/test/inputs/check-jsonc.asciidoc:21 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/check-jsonc.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/check-jsonc.asciidoc",
+    "1/1: ././src/test/inputs/check-jsonc.asciidoc: 1/2 ././src/test/inputs/check-jsonc.asciidoc:5",
+    "1/1: ././src/test/inputs/check-jsonc.asciidoc: 2/2 ././src/test/inputs/check-jsonc.asciidoc:21",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/commented-sample-with-error.asciidoc": ./src/test/inputs/commented-sample-with-error.asciidoc 1`] = `
 {
   "logs": [
@@ -213,7 +241,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/prepend-as-file.a
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/prepend-as-file.asciidoc
 ",
-    "Found 2 code samples in ./src/test/inputs/prepend-as-file.asciidoc",
+    "Found 4 code samples in ./src/test/inputs/prepend-as-file.asciidoc",
     "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:10 (--filter prepend-as-file-10)
 ",
     "Code passed type checker.",
@@ -231,13 +259,33 @@ END #././src/test/inputs/prepend-as-file.asciidoc:10 (--- ms)
     "
 END #././src/test/inputs/prepend-as-file.asciidoc:21 (--- ms)
 ",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:37 (--filter prepend-as-file-37)
+",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:37 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:53 (--filter prepend-as-file-53)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: (property) "year": number",
+    "    Actual: (property) "year": number",
+    "Twoslash type assertion match:",
+    "  Expected: (property) "months": string[]",
+    "    Actual: (property) "months": string[]",
+    "  2/2 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:53 (--- ms)
+",
     "---- END FILE ./src/test/inputs/prepend-as-file.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/prepend-as-file.asciidoc",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/2 ././src/test/inputs/prepend-as-file.asciidoc:10",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/2 ././src/test/inputs/prepend-as-file.asciidoc:21",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/4 ././src/test/inputs/prepend-as-file.asciidoc:10",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/4 ././src/test/inputs/prepend-as-file.asciidoc:21",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 3/4 ././src/test/inputs/prepend-as-file.asciidoc:37",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 4/4 ././src/test/inputs/prepend-as-file.asciidoc:53",
   ],
 }
 `;
@@ -413,6 +461,63 @@ exports[`extractSamples snapshot: backticks 1`] = `
 `;
 
 exports[`extractSamples snapshot: backticks-disabled 1`] = `[]`;
+
+exports[`extractSamples snapshot: check-jsonc 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// data.json
+{
+  "year": 2023,
+  "months": [
+    "Jan",
+    "Feb",
+    /* ... */
+    "Dec"
+  ]
+}",
+    "descriptor": "./check-jsonc.asciidoc:5",
+    "id": "check-jsonc-5",
+    "isTSX": false,
+    "language": "json",
+    "lineNumber": 4,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-jsonc.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "{
+  year: 2023,
+  months": [
+    "Jan",
+  ]
+}",
+    "descriptor": "./check-jsonc.asciidoc:21",
+    "id": "check-jsonc-21",
+    "isTSX": false,
+    "language": "json",
+    "lineNumber": 20,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-jsonc.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
 
 exports[`extractSamples snapshot: commented-sample 1`] = `
 [
@@ -997,6 +1102,64 @@ const pt: Point = {
     "sourceFile": "prepend-as-file.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// data.json
+{
+  "year": 2023,
+  "months": [
+    "Jan",
+    "Feb",
+    /* ... */
+    "Dec"
+  ]
+}",
+    "descriptor": "./prepend-as-file.asciidoc:37",
+    "id": "prepend-as-file-37",
+    "isTSX": false,
+    "language": "json",
+    "lineNumber": 36,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "prepend-as-file.asciidoc",
+    "targetFilename": "data.json",
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "import data from './data.json';
+console.log(data.year);
+//               ^? (property) "year": number
+console.log(data.months);
+//               ^? (property) "months": string[]",
+    "descriptor": "./prepend-as-file.asciidoc:53",
+    "id": "prepend-as-file-53",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 52,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "prepend-as-file-37",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "prepend-as-file.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+    },
   },
 ]
 `;

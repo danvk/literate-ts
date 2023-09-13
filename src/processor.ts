@@ -1,4 +1,5 @@
 import fs from 'fs';
+import {ParseError, parse as parseJSONC, printParseErrorCode} from 'jsonc-parser';
 import {dirname, isAbsolute} from 'path';
 
 import {
@@ -126,6 +127,13 @@ export class Processor {
     } else if (language === 'node') {
       // Node.js CLI "program listing"
       await checkProgramListing(sample, this.typeScriptBundle);
+    } else if (language === 'json') {
+      const errors: ParseError[] = [];
+      parseJSONC(sample.content, errors);
+      if (errors.length) {
+        const errorsTxt = errors.map(e => printParseErrorCode(e.error));
+        fail(`Invalid JSONC: ${errorsTxt}`);
+      }
     } else if (language === null && id.endsWith('-output')) {
       // Verify the output of a previous code sample.
       const inputId = id.split('-output')[0];

@@ -28,3 +28,31 @@ const pt: Point = {
 }
 ----
 // verifier:reset
+
+You can also import a JSON file. As a convenience, literate-ts will convert from JSONC (JSON with Comments) to JSON for you:
+
+// verifier:prepend-as-file:data.json
+[source,json]
+----
+// data.json
+{
+  "year": 2023,
+  "months": [
+    "Jan",
+    "Feb",
+    /* ... */
+    "Dec"
+  ]
+}
+----
+
+// verifier:tsconfig:resolveJsonModule=true
+// verifier:tsconfig:esModuleInterop=true
+[source,ts]
+----
+import data from './data.json';
+console.log(data.year);
+//               ^? (property) "year": number
+console.log(data.months);
+//               ^? (property) "months": string[]
+----

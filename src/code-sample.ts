@@ -5,6 +5,7 @@ import {fail} from './test-tracker.js';
 import {extractAsciidocSamples} from './asciidoc.js';
 import {extractMarkdownSamples} from './markdown.js';
 import {generateIdMetadata} from './metadata.js';
+import {stripComments} from 'jsonc-parser';
 
 export interface Processor {
   /** Let the processor know about the current line number (0-based). */
@@ -112,7 +113,8 @@ function process(
         !lastMetadata &&
         (lastLanguage === 'ts' ||
           (lastLanguage === 'js' && nextShouldCheckJs) ||
-          lastLanguage === 'node')
+          lastLanguage === 'node' ||
+          lastLanguage === 'json')
       ) {
         // TS samples get checked even without IDs.
         lastMetadata = generateIdMetadata(slug + '-' + (1 + lineNum), sourceFile, lineNum);
@@ -234,10 +236,14 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       sourceFile: sample.sourceFile,
       lineNumber: sample.lineNumber,
       targetFilename: sample.targetFilename,
-      auxiliaryFiles: auxiliary.map(({id}) => ({
-        filename: idToSample[id].targetFilename!,
-        content: idToSample[id].content,
-      })),
+      auxiliaryFiles: auxiliary.map(({id}) => {
+        const sample = idToSample[id];
+        const content = sample.language === 'json' ? stripComments(sample.content) : sample.content;
+        return {
+          filename: sample.targetFilename!,
+          content,
+        };
+      }),
       skip: sample.skip,
       prefixesLength: _.sum(combinedPrefixes.map(p => p.split('\n').length)),
       content,

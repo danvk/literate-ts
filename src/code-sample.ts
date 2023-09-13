@@ -39,6 +39,7 @@ function process(
   let tsOptions: {[key: string]: string | boolean} = {};
   let nextIsTSX = false;
   let nextShouldCheckJs = false;
+  let targetFilename: string | null = null;
 
   const p: Processor = {
     setLineNum(line) {
@@ -59,6 +60,7 @@ function process(
         nodeModules = [];
         nextIsTSX = false;
         nextShouldCheckJs = false;
+        targetFilename = null;
       } else if (directive === 'prepend-to-following') {
         prependNext = true;
       } else if (directive.startsWith('prepend-subset-to-following:')) {
@@ -92,6 +94,9 @@ function process(
         tsOptions['noEmit'] = true;
       } else if (directive.startsWith('replace-with-id')) {
         nextIsReplaced = directive.split(':', 2)[1];
+      } else if (directive.startsWith('prepend-as-file')) {
+        targetFilename = directive.split(':', 2)[1];
+        prependNext = true;
       } else {
         throw new Error(`Unknown directive: ${directive}`);
       }
@@ -125,9 +130,11 @@ function process(
           checkJS: nextShouldCheckJs,
           sourceFile,
           lineNumber: lineNum,
+          targetFilename,
           tsOptions: {...tsOptions},
           prefixesLength: 0,
           skip: skipNext || skipRemaining,
+          auxiliaryFiles: [],
         });
         if (prependNext) {
           prefixes = prefixes.concat([
@@ -148,6 +155,7 @@ function process(
       nextIsTSX = false;
       nextShouldCheckJs = false;
       nextIsReplaced = null;
+      targetFilename = null;
     },
   };
 
@@ -209,7 +217,8 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       throw new Error(`Logic error: sample ${sample.id} was not replaced.`);
     }
     const prefixes = sample.id.endsWith('-output') ? [] : sample.prefixes;
-    const combinedPrefixes = prefixes.map(({id, lines}) =>
+    const [auxiliary, prepend] = _.partition(prefixes, ({id}) => !!idToSample[id].targetFilename);
+    const combinedPrefixes = prepend.map(({id, lines}) =>
       sliceLines(idToSample[id].content, lines),
     );
     const content = combinedPrefixes.concat([sample.content]).join('\n');
@@ -224,6 +233,11 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       checkJS: sample.checkJS,
       sourceFile: sample.sourceFile,
       lineNumber: sample.lineNumber,
+      targetFilename: sample.targetFilename,
+      auxiliaryFiles: auxiliary.map(({id}) => ({
+        filename: idToSample[id].targetFilename!,
+        content: idToSample[id].content,
+      })),
       skip: sample.skip,
       prefixesLength: _.sum(combinedPrefixes.map(p => p.split('\n').length)),
       content,

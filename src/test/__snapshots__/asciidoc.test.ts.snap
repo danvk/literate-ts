@@ -208,6 +208,40 @@ END #././src/test/inputs/prepend-and-skip.asciidoc:13 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/prepend-as-file.asciidoc": ./src/test/inputs/prepend-as-file.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/prepend-as-file.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/prepend-as-file.asciidoc",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:10 (--filter prepend-as-file-10)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:10 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:21 (--filter prepend-as-file-21)
+",
+    "matched errors:",
+    "  expected: Type '{ x: number; y: number; z: number; }' is not assignable to type 'Point' Object literal may only specify known properties, and 'z' does not exist in type 'Point'.",
+    "    actual: Type '{ x: number; y: number; z: number; }' is not assignable to type 'Point'.
+  Object literal may only specify known properties, and 'z' does not exist in type 'Point'.",
+    "  error messages could not be matched!",
+    "Matched 1/1 errors.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:21 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/prepend-as-file.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/2 ././src/test/inputs/prepend-as-file.asciidoc:10",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/2 ././src/test/inputs/prepend-as-file.asciidoc:21",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/president.asciidoc": ./src/test/inputs/president.asciidoc 1`] = `
 {
   "logs": [
@@ -317,6 +351,7 @@ END #././src/test/inputs/program-listing.asciidoc:40 (--- ms)
 exports[`extractSamples snapshot: backticks 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function greet(who: string) {
   console.log('Hello', who);
@@ -333,9 +368,11 @@ exports[`extractSamples snapshot: backticks 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "backticks.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "export const Example = () => <div />;",
     "descriptor": "./backticks.asciidoc:12",
@@ -350,9 +387,11 @@ exports[`extractSamples snapshot: backticks 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "backticks.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "console.log("end of file");",
     "descriptor": "./backticks.asciidoc:27",
@@ -367,6 +406,7 @@ exports[`extractSamples snapshot: backticks 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "backticks.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -377,6 +417,7 @@ exports[`extractSamples snapshot: backticks-disabled 1`] = `[]`;
 exports[`extractSamples snapshot: commented-sample 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function somethingDangerous() {}",
     "descriptor": "./commented-sample.asciidoc:7",
@@ -391,9 +432,11 @@ exports[`extractSamples snapshot: commented-sample 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "commented-sample.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "let val = null;  // Type is any
 try {
@@ -420,6 +463,7 @@ val  // Type is number | null",
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "commented-sample.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -428,6 +472,7 @@ val  // Type is number | null",
 exports[`extractSamples snapshot: commented-sample-with-error 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const value: number = "123";",
     "descriptor": "./commented-sample-with-error.asciidoc:7",
@@ -442,9 +487,11 @@ exports[`extractSamples snapshot: commented-sample-with-error 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "commented-sample-with-error.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "console.log(value);
 //          ^? const value: number",
@@ -464,6 +511,7 @@ exports[`extractSamples snapshot: commented-sample-with-error 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "commented-sample-with-error.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -472,6 +520,7 @@ exports[`extractSamples snapshot: commented-sample-with-error 1`] = `
 exports[`extractSamples snapshot: doc1 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function greet(who: string) {
   console.log('Hello', who);
@@ -488,6 +537,7 @@ exports[`extractSamples snapshot: doc1 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "doc1.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -496,6 +546,7 @@ exports[`extractSamples snapshot: doc1 1`] = `
 exports[`extractSamples snapshot: empty-twoslash 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
   const response = await fetch(...args);
@@ -519,6 +570,7 @@ fetchANumber
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "empty-twoslash.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -527,6 +579,7 @@ fetchANumber
 exports[`extractSamples snapshot: equivalent 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "interface Point {
   x: number;
@@ -547,9 +600,11 @@ type T = keyof Point;
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "equivalent.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type T2 = keyof Point;
 //   ^? type T2 = keyof Point (equivalent to "x" | "y")",
@@ -569,9 +624,11 @@ type T = keyof Point;
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "equivalent.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type T2 = keyof Point;
 //   ^? type T2 = keyof Point (equivalent to "x" | "y" | "z")",
@@ -591,9 +648,11 @@ type T = keyof Point;
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "equivalent.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type T2 = keyof Point;
 //   ^? type T2 = keyof Point
@@ -614,6 +673,7 @@ type T = keyof Point;
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "equivalent.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -622,6 +682,7 @@ type T = keyof Point;
 exports[`extractSamples snapshot: inline-replacement 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function calculateAge(birthDate: Date): number {
   // ...
@@ -638,9 +699,11 @@ exports[`extractSamples snapshot: inline-replacement 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "inline-replacement.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function calculateAge(birthDate: Date): number {
   // COMPRESS
@@ -659,9 +722,11 @@ exports[`extractSamples snapshot: inline-replacement 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "inline-replacement.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function calculateAge(birthDate: string): number {
   // ...
@@ -678,6 +743,7 @@ exports[`extractSamples snapshot: inline-replacement 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "inline-replacement.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -686,6 +752,7 @@ exports[`extractSamples snapshot: inline-replacement 1`] = `
 exports[`extractSamples snapshot: multilinetype 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const o = {x: 1, y: 2};
 // type is {
@@ -704,9 +771,11 @@ exports[`extractSamples snapshot: multilinetype 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "multilinetype.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "function addWithExtras(a: number, b: number) {
   const c = a + b;  // type is number
@@ -725,6 +794,7 @@ exports[`extractSamples snapshot: multilinetype 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "multilinetype.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -733,6 +803,7 @@ exports[`extractSamples snapshot: multilinetype 1`] = `
 exports[`extractSamples snapshot: noid 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "console.log('Hello', 'TS');",
     "descriptor": "./noid.asciidoc:10",
@@ -747,6 +818,7 @@ exports[`extractSamples snapshot: noid 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "noid.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -755,6 +827,7 @@ exports[`extractSamples snapshot: noid 1`] = `
 exports[`extractSamples snapshot: prepend 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend.asciidoc:2",
@@ -769,9 +842,11 @@ exports[`extractSamples snapshot: prepend 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const a: AB = 'a';",
     "descriptor": "./prepend.asciidoc:8",
@@ -790,9 +865,11 @@ exports[`extractSamples snapshot: prepend 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const a: AB = 'a';",
     "descriptor": "./prepend.asciidoc:16",
@@ -807,6 +884,7 @@ exports[`extractSamples snapshot: prepend 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -815,6 +893,7 @@ exports[`extractSamples snapshot: prepend 1`] = `
 exports[`extractSamples snapshot: prepend-and-skip 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "// a.ts
 const shared = "Cher";
@@ -832,9 +911,11 @@ const shared = "Cher";
     "sectionHeader": null,
     "skip": true,
     "sourceFile": "prepend-and-skip.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "// b.ts
 const shared = "Cher";
@@ -856,6 +937,65 @@ const shared = "Cher";
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend-and-skip.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: prepend-as-file 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// point.ts
+export interface Point {
+  x: number;
+  y: number;
+}",
+    "descriptor": "./prepend-as-file.asciidoc:10",
+    "id": "prepend-as-file-10",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 9,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "prepend-as-file.asciidoc",
+    "targetFilename": "point.ts",
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "import { Point } from './point';
+const pt: Point = {
+    x: 3,
+    y: 4,
+    z: 5,
+//  ~ Type '{ x: number; y: number; z: number; }' is not assignable to type 'Point'
+//    Object literal may only specify known properties, and 'z' does not exist in type 'Point'.
+}",
+    "descriptor": "./prepend-as-file.asciidoc:21",
+    "id": "prepend-as-file-21",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 20,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "prepend-as-file-10",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "prepend-as-file.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -864,6 +1004,7 @@ const shared = "Cher";
 exports[`extractSamples snapshot: prepend-multiple 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type AB = 'a' | 'b';",
     "descriptor": "./prepend-multiple.asciidoc:4",
@@ -878,9 +1019,11 @@ exports[`extractSamples snapshot: prepend-multiple 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend-multiple.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "type ABC = AB | 'c';",
     "descriptor": "./prepend-multiple.asciidoc:10",
@@ -899,9 +1042,11 @@ exports[`extractSamples snapshot: prepend-multiple 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend-multiple.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const c: ABC = 'c';",
     "descriptor": "./prepend-multiple.asciidoc:15",
@@ -923,6 +1068,7 @@ exports[`extractSamples snapshot: prepend-multiple 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "prepend-multiple.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -931,6 +1077,7 @@ exports[`extractSamples snapshot: prepend-multiple 1`] = `
 exports[`extractSamples snapshot: president 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "declare let hasMiddle: boolean;
 const firstLast = {first: 'Harry', last: 'Truman'};
@@ -952,9 +1099,11 @@ const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "president.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "declare let hasMiddle: boolean;
 const firstLast = {first: 'Harry', last: 'Truman'};
@@ -972,6 +1121,7 @@ const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "president.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -980,6 +1130,7 @@ const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
 exports[`extractSamples snapshot: program-listing 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "<pre data-type="programlisting">&gt; <strong>x = {}</strong>
 {}
@@ -999,9 +1150,11 @@ exports[`extractSamples snapshot: program-listing 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "program-listing.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "const place = {name: 'New York', latLng: [41.6868, -74.2692]};
 const loc = place.latLng;",
@@ -1017,9 +1170,11 @@ const loc = place.latLng;",
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "program-listing.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "<pre data-type="programlisting">&gt; <strong>loc[0] = 0;</strong>
 0
@@ -1041,9 +1196,11 @@ const loc = place.latLng;",
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "program-listing.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "<pre data-type="programlisting" data-code-language="javascript">&gt; <strong> RegExp.prototype.monkey = 'Capuchin'</strong>
 "Capuchin"
@@ -1065,6 +1222,7 @@ const loc = place.latLng;",
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "program-listing.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]
@@ -1073,6 +1231,7 @@ const loc = place.latLng;",
 exports[`extractSamples snapshot: skip 1`] = `
 [
   {
+    "auxiliaryFiles": [],
     "checkJS": false,
     "content": "keyof A&B = (keyof A) | (keyof B)",
     "descriptor": "./skip.asciidoc:4",
@@ -1087,6 +1246,7 @@ exports[`extractSamples snapshot: skip 1`] = `
     "sectionHeader": null,
     "skip": true,
     "sourceFile": "skip.asciidoc",
+    "targetFilename": null,
     "tsOptions": {},
   },
 ]

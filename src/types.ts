@@ -19,6 +19,9 @@ export interface CodeSample {
   sourceFile: string;
   lineNumber: number;
   nodeModules: readonly string[];
+  /** If set, write this sample to a file with the given name instead of prepending. */
+  targetFilename: string | null;
+  auxiliaryFiles: AuxiliaryFile[];
   /** Combined length of prefixes, for offsetting error messages */
   prefixesLength: number;
   skip: boolean;
@@ -40,4 +43,9 @@ export interface SampleOutput {
   stdout: string;
   stderr: string;
   path: string;
+}
+
+export interface AuxiliaryFile {
+  filename: string;
+  content: string;
 }

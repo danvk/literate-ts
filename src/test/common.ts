@@ -1,5 +1,7 @@
 // Shared test code
 
+import {CodeSample} from '../types.js';
+
 export const baseSample = {
   tsOptions: {},
   nodeModules: [],
@@ -9,7 +11,9 @@ export const baseSample = {
   sourceFile: 'source.asciidoc',
   prefixesLength: 0,
   skip: false,
-};
+  targetFilename: null,
+  auxiliaryFiles: [],
+} satisfies Partial<CodeSample>;
 
 export const baseExtract = {
   ...baseSample,

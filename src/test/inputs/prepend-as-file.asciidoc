@@ -1,0 +1,30 @@
+See https://github.com/danvk/literate-ts/issues/40
+
+The `verifier:prepend-as-file` directive tells literate-ts to write code samples to a particular destination file (rather than concatenating them), which lets you verify code that involves `import` statements.
+
+This is a file that will be written out as a module:
+
+// verifier:prepend-as-file:point.ts
+[source,ts]
+----
+// point.ts
+export interface Point {
+  x: number;
+  y: number;
+}
+----
+
+You can import this from another snippet:
+
+[source,ts]
+----
+import { Point } from './point';
+const pt: Point = {
+    x: 3,
+    y: 4,
+    z: 5,
+//  ~ Type '{ x: number; y: number; z: number; }' is not assignable to type 'Point'
+//    Object literal may only specify known properties, and 'z' does not exist in type 'Point'.
+}
+----
+// verifier:reset

@@ -251,12 +251,20 @@ See above for how to give directive to literate-ts in your source format.
   </dd>
   <dt>verifier:next-is-tsx</dt>
   <dd>Put the next sample in a `.tsx` file, e.g. if it uses JSX syntax.</dd>
+  <dt>verifier:prepend-as-file:filename.ts</dt>
+  <dd>
+    Usually samples are "prepending" by concatenating them. This directive says to prepend the
+    next snippet by writing it to a file instead. This is useful for verifying code involving
+    `import` statements. This is a property of the sample. If it's later prepended with
+    `prepend-id-to-following`, it will still be written to a file, not concatenated.
+  </dd>
   <dt>include-node-module:module-name</dt>
   <dd>
     Make `module-name` available during type checking for subsequent sample
     (until the next `reset`). This module must also be installed in the source file's
     `node_modules` directory. Particularly useful with `@types`, e.g.
     `verifier:include-node-module:@types/lodash`.
+    This will pull in all that module's transitive `dependencies` as well.
   </dd>
   <dt>verifier:done-with-file</dt>
   <dd>

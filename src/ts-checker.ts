@@ -787,7 +787,9 @@ export async function checkProgramListing(
     });
   });
 
-  if (!_.isEqual(replOutput, expectedOutputs)) {
+  if (_.isEqual(replOutput.slice(0, -1), expectedOutputs) && replOutput.at(-1) === 'undefined') {
+    // special case to allow commands that console.log instead of evaluating to anything.
+  } else if (!_.isEqual(replOutput, expectedOutputs)) {
     // TODO: report exact mismatched spans
     let message = `Node session did not match program listing.`;
     if (replOutput.length === expectedOutputs.length) {
@@ -795,8 +797,8 @@ export async function checkProgramListing(
         message += `\n  - ${expected}\n  + ${actual}`;
       }
     } else {
-      const expected = expectedOutputs.join('\n');
-      const actual = replOutput.join('\n');
+      const expected = JSON.stringify(expectedOutputs);
+      const actual = JSON.stringify(replOutput);
       message += `\nExpected:\n${expected}\nActual:\n${actual}`;
     }
     fail(message);

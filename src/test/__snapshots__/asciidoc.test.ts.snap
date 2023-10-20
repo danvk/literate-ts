@@ -350,7 +350,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/program-listing.a
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/program-listing.asciidoc
 ",
-    "Found 4 code samples in ./src/test/inputs/program-listing.asciidoc",
+    "Found 5 code samples in ./src/test/inputs/program-listing.asciidoc",
     "BEGIN #././src/test/inputs/program-listing.asciidoc:4 (--filter program-listing-4)
 ",
     "Node session matched program listing.",
@@ -383,15 +383,22 @@ END #././src/test/inputs/program-listing.asciidoc:24 (--- ms)
     "
 END #././src/test/inputs/program-listing.asciidoc:40 (--- ms)
 ",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:49 (--filter program-listing-49)
+",
+    "Node session matched program listing.",
+    "
+END #././src/test/inputs/program-listing.asciidoc:49 (--- ms)
+",
     "---- END FILE ./src/test/inputs/program-listing.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/program-listing.asciidoc",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 1/4 ././src/test/inputs/program-listing.asciidoc:4",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 2/4 ././src/test/inputs/program-listing.asciidoc:17",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 3/4 ././src/test/inputs/program-listing.asciidoc:24",
-    "1/1: ././src/test/inputs/program-listing.asciidoc: 4/4 ././src/test/inputs/program-listing.asciidoc:40",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 1/5 ././src/test/inputs/program-listing.asciidoc:4",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 2/5 ././src/test/inputs/program-listing.asciidoc:17",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 3/5 ././src/test/inputs/program-listing.asciidoc:24",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 4/5 ././src/test/inputs/program-listing.asciidoc:40",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 5/5 ././src/test/inputs/program-listing.asciidoc:49",
   ],
 }
 `;
@@ -1374,6 +1381,31 @@ const loc = place.latLng;",
     "isTSX": false,
     "language": "node",
     "lineNumber": 39,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "program-listing-17",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "program-listing.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "<pre data-type="programlisting">&gt; <strong>console.log('hello'); console.log('goodbye');</strong>
+hello
+goodbye</pre>",
+    "descriptor": "./program-listing.asciidoc:49",
+    "id": "program-listing-49",
+    "isTSX": false,
+    "language": "node",
+    "lineNumber": 48,
     "nodeModules": [],
     "prefixes": [
       {

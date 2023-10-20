@@ -797,8 +797,8 @@ export async function checkProgramListing(
         message += `\n  - ${expected}\n  + ${actual}`;
       }
     } else {
-      const expected = JSON.stringify(expectedOutputs);
-      const actual = JSON.stringify(replOutput);
+      const expected = expectedOutputs.join('\n');
+      const actual = replOutput.join('\n');
       message += `\nExpected:\n${expected}\nActual:\n${actual}`;
     }
     fail(message);

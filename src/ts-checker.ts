@@ -605,12 +605,12 @@ async function uncachedCheckTs(
   config: ConfigBundle,
 ): Promise<CheckTsResult> {
   const {id, content} = sample;
-  const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
+  const fileName = sample.targetFilename || id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
   const sampleDir = getTempDir();
   for (const auxFile of sample.auxiliaryFiles) {
-    const destFile = sampleDir + '/' + auxFile.filename;
-    fs.writeFileSync(destFile, auxFile.content, 'utf-8');
+    const {filename, content} = auxFile;
+    writeTempFile(filename, content);
   }
 
   const options: ts.CompilerOptions = {

@@ -23,8 +23,7 @@ const pt: Point = {
     x: 3,
     y: 4,
     z: 5,
-//  ~ Type '{ x: number; y: number; z: number; }' is not assignable to type 'Point'
-//    Object literal may only specify known properties, and 'z' does not exist in type 'Point'.
+//  ~ Object literal may only specify known properties, and 'z' does not exist in type 'Point'.
 }
 ----
 // verifier:reset

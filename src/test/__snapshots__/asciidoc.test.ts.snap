@@ -74,7 +74,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.as
     "Code passed type checker.",
     "💥 ./src/test/inputs/empty-twoslash.asciidoc:15:1-13: Failed type assertion for \`fetchANumber\`
   Expected: 
-    Actual: function fetchANumber(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<number>",
+    Actual: function fetchANumber(input: RequestInfo, init?: RequestInit | undefined): Promise<number>",
     "  0/1 twoslash type assertions matched.",
     "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
   const response = await fetch(...args);
@@ -251,20 +251,19 @@ END #././src/test/inputs/prepend-as-file.asciidoc:10 (--- ms)
     "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:21 (--filter prepend-as-file-21)
 ",
     "matched errors:",
-    "  expected: Type '{ x: number; y: number; z: number; }' is not assignable to type 'Point' Object literal may only specify known properties, and 'z' does not exist in type 'Point'.",
-    "    actual: Type '{ x: number; y: number; z: number; }' is not assignable to type 'Point'.
-  Object literal may only specify known properties, and 'z' does not exist in type 'Point'.",
-    "  error messages could not be matched!",
+    "  expected: Object literal may only specify known properties, and 'z' does not exist in type 'Point'.",
+    "    actual: Object literal may only specify known properties, and 'z' does not exist in type 'Point'.",
+    "  error messages match: perfect",
     "Matched 1/1 errors.",
     "
 END #././src/test/inputs/prepend-as-file.asciidoc:21 (--- ms)
 ",
-    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:37 (--filter prepend-as-file-37)
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:36 (--filter prepend-as-file-36)
 ",
     "
-END #././src/test/inputs/prepend-as-file.asciidoc:37 (--- ms)
+END #././src/test/inputs/prepend-as-file.asciidoc:36 (--- ms)
 ",
-    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:53 (--filter prepend-as-file-53)
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:52 (--filter prepend-as-file-52)
 ",
     "Code passed type checker.",
     "Twoslash type assertion match:",
@@ -275,7 +274,7 @@ END #././src/test/inputs/prepend-as-file.asciidoc:37 (--- ms)
     "    Actual: (property) "months": string[]",
     "  2/2 twoslash type assertions matched.",
     "
-END #././src/test/inputs/prepend-as-file.asciidoc:53 (--- ms)
+END #././src/test/inputs/prepend-as-file.asciidoc:52 (--- ms)
 ",
     "---- END FILE ./src/test/inputs/prepend-as-file.asciidoc
 ",
@@ -284,8 +283,8 @@ END #././src/test/inputs/prepend-as-file.asciidoc:53 (--- ms)
     "1/1: ././src/test/inputs/prepend-as-file.asciidoc",
     "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/4 ././src/test/inputs/prepend-as-file.asciidoc:10",
     "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/4 ././src/test/inputs/prepend-as-file.asciidoc:21",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 3/4 ././src/test/inputs/prepend-as-file.asciidoc:37",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 4/4 ././src/test/inputs/prepend-as-file.asciidoc:53",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 3/4 ././src/test/inputs/prepend-as-file.asciidoc:36",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 4/4 ././src/test/inputs/prepend-as-file.asciidoc:52",
   ],
 }
 `;
@@ -1088,8 +1087,7 @@ const pt: Point = {
     x: 3,
     y: 4,
     z: 5,
-//  ~ Type '{ x: number; y: number; z: number; }' is not assignable to type 'Point'
-//    Object literal may only specify known properties, and 'z' does not exist in type 'Point'.
+//  ~ Object literal may only specify known properties, and 'z' does not exist in type 'Point'.
 }",
     "descriptor": "./prepend-as-file.asciidoc:21",
     "id": "prepend-as-file-21",
@@ -1123,11 +1121,11 @@ const pt: Point = {
     "Dec"
   ]
 }",
-    "descriptor": "./prepend-as-file.asciidoc:37",
-    "id": "prepend-as-file-37",
+    "descriptor": "./prepend-as-file.asciidoc:36",
+    "id": "prepend-as-file-36",
     "isTSX": false,
     "language": "json",
-    "lineNumber": 36,
+    "lineNumber": 35,
     "nodeModules": [],
     "prefixes": [],
     "prefixesLength": 0,
@@ -1146,15 +1144,15 @@ console.log(data.year);
 //               ^? (property) "year": number
 console.log(data.months);
 //               ^? (property) "months": string[]",
-    "descriptor": "./prepend-as-file.asciidoc:53",
-    "id": "prepend-as-file-53",
+    "descriptor": "./prepend-as-file.asciidoc:52",
+    "id": "prepend-as-file-52",
     "isTSX": false,
     "language": "ts",
-    "lineNumber": 52,
+    "lineNumber": 51,
     "nodeModules": [],
     "prefixes": [
       {
-        "id": "prepend-as-file-37",
+        "id": "prepend-as-file-36",
       },
     ],
     "prefixesLength": 0,

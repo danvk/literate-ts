@@ -516,6 +516,12 @@ describe('ts-checker', () => {
         matchModuloWhitespace('BoundingBox | undefined', 'const box: BoundingBox | undefined'),
       ).toBe(false);
     });
+
+    it('should normalize whitespace in function types', () => {
+      const actual = `function fetchANumber(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<number>`;
+      const expected = `function fetchANumber( input: RequestInfo | URL, init?: RequestInit | undefined ): Promise<number>`;
+      expect(matchModuloWhitespace(actual, expected)).toBe(true);
+    });
   });
 
   describe('sortUnions', () => {

@@ -470,6 +470,7 @@ describe('checker', () => {
     './src/test/inputs/program-listing.asciidoc',
     './src/test/inputs/prepend-as-file.asciidoc',
     './src/test/inputs/check-jsonc.asciidoc',
+    './src/test/inputs/node-output.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

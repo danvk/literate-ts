@@ -31,7 +31,7 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
     .filter(line => !line.startsWith('    at ')) // prune stack traces to one line
     .filter(line => !line.match(/^Node.js v\d+/)) // Newer versions of Node log a version number
     // Remove temp paths which vary from run to run.
-    .map(line => (tmpDir ? line.replace('/private' + tmpDir, '').replace(tmpDir, '') : line))
+    .filter(line => !tmpDir || !line.includes(tmpDir))
     .join('\n')
     .trim();
   // remove markers

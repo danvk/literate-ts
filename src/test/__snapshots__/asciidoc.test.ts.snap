@@ -205,6 +205,57 @@ END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/node-output.asciidoc": ./src/test/inputs/node-output.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/node-output.asciidoc
+",
+    "Found 3 code samples in ./src/test/inputs/node-output.asciidoc",
+    "BEGIN #././src/test/inputs/node-output.asciidoc:8 (--filter node-output-8)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const xs: number[]",
+    "    Actual: const xs: number[]",
+    "Twoslash type assertion match:",
+    "  Expected: const x: number",
+    "    Actual: const x: number",
+    "  2/2 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/node-output.asciidoc:8 (--- ms)
+",
+    "BEGIN #././src/test/inputs/node-output.asciidoc:16 (--filter unsound-code)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const xs: number[]",
+    "    Actual: const xs: number[]",
+    "Twoslash type assertion match:",
+    "  Expected: const x: number",
+    "    Actual: const x: number",
+    "  2/2 twoslash type assertions matched.",
+    "Node exited with error 1 on unsound-code.js",
+    "
+END #././src/test/inputs/node-output.asciidoc:16 (--- ms)
+",
+    "BEGIN #././src/test/inputs/node-output.asciidoc:24 (--filter unsound-code-output)
+",
+    "Actual output matched expected.",
+    "
+END #././src/test/inputs/node-output.asciidoc:24 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/node-output.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/node-output.asciidoc",
+    "1/1: ././src/test/inputs/node-output.asciidoc: 1/3 ././src/test/inputs/node-output.asciidoc:8",
+    "1/1: ././src/test/inputs/node-output.asciidoc: 2/3 ././src/test/inputs/node-output.asciidoc:16",
+    "1/1: ././src/test/inputs/node-output.asciidoc: 3/3 ././src/test/inputs/node-output.asciidoc:24",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/prepend-and-skip.asciidoc": ./src/test/inputs/prepend-and-skip.asciidoc 1`] = `
 {
   "logs": [
@@ -923,6 +974,82 @@ exports[`extractSamples snapshot: multilinetype 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "multilinetype.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: node-output 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "const xs = [0, 1, 2];
+//    ^? const xs: number[]
+const x = xs[3];
+//    ^? const x: number",
+    "descriptor": "./node-output.asciidoc:8",
+    "id": "node-output-8",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 7,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "node-output.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "console.log(x.toFixed(1));",
+    "descriptor": "./node-output.asciidoc:16",
+    "id": "unsound-code",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 18,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "node-output-8",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "node-output.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "console.log(x.toFixed(1));
+              ^
+
+TypeError: Cannot read properties of undefined (reading 'toFixed')",
+    "descriptor": "./node-output.asciidoc:24",
+    "id": "unsound-code-output",
+    "isTSX": false,
+    "language": null,
+    "lineNumber": 25,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "node-output-8",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "node-output.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
   },

@@ -1,0 +1,42 @@
+literate-ts can strip irrelevant details from Node output like the name of the file being tested in a stack trace.
+
+Here's an example of unsoundness in TypeScript:
+
+// verifier:prepend-to-following
+[source,ts]
+----
+const xs = [0, 1, 2];
+//    ^? const xs: number[]
+const x = xs[3];
+//    ^? const x: number
+----
+
+The static type of `x` is `number` but its value at runtime is `undefined`. Here's how this can lead to problems:
+
+[[unsound-code]]
+[source,ts]
+----
+console.log(x.toFixed(1));
+----
+
+There are no type errors, but when you run this code it will throw an error:
+
+[[unsound-code-output]]
+----
+console.log(x.toFixed(1));
+              ^
+
+TypeError: Cannot read properties of undefined (reading 'toFixed')
+----
+
+The actual error looks like this:
+
+----
+file:///path/to/unsound-code.js:6
+console.log(x.toFixed(1));
+              ^
+
+TypeError: Cannot read properties of undefined (reading 'toFixed')
+----
+
+But literate-ts has stripped out the file name for us.

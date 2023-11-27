@@ -241,7 +241,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/prepend-as-file.a
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/prepend-as-file.asciidoc
 ",
-    "Found 4 code samples in ./src/test/inputs/prepend-as-file.asciidoc",
+    "Found 6 code samples in ./src/test/inputs/prepend-as-file.asciidoc",
     "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:10 (--filter prepend-as-file-10)
 ",
     "Code passed type checker.",
@@ -276,15 +276,40 @@ END #././src/test/inputs/prepend-as-file.asciidoc:36 (--- ms)
     "
 END #././src/test/inputs/prepend-as-file.asciidoc:52 (--- ms)
 ",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:65 (--filter prepend-as-file-65)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:65 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:78 (--filter prepend-as-file-78)
+",
+    "💥 ./src/test/inputs/prepend-as-file.asciidoc:78:21-32: Unexpected TypeScript error: Cannot find module 'ice-cream' or its corresponding type declarations.",
+    "💥 ./src/test/inputs/prepend-as-file.asciidoc:83:22-33: Unexpected TypeScript error: Cannot find module 'ice-cream' or its corresponding type declarations.",
+    "💥 ./src/test/inputs/prepend-as-file.asciidoc:80:7-16: Expected TypeScript error was not produced: '"vanilla"' is not assignable to parameter of type 'Flavor'",
+    "Matched 0/1 errors.",
+    "import {scoop} from 'ice-cream';
+
+scoop('vanilla');
+//    ~~~~~~~~~ '"vanilla"' is not assignable to parameter of type 'Flavor'
+
+import {Flavor} from 'ice-cream';
+scoop(Flavor.VANILLA);  // OK",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:78 (--- ms)
+",
     "---- END FILE ./src/test/inputs/prepend-as-file.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/prepend-as-file.asciidoc",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/4 ././src/test/inputs/prepend-as-file.asciidoc:10",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/4 ././src/test/inputs/prepend-as-file.asciidoc:21",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 3/4 ././src/test/inputs/prepend-as-file.asciidoc:36",
-    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 4/4 ././src/test/inputs/prepend-as-file.asciidoc:52",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/6 ././src/test/inputs/prepend-as-file.asciidoc:10",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/6 ././src/test/inputs/prepend-as-file.asciidoc:21",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 3/6 ././src/test/inputs/prepend-as-file.asciidoc:36",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 4/6 ././src/test/inputs/prepend-as-file.asciidoc:52",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 5/6 ././src/test/inputs/prepend-as-file.asciidoc:65",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 6/6 ././src/test/inputs/prepend-as-file.asciidoc:78",
   ],
 }
 `;
@@ -1165,6 +1190,62 @@ console.log(data.months);
       "esModuleInterop": true,
       "resolveJsonModule": true,
     },
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "declare module 'ice-cream' {
+  export enum Flavor {
+    VANILLA = 'vanilla',
+    CHOCOLATE = 'chocolate',
+    STRAWBERRY = 'strawberry',
+  }
+
+  export function scoop(flavor: Flavor): void;
+}",
+    "descriptor": "./prepend-as-file.asciidoc:65",
+    "id": "prepend-as-file-65",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 64,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "prepend-as-file.asciidoc",
+    "targetFilename": "ice-cream.d.ts",
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "import {scoop} from 'ice-cream';
+
+scoop('vanilla');
+//    ~~~~~~~~~ '"vanilla"' is not assignable to parameter of type 'Flavor'
+
+import {Flavor} from 'ice-cream';
+scoop(Flavor.VANILLA);  // OK",
+    "descriptor": "./prepend-as-file.asciidoc:78",
+    "id": "prepend-as-file-78",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 77,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "prepend-as-file-65",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "prepend-as-file.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
   },
 ]
 `;

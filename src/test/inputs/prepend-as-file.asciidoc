@@ -55,3 +55,31 @@ console.log(data.year);
 console.log(data.months);
 //               ^? (property) "months": string[]
 ----
+
+This also works for "ambient" modules (`.d.ts` files):
+
+// verifier:reset
+// verifier:prepend-as-file:ice-cream.d.ts
+[source,ts]
+----
+declare module 'ice-cream' {
+  export enum Flavor {
+    VANILLA = 'vanilla',
+    CHOCOLATE = 'chocolate',
+    STRAWBERRY = 'strawberry',
+  }
+
+  export function scoop(flavor: Flavor): void;
+}
+----
+
+[source,ts]
+----
+import {scoop} from 'ice-cream';
+
+scoop('vanilla');
+//    ~~~~~~~~~ '"vanilla"' is not assignable to parameter of type 'Flavor'
+
+import {Flavor} from 'ice-cream';
+scoop(Flavor.VANILLA);  // OK
+----

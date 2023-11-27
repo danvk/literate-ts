@@ -74,7 +74,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.as
     "Code passed type checker.",
     "💥 ./src/test/inputs/empty-twoslash.asciidoc:15:1-13: Failed type assertion for \`fetchANumber\`
   Expected: 
-    Actual: function fetchANumber(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<number>",
+    Actual: function fetchANumber(input: RequestInfo, init?: RequestInit | undefined): Promise<number>",
     "  0/1 twoslash type assertions matched.",
     "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
   const response = await fetch(...args);

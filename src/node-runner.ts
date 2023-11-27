@@ -1,5 +1,6 @@
 import {exec} from 'child_process';
 import util from 'util';
+import {basename} from 'node:path';
 
 import {log} from './logger.js';
 
@@ -18,7 +19,7 @@ export async function runNode(path: string): Promise<ExecErrorType> {
   } catch (eIn) {
     const e = eIn as ExecErrorType;
     const {code, stderr, stdout} = e;
-    log(`Node exited with error ${e.code} on ${path}`);
+    log(`Node exited with error ${e.code} on ${basename(path)}`);
     return {code, stderr, stdout, path};
   }
 }

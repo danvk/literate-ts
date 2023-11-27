@@ -234,7 +234,7 @@ END #././src/test/inputs/node-output.asciidoc:8 (--- ms)
     "  Expected: const x: number",
     "    Actual: const x: number",
     "  2/2 twoslash type assertions matched.",
-    "Node exited with error 1 on /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-26728-vQzLv3zTJ0QK/unsound-code.js",
+    "Node exited with error 1 on unsound-code.js",
     "
 END #././src/test/inputs/node-output.asciidoc:16 (--- ms)
 ",

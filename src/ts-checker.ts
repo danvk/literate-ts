@@ -618,9 +618,11 @@ async function uncachedCheckTs(
   const fileName = sample.targetFilename || id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
   const sampleDir = getTempDir();
+  const allFiles = [tsFile];
   for (const auxFile of sample.auxiliaryFiles) {
     const {filename, content} = auxFile;
-    writeTempFile(filename, content);
+    const absPathFile = writeTempFile(filename, content);
+    allFiles.push(absPathFile);
   }
 
   const options: ts.CompilerOptions = {
@@ -633,7 +635,7 @@ async function uncachedCheckTs(
     options.typeRoots = [path.join(sampleDir, 'node_modules', '@types')];
   }
 
-  const program = ts.createProgram([tsFile], options, config.host);
+  const program = ts.createProgram(allFiles, options, config.host);
   const source = program.getSourceFile(tsFile);
   if (!source) {
     fail('Unable to load TS source file');

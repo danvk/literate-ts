@@ -605,12 +605,12 @@ async function uncachedCheckTs(
   config: ConfigBundle,
 ): Promise<CheckTsResult> {
   const {id, content} = sample;
-  const fileName = id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
+  const fileName = sample.targetFilename || id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
   const sampleDir = getTempDir();
   for (const auxFile of sample.auxiliaryFiles) {
-    const destFile = sampleDir + '/' + auxFile.filename;
-    fs.writeFileSync(destFile, auxFile.content, 'utf-8');
+    const {filename, content} = auxFile;
+    writeTempFile(filename, content);
   }
 
   const options: ts.CompilerOptions = {
@@ -787,7 +787,9 @@ export async function checkProgramListing(
     });
   });
 
-  if (!_.isEqual(replOutput, expectedOutputs)) {
+  if (_.isEqual(replOutput.slice(0, -1), expectedOutputs) && replOutput.at(-1) === 'undefined') {
+    // special case to allow commands that console.log instead of evaluating to anything.
+  } else if (!_.isEqual(replOutput, expectedOutputs)) {
     // TODO: report exact mismatched spans
     let message = `Node session did not match program listing.`;
     if (replOutput.length === expectedOutputs.length) {

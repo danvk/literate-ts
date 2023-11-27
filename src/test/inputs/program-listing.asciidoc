@@ -42,3 +42,11 @@ Here's another one with a failure:
 &gt; <strong>/123/.monkey</strong>
 "Capuchi"</pre>
 ++++
+
+Here's one where there's console output but not a useful REPL response:
+
+++++
+<pre data-type="programlisting">&gt; <strong>console.log('hello'); console.log('goodbye');</strong>
+hello
+goodbye</pre>
+++++

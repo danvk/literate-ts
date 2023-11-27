@@ -132,7 +132,9 @@ export class Processor {
       parseJSONC(sample.content, errors);
       if (errors.length) {
         const errorsTxt = errors.map(e => printParseErrorCode(e.error));
-        fail(`Invalid JSONC: ${errorsTxt}`);
+        const warning =
+          sample.prefixesLength > 0 ? ' (prefixes are active, try adding a reset)' : '';
+        fail(`Invalid JSONC${warning}: ${errorsTxt}`);
       }
     } else if (language === null && id.endsWith('-output')) {
       // Verify the output of a previous code sample.

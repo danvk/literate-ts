@@ -13,9 +13,16 @@ export function getTempDir(): string {
   return _tmpDir;
 }
 
-/** Write a temp file; return the absolute path to it.  */
+/**
+ * Write a temp file; return the absolute path to it.
+ * If fileName has slashes in it then directories will be created.
+ */
 export function writeTempFile(fileName: string, content: string): string {
   const tmpDir = getTempDir();
+  if (fileName.includes('/')) {
+    const dir = fileName.split('/').slice(0, -1).join('/');
+    fs.mkdirSync(tmpDir + '/' + dir, {recursive: true});
+  }
   const path = tmpDir + '/' + fileName;
   fs.writeFileSync(path, content, 'utf8');
   return path;

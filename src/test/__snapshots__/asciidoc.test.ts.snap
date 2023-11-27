@@ -284,18 +284,11 @@ END #././src/test/inputs/prepend-as-file.asciidoc:65 (--- ms)
 ",
     "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:78 (--filter prepend-as-file-78)
 ",
-    "💥 ./src/test/inputs/prepend-as-file.asciidoc:78:21-32: Unexpected TypeScript error: Cannot find module 'ice-cream' or its corresponding type declarations.",
-    "💥 ./src/test/inputs/prepend-as-file.asciidoc:83:22-33: Unexpected TypeScript error: Cannot find module 'ice-cream' or its corresponding type declarations.",
-    "💥 ./src/test/inputs/prepend-as-file.asciidoc:80:7-16: Expected TypeScript error was not produced: '"vanilla"' is not assignable to parameter of type 'Flavor'",
-    "Matched 0/1 errors.",
-    "import {scoop} from 'ice-cream';
-
-scoop('vanilla');
-//    ~~~~~~~~~ '"vanilla"' is not assignable to parameter of type 'Flavor'
-
-import {Flavor} from 'ice-cream';
-scoop(Flavor.VANILLA);  // OK",
-    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "matched errors:",
+    "  expected: '"vanilla"' is not assignable to parameter of type 'Flavor'",
+    "    actual: Argument of type '"vanilla"' is not assignable to parameter of type 'Flavor'.",
+    "  error messages match: subset",
+    "Matched 1/1 errors.",
     "
 END #././src/test/inputs/prepend-as-file.asciidoc:78 (--- ms)
 ",

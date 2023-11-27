@@ -234,26 +234,13 @@ END #././src/test/inputs/node-output.asciidoc:8 (--- ms)
     "  Expected: const x: number",
     "    Actual: const x: number",
     "  2/2 twoslash type assertions matched.",
-    "Node exited with error 1 on /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-26207-zq1rvicZqjkp/unsound-code.js",
+    "Node exited with error 1 on /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-26728-vQzLv3zTJ0QK/unsound-code.js",
     "
 END #././src/test/inputs/node-output.asciidoc:16 (--- ms)
 ",
     "BEGIN #././src/test/inputs/node-output.asciidoc:24 (--filter unsound-code-output)
 ",
-    "💥 ././src/test/inputs/node-output.asciidoc:24: Actual output from Node did not match expected output.",
-    "Expected:",
-    "console.log(x.toFixed(1));
-              ^
-
-TypeError: Cannot read properties of undefined (reading 'toFixed')",
-    "----",
-    "Actual:",
-    "/unsound-code.js:5
-console.log(x.toFixed(1));
-              ^
-
-TypeError: Cannot read properties of undefined (reading 'toFixed')",
-    "----",
+    "Actual output matched expected.",
     "
 END #././src/test/inputs/node-output.asciidoc:24 (--- ms)
 ",

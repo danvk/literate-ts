@@ -1,0 +1,26 @@
+You can include node modules in code samples. Just make sure to add them to your `package.json` and install them, too. You don't need to include transitive dependencies, just the ones you use.
+
+////
+// verifier:prepend-to-following
+// verifier:include-node-module:@types/express
+[source,ts]
+----
+import express from 'express';
+const app = express();
+----
+////
+
+[source,ts]
+----
+// Don't do this:
+app.get('/health', (request: express.Request, response: express.Response) => {
+  response.send('OK');
+});
+
+// Do this:
+app.get('/health', (request, response) => {
+  //                ^? (parameter) request: express.Request
+  response.send('OK');
+  // ^? (parameter) response: express.Response
+});
+----

@@ -180,7 +180,7 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
       i === lineStarts.length - 1 ? undefined : lineStarts[i + 1] - 1,
     );
 
-    console.log('line: "', lineText, '"');
+    // console.log('line: "', lineText, '"');
 
     if (lineText.match(/^ *\/\//)) {
       appliesToPreviousLine = true;
@@ -199,14 +199,14 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
     let {line} = lineChar;
     const {character} = lineChar;
     const commentText = lineText.slice(commentPos);
-    console.log('comment text:', commentText);
+    // console.log('comment text:', commentText);
     if (
       appliesToPreviousLine &&
       character === colForContinuation &&
       (commentPrefixForContinuation === null ||
         commentText.startsWith(commentPrefixForContinuation))
     ) {
-      console.log('continuation:', commentText);
+      // console.log('continuation:', commentText);
       assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
     } else {
       const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
@@ -215,11 +215,11 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
         assertions.push({line, type});
         colForContinuation = character;
       } else {
-        console.log('checking for twoslash: "', commentText, '"');
+        // console.log('checking for twoslash: "', commentText, '"');
         const type = matchAndExtract(TWOSLASH_PAT, commentText);
-        console.log(type);
+        // console.log(type);
         if (type === null) continue;
-        console.log('matched twoslash pat:', commentText);
+        // console.log('matched twoslash pat:', commentText);
         if (!appliesToPreviousLine) {
           throw new Error('Twoslash assertion must be first on line.');
         }
@@ -237,62 +237,6 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
     }
   }
 
-  /*
-  while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
-    const token = scanner.getToken();
-    if (token === ts.SyntaxKind.WhitespaceTrivia) continue; // ignore leading whitespace.
-
-    if (token === ts.SyntaxKind.NewLineTrivia) {
-      // an assertion at the start of a line applies to the previous line.
-      appliesToPreviousLine = true;
-      continue;
-    }
-
-    const pos = scanner.getTokenPos();
-    const lineChar = source.getLineAndCharacterOfPosition(pos);
-    let {line} = lineChar;
-    const {character} = lineChar;
-
-    if (token === ts.SyntaxKind.SingleLineCommentTrivia) {
-      const commentText = scanner.getTokenText();
-      if (
-        character === colForContinuation &&
-        (commentPrefixForContinuation === null ||
-          commentText.startsWith(commentPrefixForContinuation))
-      ) {
-        assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
-      } else {
-        const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
-        if (type) {
-          if (appliesToPreviousLine) line -= 1;
-          assertions.push({line, type});
-          colForContinuation = character;
-        } else {
-          const type = matchAndExtract(TWOSLASH_PAT, commentText);
-          if (type === null) continue;
-          // console.log('matched twoslash pat:', commentText);
-          if (!appliesToPreviousLine) {
-            throw new Error('Twoslash assertion must be first on line.');
-          }
-          const twoslashOffset = commentText.indexOf('^?');
-          const commentIndex = pos; // position of the "//" in source file
-          const caretIndex = commentIndex + twoslashOffset;
-          // The position of interest is wherever the "^" (caret) is, but on the previous line.
-          const position = caretIndex - (lineStarts[line] - lineStarts[line - 1]);
-          const lineAndChar = source.getLineAndCharacterOfPosition(position);
-          // line and char aren't strictly needed but they make the tests much more readable.
-          assertions.push({position, type, ...lineAndChar});
-          colForContinuation = character;
-          commentPrefixForContinuation = commentText.slice(0, twoslashOffset);
-        }
-      }
-    } else {
-      appliesToPreviousLine = false;
-      colForContinuation = null;
-      commentPrefixForContinuation = null;
-    }
-  }
-  */
   return assertions;
 }
 
@@ -673,13 +617,6 @@ function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.Com
   }
 }
 
-function printNode(node: ts.Node, indent = '') {
-  console.log(indent, 'node:', node.kind, node.getFullText());
-  for (const child of node.getChildren()) {
-    printNode(child, '  ' + indent);
-  }
-}
-
 /** Verify that a TypeScript sample has the expected errors and no others. */
 async function uncachedCheckTs(
   sample: CodeSample,
@@ -715,20 +652,6 @@ async function uncachedCheckTs(
   }
 
   let diagnostics = ts.getPreEmitDiagnostics(program);
-
-  // source.forEachChild(node => {
-  //   console.log(
-  //     'node:',
-  //     node.kind,
-  //     node.getFullText(),
-  //     'trailing comments:',
-  //     ts.getSyntheticTrailingComments(node),
-  //   );
-  // });
-  // console.log('---');
-  // for (const node of source.getChildren()) {
-  //   printNode(node);
-  // }
 
   if (runCode) {
     const emitResult = program.emit();

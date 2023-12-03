@@ -323,7 +323,6 @@ describe('ts-checker', () => {
       }
 
       const assertions = extractTypeAssertions(sourceFile);
-      console.log(assertions);
       const languageService = ts.createLanguageService(getLanguageServiceHost(program));
       return checkTypeAssertions(sourceFile, program.getTypeChecker(), languageService, assertions);
     };

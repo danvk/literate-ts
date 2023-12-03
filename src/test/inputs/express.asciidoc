@@ -7,9 +7,11 @@ You can include node modules in code samples. Just make sure to add them to your
 ----
 import express from 'express';
 const app = express();
+//    ^? const app: Express
 ----
 ////
 
+// verifier:skip
 [source,ts]
 ----
 // Don't do this:

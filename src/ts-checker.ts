@@ -568,7 +568,20 @@ export async function checkTs(
   return result;
 }
 
-function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.CompilerOptions) {
+type SetupNodeModuleResult =
+  | {
+      passed: false;
+    }
+  | {
+      passed: true;
+      typesFiles: string[];
+    };
+
+function setupNodeModules(
+  sample: CodeSample,
+  sampleDir: string,
+  options: ts.CompilerOptions,
+): SetupNodeModuleResult {
   const nodeModulesPath = path.join(sampleDir, 'node_modules');
   fs.emptyDirSync(nodeModulesPath);
 
@@ -576,6 +589,7 @@ function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.Com
   const sourceFileAbsPath = path.resolve(process.cwd(), sample.sourceFile);
   const copiedModules = new Set();
   let nodeModule;
+  const typesFiles = [];
   while ((nodeModule = allModules.shift()) !== undefined) {
     if (copiedModules.has(nodeModule)) {
       continue; // already resolved
@@ -601,11 +615,16 @@ function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.Com
     fs.copySync(nodeModuleDir, dest);
     log(`Copied ${nodeModuleDir} -> ${dest}`);
     copiedModules.add(nodeModule);
+    const {types} = pkg.packageJson;
+    if (types) {
+      typesFiles.push(path.join(dest, types));
+    }
 
     for (const dep of Object.keys(pkg.packageJson.dependencies ?? {})) {
       allModules.push(dep); // no need to de-dupe here, it's done at the top of the loop.
     }
   }
+  return {passed: true, typesFiles: typesFiles};
 }
 
 /** Verify that a TypeScript sample has the expected errors and no others. */
@@ -630,9 +649,15 @@ async function uncachedCheckTs(
     ...sample.tsOptions,
   };
 
-  setupNodeModules(sample, sampleDir, options);
   if (!_.isEmpty(sample.nodeModules)) {
-    options.typeRoots = [path.join(sampleDir, 'node_modules', '@types')];
+    const nodeModulesResult = setupNodeModules(sample, sampleDir, options);
+    if (!nodeModulesResult.passed) {
+      fail('Failed to setup node modules');
+      return nodeModulesResult;
+    }
+    // options.typeRoots = [path.join(sampleDir, 'node_modules', '@types')];
+    // options.skipLibCheck = true;
+    // allFiles.push(...nodeModulesResult.typesFiles);
   }
 
   const program = ts.createProgram(allFiles, options, config.host);

@@ -808,6 +808,68 @@ type T = keyof Point;
 ]
 `;
 
+exports[`extractSamples snapshot: express 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "import express from 'express';
+const app = express();",
+    "descriptor": "./express.asciidoc:8",
+    "id": "express-8",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 7,
+    "nodeModules": [
+      "@types/express",
+    ],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "express.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// Don't do this:
+app.get('/health', (request: express.Request, response: express.Response) => {
+  response.send('OK');
+});
+
+// Do this:
+app.get('/health', (request, response) => {
+  //                ^? (parameter) request: express.Request
+  response.send('OK');
+  // ^? (parameter) response: express.Response
+});",
+    "descriptor": "./express.asciidoc:15",
+    "id": "express-15",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 14,
+    "nodeModules": [
+      "@types/express",
+    ],
+    "prefixes": [
+      {
+        "id": "express-8",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "express.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
 exports[`extractSamples snapshot: inline-replacement 1`] = `
 [
   {

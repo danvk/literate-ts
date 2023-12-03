@@ -173,13 +173,7 @@ describe('ts-checker', () => {
 
   const getAssertions = (text: string) => {
     const testFile = ts.createSourceFile('test.ts', text, ts.ScriptTarget.ES2015);
-    const scanner = ts.createScanner(
-      ts.ScriptTarget.ES2015,
-      false,
-      testFile.languageVariant,
-      testFile.getFullText(),
-    );
-    return extractTypeAssertions(scanner, testFile);
+    return extractTypeAssertions(testFile);
   };
 
   describe('extractTypeAssertions', () => {

@@ -6,4 +6,6 @@ type T = `${number}`;
 
 const one = 1;
 //    ^? const one: 1
+
+const two = 2;  // type is 2
 ----

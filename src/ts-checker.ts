@@ -169,6 +169,7 @@ export function extractTypeAssertions(
   scanner: ts.Scanner,
   source: ts.SourceFile,
 ): TypeScriptTypeAssertion[] {
+  debugger;
   const assertions: TypeScriptTypeAssertion[] = [];
   const lineStarts = source.getLineStarts();
 
@@ -207,6 +208,7 @@ export function extractTypeAssertions(
         } else {
           const type = matchAndExtract(TWOSLASH_PAT, commentText);
           if (type === null) continue;
+          console.log('matched twoslash pat:', commentText);
           if (!appliesToPreviousLine) {
             throw new Error('Twoslash assertion must be first on line.');
           }
@@ -228,6 +230,7 @@ export function extractTypeAssertions(
       commentPrefixForContinuation = null;
     }
   }
+  console.log('assertions', assertions);
   return assertions;
 }
 
@@ -680,7 +683,8 @@ async function uncachedCheckTs(
   let ok = checkMatchingErrors(expectedErrors, actualErrors);
 
   if (hasTypeAssertions(content)) {
-    const languageVersion = config.options.target || ts.ScriptTarget.ES5;
+    const languageVersion = config.options.target || ts.ScriptTarget.ES2015;
+    console.log(languageVersion, source.languageVariant, source.getFullText());
     const scanner = ts.createScanner(
       languageVersion,
       false,

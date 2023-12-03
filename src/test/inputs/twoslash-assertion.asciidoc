@@ -8,6 +8,7 @@ const img = document.querySelector('img');
 
 It should check and pass! Here's one that fails:
 
+// verifier:next-is-tsx
 [source,ts]
 ----
 type HTMLTag = keyof HTMLElementTagNameMap;

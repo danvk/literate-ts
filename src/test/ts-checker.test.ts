@@ -294,6 +294,30 @@ describe('ts-checker', () => {
         },
       ]);
     });
+
+    test('type assertions with comments on intervening lines', () => {
+      expect(
+        getAssertions(dedent`
+        const x = 2 + '3';  // OK
+        //    ^? const x: string
+        const y = '2' + 3;  // OK
+        //    ^? const y: string
+      `),
+      ).toEqual([
+        {
+          line: 0,
+          character: 6,
+          position: 6,
+          type: 'const x: string',
+        },
+        {
+          line: 2,
+          character: 6,
+          position: 6,
+          type: 'const y: string',
+        },
+      ]);
+    });
   });
 
   describe('checkTypeAssertions', () => {

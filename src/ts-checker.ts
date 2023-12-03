@@ -180,8 +180,6 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
       i === lineStarts.length - 1 ? undefined : lineStarts[i + 1] - 1,
     );
 
-    // console.log('line: "', lineText, '"');
-
     const isFullLineComment = !!lineText.match(/^ *\/\//);
     if (!isFullLineComment) {
       appliesToPreviousLine = false;
@@ -199,14 +197,12 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
     let {line} = lineChar;
     const {character} = lineChar;
     const commentText = lineText.slice(commentPos);
-    // console.log('comment text:', commentText);
     if (
       appliesToPreviousLine &&
       character === colForContinuation &&
       (commentPrefixForContinuation === null ||
         commentText.startsWith(commentPrefixForContinuation))
     ) {
-      // console.log('continuation:', commentText);
       assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
     } else {
       const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
@@ -215,11 +211,8 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
         assertions.push({line, type});
         colForContinuation = character;
       } else {
-        // console.log('checking for twoslash: "', commentText, '"');
         const type = matchAndExtract(TWOSLASH_PAT, commentText);
-        // console.log(type);
         if (type === null) continue;
-        // console.log('matched twoslash pat:', commentText);
         if (!isFullLineComment) {
           throw new Error('Twoslash assertion must be first on line.');
         }

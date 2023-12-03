@@ -2,24 +2,8 @@ Here's a twoslash-style assertion:
 
 [source,ts]
 ----
-const img = document.querySelector('img');
-//    ^? const img: HTMLImageElement | null
-----
+type T = `${number}`;
 
-It should check and pass! Here's one that fails:
-
-// verifier:next-is-tsx
-[source,ts]
-----
-type HTMLTag = keyof HTMLElementTagNameMap;
-interface ParentNode {
-  querySelector<
-    TagName extends HTMLTag
-  >(
-    selector: `${TagName}#${string}`
-  ): HTMLElementTagNameMap[TagName] | null;
-}
-
-const img = document.querySelector('img');
-//    ^? const img: Element
+const one = 1;
+//    ^? const one: 1
 ----

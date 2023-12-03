@@ -169,7 +169,6 @@ export function extractTypeAssertions(
   scanner: ts.Scanner,
   source: ts.SourceFile,
 ): TypeScriptTypeAssertion[] {
-  debugger;
   const assertions: TypeScriptTypeAssertion[] = [];
   const lineStarts = source.getLineStarts();
 
@@ -230,7 +229,6 @@ export function extractTypeAssertions(
       commentPrefixForContinuation = null;
     }
   }
-  console.log('assertions', assertions);
   return assertions;
 }
 
@@ -611,6 +609,13 @@ function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.Com
   }
 }
 
+function printNode(node: ts.Node, indent = '') {
+  console.log(indent, 'node:', node.kind, node.getFullText());
+  for (const child of node.getChildren()) {
+    printNode(child, '  ' + indent);
+  }
+}
+
 /** Verify that a TypeScript sample has the expected errors and no others. */
 async function uncachedCheckTs(
   sample: CodeSample,
@@ -646,6 +651,14 @@ async function uncachedCheckTs(
   }
 
   let diagnostics = ts.getPreEmitDiagnostics(program);
+
+  // source.forEachChild(node => {
+  //   console.log('node:', node.getFullText());
+  // });
+  // console.log('---');
+  // for (const node of source.getChildren()) {
+  //   printNode(node);
+  // }
 
   if (runCode) {
     const emitResult = program.emit();
@@ -684,12 +697,16 @@ async function uncachedCheckTs(
 
   if (hasTypeAssertions(content)) {
     const languageVersion = config.options.target || ts.ScriptTarget.ES2015;
-    console.log(languageVersion, source.languageVariant, source.getFullText());
+    let scannerError: string | null = null;
     const scanner = ts.createScanner(
       languageVersion,
       false,
       source.languageVariant,
       source.getFullText(),
+      err => {
+        console.error(err);
+        scannerError = err.message;
+      },
     );
     const checker = program.getTypeChecker();
 
@@ -697,6 +714,9 @@ async function uncachedCheckTs(
     if (assertions.length) {
       const languageService = ts.createLanguageService(getLanguageServiceHost(program));
       ok = ok && checkTypeAssertions(source, checker, languageService, assertions);
+    }
+    if (scannerError) {
+      fail(scannerError);
     }
   }
 

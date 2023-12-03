@@ -1,17 +1,11 @@
 import ts from 'typescript';
 
 const TS_PROGRAM = `
-interface Foo {
-  method(param: \`#\${string}\`): string;
-}
+type T = \`\${number}\`;
 
-const img = document.querySelector('img');
-//    ^? const img: Element`;
-
-const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
-const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
-
-const host = ts.createCompilerHost(tsOptions, true);
+const one = 1;
+// comment
+`;
 
 console.log(TS_PROGRAM);
 
@@ -26,6 +20,5 @@ const scanner = ts.createScanner(
 );
 
 while (scanner.scan() !== ts.SyntaxKind.EndOfFileToken) {
-  // const token = scanner.getToken();
   console.log('tok:', scanner.getTokenText());
 }

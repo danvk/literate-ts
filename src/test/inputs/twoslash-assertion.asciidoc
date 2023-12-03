@@ -1,0 +1,28 @@
+Here's a twoslash-style assertion:
+
+[source,ts]
+----
+const img = document.querySelector('img');
+//    ^? const img: HTMLImageElement | null
+----
+
+It should check and pass! Here's one that fails:
+
+// verifier:prepend-to-following
+[source,ts]
+----
+type HTMLTag = keyof HTMLElementTagNameMap;
+interface ParentNode {
+  querySelector<
+    TagName extends HTMLTag
+  >(
+    selector: `${TagName}#${string}`
+  ): HTMLElementTagNameMap[TagName] | null;
+}
+----
+
+[source,ts]
+----
+const img = document.querySelector('img');
+//    ^? const img: Element
+----

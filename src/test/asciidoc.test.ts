@@ -471,6 +471,7 @@ describe('checker', () => {
     './src/test/inputs/prepend-as-file.asciidoc',
     './src/test/inputs/check-jsonc.asciidoc',
     './src/test/inputs/node-output.asciidoc',
+    './src/test/inputs/twoslash-assertion.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

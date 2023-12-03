@@ -471,6 +471,36 @@ END #././src/test/inputs/program-listing.asciidoc:49 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/twoslash-assertion.asciidoc": ./src/test/inputs/twoslash-assertion.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/twoslash-assertion.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/twoslash-assertion.asciidoc",
+    "BEGIN #././src/test/inputs/twoslash-assertion.asciidoc:5 (--filter twoslash-assertion-5)
+",
+    "Code passed type checker.",
+    "Type assertion match:",
+    "  Expected: 2",
+    "    Actual: 2",
+    "  1/1 type assertions matched.",
+    "Twoslash type assertion match:",
+    "  Expected: const one: 1",
+    "    Actual: const one: 1",
+    "  1/1 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/twoslash-assertion.asciidoc:5 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/twoslash-assertion.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/twoslash-assertion.asciidoc",
+    "1/1: ././src/test/inputs/twoslash-assertion.asciidoc: 1/1 ././src/test/inputs/twoslash-assertion.asciidoc:5",
+  ],
+}
+`;
+
 exports[`extractSamples snapshot: backticks 1`] = `
 [
   {
@@ -1640,6 +1670,35 @@ exports[`extractSamples snapshot: skip 1`] = `
     "sectionHeader": null,
     "skip": true,
     "sourceFile": "skip.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: twoslash-assertion 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "type T = \`\${number}\`;
+
+const one = 1;
+//    ^? const one: 1
+
+const two = 2;  // type is 2",
+    "descriptor": "./twoslash-assertion.asciidoc:5",
+    "id": "twoslash-assertion-5",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 4,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "twoslash-assertion.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
   },

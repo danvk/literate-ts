@@ -182,16 +182,16 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
 
     // console.log('line: "', lineText, '"');
 
-    if (lineText.match(/^ *\/\//)) {
-      appliesToPreviousLine = true;
-    } else {
-      appliesToPreviousLine = false;
-    }
-    const commentPos = lineText.indexOf('//');
-    if (commentPos === -1) {
+    const isFullLineComment = !!lineText.match(/^ *\/\//);
+    if (!isFullLineComment) {
       appliesToPreviousLine = false;
       colForContinuation = null;
       commentPrefixForContinuation = null;
+    }
+    appliesToPreviousLine = isFullLineComment;
+
+    const commentPos = lineText.indexOf('//');
+    if (commentPos === -1) {
       continue;
     }
     const pos = lineStarts[i] + commentPos;
@@ -220,7 +220,7 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
         // console.log(type);
         if (type === null) continue;
         // console.log('matched twoslash pat:', commentText);
-        if (!appliesToPreviousLine) {
+        if (!isFullLineComment) {
           throw new Error('Twoslash assertion must be first on line.');
         }
         const twoslashOffset = commentText.indexOf('^?');

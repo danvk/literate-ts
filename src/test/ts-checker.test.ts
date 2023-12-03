@@ -313,7 +313,7 @@ describe('ts-checker', () => {
         {
           line: 2,
           character: 6,
-          position: 6,
+          position: 57,
           type: 'const y: string',
         },
       ]);

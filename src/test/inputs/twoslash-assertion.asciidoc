@@ -9,3 +9,5 @@ const one = 1;
 
 const two = 2;  // type is 2
 ----
+
+This is a regression test for https://github.com/danvk/literate-ts/issues/222

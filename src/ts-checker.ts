@@ -689,13 +689,14 @@ async function uncachedCheckTs(
   let ok = checkMatchingErrors(expectedErrors, actualErrors);
 
   if (hasTypeAssertions(content)) {
-    const languageVersion = config.options.target || ts.ScriptTarget.ES2015;
     const checker = program.getTypeChecker();
 
     const assertions = extractTypeAssertions(source);
     if (assertions.length) {
       const languageService = ts.createLanguageService(getLanguageServiceHost(program));
       ok = ok && checkTypeAssertions(source, checker, languageService, assertions);
+    } else {
+      fail('Unable to extract type assertions');
     }
   }
 

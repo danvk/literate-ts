@@ -476,30 +476,27 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/twoslash-assertio
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/twoslash-assertion.asciidoc
 ",
-    "Found 2 code samples in ./src/test/inputs/twoslash-assertion.asciidoc",
+    "Found 1 code samples in ./src/test/inputs/twoslash-assertion.asciidoc",
     "BEGIN #././src/test/inputs/twoslash-assertion.asciidoc:5 (--filter twoslash-assertion-5)
 ",
     "Code passed type checker.",
+    "Type assertion match:",
+    "  Expected: 2",
+    "    Actual: 2",
+    "  1/1 type assertions matched.",
     "Twoslash type assertion match:",
-    "  Expected: const img: HTMLImageElement | null",
-    "    Actual: const img: HTMLImageElement | null",
+    "  Expected: const one: 1",
+    "    Actual: const one: 1",
     "  1/1 twoslash type assertions matched.",
     "
 END #././src/test/inputs/twoslash-assertion.asciidoc:5 (--- ms)
-",
-    "BEGIN #././src/test/inputs/twoslash-assertion.asciidoc:13 (--filter twoslash-assertion-13)
-",
-    "Code passed type checker.",
-    "
-END #././src/test/inputs/twoslash-assertion.asciidoc:13 (--- ms)
 ",
     "---- END FILE ./src/test/inputs/twoslash-assertion.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/twoslash-assertion.asciidoc",
-    "1/1: ././src/test/inputs/twoslash-assertion.asciidoc: 1/2 ././src/test/inputs/twoslash-assertion.asciidoc:5",
-    "1/1: ././src/test/inputs/twoslash-assertion.asciidoc: 2/2 ././src/test/inputs/twoslash-assertion.asciidoc:13",
+    "1/1: ././src/test/inputs/twoslash-assertion.asciidoc: 1/1 ././src/test/inputs/twoslash-assertion.asciidoc:5",
   ],
 }
 `;
@@ -1684,42 +1681,17 @@ exports[`extractSamples snapshot: twoslash-assertion 1`] = `
   {
     "auxiliaryFiles": [],
     "checkJS": false,
-    "content": "const img = document.querySelector('img');
-//    ^? const img: HTMLImageElement | null",
+    "content": "type T = \`\${number}\`;
+
+const one = 1;
+//    ^? const one: 1
+
+const two = 2;  // type is 2",
     "descriptor": "./twoslash-assertion.asciidoc:5",
     "id": "twoslash-assertion-5",
     "isTSX": false,
     "language": "ts",
     "lineNumber": 4,
-    "nodeModules": [],
-    "prefixes": [],
-    "prefixesLength": 0,
-    "replacementId": undefined,
-    "sectionHeader": null,
-    "skip": false,
-    "sourceFile": "twoslash-assertion.asciidoc",
-    "targetFilename": null,
-    "tsOptions": {},
-  },
-  {
-    "auxiliaryFiles": [],
-    "checkJS": false,
-    "content": "type HTMLTag = keyof HTMLElementTagNameMap;
-interface ParentNode {
-  querySelector<
-    TagName extends HTMLTag
-  >(
-    selector: \`\${TagName}#\${string}\`
-  ): HTMLElementTagNameMap[TagName] | null;
-}
-
-const img = document.querySelector('img');
-//    ^? const img: Element",
-    "descriptor": "./twoslash-assertion.asciidoc:13",
-    "id": "twoslash-assertion-13",
-    "isTSX": false,
-    "language": "ts",
-    "lineNumber": 12,
     "nodeModules": [],
     "prefixes": [],
     "prefixesLength": 0,

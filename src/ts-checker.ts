@@ -177,9 +177,10 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
   for (let i = 0; i < lineStarts.length; i++) {
     const lineText = text.slice(
       lineStarts[i],
-      i === lineStarts.length - 1 ? undefined : lineStarts[i + 1],
+      i === lineStarts.length - 1 ? undefined : lineStarts[i + 1] - 1,
     );
-    console.log('line:', lineText);
+
+    console.log('line: "', lineText, '"');
 
     if (lineText.match(/^ *\/\//)) {
       appliesToPreviousLine = true;
@@ -200,10 +201,12 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
     const commentText = lineText.slice(commentPos);
     console.log('comment text:', commentText);
     if (
+      appliesToPreviousLine &&
       character === colForContinuation &&
       (commentPrefixForContinuation === null ||
         commentText.startsWith(commentPrefixForContinuation))
     ) {
+      console.log('continuation:', commentText);
       assertions[assertions.length - 1].type += ' ' + commentText.slice(2).trim();
     } else {
       const type = matchAndExtract(TYPE_ASSERTION_PAT, commentText);
@@ -212,9 +215,11 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
         assertions.push({line, type});
         colForContinuation = character;
       } else {
+        console.log('checking for twoslash: "', commentText, '"');
         const type = matchAndExtract(TWOSLASH_PAT, commentText);
+        console.log(type);
         if (type === null) continue;
-        // console.log('matched twoslash pat:', commentText);
+        console.log('matched twoslash pat:', commentText);
         if (!appliesToPreviousLine) {
           throw new Error('Twoslash assertion must be first on line.');
         }

@@ -321,14 +321,9 @@ describe('ts-checker', () => {
       if (!sourceFile) {
         throw new Error('could not get sourceFile');
       }
-      const scanner = ts.createScanner(
-        ts.ScriptTarget.ES2015,
-        false,
-        sourceFile.languageVariant,
-        sourceFile.getFullText(),
-      );
 
-      const assertions = extractTypeAssertions(scanner, sourceFile);
+      const assertions = extractTypeAssertions(sourceFile);
+      console.log(assertions);
       const languageService = ts.createLanguageService(getLanguageServiceHost(program));
       return checkTypeAssertions(sourceFile, program.getTypeChecker(), languageService, assertions);
     };

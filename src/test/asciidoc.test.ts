@@ -454,6 +454,7 @@ describe('checker', () => {
       compilerOptions: {
         strictNullChecks: true,
         module: 'commonjs',
+        esModuleInterop: true,
       },
     },
     ts.sys,
@@ -470,6 +471,7 @@ describe('checker', () => {
     './src/test/inputs/program-listing.asciidoc',
     './src/test/inputs/prepend-as-file.asciidoc',
     './src/test/inputs/check-jsonc.asciidoc',
+    './src/test/inputs/express.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

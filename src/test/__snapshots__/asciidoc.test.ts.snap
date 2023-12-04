@@ -38,7 +38,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/commented-sample-
 ",
     "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:7:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
     "const value: number = "123";",
-    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
     "
 END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
 ",
@@ -48,7 +48,7 @@ END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
     "const value: number = "123";
 console.log(value);
 //          ^? const value: number",
-    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
     "
 END #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--- ms)
 ",
@@ -86,7 +86,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.as
 }
 fetchANumber
 // ^?",
-    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
     "
 END #././src/test/inputs/empty-twoslash.asciidoc:7 (--- ms)
 ",
@@ -158,7 +158,7 @@ type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
 type SynthT2 = Resolve<T2>;
 //   ^? type SynthT2 = "x" | "y" | "z"
 ",
-    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
     "
 END #././src/test/inputs/equivalent.asciidoc:31 (--- ms)
 ",
@@ -188,7 +188,7 @@ type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
 type SynthT2 = Resolve<T2>;
 //   ^? type SynthT2 = "x" | "y" | "z"
 ",
-    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
     "
 END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
 ",
@@ -201,6 +201,49 @@ END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
     "1/1: ././src/test/inputs/equivalent.asciidoc: 2/4 ././src/test/inputs/equivalent.asciidoc:23",
     "1/1: ././src/test/inputs/equivalent.asciidoc: 3/4 ././src/test/inputs/equivalent.asciidoc:31",
     "1/1: ././src/test/inputs/equivalent.asciidoc: 4/4 ././src/test/inputs/equivalent.asciidoc:39",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/express.asciidoc": ./src/test/inputs/express.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/express.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/express.asciidoc",
+    "BEGIN #././src/test/inputs/express.asciidoc:8 (--filter express-8)
+",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/express",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/body-parser -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/body-parser",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express-serve-static-core -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/express-serve-static-core",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/qs -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/qs",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/serve-static -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/serve-static",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/connect -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/connect",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/node -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/node",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/range-parser -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/range-parser",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/send -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/send",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/http-errors -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/http-errors",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/mime -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/@types/mime",
+    "Copied /Users/danvk/github/literate-ts/node_modules/undici-types -> /var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-934-Es1Z84u177Ya/node_modules/undici-types",
+    "Code passed type checker.",
+    "💥 ./src/test/inputs/express.asciidoc:9:7-10: Failed type assertion for \`app\`
+  Expected: const app: Express
+    Actual: const app: any",
+    "  0/1 twoslash type assertions matched.",
+    "import express from 'express';
+const app = express();
+//    ^? const app: Express",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/express.asciidoc:8 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/express.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/express.asciidoc",
+    "1/1: ././src/test/inputs/express.asciidoc: 1/2 ././src/test/inputs/express.asciidoc:8",
+    "1/1: ././src/test/inputs/express.asciidoc: 2/2 ././src/test/inputs/express.asciidoc:17",
   ],
 }
 `;
@@ -332,7 +375,7 @@ const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
 //         last: string;
 //         middle?: string;
 //       }",
-    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
     "
 END #././src/test/inputs/president.asciidoc:7 (--- ms)
 ",
@@ -347,7 +390,7 @@ END #././src/test/inputs/president.asciidoc:7 (--- ms)
 const firstLast = {first: 'Harry', last: 'Truman'};
 const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
 // Type is { first: string; last: string; middle?: string; }",
-    "tsconfig options: {"strictNullChecks":true,"module":1}",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
     "
 END #././src/test/inputs/president.asciidoc:21 (--- ms)
 ",
@@ -814,7 +857,8 @@ exports[`extractSamples snapshot: express 1`] = `
     "auxiliaryFiles": [],
     "checkJS": false,
     "content": "import express from 'express';
-const app = express();",
+const app = express();
+//    ^? const app: Express",
     "descriptor": "./express.asciidoc:8",
     "id": "express-8",
     "isTSX": false,
@@ -846,11 +890,11 @@ app.get('/health', (request, response) => {
   response.send('OK');
   // ^? (parameter) response: express.Response
 });",
-    "descriptor": "./express.asciidoc:15",
-    "id": "express-15",
+    "descriptor": "./express.asciidoc:17",
+    "id": "express-17",
     "isTSX": false,
     "language": "ts",
-    "lineNumber": 14,
+    "lineNumber": 16,
     "nodeModules": [
       "@types/express",
     ],
@@ -862,7 +906,7 @@ app.get('/health', (request, response) => {
     "prefixesLength": 0,
     "replacementId": undefined,
     "sectionHeader": null,
-    "skip": false,
+    "skip": true,
     "sourceFile": "express.asciidoc",
     "targetFilename": null,
     "tsOptions": {},

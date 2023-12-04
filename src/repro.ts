@@ -10,7 +10,9 @@ console.log('Verifying with TypeScript', ts.version);
 console.log('options', tsOptions);
 
 const host = ts.createCompilerHost(tsOptions, true);
-const srcPath = path.resolve('src/express.ts');
+// const srcPath = path.resolve('src/express.ts');
+const srcPath =
+  '/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs/express-8.ts';
 
 const program = ts.createProgram([srcPath], tsOptions, host);
 const source = program.getSourceFile(srcPath);
@@ -25,8 +27,14 @@ console.log('diagnostics', diagnostics);
 export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceHost {
   return {
     getCompilationSettings: () => program.getCompilerOptions(),
-    getCurrentDirectory: () => program.getCurrentDirectory(),
-    getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
+    // getCurrentDirectory: () => program.getCurrentDirectory(),
+    getCurrentDirectory: () =>
+      '/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs',
+    getDefaultLibFileName: options => {
+      const libPath = ts.getDefaultLibFilePath(options);
+      console.log('libPath', libPath);
+      return libPath;
+    },
     getScriptFileNames: () => program.getSourceFiles().map(sourceFile => sourceFile.fileName),
     getScriptSnapshot: name =>
       ts.ScriptSnapshot.fromString(program.getSourceFile(name)?.text ?? ''),

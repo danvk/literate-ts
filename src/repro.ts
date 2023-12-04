@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import process from 'node:process';
 
 import ts from 'typescript';
 
@@ -8,6 +9,8 @@ const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sy
 
 console.log('Verifying with TypeScript', ts.version);
 console.log('options', tsOptions);
+
+process.chdir('/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs');
 
 const host = ts.createCompilerHost(tsOptions, true);
 // const srcPath = path.resolve('src/express.ts');
@@ -27,9 +30,9 @@ console.log('diagnostics', diagnostics);
 export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceHost {
   return {
     getCompilationSettings: () => program.getCompilerOptions(),
-    // getCurrentDirectory: () => program.getCurrentDirectory(),
-    getCurrentDirectory: () =>
-      '/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs',
+    getCurrentDirectory: () => program.getCurrentDirectory(),
+    // getCurrentDirectory: () =>
+    //   '/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs',
     getDefaultLibFileName: options => {
       const libPath = ts.getDefaultLibFilePath(options);
       console.log('libPath', libPath);
@@ -40,8 +43,16 @@ export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceH
       ts.ScriptSnapshot.fromString(program.getSourceFile(name)?.text ?? ''),
     getScriptVersion: () => '1',
     // NB: We can't check `program` for files, it won't contain valid files like package.json
-    fileExists: ts.sys.fileExists,
-    readFile: ts.sys.readFile,
+    fileExists: path => {
+      const exists = ts.sys.fileExists(path);
+      console.log('exists?', path, exists);
+      return exists;
+    },
+    readFile: (path, encoding) => {
+      const result = ts.sys.readFile(path, encoding);
+      console.log('read', path, '->', result?.length);
+      return result;
+    },
     readDirectory: ts.sys.readDirectory,
     directoryExists: ts.sys.directoryExists,
     getDirectories: ts.sys.getDirectories,

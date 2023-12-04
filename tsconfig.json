@@ -61,7 +61,6 @@
   },
   "exclude": [
     "examples",
-    "node_modules",
   ],
   "ts-node": {
     // See https://stackoverflow.com/a/65163089/388951

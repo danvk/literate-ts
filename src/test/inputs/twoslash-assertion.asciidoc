@@ -1,0 +1,13 @@
+Here's a twoslash-style assertion:
+
+[source,ts]
+----
+type T = `${number}`;
+
+const one = 1;
+//    ^? const one: 1
+
+const two = 2;  // type is 2
+----
+
+This is a regression test for https://github.com/danvk/literate-ts/issues/222

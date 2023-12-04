@@ -173,13 +173,7 @@ describe('ts-checker', () => {
 
   const getAssertions = (text: string) => {
     const testFile = ts.createSourceFile('test.ts', text, ts.ScriptTarget.ES2015);
-    const scanner = ts.createScanner(
-      ts.ScriptTarget.ES2015,
-      false,
-      testFile.languageVariant,
-      testFile.getFullText(),
-    );
-    return extractTypeAssertions(scanner, testFile);
+    return extractTypeAssertions(testFile);
   };
 
   describe('extractTypeAssertions', () => {
@@ -300,6 +294,30 @@ describe('ts-checker', () => {
         },
       ]);
     });
+
+    test('type assertions with comments on intervening lines', () => {
+      expect(
+        getAssertions(dedent`
+        const x = 2 + '3';  // OK
+        //    ^? const x: string
+        const y = '2' + 3;  // OK
+        //    ^? const y: string
+      `),
+      ).toEqual([
+        {
+          line: 0,
+          character: 6,
+          position: 6,
+          type: 'const x: string',
+        },
+        {
+          line: 2,
+          character: 6,
+          position: 57,
+          type: 'const y: string',
+        },
+      ]);
+    });
   });
 
   describe('checkTypeAssertions', () => {
@@ -327,14 +345,8 @@ describe('ts-checker', () => {
       if (!sourceFile) {
         throw new Error('could not get sourceFile');
       }
-      const scanner = ts.createScanner(
-        ts.ScriptTarget.ES2015,
-        false,
-        sourceFile.languageVariant,
-        sourceFile.getFullText(),
-      );
 
-      const assertions = extractTypeAssertions(scanner, sourceFile);
+      const assertions = extractTypeAssertions(sourceFile);
       const languageService = ts.createLanguageService(getLanguageServiceHost(program));
       return checkTypeAssertions(sourceFile, program.getTypeChecker(), languageService, assertions);
     };

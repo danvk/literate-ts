@@ -10,12 +10,13 @@ const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sy
 console.log('Verifying with TypeScript', ts.version);
 console.log('options', tsOptions);
 
-process.chdir('/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs');
+process.chdir('/private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs');
 
 const host = ts.createCompilerHost(tsOptions, true);
 // const srcPath = path.resolve('src/express.ts');
+// const srcPath = '/Users/danvk/code/tmp-1830-5FDAmCNK4pBs/express-8.ts';
 const srcPath =
-  '/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs/express-8.ts';
+  '/private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-1830-5FDAmCNK4pBs/express-8.ts';
 
 const program = ts.createProgram([srcPath], tsOptions, host);
 const source = program.getSourceFile(srcPath);

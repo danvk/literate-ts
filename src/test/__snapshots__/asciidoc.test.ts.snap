@@ -205,6 +205,35 @@ END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/issue-235.asciidoc": ./src/test/inputs/issue-235.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/issue-235.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/issue-235.asciidoc",
+    "BEGIN #././src/test/inputs/issue-235.asciidoc:5 (--filter issue-235-5)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const numArgsBad: (...args: any) => any",
+    "    Actual: const numArgsBad: (...args: any) => any",
+    "Twoslash type assertion match:",
+    "  Expected: const numArgsBetter: (...args: any) => numberjsdklfjklsd",
+    "    Actual: const numArgsBetter: (...args: any[]) => number",
+    "  2/2 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/issue-235.asciidoc:5 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/issue-235.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/issue-235.asciidoc",
+    "1/1: ././src/test/inputs/issue-235.asciidoc: 1/1 ././src/test/inputs/issue-235.asciidoc:5",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/node-output.asciidoc": ./src/test/inputs/node-output.asciidoc 1`] = `
 {
   "logs": [
@@ -953,6 +982,33 @@ exports[`extractSamples snapshot: inline-replacement 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "inline-replacement.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: issue-235 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "const numArgsBad = (...args: any) => args.length;
+//    ^? const numArgsBad: (...args: any) => any
+const numArgsBetter = (...args: any[]) => args.length;
+//    ^? const numArgsBetter: (...args: any) => numberjsdklfjklsd",
+    "descriptor": "./issue-235.asciidoc:5",
+    "id": "issue-235-5",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 4,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "issue-235.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
   },

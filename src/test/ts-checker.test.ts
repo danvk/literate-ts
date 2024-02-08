@@ -534,6 +534,12 @@ describe('ts-checker', () => {
       const expected = `function fetchANumber( input: RequestInfo | URL, init?: RequestInit | undefined ): Promise<number>`;
       expect(matchModuloWhitespace(actual, expected)).toBe(true);
     });
+
+    it('should still see differences', () => {
+      const actual = 'const numArgsBetter: (...args: any[]) => number';
+      const expected = 'const numArgsBetter: (...args: any) => numberjsdklfjklsd';
+      expect(matchModuloWhitespace(actual, expected)).toBe(false);
+    });
   });
 
   describe('sortUnions', () => {

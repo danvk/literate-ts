@@ -450,7 +450,7 @@ export function checkTwoslashAssertions(
       const {character: end} = source.getLineAndCharacterOfPosition(node.getEnd());
       fail(
         `Failed type assertion for \`${node.getText()}\`\n` +
-          `  Expected: ${assertion.type}\n` +
+          `  Expected: ${type}\n` +
           `    Actual: ${actual}`,
         {
           location: {
@@ -463,7 +463,7 @@ export function checkTwoslashAssertions(
       anyFailures = true;
     } else {
       log(`Twoslash type assertion match:`);
-      log(`  Expected: ${assertion.type}`);
+      log(`  Expected: ${type}`);
       log(`    Actual: ${actual}`);
       matchedAssertions++;
     }

@@ -391,7 +391,7 @@ export function matchModuloWhitespace(actual: string, expected: string): boolean
   // TODO: it's much easier to normalize actual based on the displayParts
   //       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
   const normalize = (input: string) => {
-    const isFunction = !!input.match(/^ *function /);
+    const isFunction = !!input.match(/^ *function /) || !!input.match(/=>/);
 
     let name: string;
     let type: string;

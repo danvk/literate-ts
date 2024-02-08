@@ -217,10 +217,15 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/issue-235.asciido
     "Twoslash type assertion match:",
     "  Expected: const numArgsBad: (...args: any) => any",
     "    Actual: const numArgsBad: (...args: any) => any",
-    "Twoslash type assertion match:",
-    "  Expected: const numArgsBetter: (...args: any) => numberjsdklfjklsd",
-    "    Actual: const numArgsBetter: (...args: any[]) => number",
-    "  2/2 twoslash type assertions matched.",
+    "💥 ./src/test/inputs/issue-235.asciidoc:7:7-20: Failed type assertion for \`numArgsBetter\`
+  Expected: const numArgsBetter: (...args: any) => numberjsdklfjklsd
+    Actual: const numArgsBetter: (...args: any[]) => number",
+    "  1/2 twoslash type assertions matched.",
+    "const numArgsBad = (...args: any) => args.length;
+//    ^? const numArgsBad: (...args: any) => any
+const numArgsBetter = (...args: any[]) => args.length;
+//    ^? const numArgsBetter: (...args: any) => numberjsdklfjklsd",
+    "tsconfig options: {"strictNullChecks":true,"module":1}",
     "
 END #././src/test/inputs/issue-235.asciidoc:5 (--- ms)
 ",

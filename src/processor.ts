@@ -1,6 +1,7 @@
 import fs from 'fs';
 import {ParseError, parse as parseJSONC, printParseErrorCode} from 'jsonc-parser';
 import {dirname, isAbsolute} from 'path';
+import * as prettier from 'prettier';
 
 import {
   applyPrefixes,
@@ -12,10 +13,22 @@ import {fileSlug, writeTempFile} from './utils.js';
 import {log} from './logger.js';
 import {startFile, fail, finishFile, finishSample, startSample} from './test-tracker.js';
 import {CodeSample} from './types.js';
-import {ConfigBundle, checkProgramListing, checkTs} from './ts-checker.js';
+import {ConfigBundle, checkProgramListing, checkTs, getFilenameForSample} from './ts-checker.js';
 import {runNode} from './node-runner.js';
 import {Args} from './args.js';
 import _ from 'lodash';
+
+// TODO: what other languages does prettier support?
+const PRETTIER_LANGUAGES = ['ts', 'js'];
+// TODO: read from a config file
+const PRETIER_OPTIONS: prettier.Options = {
+  arrowParens: 'avoid',
+  printWidth: 85,
+  singleQuote: true,
+  trailingComma: 'all',
+  bracketSpacing: false,
+  bracketSameLine: true,
+};
 
 function checkOutput(expectedOutput: string, input: CodeSample) {
   const actualOutput = input.output;
@@ -52,6 +65,27 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
   } else {
     log('Actual output matched expected.');
   }
+}
+
+async function isSamplePrettier(sample: CodeSample): Promise<boolean> {
+  const options = {
+    filepath: getFilenameForSample(sample),
+    ...PRETIER_OPTIONS,
+  };
+  const content = sample.content + '\n';
+  const ok = await prettier.check(content, options);
+  if (!ok) {
+    const expected = await prettier.format(content, options);
+    log('Expected:');
+    log(expected);
+    log('----');
+    log('Actual:');
+    log(content);
+    log('----');
+  } else {
+    log('Sample is prettier!');
+  }
+  return ok;
 }
 
 export class Processor {
@@ -104,6 +138,13 @@ export class Processor {
       return;
     }
     startSample(sample);
+
+    // TODO: TS and Prettier can run concurrently
+    if (language && PRETTIER_LANGUAGES.includes(language)) {
+      if (!(await isSamplePrettier(sample))) {
+        fail(`Code sample is not prettier-formatted.`);
+      }
+    }
 
     if (language === 'ts' || (language === 'js' && sample.checkJS)) {
       const result = await checkTs(sample, id + '-output' in idToSample, this.typeScriptBundle, {

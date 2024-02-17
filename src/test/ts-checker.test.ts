@@ -540,6 +540,17 @@ describe('ts-checker', () => {
       const expected = 'const numArgsBetter: (...args: any) => numberjsdklfjklsd';
       expect(matchModuloWhitespace(actual, expected)).toBe(false);
     });
+
+    it('should see differences between object types', () => {
+      const expected = `const pharaoh: { start?: number | undefined; end?: number; name: string; title: string; }`;
+      const actual = `const pharaoh: {
+        start?: number | undefined;
+        end?: number | undefined;
+        name: string;
+        title: string;
+      }`;
+      expect(matchModuloWhitespace(actual, expected)).toBe(false);
+    });
   });
 
   describe('sortUnions', () => {

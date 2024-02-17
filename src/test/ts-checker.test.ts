@@ -10,6 +10,8 @@ import {
   getLanguageServiceHost,
   matchModuloWhitespace,
   sortUnions,
+  normalize,
+  limitedSplit,
 } from '../ts-checker.js';
 import {dedent} from '../utils.js';
 
@@ -542,14 +544,47 @@ describe('ts-checker', () => {
     });
 
     it('should see differences between object types', () => {
-      const expected = `const pharaoh: { start?: number | undefined; end?: number; name: string; title: string; }`;
+      const expected = `const pharaoh: {
+        start?: number | undefined;
+        end?: number;
+        name: string;
+        title: string;
+      }`;
       const actual = `const pharaoh: {
         start?: number | undefined;
-        end?: number | undefined;
+        end?: Date;
         name: string;
         title: string;
       }`;
       expect(matchModuloWhitespace(actual, expected)).toBe(false);
+    });
+  });
+
+  describe('normalize helper', () => {
+    it('should normalize an object type', () => {
+      const quickinfo = `const pharaoh: {
+        start?: number;
+        end?: number;
+      }`;
+      expect(normalize(quickinfo)).toEqual('const pharaoh: { start?: number; end?: number; }');
+    });
+  });
+
+  describe('limited split', () => {
+    it('should split at or below the limit', () => {
+      expect(limitedSplit('a:b:c', ':', 3)).toEqual(['a', 'b', 'c']);
+      expect(limitedSplit('a:b:c', ':', 4)).toEqual(['a', 'b', 'c']);
+      expect(limitedSplit('a:b:c', /[:=]/, 3)).toEqual(['a', 'b', 'c']);
+    });
+
+    it('should not split beyond the limit', () => {
+      expect(limitedSplit('a:b:c', ':', 2)).toEqual(['a', 'b:c']);
+      expect(limitedSplit('a:b:c:d', /[:=]/, 3)).toEqual(['a', 'b', 'c:d']);
+    });
+
+    it('should work with multi-character delimiters', () => {
+      expect(limitedSplit('axxbxxc', 'xx', 2)).toEqual(['a', 'bxxc']);
+      expect(limitedSplit('axxbxxxcxxd', /x+/, 3)).toEqual(['a', 'b', 'cxxd']);
     });
   });
 

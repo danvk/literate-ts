@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "check:asciidoc": "ts-node index.ts examples/asciidoc/sample.asciidoc",
+    "check:asciidoc": "node --loader=ts-node/esm --no-warnings index.ts examples/asciidoc/sample.asciidoc",
     "format": "prettier --write 'src/**/*.ts'",
     "format:check": "prettier --check 'src/**/*.ts'",
     "lint": "eslint 'src/**/*.ts'",

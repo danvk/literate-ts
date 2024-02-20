@@ -474,6 +474,7 @@ describe('checker', () => {
     './src/test/inputs/express.asciidoc',
     './src/test/inputs/node-output.asciidoc',
     './src/test/inputs/twoslash-assertion.asciidoc',
+    './src/test/inputs/issue-235.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

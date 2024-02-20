@@ -213,18 +213,18 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/express.asciidoc"
     "Found 2 code samples in ./src/test/inputs/express.asciidoc",
     "BEGIN #././src/test/inputs/express.asciidoc:8 (--filter express-8)
 ",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/express",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/body-parser -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/body-parser",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express-serve-static-core -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/express-serve-static-core",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/qs -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/qs",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/serve-static -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/serve-static",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/connect -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/connect",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/node -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/node",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/range-parser -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/range-parser",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/send -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/send",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/http-errors -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/http-errors",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/mime -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/mime",
-    "Copied /Users/danvk/github/literate-ts/node_modules/undici-types -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/undici-types",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/express",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/body-parser -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/body-parser",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express-serve-static-core -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/express-serve-static-core",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/qs -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/qs",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/serve-static -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/serve-static",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/connect -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/connect",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/node -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/node",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/range-parser -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/range-parser",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/send -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/send",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/http-errors -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/http-errors",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/mime -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/mime",
+    "Copied /Users/danvk/github/literate-ts/node_modules/undici-types -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/undici-types",
     "Code passed type checker.",
     "Twoslash type assertion match:",
     "  Expected: const app: Express",
@@ -235,18 +235,18 @@ END #././src/test/inputs/express.asciidoc:8 (--- ms)
 ",
     "BEGIN #././src/test/inputs/express.asciidoc:16 (--filter express-16)
 ",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/express",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/body-parser -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/body-parser",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express-serve-static-core -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/express-serve-static-core",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/qs -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/qs",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/serve-static -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/serve-static",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/connect -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/connect",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/node -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/node",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/range-parser -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/range-parser",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/send -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/send",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/http-errors -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/http-errors",
-    "Copied /Users/danvk/github/literate-ts/node_modules/@types/mime -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/@types/mime",
-    "Copied /Users/danvk/github/literate-ts/node_modules/undici-types -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-3967-B0pfu9UIz2R1/node_modules/undici-types",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/express",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/body-parser -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/body-parser",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/express-serve-static-core -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/express-serve-static-core",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/qs -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/qs",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/serve-static -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/serve-static",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/connect -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/connect",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/node -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/node",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/range-parser -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/range-parser",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/send -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/send",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/http-errors -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/http-errors",
+    "Copied /Users/danvk/github/literate-ts/node_modules/@types/mime -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types/mime",
+    "Copied /Users/danvk/github/literate-ts/node_modules/undici-types -> /private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/undici-types",
     "Code passed type checker.",
     "Twoslash type assertion match:",
     "  Expected: const app: Express",
@@ -272,7 +272,7 @@ app.get('/health', (request, response) => {
   response.send('OK');
   // ^? (parameter) response: express.Response
 });",
-    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true,"typeRoots":["/private/var/folders/t_/3xnk295j79v51cmlqvtnhslc0000gn/T/tmp-30530-4rlKuN1Q3fk2/node_modules/@types"]}",
     "
 END #././src/test/inputs/express.asciidoc:16 (--- ms)
 ",
@@ -283,6 +283,40 @@ END #././src/test/inputs/express.asciidoc:16 (--- ms)
     "1/1: ././src/test/inputs/express.asciidoc",
     "1/1: ././src/test/inputs/express.asciidoc: 1/2 ././src/test/inputs/express.asciidoc:8",
     "1/1: ././src/test/inputs/express.asciidoc: 2/2 ././src/test/inputs/express.asciidoc:16",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/issue-235.asciidoc": ./src/test/inputs/issue-235.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/issue-235.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/issue-235.asciidoc",
+    "BEGIN #././src/test/inputs/issue-235.asciidoc:5 (--filter issue-235-5)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const numArgsBad: (...args: any) => any",
+    "    Actual: const numArgsBad: (...args: any) => any",
+    "💥 ./src/test/inputs/issue-235.asciidoc:7:7-20: Failed type assertion for \`numArgsBetter\`
+  Expected: const numArgsBetter: (...args: any) => numberjsdklfjklsd
+    Actual: const numArgsBetter: (...args: any[]) => number",
+    "  1/2 twoslash type assertions matched.",
+    "const numArgsBad = (...args: any) => args.length;
+//    ^? const numArgsBad: (...args: any) => any
+const numArgsBetter = (...args: any[]) => args.length;
+//    ^? const numArgsBetter: (...args: any) => numberjsdklfjklsd",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/issue-235.asciidoc:5 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/issue-235.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/issue-235.asciidoc",
+    "1/1: ././src/test/inputs/issue-235.asciidoc: 1/1 ././src/test/inputs/issue-235.asciidoc:5",
   ],
 }
 `;
@@ -322,7 +356,25 @@ END #././src/test/inputs/node-output.asciidoc:16 (--- ms)
 ",
     "BEGIN #././src/test/inputs/node-output.asciidoc:24 (--filter unsound-code-output)
 ",
-    "Actual output matched expected.",
+    "💥 ././src/test/inputs/node-output.asciidoc:24: Actual output from Node did not match expected output.",
+    "Expected:",
+    "console.log(x.toFixed(1));
+              ^
+
+TypeError: Cannot read properties of undefined (reading 'toFixed')",
+    "----",
+    "Actual:",
+    "console.log(x.toFixed(1));
+              ^
+
+TypeError: Cannot read properties of undefined (reading 'toFixed')
+[90m    at Module._compile (node:internal/modules/cjs/loader:1376:14)[39m
+[90m    at Module._extensions..js (node:internal/modules/cjs/loader:1435:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1207:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1023:12)[39m
+[90m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:135:12)[39m
+[90m    at node:internal/main/run_main_module:28:49[39m",
+    "----",
     "
 END #././src/test/inputs/node-output.asciidoc:24 (--- ms)
 ",
@@ -1098,6 +1150,33 @@ exports[`extractSamples snapshot: inline-replacement 1`] = `
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "inline-replacement.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: issue-235 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "const numArgsBad = (...args: any) => args.length;
+//    ^? const numArgsBad: (...args: any) => any
+const numArgsBetter = (...args: any[]) => args.length;
+//    ^? const numArgsBetter: (...args: any) => numberjsdklfjklsd",
+    "descriptor": "./issue-235.asciidoc:5",
+    "id": "issue-235-5",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 4,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "issue-235.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
   },

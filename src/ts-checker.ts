@@ -387,33 +387,62 @@ export function sortUnions(type: string): string {
   return _.sortBy(parts).join(' | ');
 }
 
-export function matchModuloWhitespace(actual: string, expected: string): boolean {
-  // TODO: it's much easier to normalize actual based on the displayParts
-  //       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
-  const normalize = (input: string) => {
-    const isFunction = !!input.match(/^ *function /);
-
-    let name: string;
-    let type: string;
-    if (!isFunction) {
-      const parts = input.split(/[:=]/, 2);
-      if (parts.length !== 2) {
-        // this might be a typo, e.g. missing the ":" or "=" in a type assertion.
-        return input;
+/** This variant of split puts the rest of the string in the last group, rather than truncating. */
+export function limitedSplit(txt: string, pattern: string | RegExp, limit: number): string[] {
+  const groups = txt.split(pattern);
+  if (groups.length <= limit) {
+    return groups;
+  }
+  if (typeof pattern === 'string') {
+    return [...groups.slice(0, limit - 1), groups.slice(limit - 1).join(pattern)];
+  }
+  const globalPat = new RegExp(pattern, 'g');
+  const out = [];
+  let pos = 0;
+  for (const m of txt.matchAll(globalPat)) {
+    if (out.length < limit - 1) {
+      out.push(txt.slice(pos, m.index));
+      if (m.index === undefined) {
+        throw new Error();
       }
-      [name, type] = parts;
+      pos = m.index + m[0].length;
     } else {
-      name = 'n/a';
-      type = input;
+      out.push(txt.slice(pos));
+      break;
     }
+  }
+  return out;
+}
 
-    const normType = sortUnions(type)
-      .replace(/[\n\r ]+/g, ' ')
-      .replace(/\( */g, '(')
-      .replace(/ *\)/, ')')
-      .trim();
-    return isFunction ? normType : `${name}: ${normType}`;
-  };
+// TODO: it's much easier to normalize actual based on the displayParts
+//       This isn't 100% correct if a type has a space in it, e.g. type T = "string literal"
+// (exported for testing)
+export const normalize = (input: string) => {
+  const isFunction = !!input.match(/^ *function /) || !!input.match(/=>/);
+
+  let name: string;
+  let type: string;
+  if (!isFunction) {
+    const parts = limitedSplit(input, /[:=]/, 2);
+    if (parts.length !== 2) {
+      // this might be a typo, e.g. missing the ":" or "=" in a type assertion.
+      return input;
+    }
+    [name, type] = parts;
+  } else {
+    name = 'n/a';
+    type = input;
+  }
+
+  const normType = sortUnions(type)
+    .replace(/[\n\r ]+/g, ' ')
+    .replace(/\( */g, '(')
+    .replace(/ *\)/, ')')
+    .trim();
+  return isFunction ? normType : `${name}: ${normType}`;
+};
+
+export function matchModuloWhitespace(actual: string, expected: string): boolean {
   const normActual = normalize(actual);
   const normExpected = normalize(expected);
   return normActual === normExpected;
@@ -450,7 +479,7 @@ export function checkTwoslashAssertions(
       const {character: end} = source.getLineAndCharacterOfPosition(node.getEnd());
       fail(
         `Failed type assertion for \`${node.getText()}\`\n` +
-          `  Expected: ${assertion.type}\n` +
+          `  Expected: ${type}\n` +
           `    Actual: ${actual}`,
         {
           location: {
@@ -463,7 +492,7 @@ export function checkTwoslashAssertions(
       anyFailures = true;
     } else {
       log(`Twoslash type assertion match:`);
-      log(`  Expected: ${assertion.type}`);
+      log(`  Expected: ${type}`);
       log(`    Actual: ${actual}`);
       matchedAssertions++;
     }

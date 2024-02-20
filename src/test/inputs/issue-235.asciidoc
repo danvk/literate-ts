@@ -1,0 +1,9 @@
+See https://github.com/danvk/literate-ts/issues/235
+
+[source,ts]
+----
+const numArgsBad = (...args: any) => args.length;
+//    ^? const numArgsBad: (...args: any) => any
+const numArgsBetter = (...args: any[]) => args.length;
+//    ^? const numArgsBetter: (...args: any) => numberjsdklfjklsd
+----

@@ -5,7 +5,8 @@
 	],
 	"ignore": [],
 	"ignoreBinaries": [],
-	"ignoreDependencies": [],
+	// This is used in a code sample in a test
+	"ignoreDependencies": ["@types/express"],
 	"ignoreExportsUsedInFile": true,
 	"project": ["src/**/*.ts"]
 }

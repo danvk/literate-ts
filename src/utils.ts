@@ -8,7 +8,9 @@ let _tmpDir: string | null = null;
 /** Get a consistent temp dir for the duration of the program */
 export function getTempDir(): string {
   if (!_tmpDir) {
-    _tmpDir = tmp.dirSync().name;
+    // On macOS, the tmp.dirSync() returns '/var/...' which is a symlink to '/private/var/...'
+    // This trips up the TypeScript language service, so it's essential to resolve it here.
+    _tmpDir = fs.realpathSync(tmp.dirSync().name);
   }
   return _tmpDir;
 }

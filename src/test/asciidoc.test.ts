@@ -2,7 +2,7 @@ import fs from 'fs';
 import glob from 'fast-glob';
 import path from 'path';
 
-import {dedent} from '../utils.js';
+import {dedent, getTempDir} from '../utils.js';
 import {extractSamples} from '../code-sample.js';
 import {baseExtract} from './common.js';
 import {Processor} from '../processor.js';
@@ -447,13 +447,19 @@ describe('checker', () => {
     flushLog();
   });
 
-  const scrubTimingText = (line: string) => line.replace(/(\d+) ms/, '--- ms');
+  const curDir = path.resolve(process.cwd());
+  const scrubTimingText = (line: string) =>
+    line
+      .replace(/(\d+) ms/, '--- ms')
+      .replace(getTempDir(), 'TMPDIR')
+      .replace(curDir, 'CWD');
 
   const config = ts.parseJsonConfigFileContent(
     {
       compilerOptions: {
         strictNullChecks: true,
         module: 'commonjs',
+        esModuleInterop: true,
       },
     },
     ts.sys,
@@ -470,6 +476,7 @@ describe('checker', () => {
     './src/test/inputs/program-listing.asciidoc',
     './src/test/inputs/prepend-as-file.asciidoc',
     './src/test/inputs/check-jsonc.asciidoc',
+    './src/test/inputs/express.asciidoc',
     './src/test/inputs/node-output.asciidoc',
     './src/test/inputs/twoslash-assertion.asciidoc',
     './src/test/inputs/issue-235.asciidoc',

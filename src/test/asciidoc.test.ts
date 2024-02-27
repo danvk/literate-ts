@@ -1,6 +1,7 @@
 import fs from 'fs';
 import glob from 'fast-glob';
 import path from 'path';
+import {jest} from '@jest/globals';
 
 import {dedent, getTempDir} from '../utils.js';
 import {extractSamples} from '../code-sample.js';
@@ -443,6 +444,7 @@ describe('extractSamples', () => {
 });
 
 describe('checker', () => {
+  jest.mock('ora');
   afterEach(() => {
     flushLog();
   });

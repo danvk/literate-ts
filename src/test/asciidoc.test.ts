@@ -2,7 +2,7 @@ import fs from 'fs';
 import glob from 'fast-glob';
 import path from 'path';
 
-import {dedent} from '../utils.js';
+import {dedent, getTempDir} from '../utils.js';
 import {extractSamples} from '../code-sample.js';
 import {baseExtract} from './common.js';
 import {Processor} from '../processor.js';
@@ -447,7 +447,8 @@ describe('checker', () => {
     flushLog();
   });
 
-  const scrubTimingText = (line: string) => line.replace(/(\d+) ms/, '--- ms');
+  const scrubTimingText = (line: string) =>
+    line.replace(/(\d+) ms/, '--- ms').replace(getTempDir(), 'TMPDIR');
 
   const config = ts.parseJsonConfigFileContent(
     {

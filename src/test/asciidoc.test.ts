@@ -447,8 +447,12 @@ describe('checker', () => {
     flushLog();
   });
 
+  const curDir = path.resolve(process.cwd());
   const scrubTimingText = (line: string) =>
-    line.replace(/(\d+) ms/, '--- ms').replace(getTempDir(), 'TMPDIR');
+    line
+      .replace(/(\d+) ms/, '--- ms')
+      .replace(getTempDir(), 'TMPDIR')
+      .replace(curDir, 'CWD');
 
   const config = ts.parseJsonConfigFileContent(
     {

@@ -1,12 +1,10 @@
 {
-	"$schema": "https://unpkg.com/knip@next/schema.json",
-	"entry": [
-		"index.ts"
-	],
-	"ignore": [],
-	"ignoreBinaries": [],
-	// This is used in a code sample in a test
-	"ignoreDependencies": ["@types/express"],
-	"ignoreExportsUsedInFile": true,
-	"project": ["src/**/*.ts"]
+  "$schema": "https://unpkg.com/knip@next/schema.json",
+  "entry": ["index.ts"],
+  "ignore": [],
+  "ignoreBinaries": [],
+  // This is used in a code sample in a test
+  "ignoreDependencies": ["@types/express"],
+  "ignoreExportsUsedInFile": true,
+  "project": ["src/**/*.ts"]
 }

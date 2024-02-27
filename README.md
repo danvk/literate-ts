@@ -1,21 +1,19 @@
-# literate-ts
+<h1 align="center">Literate TS</h1>
 
-Literate TS statically checks TypeScript code samples in written text (blog posts, books, etc.).
-It was developed and used to type check [_Effective TypeScript_][ets] (O'Reilly 2019) as well
-as the companion blog, [effectivetypescript.com][etsblog].
+<p align="center">Code samples that scale</p>
 
 <p align="center">
-  <a href="https://codecov.io/gh/danvk/literate-ts" target="_blank">
-    <img alt="Codecov Test Coverage" src="https://codecov.io/gh/danvk/literate-ts/branch/master/graph/badge.svg?token=EF5OX198BL"/>
-  </a>
-  <a href="https://github.com/danvk/literate-ts/blob/master/LICENSE" target="_blank">
+	<a href="https://github.com/danvk/literate-ts/blob/main/.github/CODE_OF_CONDUCT.md" target="_blank"><img alt="🤝 Code of Conduct: Kept" src="https://img.shields.io/badge/%F0%9F%A4%9D_code_of_conduct-kept-21bb42" /></a>
+	<a href="https://github.com/danvk/literate-ts/blob/main/LICENSE.md" target="_blank"><img alt="📝 License: MIT" src="https://img.shields.io/badge/%F0%9F%93%9D_license-MIT-21bb42.svg"></a>
+	<a href="http://npmjs.com/package/literate-ts"><img alt="📦 npm version" src="https://img.shields.io/npm/v/literate-ts?color=21bb42&label=%F0%9F%93%A6%20npm" /></a>
+	<img alt="💪 TypeScript: Strict" src="https://img.shields.io/badge/%F0%9F%92%AA_typescript-strict-21bb42.svg" />
+	<a href="https://github.com/danvk/literate-ts/blob/master/LICENSE" target="_blank">
     <img alt="License: Apache2 📝" src="https://img.shields.io/github/license/danvk/literate-ts">
   </a>
-  <a href="https://github.com/sponsors/danvk" target="_blank">
+	<a href="https://github.com/sponsors/danvk" target="_blank">
     <img alt="Sponsor: On GitHub 💸" src="https://img.shields.io/badge/sponsor-on_github_💸-21bb42.svg" />
   </a>
-  <img alt="Style: Prettier 🧹" src="https://img.shields.io/badge/style-prettier_🧹-21bb42.svg" />
-  <img alt="TypeScript: Strict 💪" src="https://img.shields.io/badge/typescript-strict_💪-21bb42.svg" />
+	<img alt="Style: Prettier 🧹" src="https://img.shields.io/badge/style-prettier_🧹-21bb42.svg" />
 </p>
 
 ## Quickstart
@@ -35,7 +33,7 @@ Literate TS checks three sorts of things.
    squiggly underscore in it:
 
    ```ts
-   let str = 'not a number';
+   let str = "not a number";
    let num: number = str;
    // ~~~ Type 'string' is not assignable to type 'number'.
    ```
@@ -47,7 +45,7 @@ Literate TS checks three sorts of things.
    "type is":
 
    ```ts
-   'four score'.split(' '); // type is string[]
+   "four score".split(" "); // type is string[]
    ```
 
    Literate TS will verify that the type is precisely what you specify textually, ala [dtslint][].
@@ -55,7 +53,7 @@ Literate TS checks three sorts of things.
    You can also use [twoslash] syntax for type assertions:
 
    ```ts
-   const parts = 'four score'.split(' ');
+   const parts = "four score".split(" ");
    //    ^? const parts: string[]
    ```
 
@@ -278,7 +276,7 @@ Sometimes you don't want to show the full implementation of a function. For exam
 
 ```ts
 function computeSHA512(text: string): number {
-  // ...
+	// ...
 }
 ```
 
@@ -291,9 +289,9 @@ this in a file called `sha512.ts`:
 
 ```ts
 function computeSHA512(text: string): number {
-  // COMPRESS
-  return 0;
-  // END
+	// COMPRESS
+	return 0;
+	// END
 }
 ```
 
@@ -315,8 +313,8 @@ Sometimes TypeScript's type display can be a bit opaque, particularly with `keyo
 
 ```ts
 interface Point {
-  x: number;
-  y: number;
+	x: number;
+	y: number;
 }
 
 type T = keyof Point;
@@ -372,47 +370,44 @@ It's extremely convenient to run literate-ts as a task in VS Code since it will 
 
 ```jsonc
 {
-  "label": "Run file through literate-ts",
-  "command": "yarn",
-  "args": [
-      "literate-ts",
-      "${file}",
-  ],
-  "presentation": {
-      "echo": true,
-      "reveal": "never",
-      "revealProblems": "onProblem",
-      "close": true,
-      "panel": "shared",
-      "showReuseMessage": true,
-      "clear": false
-  },
-  "problemMatcher": [
-    {
-      "owner": "literate-ts",
-      "fileLocation": "absolute",
-      "pattern": [
-        {
-          "regexp": "^💥 (.*?):(\\d+):(\\d+)-(\\d+): (.*)$",
-          "file": 1,
-          "line": 2,
-          "column": 3,
-          "endColumn": 4,
-          "message": 5,
-        }
-      ]
-    },
-    {
-      "owner": "literate-ts",
-      "fileLocation": "absolute",
-      "pattern": {
-        "regexp": "^💥 (.*?):(\\d+): (.*)$",
-        "file": 1,
-        "line": 2,
-        "message": 3
-      }
-    }
-  ]
+	"label": "Run file through literate-ts",
+	"command": "yarn",
+	"args": ["literate-ts", "${file}"],
+	"presentation": {
+		"echo": true,
+		"reveal": "never",
+		"revealProblems": "onProblem",
+		"close": true,
+		"panel": "shared",
+		"showReuseMessage": true,
+		"clear": false,
+	},
+	"problemMatcher": [
+		{
+			"owner": "literate-ts",
+			"fileLocation": "absolute",
+			"pattern": [
+				{
+					"regexp": "^💥 (.*?):(\\d+):(\\d+)-(\\d+): (.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"endColumn": 4,
+					"message": 5,
+				},
+			],
+		},
+		{
+			"owner": "literate-ts",
+			"fileLocation": "absolute",
+			"pattern": {
+				"regexp": "^💥 (.*?):(\\d+): (.*)$",
+				"file": 1,
+				"line": 2,
+				"message": 3,
+			},
+		},
+	],
 }
 ```
 
@@ -461,3 +456,7 @@ Publish a new version:
 [pylit-post]: https://www.onebigfluke.com/2014/07/how-im-writing-programming-book.html
 [twoslash]: https://shikijs.github.io/twoslash/
 [machinery]: https://effectivetypescript.com/2022/02/25/gentips-4-display/
+
+<!-- You can remove this notice if you don't want it 🙂 no worries! -->
+
+> 💙 This package was templated with [`create-typescript-app`](https://github.com/JoshuaKGoldberg/create-typescript-app).

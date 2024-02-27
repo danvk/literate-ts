@@ -356,25 +356,7 @@ END #././src/test/inputs/node-output.asciidoc:16 (--- ms)
 ",
     "BEGIN #././src/test/inputs/node-output.asciidoc:24 (--filter unsound-code-output)
 ",
-    "💥 ././src/test/inputs/node-output.asciidoc:24: Actual output from Node did not match expected output.",
-    "Expected:",
-    "console.log(x.toFixed(1));
-              ^
-
-TypeError: Cannot read properties of undefined (reading 'toFixed')",
-    "----",
-    "Actual:",
-    "console.log(x.toFixed(1));
-              ^
-
-TypeError: Cannot read properties of undefined (reading 'toFixed')
-[90m    at Module._compile (node:internal/modules/cjs/loader:1376:14)[39m
-[90m    at Module._extensions..js (node:internal/modules/cjs/loader:1435:10)[39m
-[90m    at Module.load (node:internal/modules/cjs/loader:1207:32)[39m
-[90m    at Module._load (node:internal/modules/cjs/loader:1023:12)[39m
-[90m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:135:12)[39m
-[90m    at node:internal/main/run_main_module:28:49[39m",
-    "----",
+    "Actual output matched expected.",
     "
 END #././src/test/inputs/node-output.asciidoc:24 (--- ms)
 ",

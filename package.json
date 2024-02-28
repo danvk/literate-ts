@@ -13,9 +13,13 @@
     "email": "danvdk@gmail.com"
   },
   "type": "module",
-  "exports": "./dist/index.js",
+  "exports": "./lib/index.js",
   "main": "./lib/index.js",
+  "bin": {
+    "literate-ts": "./bin/literate-ts.js"
+  },
   "files": [
+    "bin/",
     "lib/",
     "package.json",
     "LICENSE.md",

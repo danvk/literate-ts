@@ -14,5 +14,7 @@
     "yaml"
   ],
   "eslint.rules.customizations": [{"rule": "*", "severity": "warn"}],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": ["nums"],
+  "asciidoc.antora.enableAntoraSupport": false
 }

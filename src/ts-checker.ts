@@ -6,7 +6,7 @@ import {Readable, Writable} from 'node:stream';
 
 import stableJsonStringify from 'fast-json-stable-stringify';
 import _ from 'lodash';
-import path, {resolve} from 'path';
+import path from 'path';
 import ts from 'typescript';
 
 import {log} from './logger.js';
@@ -514,10 +514,10 @@ export function checkTypeAssertions(
   const [twoslashAssertions, expectTypeAssertions] = _.partition(assertions, isTwoslashAssertion);
   let ok = true;
   if (expectTypeAssertions.length) {
-    ok = ok && checkExpectTypeAssertions(source, checker, expectTypeAssertions);
+    ok &&= checkExpectTypeAssertions(source, checker, expectTypeAssertions);
   }
   if (twoslashAssertions.length) {
-    ok = ok && checkTwoslashAssertions(source, languageService, twoslashAssertions);
+    ok &&= checkTwoslashAssertions(source, languageService, twoslashAssertions);
   }
 
   return ok;
@@ -716,7 +716,7 @@ async function uncachedCheckTs(
     const assertions = extractTypeAssertions(source);
     if (assertions.length) {
       const languageService = ts.createLanguageService(getLanguageServiceHost(program));
-      ok = ok && checkTypeAssertions(source, checker, languageService, assertions);
+      ok &&= checkTypeAssertions(source, checker, languageService, assertions);
     } else {
       fail('Unable to extract type assertions');
     }

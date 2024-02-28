@@ -69,7 +69,7 @@ export function extractExpectedErrors(content: string): TypeScriptError[] {
 
     const tildes = matchAll(TILDE_PAT, line);
     if (tildes.length === 0) {
-      const lastError = errors[errors.length - 1];
+      const lastError = errors[errors.length - 1] as TypeScriptError | undefined;
       if (lastError && lines[lastError.line + 1].startsWith(comment)) {
         // Presumably this is a continuation of the error.
         lastError.message += ' ' + line.slice(comment.length).trim();
@@ -534,11 +534,13 @@ export function getLanguageServiceHost(program: ts.Program): ts.LanguageServiceH
       ts.ScriptSnapshot.fromString(program.getSourceFile(name)?.text ?? ''),
     getScriptVersion: () => '1',
     // NB: We can't check `program` for files, it won't contain valid files like package.json
+    /* eslint-disable @typescript-eslint/unbound-method */
     fileExists: ts.sys.fileExists,
     readFile: ts.sys.readFile,
     readDirectory: ts.sys.readDirectory,
     directoryExists: ts.sys.directoryExists,
     getDirectories: ts.sys.getDirectories,
+    /* eslint-enable @typescript-eslint/unbound-method */
   };
 }
 
@@ -762,14 +764,16 @@ export async function checkProgramListing(
       fail('Unable to load TS source file');
       return {passed: false};
     }
-    let diagnostics = ts.getPreEmitDiagnostics(program);
+    let _diagnostics = ts.getPreEmitDiagnostics(program);
     const emitResult = program.emit();
-    diagnostics = diagnostics.concat(emitResult.diagnostics);
+    _diagnostics = _diagnostics.concat(emitResult.diagnostics);
     jsPreambleFile = tsFile.replace(/\.ts$/, '.js');
     if (!fs.existsSync(jsPreambleFile)) {
       fail(`Did not produce JS output in expected place: ${jsPreambleFile}`);
       return {passed: false};
     }
+
+    // TODO: report error if _diagnostics is non-empty.
 
     if (emitResult.emitSkipped) {
       fail('Failed to emit JavaScript for TypeScript sample.');
@@ -795,7 +799,7 @@ export async function checkProgramListing(
   const capturedOutputs: string[] = [];
 
   class CaptureStream extends Writable {
-    _write(chunk: Buffer, enc: string, next: () => void) {
+    _write(chunk: Buffer, _enc: string, next: () => void) {
       const s = chunk.toString();
       capturedOutputs.push(s);
       next();
@@ -807,7 +811,7 @@ export async function checkProgramListing(
     input: inputStream,
     output: outputStream,
   });
-  const replOutput = await new Promise<string[]>((resolve, reject) => {
+  const replOutput = await new Promise<string[]>(resolve => {
     inputStream.push(null);
     server.addListener('exit', () => {});
     server.addListener('close', () => {

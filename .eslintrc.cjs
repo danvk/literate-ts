@@ -51,7 +51,18 @@ module.exports = {
   root: true,
   rules: {
     // These off/less-strict-by-default rules work well for this repo and we like them on.
-    '@typescript-eslint/no-unused-vars': ['error', {caughtErrors: 'all'}],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        args: 'all',
+        argsIgnorePattern: '^_',
+        caughtErrors: 'all',
+        caughtErrorsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        ignoreRestSiblings: true,
+      },
+    ],
 
     // These on-by-default rules don't work well for this repo and we like them off.
     'no-case-declarations': 'off',

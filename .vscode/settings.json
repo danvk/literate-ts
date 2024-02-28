@@ -1,17 +1,20 @@
 {
-  "eslint.enable": true,
-  "eslint.validate": [
+  "editor.codeActionsOnSave": {"source.fixAll.eslint": "explicit"},
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.rulers": [80],
+  "eslint.probe": [
     "javascript",
     "javascriptreact",
+    "json",
+    "jsonc",
+    "markdown",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "yaml"
   ],
+  "eslint.rules.customizations": [{"rule": "*", "severity": "warn"}],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "[typescript]": {
-    "editor.formatOnSave": true,
-  },
-  "cSpell.words": [
-    "nums"
-  ],
+  "cSpell.words": ["nums"],
   "asciidoc.antora.enableAntoraSupport": false
 }

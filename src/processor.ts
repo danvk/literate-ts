@@ -8,7 +8,7 @@ import {
   applyReplacements,
   addResolvedChecks,
 } from './code-sample.js';
-import {fileSlug, writeTempFile} from './utils.js';
+import {fileSlug, noop, writeTempFile} from './utils.js';
 import {log} from './logger.js';
 import {startFile, fail, finishFile, finishSample, startSample} from './test-tracker.js';
 import {CodeSample} from './types.js';
@@ -64,7 +64,7 @@ export class Processor {
     this.argv = argv;
     this.typeScriptBundle = typeScriptBundle;
     this.sources = sources;
-    this.setStatus = _.noop;
+    this.setStatus = noop;
   }
 
   onSetStatus(setStatus: (status: string) => void) {
@@ -98,7 +98,8 @@ export class Processor {
     finishFile();
   }
 
-  async checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSample}): Promise<void> {
+  async checkSample(sample: CodeSample, inIdToSample: {[id: string]: CodeSample}): Promise<void> {
+    const idToSample: {[id: string]: CodeSample | undefined} = inIdToSample;
     const {id, language, content, skip} = sample;
     if (skip) {
       return;
@@ -116,7 +117,7 @@ export class Processor {
       // Run the sample through Node and record the output.
       const path = writeTempFile(id + '.js', content);
       const output = await runNode(path);
-      idToSample[id].output = output;
+      idToSample[id]!.output = output;
 
       // It's OK for a JS sample to fail, but only if its output is in another sample.
       if (output.code !== 0 && !idToSample[id + '-output']) {
@@ -131,12 +132,12 @@ export class Processor {
       const errors: ParseError[] = [];
       parseJSONC(sample.content, errors);
       if (errors.length) {
-        const errorsTxt = errors.map(e => printParseErrorCode(e.error));
+        const errorsTxt = errors.map(e => printParseErrorCode(e.error)).join(', ');
         const warning =
           sample.prefixesLength > 0 ? ' (prefixes are active, try adding a reset)' : '';
         fail(`Invalid JSONC${warning}: ${errorsTxt}`);
       }
-    } else if (language === null && id.endsWith('-output')) {
+    } else if (id.endsWith('-output')) {
       // Verify the output of a previous code sample.
       const inputId = id.split('-output')[0];
       const input = idToSample[inputId];
@@ -145,6 +146,8 @@ export class Processor {
       } else {
         checkOutput(content, input);
       }
+    } else {
+      const _t: null = language; // Exhaustiveness check
     }
     finishSample();
   }

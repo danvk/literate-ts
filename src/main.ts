@@ -30,7 +30,8 @@ if (argv.replacements) {
 }
 
 // TODO(danvk): prefer the tsconfig.json from asciidocs directory
-const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const unParsedConfig: unknown = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
 const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
 
 console.log('Verifying with TypeScript', ts.version);
@@ -92,5 +93,5 @@ export function main() {
       if (spinner) spinner.stop();
       console.error(e);
     })
-    .then(flushLog);
+    .finally(flushLog);
 }

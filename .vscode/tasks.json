@@ -18,8 +18,8 @@
               "line": 2,
               "column": 3,
               "endColumn": 4,
-              "message": 5,
-            },
+              "message": 5
+            }
             // This doesn't work, see https://github.com/microsoft/vscode/issues/9635
             // {
             //   "regexp": "^ *(?:Expected|Actual): (.*)$",

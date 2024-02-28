@@ -276,7 +276,7 @@ export function applyReplacements(
       continue;
     }
 
-    const replacementSample = idToSample[replacementId];
+    const replacementSample = idToSample[replacementId] as PrefixedCodeSample | undefined;
     if (!replacementSample) {
       fail(`No sample with ID ${replacementId} to replace ${sample.id}.`);
     } else {

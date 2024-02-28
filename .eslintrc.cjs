@@ -13,7 +13,21 @@ module.exports = {
       rules: {
         // These off-by-default rules work well for this repo and we like them on.
         'logical-assignment-operators': ['error', 'always', {enforceForIfStatements: true}],
-        'operator-assignment': 'error',
+        'operator-assignment': 'error', // Disable autofixing "let" -> "const" just because I haven't mutated it _yet_.
+        // Autofixing `() => fn()` -> `() => { fn() }` is a recipe for trouble.
+        '@typescript-eslint/no-confusing-void-expression': 'off',
+        '@typescript-eslint/no-unnecessary-condition': [
+          'error',
+          {
+            // why isn't this the default?
+            // https://github.com/typescript-eslint/typescript-eslint/issues/7047
+            allowConstantLoopConditions: true,
+          },
+        ],
+        'no-autofix/@typescript-eslint/no-confusing-void-expression': 'warn',
+        'no-autofix/prefer-const': 'warn',
+        'perfectionist/sort-interfaces': 'off',
+        'prefer-const': 'off',
       },
     },
     {
@@ -32,7 +46,7 @@ module.exports = {
     },
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'no-autofix'],
   reportUnusedDisableDirectives: true,
   root: true,
   rules: {

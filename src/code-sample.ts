@@ -37,7 +37,7 @@ function process(
   let prependLines: number[] | null = null;
   let nextIsReplaced: string | null = null;
   let nodeModules: readonly string[] = [];
-  let tsOptions: {[key: string]: string | boolean} = {};
+  let tsOptions: {[key: string]: string | boolean | number} = {};
   let nextIsTSX = false;
   let nextShouldCheckJs = false;
   let targetFilename: string | null = null;
@@ -83,7 +83,14 @@ function process(
         skipRemaining = true;
       } else if (directive.startsWith('tsconfig:')) {
         const [key, value] = directive.split(':', 2)[1].split('=', 2);
-        tsOptions[key] = value === 'true' ? true : value === 'false' ? false : value;
+        tsOptions[key] =
+          value === 'true'
+            ? true
+            : value === 'false'
+              ? false
+              : isNaN(Number(value))
+                ? value
+                : Number(value);
       } else if (directive.startsWith('include-node-module:')) {
         const value = directive.split(':', 2)[1];
         nodeModules = nodeModules.concat([value]);

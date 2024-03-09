@@ -578,9 +578,9 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/top-level-await.a
     "---- BEGIN FILE ./src/test/inputs/top-level-await.asciidoc
 ",
     "Found 1 code samples in ./src/test/inputs/top-level-await.asciidoc",
-    "BEGIN #././src/test/inputs/top-level-await.asciidoc:5 (--filter top-level-await-5)
+    "BEGIN #././src/test/inputs/top-level-await.asciidoc:7 (--filter top-level-await-7)
 ",
-    "💥 ./src/test/inputs/top-level-await.asciidoc:12:18-23: Unexpected TypeScript error: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', or 'nodenext', and the 'target' option is set to 'es2017' or higher.",
+    "💥 ./src/test/inputs/top-level-await.asciidoc:14:18-23: Unexpected TypeScript error: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', or 'nodenext', and the 'target' option is set to 'es2017' or higher.",
     "declare function get(url: string): Promise<number>;
 export async function timeout(ms: number): Promise<never> {
     return new Promise((resolve, reject) => {
@@ -590,16 +590,16 @@ export async function timeout(ms: number): Promise<never> {
 
 const resource = await Promise.race([get('example.com'), timeout(500)]);
 //    ^? const resource: number",
-    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "tsconfig options: {"strictNullChecks":true,"module":"es2022","esModuleInterop":true,"target":"es2017"}",
     "
-END #././src/test/inputs/top-level-await.asciidoc:5 (--- ms)
+END #././src/test/inputs/top-level-await.asciidoc:7 (--- ms)
 ",
     "---- END FILE ./src/test/inputs/top-level-await.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/top-level-await.asciidoc",
-    "1/1: ././src/test/inputs/top-level-await.asciidoc: 1/1 ././src/test/inputs/top-level-await.asciidoc:5",
+    "1/1: ././src/test/inputs/top-level-await.asciidoc: 1/1 ././src/test/inputs/top-level-await.asciidoc:7",
   ],
 }
 `;
@@ -1913,11 +1913,11 @@ export async function timeout(ms: number): Promise<never> {
 
 const resource = await Promise.race([get('example.com'), timeout(500)]);
 //    ^? const resource: number",
-    "descriptor": "./top-level-await.asciidoc:5",
-    "id": "top-level-await-5",
+    "descriptor": "./top-level-await.asciidoc:7",
+    "id": "top-level-await-7",
     "isTSX": false,
     "language": "ts",
-    "lineNumber": 4,
+    "lineNumber": 6,
     "nodeModules": [],
     "prefixes": [],
     "prefixesLength": 0,
@@ -1926,7 +1926,10 @@ const resource = await Promise.race([get('example.com'), timeout(500)]);
     "skip": false,
     "sourceFile": "top-level-await.asciidoc",
     "targetFilename": null,
-    "tsOptions": {},
+    "tsOptions": {
+      "module": "es2022",
+      "target": "es2017",
+    },
   },
 ]
 `;

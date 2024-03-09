@@ -1,5 +1,7 @@
 This code sample uses top-level `await`:
 
+// verifier:tsconfig:module=es2022
+// verifier:tsconfig:target=es2017
 [source,ts]
 ----
 declare function get(url: string): Promise<number>;

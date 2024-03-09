@@ -445,7 +445,21 @@ export const normalize = (input: string) => {
 export function matchModuloWhitespace(actual: string, expected: string): boolean {
   const normActual = normalize(actual);
   const normExpected = normalize(expected);
-  return normActual === normExpected;
+  if (normActual === normExpected) {
+    return true;
+  } else if (normExpected.includes('...')) {
+    const parts = limitedSplit(normExpected, '...', 2);
+    if (parts.length !== 2) {
+      return false;
+    }
+    const [left, right] = parts;
+    return (
+      normActual.startsWith(left) &&
+      normActual.endsWith(right) &&
+      normActual.length > left.length + right.length
+    );
+  }
+  return false;
 }
 
 export function checkTwoslashAssertions(

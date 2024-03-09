@@ -558,6 +558,18 @@ describe('ts-checker', () => {
       }`;
       expect(matchModuloWhitespace(actual, expected)).toBe(false);
     });
+
+    it('should treat ... as a wildcard in the expected type', () => {
+      const expected = `(parameter) response: Response<...>`;
+      const actual = `(parameter) response: Response<any, unknown, {}>`;
+      expect(matchModuloWhitespace(actual, expected)).toBe(true);
+    });
+
+    it('should fail with ... on non-match', () => {
+      const expected = `(parameter) response: Response<...>`;
+      const actual = `(parameter) response: Request<any, unknown, {}>`;
+      expect(matchModuloWhitespace(actual, expected)).toBe(false);
+    });
   });
 
   describe('normalize helper', () => {

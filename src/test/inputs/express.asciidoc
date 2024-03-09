@@ -20,8 +20,8 @@ app.get('/health', (request: express.Request, response: express.Response) => {
 
 // Do this:
 app.get('/health', (request, response) => {
-  //                ^? (parameter) request: express.Request
+  //                ^? (parameter) request: Request<...>
   response.send('OK');
-  // ^? (parameter) response: express.Response
+  // ^? (parameter) response: Response<...>
 });
 ----

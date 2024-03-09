@@ -6,7 +6,7 @@ import {Readable, Writable} from 'node:stream';
 
 import stableJsonStringify from 'fast-json-stable-stringify';
 import _ from 'lodash';
-import path, {resolve} from 'path';
+import path from 'path';
 import ts from 'typescript';
 
 import {log} from './logger.js';
@@ -703,11 +703,19 @@ async function uncachedCheckTs(
   const numLines = content.split('\n').length;
   const actualErrorsRaw: TypeScriptError[] = diagnostics
     .map(diagnostic => {
-      const {line, character} = diagnostic.file!.getLineAndCharacterOfPosition(diagnostic.start!);
+      let line, character;
+      if (diagnostic.file) {
+        const x = diagnostic.file!.getLineAndCharacterOfPosition(diagnostic.start!);
+        line = x.line;
+        character = x.character;
+      } else {
+        line = character = 0;
+      }
+      const end = character + (diagnostic.length ?? 0);
       return {
         line,
         start: character,
-        end: character + diagnostic.length!,
+        end,
         message: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
       };
     })

@@ -242,7 +242,7 @@ See above for how to give directive to literate-ts in your source format.
   <dd>
     Set a tsconfig setting for the next code sample, e.g. `strictNullChecks=false`.
     These accumulate until the next `reset` directive. By default, literate-ts will
-    use whatever settings are in your `tsconfig.json` file.
+    use whatever settings are in your `tsconfig.json` file. If the setting expects an enum value (e.g. module, moduleResolution, target) then you need to write in the enum value, not the string. So `target=9`, not `target=ES2022`.
   </dd>
   <dt>verifier:check-js</dt>
   <dd>

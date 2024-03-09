@@ -572,6 +572,38 @@ END #././src/test/inputs/program-listing.asciidoc:49 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/top-level-await.asciidoc": ./src/test/inputs/top-level-await.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/top-level-await.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/top-level-await.asciidoc",
+    "BEGIN #././src/test/inputs/top-level-await.asciidoc:5 (--filter top-level-await-5)
+",
+    "💥 ./src/test/inputs/top-level-await.asciidoc:12:18-23: Unexpected TypeScript error: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', or 'nodenext', and the 'target' option is set to 'es2017' or higher.",
+    "declare function get(url: string): Promise<number>;
+export async function timeout(ms: number): Promise<never> {
+    return new Promise((resolve, reject) => {
+        setTimeout(reject, ms);
+    });
+}
+
+const resource = await Promise.race([get('example.com'), timeout(500)]);
+//    ^? const resource: number",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/top-level-await.asciidoc:5 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/top-level-await.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/top-level-await.asciidoc",
+    "1/1: ././src/test/inputs/top-level-await.asciidoc: 1/1 ././src/test/inputs/top-level-await.asciidoc:5",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/twoslash-assertion.asciidoc": ./src/test/inputs/twoslash-assertion.asciidoc 1`] = `
 {
   "logs": [
@@ -1861,6 +1893,38 @@ exports[`extractSamples snapshot: skip 1`] = `
     "sectionHeader": null,
     "skip": true,
     "sourceFile": "skip.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: top-level-await 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "declare function get(url: string): Promise<number>;
+export async function timeout(ms: number): Promise<never> {
+    return new Promise((resolve, reject) => {
+        setTimeout(reject, ms);
+    });
+}
+
+const resource = await Promise.race([get('example.com'), timeout(500)]);
+//    ^? const resource: number",
+    "descriptor": "./top-level-await.asciidoc:5",
+    "id": "top-level-await-5",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 4,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "top-level-await.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
   },

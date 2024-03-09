@@ -1,0 +1,14 @@
+This code sample uses top-level `await`:
+
+[source,ts]
+----
+declare function get(url: string): Promise<number>;
+export async function timeout(ms: number): Promise<never> {
+    return new Promise((resolve, reject) => {
+        setTimeout(reject, ms);
+    });
+}
+
+const resource = await Promise.race([get('example.com'), timeout(500)]);
+//    ^? const resource: number
+----

@@ -105,7 +105,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/equivalent.asciid
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/equivalent.asciidoc
 ",
-    "Found 4 code samples in ./src/test/inputs/equivalent.asciidoc",
+    "Found 6 code samples in ./src/test/inputs/equivalent.asciidoc",
     "BEGIN #././src/test/inputs/equivalent.asciidoc:8 (--filter equivalent-8)
 ",
     "Code passed type checker.",
@@ -192,15 +192,67 @@ type SynthT2 = Resolve<T2>;
     "
 END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
 ",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:48 (--filter equivalent-48)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: let k: keyof Point",
+    "    Actual: let k: keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type SynthK = "x" | "y"",
+    "    Actual: type SynthK = "x" | "y"",
+    "  3/3 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/equivalent.asciidoc:48 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:60 (--filter equivalent-60)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: let k: keyof Point",
+    "    Actual: let k: keyof Point",
+    "💥 ./src/test/inputs/equivalent.asciidoc:67:6-12: Failed type assertion for \`SynthK\`
+  Expected: type SynthK = "x" | "y" | "z"
+    Actual: type SynthK = "x" | "y"",
+    "  2/3 twoslash type assertions matched.",
+    "interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+function foo(pt: Point) {
+  let k: keyof Point;
+  for (k in pt) {
+    // ^? let k: keyof Point
+  }
+}
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthK = Resolve<keyof Point>;
+//   ^? type SynthK = "x" | "y" | "z"
+",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/equivalent.asciidoc:60 (--- ms)
+",
     "---- END FILE ./src/test/inputs/equivalent.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/equivalent.asciidoc",
-    "1/1: ././src/test/inputs/equivalent.asciidoc: 1/4 ././src/test/inputs/equivalent.asciidoc:8",
-    "1/1: ././src/test/inputs/equivalent.asciidoc: 2/4 ././src/test/inputs/equivalent.asciidoc:23",
-    "1/1: ././src/test/inputs/equivalent.asciidoc: 3/4 ././src/test/inputs/equivalent.asciidoc:31",
-    "1/1: ././src/test/inputs/equivalent.asciidoc: 4/4 ././src/test/inputs/equivalent.asciidoc:39",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 1/6 ././src/test/inputs/equivalent.asciidoc:8",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 2/6 ././src/test/inputs/equivalent.asciidoc:23",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 3/6 ././src/test/inputs/equivalent.asciidoc:31",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 4/6 ././src/test/inputs/equivalent.asciidoc:39",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 5/6 ././src/test/inputs/equivalent.asciidoc:48",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 6/6 ././src/test/inputs/equivalent.asciidoc:60",
   ],
 }
 `;
@@ -999,6 +1051,62 @@ type T = keyof Point;
     "isTSX": false,
     "language": "ts",
     "lineNumber": 38,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "equivalent-8",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "equivalent.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "function foo(pt: Point) {
+  let k: keyof Point;
+  for (k in pt) {
+    // ^? let k: keyof Point (equivalent to "x" | "y")
+  }
+}",
+    "descriptor": "./equivalent.asciidoc:48",
+    "id": "equivalent-48",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 47,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "equivalent-8",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "equivalent.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "function foo(pt: Point) {
+  let k: keyof Point;
+  for (k in pt) {
+    // ^? let k: keyof Point (equivalent to "x" | "y" | "z")
+  }
+}",
+    "descriptor": "./equivalent.asciidoc:60",
+    "id": "equivalent-60",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 59,
     "nodeModules": [],
     "prefixes": [
       {

@@ -6,7 +6,6 @@ import {extractAsciidocSamples} from './asciidoc.js';
 import {extractMarkdownSamples} from './markdown.js';
 import {generateIdMetadata} from './metadata.js';
 import {stripComments} from 'jsonc-parser';
-import {dedent} from './utils.js';
 
 export interface Processor {
   /** Let the processor know about the current line number (0-based). */
@@ -306,7 +305,7 @@ const VALUE_EQUIVALENT_MULTILINE_RE =
   /\^\? [^ ]+ ([A-Za-z0-9_]+): (.*)(\n\s*\/\/ +\(equivalent to (.*)\))$/m;
 
 const RESOLVE_HELPER =
-  'type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};\n';
+  '\ntype Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};';
 
 /** Patch the code sample to test "equivalent to" types */
 export function addResolvedChecks(sample: CodeSample): CodeSample {
@@ -323,11 +322,9 @@ export function addResolvedChecks(sample: CodeSample): CodeSample {
   } else {
     const mv = VALUE_EQUIVALENT_RE.exec(content) || VALUE_EQUIVALENT_MULTILINE_RE.exec(content);
     if (mv) {
-      // would be nice to preserve indentation here
       let varName;
-      [, varName, , equivClause, equivType] = mv;
+      [, varName, type, equivClause, equivType] = mv;
       synthName = 'Synth' + varName.charAt(0).toUpperCase() + varName.slice(1);
-      type = `typeof ${varName}`;
     } else {
       return sample;
     }
@@ -336,13 +333,12 @@ export function addResolvedChecks(sample: CodeSample): CodeSample {
   // Strip the "equivalent to" bit, add Resolve<T> helper and secondary type assertion.
   // See https://github.com/danvk/literate-ts/issues/132 and
   // https://effectivetypescript.com/2022/02/25/gentips-4-display/
-  let newContent = content.replace(
-    equivClause,
-    dedent`\n
-    type ${synthName} = Resolve<${type}>;
-    //   ^? type ${synthName} = ${equivType}`,
-  );
-  newContent = RESOLVE_HELPER + newContent;
+  // Resolve is only able to "resolve" types at the top level; it can't be inserted in-place.
+  // So `type` could refer to something out of scope, but hopefully that doesn't happen.
+  let newContent = content.replace(equivClause, '');
+  newContent += RESOLVE_HELPER;
+  newContent += `\ntype ${synthName} = Resolve<${type}>;`;
+  newContent += `\n//   ^? type ${synthName} = ${equivType}\n`;
 
   return {
     ...sample,

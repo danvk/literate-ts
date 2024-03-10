@@ -456,15 +456,16 @@ describe('addResolvedChecks', () => {
     );
     expect(addResolvedChecks(sample[0]).content).toEqual(
       dedent`
-      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
       interface Point {
         x: number;
         y: number;
       }
       type T = keyof Point;
       //   ^? type T = keyof Point
+      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
       type SynthT = Resolve<T>;
-      //   ^? type SynthT = "x" | "y"`,
+      //   ^? type SynthT = "x" | "y"
+      `,
     );
   });
 
@@ -506,15 +507,12 @@ describe('addResolvedChecks', () => {
     );
 
     expect(addResolvedChecks(sample[0]).content).toEqual(dedent`
-      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
       interface Point {
         x: number;
         y: number;
       }
       type PointKeys = keyof Point;
       //   ^? type PointKeys = keyof Point
-      type SynthPointKeys = Resolve<PointKeys>;
-      //   ^? type SynthPointKeys = "x" | "y"
 
       function sortBy<K extends keyof T, T>(vals: T[], key: K): T[] {
         // ...
@@ -524,7 +522,11 @@ describe('addResolvedChecks', () => {
       sortBy(pts, 'y');  // OK, 'y' extends 'x'|'y'
       sortBy(pts, Math.random() < 0.5 ? 'x' : 'y');  // OK, 'x'|'y' extends 'x'|'y'
       sortBy(pts, 'z');
-               // ~~~ Type '"z"' is not assignable to parameter of type '"x" | "y"`);
+               // ~~~ Type '"z"' is not assignable to parameter of type '"x" | "y"
+      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+      type SynthPointKeys = Resolve<PointKeys>;
+      //   ^? type SynthPointKeys = "x" | "y"
+      `);
   });
 
   it('should patch a type assertion split across lines', () => {
@@ -546,11 +548,12 @@ describe('addResolvedChecks', () => {
     );
 
     expect(addResolvedChecks(sample[0]).content).toEqual(dedent`
-      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
       type T2 = keyof Point;
       //   ^? type T2 = keyof Point
+      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
       type SynthT2 = Resolve<T2>;
-      //   ^? type SynthT2 = "x" | "y"`);
+      //   ^? type SynthT2 = "x" | "y"
+      `);
   });
 
   it('should patch a type assertion on a value', () => {
@@ -575,16 +578,16 @@ describe('addResolvedChecks', () => {
     );
 
     const actual = addResolvedChecks(sample[0]).content;
-    console.log(actual);
     expect(actual).toEqual(dedent`
-      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
       function foo(pt: Point) {
         let k: keyof Point;
         for (k in pt) {
           // ^? let k: keyof Point
-      type SynthK = Resolve<typeof k>;
-      //   ^? type SynthK = "x" | "y"
         }
-      }`);
+      }
+      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+      type SynthK = Resolve<keyof Point>;
+      //   ^? type SynthK = "x" | "y"
+      `);
   });
 });

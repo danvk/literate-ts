@@ -663,6 +663,10 @@ function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.Com
   }
 }
 
+export function getFilenameForSample(sample: CodeSample) {
+  return sample.targetFilename || sample.id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
+}
+
 /** Verify that a TypeScript sample has the expected errors and no others. */
 async function uncachedCheckTs(
   sample: CodeSample,
@@ -670,7 +674,7 @@ async function uncachedCheckTs(
   config: ConfigBundle,
 ): Promise<CheckTsResult> {
   const {id, content} = sample;
-  const fileName = sample.targetFilename || id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
+  const fileName = getFilenameForSample(sample);
   const tsFile = writeTempFile(fileName, content);
   const sampleDir = getTempDir();
   const allFiles = [tsFile];

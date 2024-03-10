@@ -48,6 +48,7 @@ export interface ConfigBundle {
 const COMMENT_PAT = /^( *\/\/) /;
 const TILDE_PAT = / (~+)/g;
 const POST_TILDE_PAT = /\/\/ [~ ]+(?:(.*))?/;
+const START_ERROR_PATH = /^ *\/\/ Error: (.+)/;
 const TYPE_ASSERTION_PAT = /\/\/.*[tT]ype is (?:still )?(?:just )?(.*)\.?$/;
 const TWOSLASH_PAT = /\/\/ (?: *)\^\? ?(.*)$/;
 
@@ -64,6 +65,15 @@ export function extractExpectedErrors(content: string): TypeScriptError[] {
     const comment = matchAndExtract(COMMENT_PAT, line);
     if (!comment) {
       lastCodeLine = i;
+      return;
+    }
+
+    const startErrorMatch = START_ERROR_PATH.exec(line);
+    if (startErrorMatch) {
+      const message = startErrorMatch[1];
+      const start = comment.length - 2;
+      const end = start + 1;
+      errors.push({line: i - 1, start, end, message});
       return;
     }
 

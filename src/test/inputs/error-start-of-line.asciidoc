@@ -1,0 +1,7 @@
+This code sample has an error at the very start of the line. It's awkward to put a `~~~` here, so an alternate syntax is allowed:
+
+[source,ts]
+----
+x = 12;
+// Error: Cannot find name 'x'.
+----

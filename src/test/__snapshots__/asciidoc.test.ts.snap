@@ -294,6 +294,32 @@ END #././src/test/inputs/equivalent.asciidoc:60 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/error-start-of-line.asciidoc": ./src/test/inputs/error-start-of-line.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/error-start-of-line.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/error-start-of-line.asciidoc",
+    "BEGIN #././src/test/inputs/error-start-of-line.asciidoc:5 (--filter error-start-of-line-5)
+",
+    "matched errors:",
+    "  expected: Cannot find name 'x'.",
+    "    actual: Cannot find name 'x'.",
+    "  error messages match: perfect",
+    "Matched 1/1 errors.",
+    "
+END #././src/test/inputs/error-start-of-line.asciidoc:5 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/error-start-of-line.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/error-start-of-line.asciidoc",
+    "1/1: ././src/test/inputs/error-start-of-line.asciidoc: 1/1 ././src/test/inputs/error-start-of-line.asciidoc:5",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/express.asciidoc": ./src/test/inputs/express.asciidoc 1`] = `
 {
   "logs": [
@@ -1214,6 +1240,31 @@ type T = keyof Point;
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "equivalent.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: error-start-of-line 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "x = 12;
+// Error: Cannot find name 'x'.",
+    "descriptor": "./error-start-of-line.asciidoc:5",
+    "id": "error-start-of-line-5",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 4,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "error-start-of-line.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
   },

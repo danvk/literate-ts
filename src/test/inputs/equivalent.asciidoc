@@ -52,3 +52,15 @@ function foo(pt: Point) {
   }
 }
 ----
+
+This one should fail:
+
+[source,ts]
+----
+function foo(pt: Point) {
+  let k: keyof Point;
+  for (k in pt) {
+    // ^? let k: keyof Point (equivalent to "x" | "y" | "z")
+  }
+}
+----

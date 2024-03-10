@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/augment-dom.asciidoc": ./src/test/inputs/augment-dom.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/augment-dom.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/augment-dom.asciidoc",
+    "BEGIN #././src/test/inputs/augment-dom.asciidoc:6 (--filter augment-dom-6)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/augment-dom.asciidoc:6 (--- ms)
+",
+    "BEGIN #././src/test/inputs/augment-dom.asciidoc:23 (--filter augment-dom-23)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const img: HTMLImageElement | null",
+    "    Actual: const img: HTMLImageElement | null",
+    "  1/1 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/augment-dom.asciidoc:23 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/augment-dom.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/augment-dom.asciidoc",
+    "1/1: ././src/test/inputs/augment-dom.asciidoc: 1/2 ././src/test/inputs/augment-dom.asciidoc:6",
+    "1/1: ././src/test/inputs/augment-dom.asciidoc: 2/2 ././src/test/inputs/augment-dom.asciidoc:23",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/check-jsonc.asciidoc": ./src/test/inputs/check-jsonc.asciidoc 1`] = `
 {
   "logs": [
@@ -45,6 +78,10 @@ END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
     "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--filter commented-sample-with-error-17)
 ",
     "💥 ././src/test/inputs/commented-sample-with-error.asciidoc:17: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
+    "Twoslash type assertion match:",
+    "  Expected: const value: number",
+    "    Actual: const value: number",
+    "  1/1 twoslash type assertions matched.",
     "const value: number = "123";
 console.log(value);
 //          ^? const value: number",
@@ -678,6 +715,65 @@ END #././src/test/inputs/twoslash-assertion.asciidoc:5 (--- ms)
     "1/1: ././src/test/inputs/twoslash-assertion.asciidoc: 1/1 ././src/test/inputs/twoslash-assertion.asciidoc:5",
   ],
 }
+`;
+
+exports[`extractSamples snapshot: augment-dom 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "export {}
+declare global {
+  type HTMLTag = keyof HTMLElementTagNameMap;
+  interface ParentNode {
+  querySelector<
+      TagName extends HTMLTag
+  >(
+      selector: \`\${TagName}#\${string}\`
+  ): HTMLElementTagNameMap[TagName] | null;
+  }
+}",
+    "descriptor": "./augment-dom.asciidoc:6",
+    "id": "augment-dom-6",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 5,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "augment-dom.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "const img = document.querySelector('img#spectacular-sunset');
+//    ^? const img: HTMLImageElement | null
+img?.src  // ok",
+    "descriptor": "./augment-dom.asciidoc:23",
+    "id": "augment-dom-23",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 22,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "augment-dom-6",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "augment-dom.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
 `;
 
 exports[`extractSamples snapshot: backticks 1`] = `

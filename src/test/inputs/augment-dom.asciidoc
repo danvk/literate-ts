@@ -1,0 +1,26 @@
+Now we can use a template literal type to add an overload for the `tag#id` case:
+
+// verifier:prepend-to-following
+[source,ts]
+----
+export {}
+declare global {
+  type HTMLTag = keyof HTMLElementTagNameMap;
+  interface ParentNode {
+  querySelector<
+      TagName extends HTMLTag
+  >(
+      selector: `${TagName}#${string}`
+  ): HTMLElementTagNameMap[TagName] | null;
+  }
+}
+----
+
+The example from before now works as you'd hope, returning the more precise image type and allowing access to its `src` property:
+
+[source,ts]
+----
+const img = document.querySelector('img#spectacular-sunset');
+//    ^? const img: HTMLImageElement | null
+img?.src  // ok
+----

@@ -738,7 +738,8 @@ async function uncachedCheckTs(
     const assertions = extractTypeAssertions(source);
     if (assertions.length) {
       const languageService = ts.createLanguageService(getLanguageServiceHost(program));
-      ok = ok && checkTypeAssertions(source, checker, languageService, assertions);
+      const typeAssertionsOk = checkTypeAssertions(source, checker, languageService, assertions);
+      ok = ok && typeAssertionsOk;
     } else {
       fail('Unable to extract type assertions');
     }

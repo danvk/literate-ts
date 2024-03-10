@@ -1332,6 +1332,51 @@ exports[`extractSamples snapshot: multilinetype 1`] = `
     "targetFilename": null,
     "tsOptions": {},
   },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "const o = {x: 1, y: 2};
+//    ^? const o: {
+//         x: number;
+//         y: number;
+//       }",
+    "descriptor": "./multilinetype.asciidoc:25",
+    "id": "multilinetype-25",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 24,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "multilinetype.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "const o = {x: 1, y: 2};
+//    ^? const o: { x: number; y: number; }
+//    this comment applies to the next line.
+const p = o;",
+    "descriptor": "./multilinetype.asciidoc:37",
+    "id": "multilinetype-37",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 36,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "multilinetype.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
 ]
 `;
 

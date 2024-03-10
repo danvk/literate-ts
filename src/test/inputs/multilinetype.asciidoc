@@ -17,3 +17,25 @@ function addWithExtras(a: number, b: number) {
   return c;
 }
 ```
+
+This is a twoslash multiline assertion:
+
+[source,ts]
+----
+const o = {x: 1, y: 2};
+//    ^? const o: {
+//         x: number;
+//         y: number;
+//       }
+----
+
+
+This is not a multiline assertion:
+
+[source,ts]
+----
+const o = {x: 1, y: 2};
+//    ^? const o: { x: number; y: number; }
+//    this comment applies to the next line.
+const p = o;
+----

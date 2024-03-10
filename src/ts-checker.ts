@@ -225,7 +225,7 @@ export function extractTypeAssertions(source: ts.SourceFile): TypeScriptTypeAsse
         // line and char aren't strictly needed but they make the tests much more readable.
         assertions.push({position, type, ...lineAndChar});
         colForContinuation = character;
-        commentPrefixForContinuation = commentText.slice(0, twoslashOffset);
+        commentPrefixForContinuation = commentText.slice(0, twoslashOffset) + '   ';
       }
     }
   }

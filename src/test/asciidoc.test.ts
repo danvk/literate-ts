@@ -481,6 +481,7 @@ describe('checker', () => {
     './src/test/inputs/twoslash-assertion.asciidoc',
     './src/test/inputs/issue-235.asciidoc',
     './src/test/inputs/top-level-await.asciidoc',
+    './src/test/inputs/augment-dom.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

@@ -40,3 +40,15 @@ type T2 = keyof Point;
 //   ^? type T2 = keyof Point
 //      (equivalent to "x" | "y" | "z")
 ----
+
+You can use the same pattern with values as well as types:
+
+[source,ts]
+----
+function foo(pt: Point) {
+  let k: keyof Point;
+  for (k in pt) {
+    // ^? let k: keyof Point (equivalent to "x" | "y")
+  }
+}
+----

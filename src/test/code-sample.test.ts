@@ -555,4 +555,39 @@ describe('addResolvedChecks', () => {
       //   ^? type SynthT2 = "x" | "y"
       `);
   });
+
+  it('should patch a type assertion on a value', () => {
+    const sample = applyPrefixes(
+      extractSamples(
+        dedent`
+          You can use the same pattern with values as well as types:
+
+          [source,ts]
+          ----
+          function foo(pt: Point) {
+            let k: keyof Point;
+            for (k in pt) {
+              // ^? let k: keyof Point (equivalent to "x" | "y")
+            }
+          }
+          ----
+        `,
+        'equivalent-assertion',
+        'source.asciidoc',
+      ),
+    );
+
+    const actual = addResolvedChecks(sample[0]).content;
+    expect(actual).toEqual(dedent`
+      function foo(pt: Point) {
+        let k: keyof Point;
+        for (k in pt) {
+          // ^? let k: keyof Point
+        }
+      }
+      type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+      type SynthK = Resolve<keyof Point>;
+      //   ^? type SynthK = "x" | "y"
+      `);
+  });
 });

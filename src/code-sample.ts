@@ -300,6 +300,13 @@ const EQUIVALENT_RE = /\^\? type ([A-Za-z0-9_]+) = (.*)( \(equivalent to (.*)\))
 const EQUIVALENT_MULTILINE_RE =
   /\^\? type ([A-Za-z0-9_]+) = (.*)(\n\s*\/\/ +\(equivalent to (.*)\))$/m;
 
+const VALUE_EQUIVALENT_RE = /\^\? [^ ]+ ([A-Za-z0-9_]+): (.*)( \(equivalent to (.*)\))$/m;
+const VALUE_EQUIVALENT_MULTILINE_RE =
+  /\^\? [^ ]+ ([A-Za-z0-9_]+): (.*)(\n\s*\/\/ +\(equivalent to (.*)\))$/m;
+
+const RESOLVE_HELPER =
+  '\ntype Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};';
+
 /** Patch the code sample to test "equivalent to" types */
 export function addResolvedChecks(sample: CodeSample): CodeSample {
   const {content} = sample;
@@ -307,20 +314,31 @@ export function addResolvedChecks(sample: CodeSample): CodeSample {
     return sample;
   }
 
+  let synthName, type, equivClause, equivType;
   const m = EQUIVALENT_RE.exec(content) || EQUIVALENT_MULTILINE_RE.exec(content);
-  if (!m) {
-    return sample;
+  if (m) {
+    [, type, , equivClause, equivType] = m;
+    synthName = `Synth${type}`;
+  } else {
+    const mv = VALUE_EQUIVALENT_RE.exec(content) || VALUE_EQUIVALENT_MULTILINE_RE.exec(content);
+    if (mv) {
+      let varName;
+      [, varName, type, equivClause, equivType] = mv;
+      synthName = 'Synth' + varName.charAt(0).toUpperCase() + varName.slice(1);
+    } else {
+      return sample;
+    }
   }
-
-  const [, typeName, _raw, equivClause, equivType] = m;
 
   // Strip the "equivalent to" bit, add Resolve<T> helper and secondary type assertion.
   // See https://github.com/danvk/literate-ts/issues/132 and
   // https://effectivetypescript.com/2022/02/25/gentips-4-display/
+  // Resolve is only able to "resolve" types at the top level; it can't be inserted in-place.
+  // So `type` could refer to something out of scope, but hopefully that doesn't happen.
   let newContent = content.replace(equivClause, '');
-  newContent += '\ntype Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};';
-  newContent += `\ntype Synth${typeName} = Resolve<${typeName}>;`;
-  newContent += `\n//   ^? type Synth${typeName} = ${equivType}\n`;
+  newContent += RESOLVE_HELPER;
+  newContent += `\ntype ${synthName} = Resolve<${type}>;`;
+  newContent += `\n//   ^? type ${synthName} = ${equivType}\n`;
 
   return {
     ...sample,

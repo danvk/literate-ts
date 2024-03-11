@@ -33,6 +33,12 @@ if (argv.replacements) {
 const unParsedConfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config || {};
 const {options: tsOptions} = ts.parseJsonConfigFileContent(unParsedConfig, ts.sys, process.cwd());
 
+// Some settings should never be inherited from tsconfig.json because they'll
+// interfere with literate-ts's ability to execute code samples.
+delete tsOptions.outDir;
+delete tsOptions.out;
+delete tsOptions.outFile;
+
 console.log('Verifying with TypeScript', ts.version);
 if (!argv.nocache) {
   console.log('Cache dir:', CACHE_DIR);

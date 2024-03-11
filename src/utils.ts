@@ -2,6 +2,7 @@ import {createHash} from 'crypto';
 import fs from 'fs';
 import tmp from 'tmp';
 import {basename} from 'path';
+import _ from 'lodash';
 
 let _tmpDir: string | null = null;
 
@@ -89,3 +90,8 @@ export function sha256(message: string) {
 }
 
 export const tuple = <Args extends unknown[]>(...args: Args): Args => args;
+
+/** Reduce indentation in half, say from 4 to 2 spaces. */
+export function reduceIndentation(src: string): string {
+  return src.replace(/^(?:    )+/gm, spaces => _.repeat(' ', spaces.length / 2));
+}

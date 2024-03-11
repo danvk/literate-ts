@@ -1,0 +1,75 @@
+With target=ES2021, numeric separators are preserved:
+
+// verifier:tsconfig:alwaysStrict=false
+// verifier:tsconfig:moduleResolution=2
+// verifier:tsconfig:module=99
+// verifier:tsconfig:target=8
+[[sep-es2021]]
+[source,ts]
+----
+// @target: es2021
+const num = 1_234_567;
+----
+
+[[sep-es2021-emit-js]]
+[source,js]
+----
+// @target: es2021
+const num = 1_234_567;
+----
+
+With a lower target, however, they are not:
+
+// verifier:tsconfig:target=1
+[[sep-es5]]
+[source,ts]
+----
+// @target: es5
+const num = 1_234_567;
+----
+
+[[sep-es5-emit-js]]
+[source,js]
+----
+// @target: es5
+var num = 1234567;
+----
+
+This will fail on a mismatch.
+
+[[spread]]
+[source,ts]
+----
+const [x, y] = [1, 2];
+----
+
+This compiles to something more complicated than what's listed below. This is the only sample in this file that's expected to fail.
+
+[[spread-emit-js]]
+[source,js]
+----
+var [x, y] = [1, 2];
+----
+
+Emit is expected to use two-space indent:
+
+[[indent]]
+[source,ts]
+----
+function foo(nums: number[]) {
+  for (const num of nums) {
+    console.log(num);
+  }
+}
+----
+
+[[indent-emit-js]]
+[source,js]
+----
+function foo(nums) {
+  for (var _i = 0, nums_1 = nums; _i < nums_1.length; _i++) {
+    var num = nums_1[_i];
+    console.log(num);
+  }
+}
+----

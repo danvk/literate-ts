@@ -8,7 +8,7 @@ import {
   applyReplacements,
   addResolvedChecks,
 } from './code-sample.js';
-import {fileSlug, writeTempFile} from './utils.js';
+import {fileSlug, reduceIndentation, writeTempFile} from './utils.js';
 import {log} from './logger.js';
 import {startFile, fail, finishFile, finishSample, startSample} from './test-tracker.js';
 import {CodeSample} from './types.js';
@@ -60,10 +60,11 @@ function checkEmitOutput(expectedOutput: string, input: CodeSample) {
     fail(`Sample ${input.id} was not run or produced no output.`);
     return;
   }
-  const checkOutput = actualOutput.trim();
+  // TS output uses a four-space indent. Standardize on two-space indent instead.
+  const checkOutput = reduceIndentation(actualOutput.trim());
 
   if (expectedOutput !== checkOutput) {
-    fail(`Actual emitted did not match expected JS.`);
+    fail(`Actual JS emit did not match expected JS.`);
     log('Expected:');
     log(expectedOutput);
     log('----');

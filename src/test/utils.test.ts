@@ -1,4 +1,4 @@
-import {matchAndExtract, sha256} from '../utils.js';
+import {dedent, matchAndExtract, reduceIndentation, sha256} from '../utils.js';
 
 describe('utils', () => {
   test('matchAndExtract', () => {
@@ -12,5 +12,23 @@ describe('utils', () => {
     expect(sha256('')).toMatchInlineSnapshot(
       `"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"`,
     );
+  });
+
+  test('reduce indentation', () => {
+    expect(
+      reduceIndentation(dedent`
+      function foo(nums) {
+          for (num of nums) {
+              console.log(num);
+          }
+      }
+    `),
+    ).toEqual(dedent`
+    function foo(nums) {
+      for (num of nums) {
+        console.log(num);
+      }
+    }
+  `);
   });
 });

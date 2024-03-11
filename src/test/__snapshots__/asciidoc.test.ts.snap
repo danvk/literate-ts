@@ -33,6 +33,72 @@ END #././src/test/inputs/augment-dom.asciidoc:23 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/check-emit.asciidoc": ./src/test/inputs/check-emit.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/check-emit.asciidoc
+",
+    "Found 6 code samples in ./src/test/inputs/check-emit.asciidoc",
+    "BEGIN #././src/test/inputs/check-emit.asciidoc:7 (--filter sep-es2021)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/check-emit.asciidoc:7 (--- ms)
+",
+    "BEGIN #././src/test/inputs/check-emit.asciidoc:14 (--filter sep-es2021-emit-js)
+",
+    "Node exited with code 0",
+    "Actual JS emit matched expected.",
+    "
+END #././src/test/inputs/check-emit.asciidoc:14 (--- ms)
+",
+    "BEGIN #././src/test/inputs/check-emit.asciidoc:24 (--filter sep-es5)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/check-emit.asciidoc:24 (--- ms)
+",
+    "BEGIN #././src/test/inputs/check-emit.asciidoc:31 (--filter sep-es5-emit-js)
+",
+    "Node exited with code 0",
+    "Actual JS emit matched expected.",
+    "
+END #././src/test/inputs/check-emit.asciidoc:31 (--- ms)
+",
+    "BEGIN #././src/test/inputs/check-emit.asciidoc:40 (--filter spread)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/check-emit.asciidoc:40 (--- ms)
+",
+    "BEGIN #././src/test/inputs/check-emit.asciidoc:48 (--filter spread-emit-js)
+",
+    "Node exited with code 0",
+    "💥 ././src/test/inputs/check-emit.asciidoc:48: Actual emitted did not match expected JS.",
+    "Expected:",
+    "var [x, y] = [1, 2];",
+    "----",
+    "Actual:",
+    "var _a = [1, 2], x = _a[0], y = _a[1];",
+    "----",
+    "
+END #././src/test/inputs/check-emit.asciidoc:48 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/check-emit.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/check-emit.asciidoc",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 1/6 ././src/test/inputs/check-emit.asciidoc:7",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 2/6 ././src/test/inputs/check-emit.asciidoc:14",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 3/6 ././src/test/inputs/check-emit.asciidoc:24",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 4/6 ././src/test/inputs/check-emit.asciidoc:31",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 5/6 ././src/test/inputs/check-emit.asciidoc:40",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 6/6 ././src/test/inputs/check-emit.asciidoc:48",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/check-jsonc.asciidoc": ./src/test/inputs/check-jsonc.asciidoc 1`] = `
 {
   "logs": [
@@ -867,6 +933,159 @@ exports[`extractSamples snapshot: backticks 1`] = `
 `;
 
 exports[`extractSamples snapshot: backticks-disabled 1`] = `[]`;
+
+exports[`extractSamples snapshot: check-emit 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// @target: es2021
+const num = 1_234_567;",
+    "descriptor": "./check-emit.asciidoc:7",
+    "id": "sep-es2021",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 9,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-emit.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "alwaysStrict": false,
+      "module": 99,
+      "moduleResolution": 2,
+      "target": 8,
+    },
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// @target: es2021
+const num = 1_234_567;",
+    "descriptor": "./check-emit.asciidoc:14",
+    "id": "sep-es2021-emit-js",
+    "isTSX": false,
+    "language": "js",
+    "lineNumber": 16,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-emit.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "alwaysStrict": false,
+      "module": 99,
+      "moduleResolution": 2,
+      "target": 8,
+    },
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// @target: es5
+const num = 1_234_567;",
+    "descriptor": "./check-emit.asciidoc:24",
+    "id": "sep-es5",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 26,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-emit.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "alwaysStrict": false,
+      "module": 99,
+      "moduleResolution": 2,
+      "target": 1,
+    },
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// @target: es5
+var num = 1234567;",
+    "descriptor": "./check-emit.asciidoc:31",
+    "id": "sep-es5-emit-js",
+    "isTSX": false,
+    "language": "js",
+    "lineNumber": 33,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-emit.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "alwaysStrict": false,
+      "module": 99,
+      "moduleResolution": 2,
+      "target": 1,
+    },
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "const [x, y] = [1, 2];",
+    "descriptor": "./check-emit.asciidoc:40",
+    "id": "spread",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 42,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-emit.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "alwaysStrict": false,
+      "module": 99,
+      "moduleResolution": 2,
+      "target": 1,
+    },
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "var [x, y] = [1, 2];",
+    "descriptor": "./check-emit.asciidoc:48",
+    "id": "spread-emit-js",
+    "isTSX": false,
+    "language": "js",
+    "lineNumber": 50,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-emit.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "alwaysStrict": false,
+      "module": 99,
+      "moduleResolution": 2,
+      "target": 1,
+    },
+  },
+]
+`;
 
 exports[`extractSamples snapshot: check-jsonc 1`] = `
 [

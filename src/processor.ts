@@ -54,6 +54,27 @@ function checkOutput(expectedOutput: string, input: CodeSample) {
   }
 }
 
+function checkEmitOutput(expectedOutput: string, input: CodeSample) {
+  const actualOutput = input.output?.stdout;
+  if (!actualOutput) {
+    fail(`Sample ${input.id} was not run or produced no output.`);
+    return;
+  }
+  const checkOutput = actualOutput.trim();
+
+  if (expectedOutput !== checkOutput) {
+    fail(`Actual emitted did not match expected JS.`);
+    log('Expected:');
+    log(expectedOutput);
+    log('----');
+    log('Actual:');
+    log(checkOutput);
+    log('----');
+  } else {
+    log('Actual JS emit matched expected.');
+  }
+}
+
 export class Processor {
   argv: Args;
   typeScriptBundle: ConfigBundle;
@@ -106,7 +127,13 @@ export class Processor {
     startSample(sample);
 
     if (language === 'ts' || (language === 'js' && sample.checkJS)) {
-      const result = await checkTs(sample, id + '-output' in idToSample, this.typeScriptBundle, {
+      const shouldRun = `${id}-output` in idToSample;
+      const shouldEmit = `${id}-emit-js` in idToSample;
+      if (shouldRun && shouldEmit) {
+        fail(`Cannot both run and check emitted JS`);
+      }
+      const outputMode = shouldRun ? 'run' : shouldEmit ? 'emit' : false;
+      const result = await checkTs(sample, outputMode, this.typeScriptBundle, {
         skipCache: !!this.argv.nocache,
       });
       if (result.output !== undefined) {
@@ -119,10 +146,21 @@ export class Processor {
       idToSample[id].output = output;
 
       // It's OK for a JS sample to fail, but only if its output is in another sample.
-      if (output.code !== 0 && !idToSample[id + '-output']) {
+      if (output.code !== 0 && !idToSample[`${id}-output`]) {
         fail(`Node exited with code ${output.code} but there is no corresponding -output sample.`);
       } else {
         log(`Node exited with code ${output.code}`);
+      }
+
+      if (id.endsWith('-emit-js')) {
+        // Verify the generated JS for a previous code sample.
+        const inputId = id.split('-emit-js')[0];
+        const input = idToSample[inputId];
+        if (!input) {
+          fail(`No paired input: #${inputId}`);
+        } else {
+          checkEmitOutput(content, input);
+        }
       }
     } else if (language === 'node') {
       // Node.js CLI "program listing"

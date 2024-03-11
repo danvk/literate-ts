@@ -573,11 +573,14 @@ export interface CheckTsResult {
   // TODO: include more details about errors
 }
 
-function getCheckTsCacheKey(inSample: CodeSample, runCode: boolean) {
+/** Should the code be run, or should emitted JS be captured? */
+export type OutputMode = false | 'run' | 'emit';
+
+function getCheckTsCacheKey(inSample: CodeSample, outputMode: OutputMode) {
   const {descriptor: _1, id: _2, sectionHeader: _3, sourceFile: _4, ...sample} = inSample;
   const key = {
     sample,
-    runCode,
+    outputMode,
     // `config` has compiler options but these are already in `sample`
     versions: {
       typeScript: ts.version,
@@ -595,11 +598,11 @@ if (!CACHE_DIR) {
 
 export async function checkTs(
   sample: CodeSample,
-  runCode: boolean,
+  outputMode: OutputMode,
   config: ConfigBundle,
   options: {skipCache: boolean},
 ): Promise<CheckTsResult> {
-  const [key, cacheKey] = getCheckTsCacheKey(sample, runCode);
+  const [key, cacheKey] = getCheckTsCacheKey(sample, outputMode);
   const tempFilePath = path.join(CACHE_DIR, `${key}.json`);
   const hit = await fs.pathExists(tempFilePath);
   if (hit && !options.skipCache) {
@@ -612,7 +615,7 @@ export async function checkTs(
     return out;
   }
 
-  const result = await uncachedCheckTs(sample, runCode, config);
+  const result = await uncachedCheckTs(sample, outputMode, config);
   if (result.passed === false) {
     result.failure = getLastFailReason() ?? undefined;
   }
@@ -666,7 +669,7 @@ function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.Com
 /** Verify that a TypeScript sample has the expected errors and no others. */
 async function uncachedCheckTs(
   sample: CodeSample,
-  runCode: boolean,
+  outputMode: OutputMode,
   config: ConfigBundle,
 ): Promise<CheckTsResult> {
   const {id, content} = sample;
@@ -699,7 +702,7 @@ async function uncachedCheckTs(
 
   let diagnostics = ts.getPreEmitDiagnostics(program);
 
-  if (runCode) {
+  if (outputMode) {
     const emitResult = program.emit();
     diagnostics = diagnostics.concat(emitResult.diagnostics);
 
@@ -760,12 +763,17 @@ async function uncachedCheckTs(
     log(`tsconfig options: ${JSON.stringify(options)}`);
   }
 
-  if (!runCode) return {passed: ok};
+  if (!outputMode) return {passed: ok};
 
   const jsFile = tsFile.replace(/\.ts$/, '.js');
   if (!fs.existsSync(jsFile)) {
     fail(`Did not produce JS output in expected place: ${jsFile}`);
     return {passed: false};
+  }
+
+  if (outputMode === 'emit') {
+    const jsEmit = await fs.readFile(jsFile, 'utf8');
+    return {passed: true, output: {code: 0, stdout: jsEmit, stderr: '', path: jsFile}};
   }
 
   const output = await runNode(jsFile);

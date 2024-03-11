@@ -1,31 +1,52 @@
-There is a shorthand for `this` binding that is extremely convenient:
+With target=ES2021, numeric separators are preserved:
 
-[[reset-button]]
+// verifier:tsconfig:alwaysStrict=false
+// verifier:tsconfig:moduleResolution=2
+// verifier:tsconfig:module=99
+// verifier:tsconfig:target=8
+[[sep-es2021]]
 [source,ts]
 ----
-class ResetButton {
-  render() {
-    return {text: 'Reset', onClick: this.onClick};
-  }
-  onClick = () => {
-    alert(`Reset ${this}`);  // "this" always refers to the ResetButton instance.
-  }
-}
+// @target: es2021
+const num = 1_234_567;
 ----
 
-Here we've replaced `onClick` with an arrow function. This will define a new function every time a `ResetButton` is constructed with `this` set to the appropriate value. It's instructive to look at the generated JavaScript:
-
-[[reset-button-emit-js]]
+[[sep-es2021-emit-js]]
 [source,js]
 ----
-class ResetButton {
-  constructor() {
-    this.onClick = () => {
-      alert(`Reset ${this}`); // "this" always refers to the ResetButton instance.
-    };
-  }
-  render() {
-    return { text: 'Reset', onClick: this.onClick };
-  }
-}
+// @target: es2021
+const num = 1_234_567;
+----
+
+With a lower target, however, they are not:
+
+// verifier:tsconfig:target=1
+[[sep-es5]]
+[source,ts]
+----
+// @target: es5
+const num = 1_234_567;
+----
+
+[[sep-es5-emit-js]]
+[source,js]
+----
+// @target: es5
+var num = 1234567;
+----
+
+This will fail on a mismatch.
+
+[[spread]]
+[source,ts]
+----
+const [x, y] = [1, 2];
+----
+
+This compiles to something more complicated than what's listed below:
+
+[[spread-emit-js]]
+[source,js]
+----
+var [x, y] = [1, 2];
 ----

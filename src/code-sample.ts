@@ -111,6 +111,12 @@ function process(
     },
     setNextId(id) {
       lastMetadata = id;
+      // We don't have enough context to fail() here, so throw instead.
+      for (const sample of samples) {
+        if (sample.id === id.id) {
+          throw new Error(`Duplicate ID: ${id.id}`);
+        }
+      }
     },
     setNextLanguage(lang) {
       lastLanguage = lang;

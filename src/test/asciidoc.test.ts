@@ -85,6 +85,9 @@ describe('extractSamples', () => {
     const inputFiles = glob.sync('./src/test/inputs/*.asciidoc');
 
     for (const inputFile of inputFiles) {
+      if (inputFile.includes('duplicate')) {
+        continue; // this one throws and is tested separately, below
+      }
       const {base, name} = path.parse(inputFile);
       expect(extractSamples(fs.readFileSync(inputFile, 'utf8'), name, base)).toMatchSnapshot(name);
     }
@@ -104,6 +107,14 @@ describe('extractSamples', () => {
           }`,
       },
     ]);
+  });
+
+  test('duplicate throws', () => {
+    const inputFile = './src/test/inputs/duplicate-ids.asciidoc';
+    const contents = fs.readFileSync(inputFile, 'utf8');
+    expect(() => extractSamples(contents, 'duplicate-ids', 'duplicate-ids.asciidoc')).toThrow(
+      'Duplicate ID: example',
+    );
   });
 
   test('no ID', () => {

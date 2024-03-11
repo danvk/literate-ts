@@ -38,7 +38,7 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/check-emit.asciid
   "logs": [
     "---- BEGIN FILE ./src/test/inputs/check-emit.asciidoc
 ",
-    "Found 6 code samples in ./src/test/inputs/check-emit.asciidoc",
+    "Found 8 code samples in ./src/test/inputs/check-emit.asciidoc",
     "BEGIN #././src/test/inputs/check-emit.asciidoc:7 (--filter sep-es2021)
 ",
     "Code passed type checker.",
@@ -74,7 +74,7 @@ END #././src/test/inputs/check-emit.asciidoc:40 (--- ms)
     "BEGIN #././src/test/inputs/check-emit.asciidoc:48 (--filter spread-emit-js)
 ",
     "Node exited with code 0",
-    "💥 ././src/test/inputs/check-emit.asciidoc:48: Actual emitted did not match expected JS.",
+    "💥 ././src/test/inputs/check-emit.asciidoc:48: Actual JS emit did not match expected JS.",
     "Expected:",
     "var [x, y] = [1, 2];",
     "----",
@@ -84,17 +84,32 @@ END #././src/test/inputs/check-emit.asciidoc:40 (--- ms)
     "
 END #././src/test/inputs/check-emit.asciidoc:48 (--- ms)
 ",
+    "BEGIN #././src/test/inputs/check-emit.asciidoc:56 (--filter indent)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/check-emit.asciidoc:56 (--- ms)
+",
+    "BEGIN #././src/test/inputs/check-emit.asciidoc:66 (--filter indent-emit-js)
+",
+    "Node exited with code 0",
+    "Actual JS emit matched expected.",
+    "
+END #././src/test/inputs/check-emit.asciidoc:66 (--- ms)
+",
     "---- END FILE ./src/test/inputs/check-emit.asciidoc
 ",
   ],
   "statuses": [
     "1/1: ././src/test/inputs/check-emit.asciidoc",
-    "1/1: ././src/test/inputs/check-emit.asciidoc: 1/6 ././src/test/inputs/check-emit.asciidoc:7",
-    "1/1: ././src/test/inputs/check-emit.asciidoc: 2/6 ././src/test/inputs/check-emit.asciidoc:14",
-    "1/1: ././src/test/inputs/check-emit.asciidoc: 3/6 ././src/test/inputs/check-emit.asciidoc:24",
-    "1/1: ././src/test/inputs/check-emit.asciidoc: 4/6 ././src/test/inputs/check-emit.asciidoc:31",
-    "1/1: ././src/test/inputs/check-emit.asciidoc: 5/6 ././src/test/inputs/check-emit.asciidoc:40",
-    "1/1: ././src/test/inputs/check-emit.asciidoc: 6/6 ././src/test/inputs/check-emit.asciidoc:48",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 1/8 ././src/test/inputs/check-emit.asciidoc:7",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 2/8 ././src/test/inputs/check-emit.asciidoc:14",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 3/8 ././src/test/inputs/check-emit.asciidoc:24",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 4/8 ././src/test/inputs/check-emit.asciidoc:31",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 5/8 ././src/test/inputs/check-emit.asciidoc:40",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 6/8 ././src/test/inputs/check-emit.asciidoc:48",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 7/8 ././src/test/inputs/check-emit.asciidoc:56",
+    "1/1: ././src/test/inputs/check-emit.asciidoc: 8/8 ././src/test/inputs/check-emit.asciidoc:66",
   ],
 }
 `;
@@ -1069,6 +1084,63 @@ var num = 1234567;",
     "isTSX": false,
     "language": "js",
     "lineNumber": 50,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-emit.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "alwaysStrict": false,
+      "module": 99,
+      "moduleResolution": 2,
+      "target": 1,
+    },
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "function foo(nums: number[]) {
+  for (const num of nums) {
+    console.log(num);
+  }
+}",
+    "descriptor": "./check-emit.asciidoc:56",
+    "id": "indent",
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 58,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "check-emit.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {
+      "alwaysStrict": false,
+      "module": 99,
+      "moduleResolution": 2,
+      "target": 1,
+    },
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "function foo(nums) {
+  for (var _i = 0, nums_1 = nums; _i < nums_1.length; _i++) {
+    var num = nums_1[_i];
+    console.log(num);
+  }
+}",
+    "descriptor": "./check-emit.asciidoc:66",
+    "id": "indent-emit-js",
+    "isTSX": false,
+    "language": "js",
+    "lineNumber": 68,
     "nodeModules": [],
     "prefixes": [],
     "prefixesLength": 0,

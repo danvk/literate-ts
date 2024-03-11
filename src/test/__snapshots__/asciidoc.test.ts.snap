@@ -1,5 +1,748 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/augment-dom.asciidoc": ./src/test/inputs/augment-dom.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/augment-dom.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/augment-dom.asciidoc",
+    "BEGIN #././src/test/inputs/augment-dom.asciidoc:6 (--filter augment-dom-6)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/augment-dom.asciidoc:6 (--- ms)
+",
+    "BEGIN #././src/test/inputs/augment-dom.asciidoc:23 (--filter augment-dom-23)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const img: HTMLImageElement | null",
+    "    Actual: const img: HTMLImageElement | null",
+    "  1/1 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/augment-dom.asciidoc:23 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/augment-dom.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/augment-dom.asciidoc",
+    "1/1: ././src/test/inputs/augment-dom.asciidoc: 1/2 ././src/test/inputs/augment-dom.asciidoc:6",
+    "1/1: ././src/test/inputs/augment-dom.asciidoc: 2/2 ././src/test/inputs/augment-dom.asciidoc:23",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/check-jsonc.asciidoc": ./src/test/inputs/check-jsonc.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/check-jsonc.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/check-jsonc.asciidoc",
+    "BEGIN #././src/test/inputs/check-jsonc.asciidoc:5 (--filter check-jsonc-5)
+",
+    "
+END #././src/test/inputs/check-jsonc.asciidoc:5 (--- ms)
+",
+    "BEGIN #././src/test/inputs/check-jsonc.asciidoc:21 (--filter check-jsonc-21)
+",
+    "💥 ././src/test/inputs/check-jsonc.asciidoc:21: Invalid JSONC: InvalidSymbol,PropertyNameExpected,ValueExpected,InvalidSymbol,UnexpectedEndOfString,ColonExpected,PropertyNameExpected,ValueExpected",
+    "
+END #././src/test/inputs/check-jsonc.asciidoc:21 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/check-jsonc.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/check-jsonc.asciidoc",
+    "1/1: ././src/test/inputs/check-jsonc.asciidoc: 1/2 ././src/test/inputs/check-jsonc.asciidoc:5",
+    "1/1: ././src/test/inputs/check-jsonc.asciidoc: 2/2 ././src/test/inputs/check-jsonc.asciidoc:21",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/commented-sample-with-error.asciidoc": ./src/test/inputs/commented-sample-with-error.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/commented-sample-with-error.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/commented-sample-with-error.asciidoc",
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--filter commented-sample-with-error-7)
+",
+    "💥 ./src/test/inputs/commented-sample-with-error.asciidoc:7:7-12: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
+    "const value: number = "123";",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/commented-sample-with-error.asciidoc:7 (--- ms)
+",
+    "BEGIN #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--filter commented-sample-with-error-17)
+",
+    "💥 ././src/test/inputs/commented-sample-with-error.asciidoc:17: Unexpected TypeScript error: Type 'string' is not assignable to type 'number'.",
+    "Twoslash type assertion match:",
+    "  Expected: const value: number",
+    "    Actual: const value: number",
+    "  1/1 twoslash type assertions matched.",
+    "const value: number = "123";
+console.log(value);
+//          ^? const value: number",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/commented-sample-with-error.asciidoc:17 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/commented-sample-with-error.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc",
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc: 1/2 ././src/test/inputs/commented-sample-with-error.asciidoc:7",
+    "1/1: ././src/test/inputs/commented-sample-with-error.asciidoc: 2/2 ././src/test/inputs/commented-sample-with-error.asciidoc:17",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.asciidoc": ./src/test/inputs/empty-twoslash.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/empty-twoslash.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/empty-twoslash.asciidoc",
+    "BEGIN #././src/test/inputs/empty-twoslash.asciidoc:7 (--filter empty-twoslash-7)
+",
+    "Code passed type checker.",
+    "💥 ./src/test/inputs/empty-twoslash.asciidoc:15:1-13: Failed type assertion for \`fetchANumber\`
+  Expected: 
+    Actual: function fetchANumber(input: RequestInfo, init?: RequestInit | undefined): Promise<number>",
+    "  0/1 twoslash type assertions matched.",
+    "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
+  const response = await fetch(...args);
+  const num = Number(await response.text());
+  if (isNaN(num)) {
+    throw new Error(\`Response was not a number.\`);
+  }
+  return num;
+}
+fetchANumber
+// ^?",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/empty-twoslash.asciidoc:7 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/empty-twoslash.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/empty-twoslash.asciidoc",
+    "1/1: ././src/test/inputs/empty-twoslash.asciidoc: 1/1 ././src/test/inputs/empty-twoslash.asciidoc:7",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/equivalent.asciidoc": ./src/test/inputs/equivalent.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/equivalent.asciidoc
+",
+    "Found 6 code samples in ./src/test/inputs/equivalent.asciidoc",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:8 (--filter equivalent-8)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "  1/1 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/equivalent.asciidoc:8 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:23 (--filter equivalent-23)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type T2 = keyof Point",
+    "    Actual: type T2 = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type SynthT2 = "x" | "y"",
+    "    Actual: type SynthT2 = "x" | "y"",
+    "  3/3 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/equivalent.asciidoc:23 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:31 (--filter equivalent-31)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type T2 = keyof Point",
+    "    Actual: type T2 = keyof Point",
+    "💥 ./src/test/inputs/equivalent.asciidoc:34:6-13: Failed type assertion for \`SynthT2\`
+  Expected: type SynthT2 = "x" | "y" | "z"
+    Actual: type SynthT2 = "x" | "y"",
+    "  2/3 twoslash type assertions matched.",
+    "interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthT2 = Resolve<T2>;
+//   ^? type SynthT2 = "x" | "y" | "z"
+",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/equivalent.asciidoc:31 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:39 (--filter equivalent-39)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type T2 = keyof Point",
+    "    Actual: type T2 = keyof Point",
+    "💥 ./src/test/inputs/equivalent.asciidoc:42:6-13: Failed type assertion for \`SynthT2\`
+  Expected: type SynthT2 = "x" | "y" | "z"
+    Actual: type SynthT2 = "x" | "y"",
+    "  2/3 twoslash type assertions matched.",
+    "interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthT2 = Resolve<T2>;
+//   ^? type SynthT2 = "x" | "y" | "z"
+",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:48 (--filter equivalent-48)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: let k: keyof Point",
+    "    Actual: let k: keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: type SynthK = "x" | "y"",
+    "    Actual: type SynthK = "x" | "y"",
+    "  3/3 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/equivalent.asciidoc:48 (--- ms)
+",
+    "BEGIN #././src/test/inputs/equivalent.asciidoc:60 (--filter equivalent-60)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: type T = keyof Point",
+    "    Actual: type T = keyof Point",
+    "Twoslash type assertion match:",
+    "  Expected: let k: keyof Point",
+    "    Actual: let k: keyof Point",
+    "💥 ./src/test/inputs/equivalent.asciidoc:67:6-12: Failed type assertion for \`SynthK\`
+  Expected: type SynthK = "x" | "y" | "z"
+    Actual: type SynthK = "x" | "y"",
+    "  2/3 twoslash type assertions matched.",
+    "interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+function foo(pt: Point) {
+  let k: keyof Point;
+  for (k in pt) {
+    // ^? let k: keyof Point
+  }
+}
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthK = Resolve<keyof Point>;
+//   ^? type SynthK = "x" | "y" | "z"
+",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/equivalent.asciidoc:60 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/equivalent.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/equivalent.asciidoc",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 1/6 ././src/test/inputs/equivalent.asciidoc:8",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 2/6 ././src/test/inputs/equivalent.asciidoc:23",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 3/6 ././src/test/inputs/equivalent.asciidoc:31",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 4/6 ././src/test/inputs/equivalent.asciidoc:39",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 5/6 ././src/test/inputs/equivalent.asciidoc:48",
+    "1/1: ././src/test/inputs/equivalent.asciidoc: 6/6 ././src/test/inputs/equivalent.asciidoc:60",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/error-start-of-line.asciidoc": ./src/test/inputs/error-start-of-line.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/error-start-of-line.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/error-start-of-line.asciidoc",
+    "BEGIN #././src/test/inputs/error-start-of-line.asciidoc:5 (--filter error-start-of-line-5)
+",
+    "matched errors:",
+    "  expected: Cannot find name 'x'.",
+    "    actual: Cannot find name 'x'.",
+    "  error messages match: perfect",
+    "Matched 1/1 errors.",
+    "
+END #././src/test/inputs/error-start-of-line.asciidoc:5 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/error-start-of-line.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/error-start-of-line.asciidoc",
+    "1/1: ././src/test/inputs/error-start-of-line.asciidoc: 1/1 ././src/test/inputs/error-start-of-line.asciidoc:5",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/express.asciidoc": ./src/test/inputs/express.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/express.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/express.asciidoc",
+    "BEGIN #././src/test/inputs/express.asciidoc:8 (--filter express-8)
+",
+    "Copied CWD/node_modules/@types/express -> TMPDIR/node_modules/@types/express",
+    "Copied CWD/node_modules/@types/body-parser -> TMPDIR/node_modules/@types/body-parser",
+    "Copied CWD/node_modules/@types/express-serve-static-core -> TMPDIR/node_modules/@types/express-serve-static-core",
+    "Copied CWD/node_modules/@types/qs -> TMPDIR/node_modules/@types/qs",
+    "Copied CWD/node_modules/@types/serve-static -> TMPDIR/node_modules/@types/serve-static",
+    "Copied CWD/node_modules/@types/connect -> TMPDIR/node_modules/@types/connect",
+    "Copied CWD/node_modules/@types/node -> TMPDIR/node_modules/@types/node",
+    "Copied CWD/node_modules/@types/range-parser -> TMPDIR/node_modules/@types/range-parser",
+    "Copied CWD/node_modules/@types/send -> TMPDIR/node_modules/@types/send",
+    "Copied CWD/node_modules/@types/http-errors -> TMPDIR/node_modules/@types/http-errors",
+    "Copied CWD/node_modules/@types/mime -> TMPDIR/node_modules/@types/mime",
+    "Copied CWD/node_modules/undici-types -> TMPDIR/node_modules/undici-types",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const app: Express",
+    "    Actual: const app: Express",
+    "  1/1 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/express.asciidoc:8 (--- ms)
+",
+    "BEGIN #././src/test/inputs/express.asciidoc:16 (--filter express-16)
+",
+    "Copied CWD/node_modules/@types/express -> TMPDIR/node_modules/@types/express",
+    "Copied CWD/node_modules/@types/body-parser -> TMPDIR/node_modules/@types/body-parser",
+    "Copied CWD/node_modules/@types/express-serve-static-core -> TMPDIR/node_modules/@types/express-serve-static-core",
+    "Copied CWD/node_modules/@types/qs -> TMPDIR/node_modules/@types/qs",
+    "Copied CWD/node_modules/@types/serve-static -> TMPDIR/node_modules/@types/serve-static",
+    "Copied CWD/node_modules/@types/connect -> TMPDIR/node_modules/@types/connect",
+    "Copied CWD/node_modules/@types/node -> TMPDIR/node_modules/@types/node",
+    "Copied CWD/node_modules/@types/range-parser -> TMPDIR/node_modules/@types/range-parser",
+    "Copied CWD/node_modules/@types/send -> TMPDIR/node_modules/@types/send",
+    "Copied CWD/node_modules/@types/http-errors -> TMPDIR/node_modules/@types/http-errors",
+    "Copied CWD/node_modules/@types/mime -> TMPDIR/node_modules/@types/mime",
+    "Copied CWD/node_modules/undici-types -> TMPDIR/node_modules/undici-types",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const app: Express",
+    "    Actual: const app: Express",
+    "Twoslash type assertion match:",
+    "  Expected: (parameter) request: Request<...>",
+    "    Actual: (parameter) request: Request<{}, any, any, QueryString.ParsedQs, Record<string, any>>",
+    "Twoslash type assertion match:",
+    "  Expected: (parameter) response: Response<...>",
+    "    Actual: (parameter) response: Response<any, Record<string, any>, number>",
+    "  3/3 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/express.asciidoc:16 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/express.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/express.asciidoc",
+    "1/1: ././src/test/inputs/express.asciidoc: 1/2 ././src/test/inputs/express.asciidoc:8",
+    "1/1: ././src/test/inputs/express.asciidoc: 2/2 ././src/test/inputs/express.asciidoc:16",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/issue-235.asciidoc": ./src/test/inputs/issue-235.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/issue-235.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/issue-235.asciidoc",
+    "BEGIN #././src/test/inputs/issue-235.asciidoc:5 (--filter issue-235-5)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const numArgsBad: (...args: any) => any",
+    "    Actual: const numArgsBad: (...args: any) => any",
+    "💥 ./src/test/inputs/issue-235.asciidoc:7:7-20: Failed type assertion for \`numArgsBetter\`
+  Expected: const numArgsBetter: (...args: any) => numberjsdklfjklsd
+    Actual: const numArgsBetter: (...args: any[]) => number",
+    "  1/2 twoslash type assertions matched.",
+    "const numArgsBad = (...args: any) => args.length;
+//    ^? const numArgsBad: (...args: any) => any
+const numArgsBetter = (...args: any[]) => args.length;
+//    ^? const numArgsBetter: (...args: any) => numberjsdklfjklsd",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/issue-235.asciidoc:5 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/issue-235.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/issue-235.asciidoc",
+    "1/1: ././src/test/inputs/issue-235.asciidoc: 1/1 ././src/test/inputs/issue-235.asciidoc:5",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/node-output.asciidoc": ./src/test/inputs/node-output.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/node-output.asciidoc
+",
+    "Found 3 code samples in ./src/test/inputs/node-output.asciidoc",
+    "BEGIN #././src/test/inputs/node-output.asciidoc:8 (--filter node-output-8)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const xs: number[]",
+    "    Actual: const xs: number[]",
+    "Twoslash type assertion match:",
+    "  Expected: const x: number",
+    "    Actual: const x: number",
+    "  2/2 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/node-output.asciidoc:8 (--- ms)
+",
+    "BEGIN #././src/test/inputs/node-output.asciidoc:16 (--filter unsound-code)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const xs: number[]",
+    "    Actual: const xs: number[]",
+    "Twoslash type assertion match:",
+    "  Expected: const x: number",
+    "    Actual: const x: number",
+    "  2/2 twoslash type assertions matched.",
+    "Node exited with error 1 on unsound-code.js",
+    "
+END #././src/test/inputs/node-output.asciidoc:16 (--- ms)
+",
+    "BEGIN #././src/test/inputs/node-output.asciidoc:24 (--filter unsound-code-output)
+",
+    "Actual output matched expected.",
+    "
+END #././src/test/inputs/node-output.asciidoc:24 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/node-output.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/node-output.asciidoc",
+    "1/1: ././src/test/inputs/node-output.asciidoc: 1/3 ././src/test/inputs/node-output.asciidoc:8",
+    "1/1: ././src/test/inputs/node-output.asciidoc: 2/3 ././src/test/inputs/node-output.asciidoc:16",
+    "1/1: ././src/test/inputs/node-output.asciidoc: 3/3 ././src/test/inputs/node-output.asciidoc:24",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/prepend-and-skip.asciidoc": ./src/test/inputs/prepend-and-skip.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/prepend-and-skip.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/prepend-and-skip.asciidoc",
+    "BEGIN #././src/test/inputs/prepend-and-skip.asciidoc:13 (--filter prepend-and-skip-13)
+",
+    "matched errors:",
+    "  expected:  Cannot redeclare block-scoped variable 'shared'. b.ts",
+    "    actual: Cannot redeclare block-scoped variable 'shared'.",
+    "  error messages could not be matched!",
+    "matched errors:",
+    "  expected:  Cannot redeclare block-scoped variable 'shared'.",
+    "    actual: Cannot redeclare block-scoped variable 'shared'.",
+    "  error messages could not be matched!",
+    "Matched 2/2 errors.",
+    "
+END #././src/test/inputs/prepend-and-skip.asciidoc:13 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/prepend-and-skip.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/prepend-and-skip.asciidoc",
+    "1/1: ././src/test/inputs/prepend-and-skip.asciidoc: 1/2 ././src/test/inputs/prepend-and-skip.asciidoc:6",
+    "1/1: ././src/test/inputs/prepend-and-skip.asciidoc: 2/2 ././src/test/inputs/prepend-and-skip.asciidoc:13",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/prepend-as-file.asciidoc": ./src/test/inputs/prepend-as-file.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/prepend-as-file.asciidoc
+",
+    "Found 6 code samples in ./src/test/inputs/prepend-as-file.asciidoc",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:10 (--filter prepend-as-file-10)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:10 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:21 (--filter prepend-as-file-21)
+",
+    "matched errors:",
+    "  expected: Object literal may only specify known properties, and 'z' does not exist in type 'Point'.",
+    "    actual: Object literal may only specify known properties, and 'z' does not exist in type 'Point'.",
+    "  error messages match: perfect",
+    "Matched 1/1 errors.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:21 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:36 (--filter prepend-as-file-36)
+",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:36 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:52 (--filter prepend-as-file-52)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: (property) "year": number",
+    "    Actual: (property) "year": number",
+    "Twoslash type assertion match:",
+    "  Expected: (property) "months": string[]",
+    "    Actual: (property) "months": string[]",
+    "  2/2 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:52 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:65 (--filter prepend-as-file-65)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:65 (--- ms)
+",
+    "BEGIN #././src/test/inputs/prepend-as-file.asciidoc:78 (--filter prepend-as-file-78)
+",
+    "matched errors:",
+    "  expected: '"vanilla"' is not assignable to parameter of type 'Flavor'",
+    "    actual: Argument of type '"vanilla"' is not assignable to parameter of type 'Flavor'.",
+    "  error messages match: subset",
+    "Matched 1/1 errors.",
+    "
+END #././src/test/inputs/prepend-as-file.asciidoc:78 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/prepend-as-file.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 1/6 ././src/test/inputs/prepend-as-file.asciidoc:10",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 2/6 ././src/test/inputs/prepend-as-file.asciidoc:21",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 3/6 ././src/test/inputs/prepend-as-file.asciidoc:36",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 4/6 ././src/test/inputs/prepend-as-file.asciidoc:52",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 5/6 ././src/test/inputs/prepend-as-file.asciidoc:65",
+    "1/1: ././src/test/inputs/prepend-as-file.asciidoc: 6/6 ././src/test/inputs/prepend-as-file.asciidoc:78",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/president.asciidoc": ./src/test/inputs/president.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/president.asciidoc
+",
+    "Found 2 code samples in ./src/test/inputs/president.asciidoc",
+    "BEGIN #././src/test/inputs/president.asciidoc:7 (--filter president-7)
+",
+    "Code passed type checker.",
+    "💥 ./src/test/inputs/president.asciidoc:9:7-16: Failed type assertion for \`president\`
+  Expected: const president: { first: string; last: string; middle?: string; }
+    Actual: const president: {
+    middle?: string | undefined;
+    first: string;
+    last: string;
+}",
+    "  0/1 twoslash type assertions matched.",
+    "declare let hasMiddle: boolean;
+const firstLast = {first: 'Harry', last: 'Truman'};
+const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
+//    ^? const president: {
+//         first: string;
+//         last: string;
+//         middle?: string;
+//       }",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/president.asciidoc:7 (--- ms)
+",
+    "BEGIN #././src/test/inputs/president.asciidoc:21 (--filter president-21)
+",
+    "Code passed type checker.",
+    "💥 ./src/test/inputs/president.asciidoc:23:7-16: Failed type assertion for \`const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};\` (tested \`president\`)
+  Expected: { first: string; last: string; middle?: string; }
+    Actual: { middle?: string | undefined; first: string; last: string; }",
+    "  0/1 type assertions matched.",
+    "declare let hasMiddle: boolean;
+const firstLast = {first: 'Harry', last: 'Truman'};
+const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
+// Type is { first: string; last: string; middle?: string; }",
+    "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
+    "
+END #././src/test/inputs/president.asciidoc:21 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/president.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/president.asciidoc",
+    "1/1: ././src/test/inputs/president.asciidoc: 1/2 ././src/test/inputs/president.asciidoc:7",
+    "1/1: ././src/test/inputs/president.asciidoc: 2/2 ././src/test/inputs/president.asciidoc:21",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/program-listing.asciidoc": ./src/test/inputs/program-listing.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/program-listing.asciidoc
+",
+    "Found 5 code samples in ./src/test/inputs/program-listing.asciidoc",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:4 (--filter program-listing-4)
+",
+    "Node session matched program listing.",
+    "
+END #././src/test/inputs/program-listing.asciidoc:4 (--- ms)
+",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:17 (--filter program-listing-17)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/program-listing.asciidoc:17 (--- ms)
+",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:24 (--filter program-listing-24)
+",
+    "💥 ././src/test/inputs/program-listing.asciidoc:24: Node session did not match program listing.
+  - 0
+  + 0
+  - [ 0, -73.979 ]
+  + [ 0, -74.2692 ]",
+    "
+END #././src/test/inputs/program-listing.asciidoc:24 (--- ms)
+",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:40 (--filter program-listing-40)
+",
+    "💥 ././src/test/inputs/program-listing.asciidoc:40: Node session did not match program listing.
+  - "Capuchin"
+  + 'Capuchin'
+  - "Capuchi"
+  + 'Capuchin'",
+    "
+END #././src/test/inputs/program-listing.asciidoc:40 (--- ms)
+",
+    "BEGIN #././src/test/inputs/program-listing.asciidoc:49 (--filter program-listing-49)
+",
+    "Node session matched program listing.",
+    "
+END #././src/test/inputs/program-listing.asciidoc:49 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/program-listing.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/program-listing.asciidoc",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 1/5 ././src/test/inputs/program-listing.asciidoc:4",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 2/5 ././src/test/inputs/program-listing.asciidoc:17",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 3/5 ././src/test/inputs/program-listing.asciidoc:24",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 4/5 ././src/test/inputs/program-listing.asciidoc:40",
+    "1/1: ././src/test/inputs/program-listing.asciidoc: 5/5 ././src/test/inputs/program-listing.asciidoc:49",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/top-level-await.asciidoc": ./src/test/inputs/top-level-await.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/top-level-await.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/top-level-await.asciidoc",
+    "BEGIN #././src/test/inputs/top-level-await.asciidoc:8 (--filter top-level-await-8)
+",
+    "Code passed type checker.",
+    "Twoslash type assertion match:",
+    "  Expected: const resource: number",
+    "    Actual: const resource: number",
+    "  1/1 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/top-level-await.asciidoc:8 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/top-level-await.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/top-level-await.asciidoc",
+    "1/1: ././src/test/inputs/top-level-await.asciidoc: 1/1 ././src/test/inputs/top-level-await.asciidoc:8",
+  ],
+}
+`;
+
+exports[`checker asciidoc checker snapshots "./src/test/inputs/twoslash-assertion.asciidoc": ./src/test/inputs/twoslash-assertion.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/twoslash-assertion.asciidoc
+",
+    "Found 1 code samples in ./src/test/inputs/twoslash-assertion.asciidoc",
+    "BEGIN #././src/test/inputs/twoslash-assertion.asciidoc:5 (--filter twoslash-assertion-5)
+",
+    "Code passed type checker.",
+    "Type assertion match:",
+    "  Expected: 2",
+    "    Actual: 2",
+    "  1/1 type assertions matched.",
+    "Twoslash type assertion match:",
+    "  Expected: const one: 1",
+    "    Actual: const one: 1",
+    "  1/1 twoslash type assertions matched.",
+    "
+END #././src/test/inputs/twoslash-assertion.asciidoc:5 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/twoslash-assertion.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/twoslash-assertion.asciidoc",
+    "1/1: ././src/test/inputs/twoslash-assertion.asciidoc: 1/1 ././src/test/inputs/twoslash-assertion.asciidoc:5",
+  ],
+}
+`;
+
 exports[`extractSamples snapshot: augment-dom 1`] = `
 [
   {

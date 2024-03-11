@@ -1,0 +1,31 @@
+There is a shorthand for `this` binding that is extremely convenient:
+
+[[reset-button]]
+[source,ts]
+----
+class ResetButton {
+  render() {
+    return {text: 'Reset', onClick: this.onClick};
+  }
+  onClick = () => {
+    alert(`Reset ${this}`);  // "this" always refers to the ResetButton instance.
+  }
+}
+----
+
+Here we've replaced `onClick` with an arrow function. This will define a new function every time a `ResetButton` is constructed with `this` set to the appropriate value. It's instructive to look at the generated JavaScript:
+
+[[reset-button-emit-js]]
+[source,js]
+----
+class ResetButton {
+  constructor() {
+    this.onClick = () => {
+      alert(`Reset ${this}`); // "this" always refers to the ResetButton instance.
+    };
+  }
+  render() {
+    return { text: 'Reset', onClick: this.onClick };
+  }
+}
+----

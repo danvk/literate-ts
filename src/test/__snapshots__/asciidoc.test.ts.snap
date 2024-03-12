@@ -502,6 +502,49 @@ END #././src/test/inputs/issue-235.asciidoc:5 (--- ms)
 }
 `;
 
+exports[`checker asciidoc checker snapshots "./src/test/inputs/long-lines.asciidoc": ./src/test/inputs/long-lines.asciidoc 1`] = `
+{
+  "logs": [
+    "---- BEGIN FILE ./src/test/inputs/long-lines.asciidoc
+",
+    "Found 4 code samples in ./src/test/inputs/long-lines.asciidoc",
+    "BEGIN #././src/test/inputs/long-lines.asciidoc:5 (--filter long-lines-5)
+",
+    "
+END #././src/test/inputs/long-lines.asciidoc:5 (--- ms)
+",
+    "BEGIN #././src/test/inputs/long-lines.asciidoc:18 (--filter long-lines-18)
+",
+    "Code passed type checker.",
+    "
+END #././src/test/inputs/long-lines.asciidoc:18 (--- ms)
+",
+    "BEGIN #././src/test/inputs/long-lines.asciidoc:26 (--filter long-lines-26)
+",
+    "Code passed type checker.",
+    "💥 ./src/test/inputs/long-lines.asciidoc:26:101-104: Line too long: 103 > 100",
+    "
+END #././src/test/inputs/long-lines.asciidoc:26 (--- ms)
+",
+    "BEGIN #././src/test/inputs/long-lines.asciidoc:32 (--filter long-lines-32)
+",
+    "Node session matched program listing.",
+    "
+END #././src/test/inputs/long-lines.asciidoc:32 (--- ms)
+",
+    "---- END FILE ./src/test/inputs/long-lines.asciidoc
+",
+  ],
+  "statuses": [
+    "1/1: ././src/test/inputs/long-lines.asciidoc",
+    "1/1: ././src/test/inputs/long-lines.asciidoc: 1/4 ././src/test/inputs/long-lines.asciidoc:5",
+    "1/1: ././src/test/inputs/long-lines.asciidoc: 2/4 ././src/test/inputs/long-lines.asciidoc:18",
+    "1/1: ././src/test/inputs/long-lines.asciidoc: 3/4 ././src/test/inputs/long-lines.asciidoc:26",
+    "1/1: ././src/test/inputs/long-lines.asciidoc: 4/4 ././src/test/inputs/long-lines.asciidoc:32",
+  ],
+}
+`;
+
 exports[`checker asciidoc checker snapshots "./src/test/inputs/node-output.asciidoc": ./src/test/inputs/node-output.asciidoc 1`] = `
 {
   "logs": [
@@ -1750,6 +1793,104 @@ const numArgsBetter = (...args: any[]) => args.length;
     "sectionHeader": null,
     "skip": false,
     "sourceFile": "issue-235.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+]
+`;
+
+exports[`extractSamples snapshot: long-lines 1`] = `
+[
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "{
+  "prettier": {
+    "printWidth": 81
+  }
+}",
+    "descriptor": "./long-lines.asciidoc:5",
+    "id": "long-lines-5",
+    "inCommentBlock": false,
+    "isTSX": false,
+    "language": "json",
+    "lineNumber": 4,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "long-lines.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// This is an extremely long line. This is an extremely long line. This is an extremely long line. This is an extremely long line.",
+    "descriptor": "./long-lines.asciidoc:18",
+    "id": "long-lines-18",
+    "inCommentBlock": true,
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 17,
+    "nodeModules": [],
+    "prefixes": [],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "long-lines.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "// This is also a long line. 100 characters ought to be enough for anyone. Don't you think that's true?",
+    "descriptor": "./long-lines.asciidoc:26",
+    "id": "long-lines-26",
+    "inCommentBlock": false,
+    "isTSX": false,
+    "language": "ts",
+    "lineNumber": 25,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "long-lines-18",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "long-lines.asciidoc",
+    "targetFilename": null,
+    "tsOptions": {},
+  },
+  {
+    "auxiliaryFiles": [],
+    "checkJS": false,
+    "content": "<pre data-type="programlisting">&gt; <strong>["some", "text", "that", "is", "long", "but", "not", "too", "long"].length</strong>
+9</pre>",
+    "descriptor": "./long-lines.asciidoc:32",
+    "id": "long-lines-32",
+    "inCommentBlock": false,
+    "isTSX": false,
+    "language": "node",
+    "lineNumber": 31,
+    "nodeModules": [],
+    "prefixes": [
+      {
+        "id": "long-lines-18",
+      },
+    ],
+    "prefixesLength": 0,
+    "replacementId": undefined,
+    "sectionHeader": null,
+    "skip": false,
+    "sourceFile": "long-lines.asciidoc",
     "targetFilename": null,
     "tsOptions": {},
   },

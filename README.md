@@ -357,6 +357,18 @@ This is only supported for Asciidoc. Here's what it looks like:
 ++++
 ```
 
+## Line length enforcement
+
+If you fill out a `"prettier"` section in your `package.json`, literate-ts will enforce a maximum line length on your code samples:
+
+```json
+{
+  "prettier": {
+    "printWidth": 81
+  }
+}
+```
+
 ## Command-Line Options
 
 - `--help`: Show help.

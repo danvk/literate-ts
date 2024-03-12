@@ -92,7 +92,7 @@ function checkLineLengths(sample: CodeSample, printWidth: number) {
     line = lines[i].trimEnd();
     if (line.length > printWidth) {
       fail(`Line too long: ${line.length} > ${printWidth}`, {
-        location: {line: i, start: printWidth, end: line.length},
+        location: {line: i + sample.prefixesLength, start: printWidth, end: line.length},
       });
     }
   });

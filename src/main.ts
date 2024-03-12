@@ -75,8 +75,9 @@ export function main() {
     for (const [file, fileResults] of Object.entries(getTestResults())) {
       const displayPath = isAbsolute(file) ? file : `./${file}`;
       const numPassed = _.sum(_.map(fileResults, n => (n === 0 ? 1 : 0)));
-      if (numPassed < _.size(fileResults)) {
-        console.log(`${displayPath}`, `${numPassed}/${_.size(fileResults)} passed`);
+      const numSamples = _.size(fileResults);
+      if (numPassed < numSamples) {
+        console.log(`${displayPath}`, `${numPassed}/${numSamples} passed`);
         for (const [id, failures] of Object.entries(fileResults)) {
           numTotal += 1;
           if (failures > 0) {
@@ -84,6 +85,8 @@ export function main() {
             numFailures += 1;
           }
         }
+      } else {
+        numTotal += numSamples;
       }
     }
 

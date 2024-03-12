@@ -157,15 +157,9 @@ export class Processor {
         fail(`Cannot both run and check emitted JS`);
       }
       const outputMode = shouldRun ? 'run' : shouldEmit ? 'emit' : false;
-      const result = await checkTs(
-        sample,
-        outputMode,
-        this.typeScriptBundle,
-        {
-          skipCache: !!this.argv.nocache,
-        },
-        pkg,
-      );
+      const result = await checkTs(sample, outputMode, this.typeScriptBundle, {
+        skipCache: !!this.argv.nocache,
+      });
       if (result.output !== undefined) {
         sample.output = result.output;
       }

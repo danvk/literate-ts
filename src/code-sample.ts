@@ -97,21 +97,16 @@ function process(
         skipRemaining = true;
       } else if (directive.startsWith('tsconfig:')) {
         const [key, value] = directive.split(':', 2)[1].split('=', 2);
-        let parsedValue;
         const enumKind = tsconfigToEnum[key];
-        if (enumKind) {
-          parsedValue = getEnumValue(key, enumKind, value);
-        } else {
-          parsedValue =
-            value === 'true'
-              ? true
-              : value === 'false'
-                ? false
-                : isNaN(Number(value))
-                  ? value
-                  : Number(value);
-        }
-        tsOptions[key] = parsedValue;
+        tsOptions[key] = enumKind
+          ? getEnumValue(key, enumKind, value)
+          : value === 'true'
+            ? true
+            : value === 'false'
+              ? false
+              : isNaN(Number(value))
+                ? value
+                : Number(value);
       } else if (directive.startsWith('include-node-module:')) {
         const value = directive.split(':', 2)[1];
         nodeModules = nodeModules.concat([value]);

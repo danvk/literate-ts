@@ -2,7 +2,7 @@ With target=ES2021, numeric separators are preserved:
 
 // verifier:tsconfig:alwaysStrict=false
 // verifier:tsconfig:moduleResolution=NodeJs
-// verifier:tsconfig:module=NodeNext
+// verifier:tsconfig:module=ESNext
 // verifier:tsconfig:target=ES2021
 [[sep-es2021]]
 [source,ts]

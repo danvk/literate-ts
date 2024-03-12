@@ -70,7 +70,7 @@ export function fail(message: string, context: FailureContext = {}) {
         1 + location.end
       }: ${message}`
     : `💥 ${sample?.descriptor}: ${message}`;
-  if (!isLoggingToStderr()) {
+  if (!isLoggingToStderr() && !global.__TEST__) {
     console.error('\n' + fullMessage);
   }
   log(fullMessage);

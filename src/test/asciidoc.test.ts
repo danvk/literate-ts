@@ -495,6 +495,7 @@ describe('checker', () => {
     './src/test/inputs/augment-dom.asciidoc',
     './src/test/inputs/error-start-of-line.asciidoc',
     './src/test/inputs/check-emit.asciidoc',
+    './src/test/inputs/long-lines.asciidoc',
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {

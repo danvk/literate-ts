@@ -29,7 +29,7 @@ export function log(message: string) {
   // TODO(danvk): figure out how to use a jest mock
   if (global.__TEST__) {
     logsForTest.push(message);
-    console.log(message);
+    // console.log(message);
     return;
   }
 

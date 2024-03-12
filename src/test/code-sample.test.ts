@@ -70,6 +70,7 @@ describe('code-sample', () => {
         prefixesLength: 1,
         language: 'ts',
         id: 'combined',
+        originalContent: `const a: AB = 'a';`,
         content: dedent`
           type AB = 'a' | 'b';
           const a: AB = 'a';`,
@@ -104,6 +105,7 @@ describe('code-sample', () => {
         language: 'ts',
         id: 'mpd-11',
         prefixesLength: 1,
+        originalContent: `type ABC = AB | 'c';`,
         content: dedent`
           type AB = 'a' | 'b';
           type ABC = AB | 'c';`,
@@ -115,6 +117,7 @@ describe('code-sample', () => {
         prefixesLength: 2,
         language: 'ts',
         id: 'mpd-16',
+        originalContent: `const c: ABC = 'c';`,
         content: dedent`
           type AB = 'a' | 'b';
           type ABC = AB | 'c';
@@ -168,6 +171,7 @@ describe('code-sample', () => {
         language: 'ts',
         id: 'b',
         prefixesLength: 3,
+        originalContent: `const p = {} as Person;`,
         content: dedent`
         interface Person {
           name: string;
@@ -220,6 +224,7 @@ describe('code-sample', () => {
         language: 'ts',
         id: 'b',
         prefixesLength: 2,
+        originalContent: `const {name} = p;`,
         content: dedent`
         import _ from 'lodash';
         const p = {name: 'Bob'};
@@ -347,6 +352,7 @@ describe('applyReplacements', () => {
     content: '',
     prefixesLength: 0,
     lineNumber: 4,
+    inCommentBlock: false,
   };
 
   const compressed = dedent`
@@ -378,6 +384,7 @@ describe('applyReplacements', () => {
     ).toEqual([
       {
         ...foo,
+        originalContent: compressed,
         content: full,
       },
     ]);
@@ -403,6 +410,7 @@ describe('applyReplacements', () => {
     ).toEqual([
       {
         ...foo,
+        originalContent: compressed,
         content: full,
       },
       {

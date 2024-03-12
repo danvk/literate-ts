@@ -18,6 +18,8 @@ export interface CodeSample {
   tsOptions: CompilerOptions;
   sourceFile: string;
   lineNumber: number;
+  /** Is this code sample in a commented-out block? (Disables cosmetic checks.) */
+  inCommentBlock: boolean;
   nodeModules: readonly string[];
   /** If set, write this sample to a file with the given name instead of prepending. */
   targetFilename: string | null;
@@ -26,6 +28,8 @@ export interface CodeSample {
   prefixesLength: number;
   skip: boolean;
   output?: SampleOutput;
+  /** The raw content of the code sample (if different than content) */
+  originalContent?: string;
 }
 
 export interface Prefix {

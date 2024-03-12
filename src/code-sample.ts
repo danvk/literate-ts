@@ -15,6 +15,8 @@ export interface Processor {
   setNextId(idMetadata: IdMetadata): void;
   setNextLanguage(lang: string | null): void;
   addSample(code: string): void;
+  startCommentBlock(): void;
+  endCommentBlock(): void;
   resetWithNormalLine(): void;
 }
 
@@ -41,6 +43,7 @@ function process(
   let nextIsTSX = false;
   let nextShouldCheckJs = false;
   let targetFilename: string | null = null;
+  let inCommentBlock = false;
 
   const p: Processor = {
     setLineNum(line) {
@@ -121,6 +124,12 @@ function process(
     setNextLanguage(lang) {
       lastLanguage = lang;
     },
+    startCommentBlock() {
+      inCommentBlock = true;
+    },
+    endCommentBlock() {
+      inCommentBlock = false;
+    },
     addSample(content) {
       if (
         !lastMetadata &&
@@ -150,6 +159,7 @@ function process(
           prefixesLength: 0,
           skip: skipNext || skipRemaining,
           auxiliaryFiles: [],
+          inCommentBlock,
         });
         if (prependNext) {
           prefixes = prefixes.concat([
@@ -248,6 +258,7 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       checkJS: sample.checkJS,
       sourceFile: sample.sourceFile,
       lineNumber: sample.lineNumber,
+      inCommentBlock: sample.inCommentBlock,
       targetFilename: sample.targetFilename,
       auxiliaryFiles: auxiliary.map(({id}) => {
         const sample = idToSample[id];
@@ -259,6 +270,8 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       }),
       skip: sample.skip,
       prefixesLength: _.sum(combinedPrefixes.map(p => p.split('\n').length)),
+      originalContent:
+        sample.originalContent ?? sample.content === content ? undefined : sample.content,
       content,
     };
   });
@@ -270,6 +283,10 @@ export function applyReplacements(
 ): PrefixedCodeSample[] {
   const samples = _.cloneDeep(rawSamples) as PrefixedCodeSample[];
   const idToSample = _.keyBy(samples, 'id');
+  for (const sample of samples) {
+    // will be deleted from unaltered samples later
+    sample.originalContent = sample.content;
+  }
 
   // First check the external replacements
   for (const sample of samples) {
@@ -299,6 +316,11 @@ export function applyReplacements(
     }
   }
 
+  for (const sample of samples) {
+    if (sample.content === sample.originalContent) {
+      delete sample.originalContent;
+    }
+  }
   return samples;
 }
 
@@ -348,6 +370,7 @@ export function addResolvedChecks(sample: CodeSample): CodeSample {
 
   return {
     ...sample,
+    originalContent: sample.originalContent ?? content,
     content: newContent,
   };
 }

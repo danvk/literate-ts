@@ -13,6 +13,8 @@ export const baseSample = {
   skip: false,
   targetFilename: null,
   auxiliaryFiles: [],
+  inCommentBlock: false,
+  originalContent: undefined,
 } satisfies Partial<CodeSample>;
 
 export const baseExtract = {

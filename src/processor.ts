@@ -17,6 +17,7 @@ import {runNode} from './node-runner.js';
 import {Args} from './args.js';
 import _ from 'lodash';
 import {NormalizedReadResult, readPackageUpSync} from 'read-pkg-up';
+import {htmlToText} from 'html-to-text';
 
 function checkOutput(expectedOutput: string, input: CodeSample) {
   const actualOutput = input.output;
@@ -81,15 +82,20 @@ function checkLineLengths(sample: CodeSample, printWidth: number) {
   if (sample.inCommentBlock) {
     return; // no need to run cosmetic checks on commented-out code samples.
   }
-  const lines = sample.content.split('\n');
-  lines.forEach((line, i) => {
-    line = line.trimEnd();
+  let {content} = sample;
+  if (sample.language === 'node') {
+    // program listing, need to strip HTML to get displayed line length.
+    content = htmlToText(content);
+  }
+  const lines = content.split('\n');
+  for (let i = sample.prefixesLength; i < lines.length; i++) {
+    const line = lines[i].trimEnd();
     if (line.length > printWidth) {
       fail(`Line too long: ${line.length} > ${printWidth}`, {
         location: {line: i, start: printWidth, end: line.length},
       });
     }
-  });
+  }
 }
 
 export class Processor {

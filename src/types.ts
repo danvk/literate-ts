@@ -28,6 +28,7 @@ export interface CodeSample {
   prefixesLength: number;
   skip: boolean;
   output?: SampleOutput;
+  /** The raw content of the code sample (if different than content) */
   originalContent?: string;
 }
 

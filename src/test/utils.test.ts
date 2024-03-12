@@ -1,4 +1,6 @@
-import {dedent, matchAndExtract, reduceIndentation, sha256} from '../utils.js';
+import ts from 'typescript';
+
+import {dedent, getEnumValue, matchAndExtract, reduceIndentation, sha256} from '../utils.js';
 
 describe('utils', () => {
   test('matchAndExtract', () => {
@@ -30,5 +32,17 @@ describe('utils', () => {
       }
     }
   `);
+  });
+
+  test('getEnumValue', () => {
+    expect(getEnumValue('ScriptTarget', ts.ScriptTarget, 2)).toEqual(2);
+    expect(getEnumValue('ScriptTarget', ts.ScriptTarget, '2')).toEqual(2);
+    expect(getEnumValue('ScriptTarget', ts.ScriptTarget, 'ES2020')).toEqual(7);
+    expect(() => getEnumValue('ScriptTarget', ts.ScriptTarget, 'ES2007')).toThrow(
+      /ES2007 is not a valid ScriptTarget. Expected one of: 0, 1, 2, 3, 4, 5, 6, 7/,
+    );
+    expect(() => getEnumValue('ScriptTarget', ts.ScriptTarget, 2007)).toThrow(
+      /2007 is not a valid ScriptTarget. Expected one of: 0, 1, 2, 3, 4, 5, 6, 7/,
+    );
   });
 });

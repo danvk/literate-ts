@@ -6,6 +6,8 @@ import {extractAsciidocSamples} from './asciidoc.js';
 import {extractMarkdownSamples} from './markdown.js';
 import {generateIdMetadata} from './metadata.js';
 import {stripComments} from 'jsonc-parser';
+import ts from 'typescript';
+import {EnumType, getEnumValue} from './utils.js';
 
 export interface Processor {
   /** Let the processor know about the current line number (0-based). */
@@ -19,6 +21,15 @@ export interface Processor {
   endCommentBlock(): void;
   resetWithNormalLine(): void;
 }
+
+const tsconfigToEnum: Record<string, EnumType<object> | undefined> = {
+  jsx: ts.JsxEmit,
+  target: ts.ScriptTarget,
+  module: ts.ModuleKind,
+  moduleResolution: ts.ModuleResolutionKind,
+  moduleDetection: ts.ModuleDetectionKind,
+  newLine: ts.NewLineKind,
+};
 
 function process(
   text: string,
@@ -86,8 +97,10 @@ function process(
         skipRemaining = true;
       } else if (directive.startsWith('tsconfig:')) {
         const [key, value] = directive.split(':', 2)[1].split('=', 2);
-        tsOptions[key] =
-          value === 'true'
+        const enumKind = tsconfigToEnum[key];
+        tsOptions[key] = enumKind
+          ? getEnumValue(key, enumKind, value)
+          : value === 'true'
             ? true
             : value === 'false'
               ? false

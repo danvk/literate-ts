@@ -95,3 +95,27 @@ export const tuple = <Args extends unknown[]>(...args: Args): Args => args;
 export function reduceIndentation(src: string): string {
   return src.replace(/^(?:    )+/gm, spaces => _.repeat(' ', spaces.length / 2));
 }
+
+// See https://stackoverflow.com/a/50159864/388951
+export type EnumType<E> = Record<keyof E, number | string> & {[k: number]: string};
+
+export function getEnumValue<E extends EnumType<E>>(
+  enumName: string,
+  enumType: E,
+  str: string | number,
+): number {
+  if (!(str in enumType)) {
+    throw new Error(
+      `${str} is not a valid ${enumName}. Expected one of: ${Object.keys(enumType).join(', ')}`,
+    );
+  }
+
+  if (typeof str === 'number') {
+    return str;
+  } else if (!isNaN(Number(str))) {
+    return Number(str);
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (enumType as any)[str];
+  }
+}

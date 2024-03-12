@@ -1,0 +1,34 @@
+If your `package.json` has a `prettier` section, literate-ts will check the line lengths of code samples against prettier's `printWidth`:
+
+[source,json]
+----
+{
+  "prettier": {
+    "printWidth": 81
+  }
+}
+----
+
+Line length limits are not enforced against code samples in commented-out blocks, even when they are prepended:
+
+////
+// verifier:prepend-to-following
+[source,ts]
+----
+// This is an extremely long line. This is an extremely long line. This is an extremely long line. This is an extremely long line.
+----
+////
+
+This is the only sample that should produce an error. (literate-ts sets `printWidth` to 100 for itself.)
+
+[source,ts]
+----
+// This is also a long line. 100 characters ought to be enough for anyone. Don't you think that's true?
+----
+
+A program listing is fine, so long as it's less than the `printWidth` after HTML tags are stripped:
+
+++++
+<pre data-type="programlisting">&gt; <strong>["some", "text", "that", "is", "long", "but", "not", "too", "long"].length</strong>
+9</pre>
+++++

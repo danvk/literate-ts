@@ -270,6 +270,7 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       }),
       skip: sample.skip,
       prefixesLength: _.sum(combinedPrefixes.map(p => p.split('\n').length)),
+      originalContent: sample.originalContent ?? sample.content,
       content,
     };
   });
@@ -281,6 +282,10 @@ export function applyReplacements(
 ): PrefixedCodeSample[] {
   const samples = _.cloneDeep(rawSamples) as PrefixedCodeSample[];
   const idToSample = _.keyBy(samples, 'id');
+  for (const sample of samples) {
+    // will be deleted from unaltered samples later
+    sample.originalContent = sample.content;
+  }
 
   // First check the external replacements
   for (const sample of samples) {
@@ -310,6 +315,11 @@ export function applyReplacements(
     }
   }
 
+  for (const sample of samples) {
+    if (sample.content === sample.originalContent) {
+      delete sample.originalContent;
+    }
+  }
   return samples;
 }
 
@@ -359,6 +369,7 @@ export function addResolvedChecks(sample: CodeSample): CodeSample {
 
   return {
     ...sample,
+    originalContent: sample.originalContent ?? content,
     content: newContent,
   };
 }

@@ -82,20 +82,20 @@ function checkLineLengths(sample: CodeSample, printWidth: number) {
   if (sample.inCommentBlock) {
     return; // no need to run cosmetic checks on commented-out code samples.
   }
-  let {content} = sample;
+  let content = sample.originalContent ?? sample.content;
   if (sample.language === 'node') {
     // program listing, need to strip HTML to get displayed line length.
     content = htmlToText(content);
   }
   const lines = content.split('\n');
-  for (let i = sample.prefixesLength; i < lines.length; i++) {
-    const line = lines[i].trimEnd();
+  lines.forEach((line, i) => {
+    line = lines[i].trimEnd();
     if (line.length > printWidth) {
       fail(`Line too long: ${line.length} > ${printWidth}`, {
         location: {line: i, start: printWidth, end: line.length},
       });
     }
-  }
+  });
 }
 
 export class Processor {

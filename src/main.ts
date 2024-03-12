@@ -75,12 +75,14 @@ export function main() {
     for (const [file, fileResults] of Object.entries(getTestResults())) {
       const displayPath = isAbsolute(file) ? file : `./${file}`;
       const numPassed = _.sum(_.map(fileResults, n => (n === 0 ? 1 : 0)));
-      console.log(`./${displayPath}`, `${numPassed}/${_.size(fileResults)} passed`);
-      for (const [id, failures] of Object.entries(fileResults)) {
-        numTotal += 1;
-        if (failures > 0) {
-          console.log(chalk.red(` ✗ ${id}`));
-          numFailures += 1;
+      if (numPassed < _.size(fileResults)) {
+        console.log(`${displayPath}`, `${numPassed}/${_.size(fileResults)} passed`);
+        for (const [id, failures] of Object.entries(fileResults)) {
+          numTotal += 1;
+          if (failures > 0) {
+            console.log(chalk.red(` ✗ ${id}`));
+            numFailures += 1;
+          }
         }
       }
     }

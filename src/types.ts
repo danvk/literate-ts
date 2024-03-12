@@ -28,6 +28,7 @@ export interface CodeSample {
   prefixesLength: number;
   skip: boolean;
   output?: SampleOutput;
+  originalContent?: string;
 }
 
 export interface Prefix {

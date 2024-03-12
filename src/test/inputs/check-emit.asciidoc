@@ -1,9 +1,9 @@
 With target=ES2021, numeric separators are preserved:
 
 // verifier:tsconfig:alwaysStrict=false
-// verifier:tsconfig:moduleResolution=2
-// verifier:tsconfig:module=99
-// verifier:tsconfig:target=8
+// verifier:tsconfig:moduleResolution=NodeJs
+// verifier:tsconfig:module=NodeNext
+// verifier:tsconfig:target=ES2021
 [[sep-es2021]]
 [source,ts]
 ----
@@ -20,7 +20,7 @@ const num = 1_234_567;
 
 With a lower target, however, they are not:
 
-// verifier:tsconfig:target=1
+// verifier:tsconfig:target=ES5
 [[sep-es5]]
 [source,ts]
 ----

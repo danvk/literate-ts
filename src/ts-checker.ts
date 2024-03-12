@@ -15,7 +15,7 @@ import {writeTempFile, matchAndExtract, getTempDir, matchAll, sha256, tuple} fro
 import {CodeSample} from './types.js';
 import {ExecErrorType, runNode} from './node-runner.js';
 import {VERSION} from './version.js';
-import {readPackageUpSync} from 'read-pkg-up';
+import {NormalizedPackageJson, NormalizedReadResult, readPackageUpSync} from 'read-pkg-up';
 
 export interface TypeScriptError {
   line: number;
@@ -601,6 +601,7 @@ export async function checkTs(
   outputMode: OutputMode,
   config: ConfigBundle,
   options: {skipCache: boolean},
+  pkg: NormalizedReadResult | undefined,
 ): Promise<CheckTsResult> {
   const [key, cacheKey] = getCheckTsCacheKey(sample, outputMode);
   const tempFilePath = path.join(CACHE_DIR, `${key}.json`);
@@ -615,7 +616,7 @@ export async function checkTs(
     return out;
   }
 
-  const result = await uncachedCheckTs(sample, outputMode, config);
+  const result = await uncachedCheckTs(sample, outputMode, config, pkg);
   if (result.passed === false) {
     result.failure = getLastFailReason() ?? undefined;
   }
@@ -626,7 +627,12 @@ export async function checkTs(
   return result;
 }
 
-function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.CompilerOptions) {
+function setupNodeModules(
+  sample: CodeSample,
+  sampleDir: string,
+  options: ts.CompilerOptions,
+  pkg: NormalizedReadResult | undefined,
+) {
   const nodeModulesPath = path.join(sampleDir, 'node_modules');
   fs.emptyDirSync(nodeModulesPath);
 
@@ -648,7 +654,6 @@ function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.Com
       return {passed: false};
     }
     const {resolvedFileName} = resolvedModule;
-    const pkg = readPackageUpSync({cwd: resolvedFileName});
     if (!pkg) {
       fail(`Could not find package.json from ${resolvedFileName}.`);
       return {passed: false};
@@ -671,6 +676,7 @@ async function uncachedCheckTs(
   sample: CodeSample,
   outputMode: OutputMode,
   config: ConfigBundle,
+  pkg: NormalizedReadResult | undefined,
 ): Promise<CheckTsResult> {
   const {id, content} = sample;
   const fileName = sample.targetFilename || id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
@@ -688,7 +694,7 @@ async function uncachedCheckTs(
     ...sample.tsOptions,
   };
 
-  setupNodeModules(sample, sampleDir, options);
+  setupNodeModules(sample, sampleDir, options, pkg);
   if (!_.isEmpty(sample.nodeModules)) {
     options.typeRoots = [path.join(sampleDir, 'node_modules', '@types')];
   }

@@ -11,6 +11,7 @@ const NODE_PROGRAM_LISTING = /<pre data-type="programlisting".*>&gt; /;
 
 export function extractAsciidocSamples(sourceFile: string, text: string, p: Processor) {
   let isIgnoringFencedCodeBlocks = false;
+  let inCommentBlock = false;
   const lines = text.split('\n');
 
   const extractCodeSample = (i: number, until: string) => {
@@ -47,6 +48,14 @@ export function extractAsciidocSamples(sourceFile: string, text: string, p: Proc
         isIgnoringFencedCodeBlocks = true;
       } else {
         p.setDirective(directive);
+      }
+    } else if (line === '////') {
+      if (inCommentBlock) {
+        p.endCommentBlock();
+        inCommentBlock = false;
+      } else {
+        p.startCommentBlock();
+        inCommentBlock = true;
       }
     } else {
       const matches = matchAndExtract(EXTRACT_BACKTICKS, line);

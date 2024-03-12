@@ -347,6 +347,7 @@ describe('applyReplacements', () => {
     content: '',
     prefixesLength: 0,
     lineNumber: 4,
+    inCommentBlock: false,
   };
 
   const compressed = dedent`

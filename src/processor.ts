@@ -1,6 +1,6 @@
 import fs from 'fs';
 import {ParseError, parse as parseJSONC, printParseErrorCode} from 'jsonc-parser';
-import {dirname, isAbsolute} from 'path';
+import {dirname, isAbsolute, resolve} from 'path';
 
 import {
   applyPrefixes,
@@ -16,6 +16,7 @@ import {ConfigBundle, checkProgramListing, checkTs} from './ts-checker.js';
 import {runNode} from './node-runner.js';
 import {Args} from './args.js';
 import _ from 'lodash';
+import {NormalizedReadResult, readPackageUpSync} from 'read-pkg-up';
 
 function checkOutput(expectedOutput: string, input: CodeSample) {
   const actualOutput = input.output;
@@ -76,6 +77,21 @@ function checkEmitOutput(expectedOutput: string, input: CodeSample) {
   }
 }
 
+function checkLineLengths(sample: CodeSample, printWidth: number) {
+  if (sample.inCommentBlock) {
+    return; // no need to run cosmetic checks on commented-out code samples.
+  }
+  const lines = sample.content.split('\n');
+  lines.forEach((line, i) => {
+    line = line.trimEnd();
+    if (line.length > printWidth) {
+      fail(`Line too long: ${line.length} > ${printWidth}`, {
+        location: {line: i, start: printWidth, end: line.length},
+      });
+    }
+  });
+}
+
 export class Processor {
   argv: Args;
   typeScriptBundle: ConfigBundle;
@@ -107,6 +123,9 @@ export class Processor {
     const replacedSamples = applyReplacements(rawSamples, this.sources);
     const samples = applyPrefixes(replacedSamples).map(addResolvedChecks);
 
+    const sourceFileAbsPath = resolve(process.cwd(), path);
+    const pkg = readPackageUpSync({cwd: sourceFileAbsPath});
+
     const outputs = _.keyBy(samples, 'id');
     for (const [i, sample] of Object.entries(samples)) {
       const n = 1 + Number(i);
@@ -114,13 +133,17 @@ export class Processor {
         continue;
       }
       this.setStatus(`${fileStatus}: ${n}/${samples.length} ${sample.descriptor}`);
-      await this.checkSample(sample, outputs);
+      await this.checkSample(sample, outputs, pkg);
     }
 
     finishFile();
   }
 
-  async checkSample(sample: CodeSample, idToSample: {[id: string]: CodeSample}): Promise<void> {
+  async checkSample(
+    sample: CodeSample,
+    idToSample: {[id: string]: CodeSample},
+    pkg: NormalizedReadResult | undefined,
+  ): Promise<void> {
     const {id, language, content, skip} = sample;
     if (skip) {
       return;
@@ -134,9 +157,15 @@ export class Processor {
         fail(`Cannot both run and check emitted JS`);
       }
       const outputMode = shouldRun ? 'run' : shouldEmit ? 'emit' : false;
-      const result = await checkTs(sample, outputMode, this.typeScriptBundle, {
-        skipCache: !!this.argv.nocache,
-      });
+      const result = await checkTs(
+        sample,
+        outputMode,
+        this.typeScriptBundle,
+        {
+          skipCache: !!this.argv.nocache,
+        },
+        pkg,
+      );
       if (result.output !== undefined) {
         sample.output = result.output;
       }
@@ -185,6 +214,12 @@ export class Processor {
         checkOutput(content, input);
       }
     }
+
+    const printWidth = pkg?.packageJson.prettier?.printWidth;
+    if (printWidth) {
+      checkLineLengths(sample, printWidth);
+    }
+
     finishSample();
   }
 }

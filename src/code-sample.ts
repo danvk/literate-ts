@@ -15,6 +15,8 @@ export interface Processor {
   setNextId(idMetadata: IdMetadata): void;
   setNextLanguage(lang: string | null): void;
   addSample(code: string): void;
+  startCommentBlock(): void;
+  endCommentBlock(): void;
   resetWithNormalLine(): void;
 }
 
@@ -41,6 +43,7 @@ function process(
   let nextIsTSX = false;
   let nextShouldCheckJs = false;
   let targetFilename: string | null = null;
+  let inCommentBlock = false;
 
   const p: Processor = {
     setLineNum(line) {
@@ -121,6 +124,12 @@ function process(
     setNextLanguage(lang) {
       lastLanguage = lang;
     },
+    startCommentBlock() {
+      inCommentBlock = true;
+    },
+    endCommentBlock() {
+      inCommentBlock = false;
+    },
     addSample(content) {
       if (
         !lastMetadata &&
@@ -150,6 +159,7 @@ function process(
           prefixesLength: 0,
           skip: skipNext || skipRemaining,
           auxiliaryFiles: [],
+          inCommentBlock,
         });
         if (prependNext) {
           prefixes = prefixes.concat([
@@ -248,6 +258,7 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       checkJS: sample.checkJS,
       sourceFile: sample.sourceFile,
       lineNumber: sample.lineNumber,
+      inCommentBlock: sample.inCommentBlock,
       targetFilename: sample.targetFilename,
       auxiliaryFiles: auxiliary.map(({id}) => {
         const sample = idToSample[id];

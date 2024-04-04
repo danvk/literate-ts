@@ -190,19 +190,14 @@ exports[`checker asciidoc checker snapshots "./src/test/inputs/empty-twoslash.as
     "BEGIN #././src/test/inputs/empty-twoslash.asciidoc:7 (--filter empty-twoslash-7)
 ",
     "Code passed type checker.",
-    "💥 ./src/test/inputs/empty-twoslash.asciidoc:15:1-13: Failed type assertion for \`fetchANumber\`
+    "💥 ./src/test/inputs/empty-twoslash.asciidoc:10:1-16: Failed type assertion for \`getRandomNumber\`
   Expected: 
-    Actual: function fetchANumber(input: RequestInfo, init?: RequestInit | undefined): Promise<number>",
+    Actual: function getRandomNumber(): Promise<number>",
     "  0/1 twoslash type assertions matched.",
-    "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
-  const response = await fetch(...args);
-  const num = Number(await response.text());
-  if (isNaN(num)) {
-    throw new Error(\`Response was not a number.\`);
-  }
-  return num;
+    "async function getRandomNumber(): Promise<number> {
+  return Math.random();
 }
-fetchANumber
+getRandomNumber
 // ^?",
     "tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}",
     "
@@ -1413,15 +1408,10 @@ exports[`extractSamples snapshot: empty-twoslash 1`] = `
   {
     "auxiliaryFiles": [],
     "checkJS": false,
-    "content": "async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
-  const response = await fetch(...args);
-  const num = Number(await response.text());
-  if (isNaN(num)) {
-    throw new Error(\`Response was not a number.\`);
-  }
-  return num;
+    "content": "async function getRandomNumber(): Promise<number> {
+  return Math.random();
 }
-fetchANumber
+getRandomNumber
 // ^?",
     "descriptor": "./empty-twoslash.asciidoc:7",
     "id": "empty-twoslash-7",

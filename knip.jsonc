@@ -5,8 +5,12 @@
 	],
 	"ignore": [],
 	"ignoreBinaries": [],
-	// This is used in a code sample in a test
-	"ignoreDependencies": ["@types/express"],
+	"ignoreDependencies": [
+		// This is used in a code sample in a test
+		"@types/express",
+		// This one is weird.
+		"@types/jest"
+	],
 	"ignoreExportsUsedInFile": true,
 	"project": ["src/**/*.ts"]
 }

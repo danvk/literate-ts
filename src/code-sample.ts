@@ -284,7 +284,7 @@ export function applyPrefixes(samples: PrefixedCodeSample[]): CodeSample[] {
       skip: sample.skip,
       prefixesLength: _.sum(combinedPrefixes.map(p => p.split('\n').length)),
       originalContent:
-        sample.originalContent ?? sample.content === content ? undefined : sample.content,
+        sample.originalContent ?? (sample.content === content ? undefined : sample.content),
       content,
     };
   });

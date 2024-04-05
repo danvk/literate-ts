@@ -44,7 +44,7 @@ function hash(str: string, seed = 0) {
 }
 
 export function checkerTest(shard: number, total: number) {
-  const shardTests = ALL_TESTS.filter(t => hash(t) % total === shard);
+  const shardTests = ALL_TESTS.filter(t => hash(t, 42) % total === shard);
 
   describe('checker baselines', () => {
     afterEach(() => {

@@ -1,0 +1,109 @@
+[
+  {
+    "descriptor": "./program-listing.asciidoc:4",
+    "id": "program-listing-4",
+    "sectionHeader": null,
+    "language": "node",
+    "content": "<pre data-type=\"programlisting\">&gt; <strong>x = {}</strong>\n{}\n&gt; <strong>x[[1, 2, 3]] = 2</strong>\n2\n&gt; <strong>x</strong>\n{ '1,2,3': 2 }</pre>",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "program-listing.asciidoc",
+    "lineNumber": 3,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./program-listing.asciidoc:17",
+    "id": "program-listing-17",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "const place = {name: 'New York', latLng: [41.6868, -74.2692]};\nconst loc = place.latLng;",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "program-listing.asciidoc",
+    "lineNumber": 16,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./program-listing.asciidoc:24",
+    "id": "program-listing-24",
+    "sectionHeader": null,
+    "language": "node",
+    "content": "<pre data-type=\"programlisting\">&gt; <strong>loc[0] = 0;</strong>\n0\n&gt; <strong>place.latLng</strong>\n[ 0, -73.979 ]</pre>",
+    "prefixes": [
+      {
+        "id": "program-listing-17"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "program-listing.asciidoc",
+    "lineNumber": 23,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./program-listing.asciidoc:40",
+    "id": "program-listing-40",
+    "sectionHeader": null,
+    "language": "node",
+    "content": "<pre data-type=\"programlisting\" data-code-language=\"javascript\">&gt; <strong> RegExp.prototype.monkey = 'Capuchin'</strong>\n\"Capuchin\"\n&gt; <strong>/123/.monkey</strong>\n\"Capuchi\"</pre>",
+    "prefixes": [
+      {
+        "id": "program-listing-17"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "program-listing.asciidoc",
+    "lineNumber": 39,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./program-listing.asciidoc:49",
+    "id": "program-listing-49",
+    "sectionHeader": null,
+    "language": "node",
+    "content": "<pre data-type=\"programlisting\">&gt; <strong>console.log('hello'); console.log('goodbye');</strong>\nhello\ngoodbye</pre>",
+    "prefixes": [
+      {
+        "id": "program-listing-17"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "program-listing.asciidoc",
+    "lineNumber": 48,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

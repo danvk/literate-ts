@@ -1,0 +1,44 @@
+[
+  {
+    "descriptor": "./augment-dom.asciidoc:6",
+    "id": "augment-dom-6",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "export {}\ndeclare global {\n  type HTMLTag = keyof HTMLElementTagNameMap;\n  interface ParentNode {\n  querySelector<\n      TagName extends HTMLTag\n  >(\n      selector: `${TagName}#${string}`\n  ): HTMLElementTagNameMap[TagName] | null;\n  }\n}",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "augment-dom.asciidoc",
+    "lineNumber": 5,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./augment-dom.asciidoc:23",
+    "id": "augment-dom-23",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "const img = document.querySelector('img#spectacular-sunset');\n//    ^? const img: HTMLImageElement | null\nimg?.src  // ok",
+    "prefixes": [
+      {
+        "id": "augment-dom-6"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "augment-dom.asciidoc",
+    "lineNumber": 22,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

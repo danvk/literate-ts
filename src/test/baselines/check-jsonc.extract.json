@@ -1,0 +1,40 @@
+[
+  {
+    "descriptor": "./check-jsonc.asciidoc:5",
+    "id": "check-jsonc-5",
+    "sectionHeader": null,
+    "language": "json",
+    "content": "// data.json\n{\n  \"year\": 2023,\n  \"months\": [\n    \"Jan\",\n    \"Feb\",\n    /* ... */\n    \"Dec\"\n  ]\n}",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "check-jsonc.asciidoc",
+    "lineNumber": 4,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./check-jsonc.asciidoc:21",
+    "id": "check-jsonc-21",
+    "sectionHeader": null,
+    "language": "json",
+    "content": "{\n  year: 2023,\n  months\": [\n    \"Jan\",\n  ]\n}",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "check-jsonc.asciidoc",
+    "lineNumber": 20,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

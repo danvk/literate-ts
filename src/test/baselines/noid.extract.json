@@ -1,0 +1,21 @@
+[
+  {
+    "descriptor": "./noid.asciidoc:10",
+    "id": "noid-10",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "console.log('Hello', 'TS');",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "noid.asciidoc",
+    "lineNumber": 9,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

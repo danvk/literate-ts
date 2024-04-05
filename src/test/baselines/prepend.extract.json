@@ -1,0 +1,63 @@
+[
+  {
+    "descriptor": "./prepend.asciidoc:2",
+    "id": "prefix",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "type AB = 'a' | 'b';",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "prepend.asciidoc",
+    "lineNumber": 4,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./prepend.asciidoc:8",
+    "id": "combined",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "const a: AB = 'a';",
+    "prefixes": [
+      {
+        "id": "prefix"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "prepend.asciidoc",
+    "lineNumber": 10,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./prepend.asciidoc:16",
+    "id": "final",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "const a: AB = 'a';",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "prepend.asciidoc",
+    "lineNumber": 18,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

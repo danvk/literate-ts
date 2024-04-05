@@ -1,0 +1,44 @@
+[
+  {
+    "descriptor": "./commented-sample-with-error.asciidoc:7",
+    "id": "commented-sample-with-error-7",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "const value: number = \"123\";",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "commented-sample-with-error.asciidoc",
+    "lineNumber": 6,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": true
+  },
+  {
+    "descriptor": "./commented-sample-with-error.asciidoc:17",
+    "id": "commented-sample-with-error-17",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "console.log(value);\n//          ^? const value: number",
+    "prefixes": [
+      {
+        "id": "commented-sample-with-error-7"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "commented-sample-with-error.asciidoc",
+    "lineNumber": 16,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "descriptor": "./twoslash-assertion.asciidoc:5",
+    "id": "twoslash-assertion-5",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "type T = `${number}`;\n\nconst one = 1;\n//    ^? const one: 1\n\nconst two = 2;  // type is 2",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "twoslash-assertion.asciidoc",
+    "lineNumber": 4,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

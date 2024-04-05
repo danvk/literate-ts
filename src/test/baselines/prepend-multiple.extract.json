@@ -1,0 +1,70 @@
+[
+  {
+    "descriptor": "./prepend-multiple.asciidoc:4",
+    "id": "prepend-multiple-4",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "type AB = 'a' | 'b';",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "prepend-multiple.asciidoc",
+    "lineNumber": 3,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./prepend-multiple.asciidoc:10",
+    "id": "prepend-multiple-10",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "type ABC = AB | 'c';",
+    "prefixes": [
+      {
+        "id": "prepend-multiple-4"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "prepend-multiple.asciidoc",
+    "lineNumber": 9,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./prepend-multiple.asciidoc:15",
+    "id": "prepend-multiple-15",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "const c: ABC = 'c';",
+    "prefixes": [
+      {
+        "id": "prepend-multiple-4"
+      },
+      {
+        "id": "prepend-multiple-10"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "prepend-multiple.asciidoc",
+    "lineNumber": 14,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

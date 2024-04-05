@@ -1,0 +1,136 @@
+[
+  {
+    "descriptor": "./equivalent.asciidoc:8",
+    "id": "equivalent-8",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "interface Point {\n  x: number;\n  y: number;\n}\n\ntype T = keyof Point;\n//   ^? type T = keyof Point",
+    "prefixes": [],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "equivalent.asciidoc",
+    "lineNumber": 7,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./equivalent.asciidoc:23",
+    "id": "equivalent-23",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "type T2 = keyof Point;\n//   ^? type T2 = keyof Point (equivalent to \"x\" | \"y\")",
+    "prefixes": [
+      {
+        "id": "equivalent-8"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "equivalent.asciidoc",
+    "lineNumber": 22,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./equivalent.asciidoc:31",
+    "id": "equivalent-31",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "type T2 = keyof Point;\n//   ^? type T2 = keyof Point (equivalent to \"x\" | \"y\" | \"z\")",
+    "prefixes": [
+      {
+        "id": "equivalent-8"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "equivalent.asciidoc",
+    "lineNumber": 30,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./equivalent.asciidoc:39",
+    "id": "equivalent-39",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "type T2 = keyof Point;\n//   ^? type T2 = keyof Point\n//      (equivalent to \"x\" | \"y\" | \"z\")",
+    "prefixes": [
+      {
+        "id": "equivalent-8"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "equivalent.asciidoc",
+    "lineNumber": 38,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./equivalent.asciidoc:48",
+    "id": "equivalent-48",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "function foo(pt: Point) {\n  let k: keyof Point;\n  for (k in pt) {\n    // ^? let k: keyof Point (equivalent to \"x\" | \"y\")\n  }\n}",
+    "prefixes": [
+      {
+        "id": "equivalent-8"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "equivalent.asciidoc",
+    "lineNumber": 47,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  },
+  {
+    "descriptor": "./equivalent.asciidoc:60",
+    "id": "equivalent-60",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "function foo(pt: Point) {\n  let k: keyof Point;\n  for (k in pt) {\n    // ^? let k: keyof Point (equivalent to \"x\" | \"y\" | \"z\")\n  }\n}",
+    "prefixes": [
+      {
+        "id": "equivalent-8"
+      }
+    ],
+    "nodeModules": [],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "equivalent.asciidoc",
+    "lineNumber": 59,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

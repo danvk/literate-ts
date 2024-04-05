@@ -1,0 +1,48 @@
+[
+  {
+    "descriptor": "./express.asciidoc:8",
+    "id": "express-8",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "import express from 'express';\nconst app = express();\n//    ^? const app: Express",
+    "prefixes": [],
+    "nodeModules": [
+      "@types/express"
+    ],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "express.asciidoc",
+    "lineNumber": 7,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": true
+  },
+  {
+    "descriptor": "./express.asciidoc:16",
+    "id": "express-16",
+    "sectionHeader": null,
+    "language": "ts",
+    "content": "// Don't do this:\napp.get('/health', (request: express.Request, response: express.Response) => {\n  response.send('OK');\n});\n\n// Do this:\napp.get('/health', (request, response) => {\n  //                ^? (parameter) request: Request<...>\n  response.send('OK');\n  // ^? (parameter) response: Response<...>\n});",
+    "prefixes": [
+      {
+        "id": "express-8"
+      }
+    ],
+    "nodeModules": [
+      "@types/express"
+    ],
+    "isTSX": false,
+    "checkJS": false,
+    "sourceFile": "express.asciidoc",
+    "lineNumber": 15,
+    "targetFilename": null,
+    "tsOptions": {},
+    "prefixesLength": 0,
+    "skip": false,
+    "auxiliaryFiles": [],
+    "inCommentBlock": false
+  }
+]

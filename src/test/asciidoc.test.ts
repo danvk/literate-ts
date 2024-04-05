@@ -1,4 +1,5 @@
 import fs from 'fs';
+import {readFile, writeFile} from 'fs/promises';
 import glob from 'fast-glob';
 import path from 'path';
 
@@ -80,19 +81,30 @@ const a: AB = 'a';
 ----
 `;
 
-describe('extractSamples', () => {
-  test('snapshot', () => {
-    const inputFiles = glob.sync('./src/test/inputs/*.asciidoc');
+const TEST_DIR = 'src/test/inputs';
+const asciidocFiles = fs
+  .readdirSync(TEST_DIR, {recursive: true})
+  .filter((path): path is string => typeof path === 'string')
+  .filter(path => path.endsWith('.asciidoc'))
+  .map(p => path.join(TEST_DIR, p));
 
-    for (const inputFile of inputFiles) {
-      if (inputFile.includes('duplicate')) {
-        continue; // this one throws and is tested separately, below
-      }
-      const {base, name} = path.parse(inputFile);
-      expect(extractSamples(fs.readFileSync(inputFile, 'utf8'), name, base)).toMatchSnapshot(name);
+describe('asciidoc extract baselines', () => {
+  it.each(asciidocFiles.map(file => [file]))('snapshot: %s', async inputFile => {
+    if (inputFile.includes('duplicate')) {
+      return; // this one throws and is tested separately, below
     }
+    const {base, name} = path.parse(inputFile);
+    const content = await readFile(inputFile, 'utf8');
+    const samples = extractSamples(content, name, base);
+    const sampleTxt = JSON.stringify(samples, null, 2);
+    const baselineFile = `src/test/baselines/${name}.extract.json`;
+    // await writeFile(baselineFile, sampleTxt, 'utf-8');
+    const expected = await readFile(baselineFile, 'utf-8');
+    expect(sampleTxt).toEqual(expected);
   });
+});
 
+describe('extractSamples', () => {
   test('basic', () => {
     expect(extractSamples(ASCII_DOC1, 'doc1', 'source.asciidoc')).toEqual([
       {
@@ -520,9 +532,10 @@ describe('checker', () => {
         statuses.push(status);
       });
       await processor.processSourceFile(inputFile, 1, 1);
+      const logs = getTestLogs().map(scrubTimingText);
+
       expect({
-        logs: getTestLogs().map(scrubTimingText),
-        statuses,
+        logs: statuses,
       }).toMatchSnapshot(inputFile);
     },
     40_000,

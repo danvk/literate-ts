@@ -1,0 +1,141 @@
+---- BEGIN FILE ./src/test/inputs/equivalent.asciidoc
+
+Found 6 code samples in ./src/test/inputs/equivalent.asciidoc
+BEGIN #././src/test/inputs/equivalent.asciidoc:8 (--filter equivalent-8)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: type T = keyof Point
+    Actual: type T = keyof Point
+  1/1 twoslash type assertions matched.
+
+END #././src/test/inputs/equivalent.asciidoc:8 (--- ms)
+
+BEGIN #././src/test/inputs/equivalent.asciidoc:23 (--filter equivalent-23)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: type T = keyof Point
+    Actual: type T = keyof Point
+Twoslash type assertion match:
+  Expected: type T2 = keyof Point
+    Actual: type T2 = keyof Point
+Twoslash type assertion match:
+  Expected: type SynthT2 = "x" | "y"
+    Actual: type SynthT2 = "x" | "y"
+  3/3 twoslash type assertions matched.
+
+END #././src/test/inputs/equivalent.asciidoc:23 (--- ms)
+
+BEGIN #././src/test/inputs/equivalent.asciidoc:31 (--filter equivalent-31)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: type T = keyof Point
+    Actual: type T = keyof Point
+Twoslash type assertion match:
+  Expected: type T2 = keyof Point
+    Actual: type T2 = keyof Point
+💥 ./src/test/inputs/equivalent.asciidoc:34:6-13: Failed type assertion for `SynthT2`
+  Expected: type SynthT2 = "x" | "y" | "z"
+    Actual: type SynthT2 = "x" | "y"
+  2/3 twoslash type assertions matched.
+interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthT2 = Resolve<T2>;
+//   ^? type SynthT2 = "x" | "y" | "z"
+
+tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
+
+END #././src/test/inputs/equivalent.asciidoc:31 (--- ms)
+
+BEGIN #././src/test/inputs/equivalent.asciidoc:39 (--filter equivalent-39)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: type T = keyof Point
+    Actual: type T = keyof Point
+Twoslash type assertion match:
+  Expected: type T2 = keyof Point
+    Actual: type T2 = keyof Point
+💥 ./src/test/inputs/equivalent.asciidoc:42:6-13: Failed type assertion for `SynthT2`
+  Expected: type SynthT2 = "x" | "y" | "z"
+    Actual: type SynthT2 = "x" | "y"
+  2/3 twoslash type assertions matched.
+interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+type T2 = keyof Point;
+//   ^? type T2 = keyof Point
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthT2 = Resolve<T2>;
+//   ^? type SynthT2 = "x" | "y" | "z"
+
+tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
+
+END #././src/test/inputs/equivalent.asciidoc:39 (--- ms)
+
+BEGIN #././src/test/inputs/equivalent.asciidoc:48 (--filter equivalent-48)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: type T = keyof Point
+    Actual: type T = keyof Point
+Twoslash type assertion match:
+  Expected: let k: keyof Point
+    Actual: let k: keyof Point
+Twoslash type assertion match:
+  Expected: type SynthK = "x" | "y"
+    Actual: type SynthK = "x" | "y"
+  3/3 twoslash type assertions matched.
+
+END #././src/test/inputs/equivalent.asciidoc:48 (--- ms)
+
+BEGIN #././src/test/inputs/equivalent.asciidoc:60 (--filter equivalent-60)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: type T = keyof Point
+    Actual: type T = keyof Point
+Twoslash type assertion match:
+  Expected: let k: keyof Point
+    Actual: let k: keyof Point
+💥 ./src/test/inputs/equivalent.asciidoc:67:6-12: Failed type assertion for `SynthK`
+  Expected: type SynthK = "x" | "y" | "z"
+    Actual: type SynthK = "x" | "y"
+  2/3 twoslash type assertions matched.
+interface Point {
+  x: number;
+  y: number;
+}
+
+type T = keyof Point;
+//   ^? type T = keyof Point
+function foo(pt: Point) {
+  let k: keyof Point;
+  for (k in pt) {
+    // ^? let k: keyof Point
+  }
+}
+type Resolve<Raw> = Raw extends Function ? Raw : {[K in keyof Raw]: Raw[K]};
+type SynthK = Resolve<keyof Point>;
+//   ^? type SynthK = "x" | "y" | "z"
+
+tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
+
+END #././src/test/inputs/equivalent.asciidoc:60 (--- ms)
+
+---- END FILE ./src/test/inputs/equivalent.asciidoc
+

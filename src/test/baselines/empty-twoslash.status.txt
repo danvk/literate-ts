@@ -1,0 +1,2 @@
+1/1: ././src/test/inputs/empty-twoslash.asciidoc
+1/1: ././src/test/inputs/empty-twoslash.asciidoc: 1/1 ././src/test/inputs/empty-twoslash.asciidoc:7

@@ -1,0 +1,55 @@
+---- BEGIN FILE ./src/test/inputs/prepend-as-file.asciidoc
+
+Found 6 code samples in ./src/test/inputs/prepend-as-file.asciidoc
+BEGIN #././src/test/inputs/prepend-as-file.asciidoc:10 (--filter prepend-as-file-10)
+
+Code passed type checker.
+
+END #././src/test/inputs/prepend-as-file.asciidoc:10 (--- ms)
+
+BEGIN #././src/test/inputs/prepend-as-file.asciidoc:21 (--filter prepend-as-file-21)
+
+matched errors:
+  expected: Object literal may only specify known properties, and 'z' does not exist in type 'Point'.
+    actual: Object literal may only specify known properties, and 'z' does not exist in type 'Point'.
+  error messages match: perfect
+Matched 1/1 errors.
+
+END #././src/test/inputs/prepend-as-file.asciidoc:21 (--- ms)
+
+BEGIN #././src/test/inputs/prepend-as-file.asciidoc:36 (--filter prepend-as-file-36)
+
+
+END #././src/test/inputs/prepend-as-file.asciidoc:36 (--- ms)
+
+BEGIN #././src/test/inputs/prepend-as-file.asciidoc:52 (--filter prepend-as-file-52)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: (property) "year": number
+    Actual: (property) "year": number
+Twoslash type assertion match:
+  Expected: (property) "months": string[]
+    Actual: (property) "months": string[]
+  2/2 twoslash type assertions matched.
+
+END #././src/test/inputs/prepend-as-file.asciidoc:52 (--- ms)
+
+BEGIN #././src/test/inputs/prepend-as-file.asciidoc:65 (--filter prepend-as-file-65)
+
+Code passed type checker.
+
+END #././src/test/inputs/prepend-as-file.asciidoc:65 (--- ms)
+
+BEGIN #././src/test/inputs/prepend-as-file.asciidoc:78 (--filter prepend-as-file-78)
+
+matched errors:
+  expected: '"vanilla"' is not assignable to parameter of type 'Flavor'
+    actual: Argument of type '"vanilla"' is not assignable to parameter of type 'Flavor'.
+  error messages match: subset
+Matched 1/1 errors.
+
+END #././src/test/inputs/prepend-as-file.asciidoc:78 (--- ms)
+
+---- END FILE ./src/test/inputs/prepend-as-file.asciidoc
+

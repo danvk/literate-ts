@@ -1,0 +1,43 @@
+---- BEGIN FILE ./src/test/inputs/program-listing.asciidoc
+
+Found 5 code samples in ./src/test/inputs/program-listing.asciidoc
+BEGIN #././src/test/inputs/program-listing.asciidoc:4 (--filter program-listing-4)
+
+Node session matched program listing.
+
+END #././src/test/inputs/program-listing.asciidoc:4 (--- ms)
+
+BEGIN #././src/test/inputs/program-listing.asciidoc:17 (--filter program-listing-17)
+
+Code passed type checker.
+
+END #././src/test/inputs/program-listing.asciidoc:17 (--- ms)
+
+BEGIN #././src/test/inputs/program-listing.asciidoc:24 (--filter program-listing-24)
+
+💥 ././src/test/inputs/program-listing.asciidoc:24: Node session did not match program listing.
+  - 0
+  + 0
+  - [ 0, -73.979 ]
+  + [ 0, -74.2692 ]
+
+END #././src/test/inputs/program-listing.asciidoc:24 (--- ms)
+
+BEGIN #././src/test/inputs/program-listing.asciidoc:40 (--filter program-listing-40)
+
+💥 ././src/test/inputs/program-listing.asciidoc:40: Node session did not match program listing.
+  - "Capuchin"
+  + 'Capuchin'
+  - "Capuchi"
+  + 'Capuchin'
+
+END #././src/test/inputs/program-listing.asciidoc:40 (--- ms)
+
+BEGIN #././src/test/inputs/program-listing.asciidoc:49 (--filter program-listing-49)
+
+Node session matched program listing.
+
+END #././src/test/inputs/program-listing.asciidoc:49 (--- ms)
+
+---- END FILE ./src/test/inputs/program-listing.asciidoc
+

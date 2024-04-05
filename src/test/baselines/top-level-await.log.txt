@@ -1,0 +1,15 @@
+---- BEGIN FILE ./src/test/inputs/top-level-await.asciidoc
+
+Found 1 code samples in ./src/test/inputs/top-level-await.asciidoc
+BEGIN #././src/test/inputs/top-level-await.asciidoc:8 (--filter top-level-await-8)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: const resource: number
+    Actual: const resource: number
+  1/1 twoslash type assertions matched.
+
+END #././src/test/inputs/top-level-await.asciidoc:8 (--- ms)
+
+---- END FILE ./src/test/inputs/top-level-await.asciidoc
+

@@ -1,0 +1,38 @@
+---- BEGIN FILE ./src/test/inputs/node-output.asciidoc
+
+Found 3 code samples in ./src/test/inputs/node-output.asciidoc
+BEGIN #././src/test/inputs/node-output.asciidoc:8 (--filter node-output-8)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: const xs: number[]
+    Actual: const xs: number[]
+Twoslash type assertion match:
+  Expected: const x: number
+    Actual: const x: number
+  2/2 twoslash type assertions matched.
+
+END #././src/test/inputs/node-output.asciidoc:8 (--- ms)
+
+BEGIN #././src/test/inputs/node-output.asciidoc:16 (--filter unsound-code)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: const xs: number[]
+    Actual: const xs: number[]
+Twoslash type assertion match:
+  Expected: const x: number
+    Actual: const x: number
+  2/2 twoslash type assertions matched.
+Node exited with error 1 on unsound-code.js
+
+END #././src/test/inputs/node-output.asciidoc:16 (--- ms)
+
+BEGIN #././src/test/inputs/node-output.asciidoc:24 (--filter unsound-code-output)
+
+Actual output matched expected.
+
+END #././src/test/inputs/node-output.asciidoc:24 (--- ms)
+
+---- END FILE ./src/test/inputs/node-output.asciidoc
+

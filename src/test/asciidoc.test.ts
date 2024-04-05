@@ -513,6 +513,7 @@ describe('checker', () => {
   ])(
     'asciidoc checker snapshots %p',
     async inputFile => {
+      const {name} = path.parse(inputFile);
       const statuses: string[] = [];
 
       const processor = new Processor(
@@ -536,9 +537,20 @@ describe('checker', () => {
       await processor.processSourceFile(inputFile, 1, 1);
       const logs = getTestLogs().map(scrubTimingText);
 
-      expect({
-        logs: statuses,
-      }).toMatchSnapshot(inputFile);
+      const logFile = `src/test/baselines/${name}.log.txt`;
+      const statusFile = `src/test/baselines/${name}.status.txt`;
+      const logText = logs.join('\n') + '\n';
+      const statusText = statuses.join('\n') + '\n';
+
+      if (process.env.UPDATE_MODE) {
+        await writeFile(logFile, logText, 'utf-8');
+        await writeFile(statusFile, statusText, 'utf-8');
+      }
+
+      const expectedLogs = await readFile(logFile, 'utf-8');
+      expect(logText).toEqual(expectedLogs);
+      const expectedStatuses = await readFile(statusFile, 'utf-8');
+      expect(statusText).toEqual(expectedStatuses);
     },
     40_000,
   );

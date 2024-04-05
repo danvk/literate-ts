@@ -1,0 +1,21 @@
+---- BEGIN FILE ./src/test/inputs/augment-dom.asciidoc
+
+Found 2 code samples in ./src/test/inputs/augment-dom.asciidoc
+BEGIN #././src/test/inputs/augment-dom.asciidoc:6 (--filter augment-dom-6)
+
+Code passed type checker.
+
+END #././src/test/inputs/augment-dom.asciidoc:6 (--- ms)
+
+BEGIN #././src/test/inputs/augment-dom.asciidoc:23 (--filter augment-dom-23)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: const img: HTMLImageElement | null
+    Actual: const img: HTMLImageElement | null
+  1/1 twoslash type assertions matched.
+
+END #././src/test/inputs/augment-dom.asciidoc:23 (--- ms)
+
+---- END FILE ./src/test/inputs/augment-dom.asciidoc
+

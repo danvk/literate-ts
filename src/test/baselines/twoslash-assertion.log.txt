@@ -1,0 +1,19 @@
+---- BEGIN FILE ./src/test/inputs/twoslash-assertion.asciidoc
+
+Found 1 code samples in ./src/test/inputs/twoslash-assertion.asciidoc
+BEGIN #././src/test/inputs/twoslash-assertion.asciidoc:5 (--filter twoslash-assertion-5)
+
+Code passed type checker.
+Type assertion match:
+  Expected: 2
+    Actual: 2
+  1/1 type assertions matched.
+Twoslash type assertion match:
+  Expected: const one: 1
+    Actual: const one: 1
+  1/1 twoslash type assertions matched.
+
+END #././src/test/inputs/twoslash-assertion.asciidoc:5 (--- ms)
+
+---- END FILE ./src/test/inputs/twoslash-assertion.asciidoc
+

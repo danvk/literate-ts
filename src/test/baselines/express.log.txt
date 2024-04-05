@@ -1,0 +1,55 @@
+---- BEGIN FILE ./src/test/inputs/express.asciidoc
+
+Found 2 code samples in ./src/test/inputs/express.asciidoc
+BEGIN #././src/test/inputs/express.asciidoc:8 (--filter express-8)
+
+Copied CWD/node_modules/@types/express -> TMPDIR/node_modules/@types/express
+Copied CWD/node_modules/@types/body-parser -> TMPDIR/node_modules/@types/body-parser
+Copied CWD/node_modules/@types/express-serve-static-core -> TMPDIR/node_modules/@types/express-serve-static-core
+Copied CWD/node_modules/@types/qs -> TMPDIR/node_modules/@types/qs
+Copied CWD/node_modules/@types/serve-static -> TMPDIR/node_modules/@types/serve-static
+Copied CWD/node_modules/@types/connect -> TMPDIR/node_modules/@types/connect
+Copied CWD/node_modules/@types/node -> TMPDIR/node_modules/@types/node
+Copied CWD/node_modules/@types/range-parser -> TMPDIR/node_modules/@types/range-parser
+Copied CWD/node_modules/@types/send -> TMPDIR/node_modules/@types/send
+Copied CWD/node_modules/@types/http-errors -> TMPDIR/node_modules/@types/http-errors
+Copied CWD/node_modules/@types/mime -> TMPDIR/node_modules/@types/mime
+Copied CWD/node_modules/undici-types -> TMPDIR/node_modules/undici-types
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: const app: Express
+    Actual: const app: Express
+  1/1 twoslash type assertions matched.
+
+END #././src/test/inputs/express.asciidoc:8 (--- ms)
+
+BEGIN #././src/test/inputs/express.asciidoc:16 (--filter express-16)
+
+Copied CWD/node_modules/@types/express -> TMPDIR/node_modules/@types/express
+Copied CWD/node_modules/@types/body-parser -> TMPDIR/node_modules/@types/body-parser
+Copied CWD/node_modules/@types/express-serve-static-core -> TMPDIR/node_modules/@types/express-serve-static-core
+Copied CWD/node_modules/@types/qs -> TMPDIR/node_modules/@types/qs
+Copied CWD/node_modules/@types/serve-static -> TMPDIR/node_modules/@types/serve-static
+Copied CWD/node_modules/@types/connect -> TMPDIR/node_modules/@types/connect
+Copied CWD/node_modules/@types/node -> TMPDIR/node_modules/@types/node
+Copied CWD/node_modules/@types/range-parser -> TMPDIR/node_modules/@types/range-parser
+Copied CWD/node_modules/@types/send -> TMPDIR/node_modules/@types/send
+Copied CWD/node_modules/@types/http-errors -> TMPDIR/node_modules/@types/http-errors
+Copied CWD/node_modules/@types/mime -> TMPDIR/node_modules/@types/mime
+Copied CWD/node_modules/undici-types -> TMPDIR/node_modules/undici-types
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: const app: Express
+    Actual: const app: Express
+Twoslash type assertion match:
+  Expected: (parameter) request: Request<...>
+    Actual: (parameter) request: Request<{}, any, any, QueryString.ParsedQs, Record<string, any>>
+Twoslash type assertion match:
+  Expected: (parameter) response: Response<...>
+    Actual: (parameter) response: Response<any, Record<string, any>, number>
+  3/3 twoslash type assertions matched.
+
+END #././src/test/inputs/express.asciidoc:16 (--- ms)
+
+---- END FILE ./src/test/inputs/express.asciidoc
+

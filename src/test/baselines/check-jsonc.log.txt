@@ -1,0 +1,16 @@
+---- BEGIN FILE ./src/test/inputs/check-jsonc.asciidoc
+
+Found 2 code samples in ./src/test/inputs/check-jsonc.asciidoc
+BEGIN #././src/test/inputs/check-jsonc.asciidoc:5 (--filter check-jsonc-5)
+
+
+END #././src/test/inputs/check-jsonc.asciidoc:5 (--- ms)
+
+BEGIN #././src/test/inputs/check-jsonc.asciidoc:21 (--filter check-jsonc-21)
+
+💥 ././src/test/inputs/check-jsonc.asciidoc:21: Invalid JSONC: InvalidSymbol,PropertyNameExpected,ValueExpected,InvalidSymbol,UnexpectedEndOfString,ColonExpected,PropertyNameExpected,ValueExpected
+
+END #././src/test/inputs/check-jsonc.asciidoc:21 (--- ms)
+
+---- END FILE ./src/test/inputs/check-jsonc.asciidoc
+

@@ -1,0 +1,2 @@
+1/1: ././src/test/inputs/issue-235.asciidoc
+1/1: ././src/test/inputs/issue-235.asciidoc: 1/1 ././src/test/inputs/issue-235.asciidoc:5

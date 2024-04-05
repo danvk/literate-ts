@@ -1,0 +1,9 @@
+1/1: ././src/test/inputs/check-emit.asciidoc
+1/1: ././src/test/inputs/check-emit.asciidoc: 1/8 ././src/test/inputs/check-emit.asciidoc:7
+1/1: ././src/test/inputs/check-emit.asciidoc: 2/8 ././src/test/inputs/check-emit.asciidoc:14
+1/1: ././src/test/inputs/check-emit.asciidoc: 3/8 ././src/test/inputs/check-emit.asciidoc:24
+1/1: ././src/test/inputs/check-emit.asciidoc: 4/8 ././src/test/inputs/check-emit.asciidoc:31
+1/1: ././src/test/inputs/check-emit.asciidoc: 5/8 ././src/test/inputs/check-emit.asciidoc:40
+1/1: ././src/test/inputs/check-emit.asciidoc: 6/8 ././src/test/inputs/check-emit.asciidoc:48
+1/1: ././src/test/inputs/check-emit.asciidoc: 7/8 ././src/test/inputs/check-emit.asciidoc:56
+1/1: ././src/test/inputs/check-emit.asciidoc: 8/8 ././src/test/inputs/check-emit.asciidoc:66

@@ -1,0 +1,2 @@
+1/1: ././src/test/inputs/top-level-await.asciidoc
+1/1: ././src/test/inputs/top-level-await.asciidoc: 1/1 ././src/test/inputs/top-level-await.asciidoc:8

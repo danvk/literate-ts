@@ -14,7 +14,9 @@
     "format:check": "prettier --check 'src/**/*.ts'",
     "lint": "eslint 'src/**/*.ts'",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "baselines:update": "NODE_OPTIONS=--experimental-vm-modules UPDATE_MODE=true jest src/test/*.e2e.ts"
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest --testPathIgnorePatterns 'dist|e2e'",
+    "baselines:check": "NODE_OPTIONS=--experimental-vm-modules jest src/test/*.e2e.test.ts",
+    "baselines:update": "NODE_OPTIONS=--experimental-vm-modules UPDATE_MODE=true jest src/test/*.e2e.test.ts"
   },
   "bin": {
     "literate-ts": "./bin/literate-ts.js"

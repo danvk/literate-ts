@@ -1,0 +1,12 @@
+== Chapter 1
+// verifier:done-with-file
+[source,ts]
+----
+const x = 12;
+----
+
+== Chapter 2
+[source,ts]
+----
+const x = 12;
+----

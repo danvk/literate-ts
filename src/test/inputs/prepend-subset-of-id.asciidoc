@@ -1,0 +1,12 @@
+[[type-and-func]]
+[source,ts]
+----
+type ABC = 'A' | 'B' | 'C';
+function foo() {}
+----
+
+// verifier:prepend-subset-of-id-to-following:type-and-func:1-1
+[source,ts]
+----
+function foo(abc: ABC) {}
+----

@@ -1,0 +1,6 @@
+// verifier:next-is-tsx
+[[tsx-example]]
+[source,ts]
+----
+console.log(a);
+----

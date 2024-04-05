@@ -1,0 +1,34 @@
+- descriptor: ./header-resets.asciidoc:5
+  id: header-resets-5
+  sectionHeader: Chapter 1
+  language: ts
+  content: const x = 12;
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: header-resets.asciidoc
+  lineNumber: 4
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./header-resets.asciidoc:12
+  id: header-resets-12
+  sectionHeader: Chapter 2
+  language: ts
+  content: const x = 12;
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: header-resets.asciidoc
+  lineNumber: 11
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

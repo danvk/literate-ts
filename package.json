@@ -15,8 +15,8 @@
     "lint": "eslint 'src/**/*.ts'",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest --testPathIgnorePatterns 'dist|e2e'",
-    "baselines:check": "NODE_OPTIONS=--experimental-vm-modules jest src/test/*.e2e.test.ts",
-    "baselines:update": "NODE_OPTIONS=--experimental-vm-modules UPDATE_MODE=true jest src/test/*.e2e.test.ts"
+    "baselines:check": "NODE_OPTIONS=--experimental-vm-modules jest --testPathPattern e2e",
+    "baselines:update": "NODE_OPTIONS=--experimental-vm-modules UPDATE_MODE=true jest --testPathPattern e2e"
   },
   "bin": {
     "literate-ts": "./bin/literate-ts.js"

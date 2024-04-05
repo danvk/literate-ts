@@ -1,0 +1,40 @@
+- descriptor: ./prepend-subset-of-id.asciidoc:1
+  id: type-and-func
+  sectionHeader: null
+  language: ts
+  content: |-
+    type ABC = 'A' | 'B' | 'C';
+    function foo() {}
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-subset-of-id.asciidoc
+  lineNumber: 3
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-subset-of-id.asciidoc:11
+  id: prepend-subset-of-id-11
+  sectionHeader: null
+  language: ts
+  content: 'function foo(abc: ABC) {}'
+  prefixes:
+    - id: type-and-func
+      lines:
+        - 1
+        - 1
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-subset-of-id.asciidoc
+  lineNumber: 10
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

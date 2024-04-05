@@ -46,7 +46,7 @@ function hash(str: string, seed = 0) {
 export function checkerTest(shard: number, total: number) {
   const shardTests = ALL_TESTS.filter(t => hash(t) % total === shard);
 
-  describe('checker', () => {
+  describe('checker baselines', () => {
     afterEach(() => {
       flushLog();
     });

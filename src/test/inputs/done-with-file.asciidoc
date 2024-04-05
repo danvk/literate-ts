@@ -1,0 +1,18 @@
+// verifier:done-with-file
+[source,ts]
+----
+console.log(a);
+----
+
+and:
+[source,ts]
+----
+const x = 12;
+----
+
+// verifier:reset
+[[back-in-business]]
+[source,ts]
+----
+const backInBusiness = 23;
+----

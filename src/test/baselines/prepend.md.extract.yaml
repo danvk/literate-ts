@@ -1,0 +1,52 @@
+- descriptor: ./prepend.md:2
+  id: prefix
+  sectionHeader: null
+  language: ts
+  content: type AB = 'a' | 'b';
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend.md
+  lineNumber: 3
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend.md:7
+  id: combined
+  sectionHeader: null
+  language: ts
+  content: 'const a: AB = ''a'';'
+  prefixes:
+    - id: prefix
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend.md
+  lineNumber: 8
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend.md:14
+  id: final
+  sectionHeader: null
+  language: ts
+  content: 'const a: AB = ''a'';'
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend.md
+  lineNumber: 15
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

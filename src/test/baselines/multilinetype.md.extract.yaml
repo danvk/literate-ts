@@ -1,0 +1,44 @@
+- descriptor: ./multilinetype.md:4
+  id: multilinetype-4
+  sectionHeader: null
+  language: ts
+  content: |-
+    const o = {x: 1, y: 2};
+    // type is {
+    //   x: number;
+    //   y: number;
+    // }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: multilinetype.md
+  lineNumber: 3
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./multilinetype.md:14
+  id: multilinetype-14
+  sectionHeader: null
+  language: ts
+  content: |-
+    function addWithExtras(a: number, b: number) {
+      const c = a + b;  // type is number
+      // ...
+      return c;
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: multilinetype.md
+  lineNumber: 13
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

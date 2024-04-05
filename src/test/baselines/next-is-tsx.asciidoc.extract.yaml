@@ -1,0 +1,17 @@
+- descriptor: ./next-is-tsx.asciidoc:2
+  id: tsx-example
+  sectionHeader: null
+  language: ts
+  content: console.log(a);
+  prefixes: []
+  nodeModules: []
+  isTSX: true
+  checkJS: false
+  sourceFile: next-is-tsx.asciidoc
+  lineNumber: 4
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

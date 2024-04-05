@@ -1,3 +1,3 @@
 import {checkerTest} from './checker-logic.js';
 
-checkerTest(1, 3);
+checkerTest(2, 3);

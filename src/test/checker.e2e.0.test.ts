@@ -1,3 +1,3 @@
-import {checkerTest} from './checker-logic.js';
+import {checkerTest, testsForShard} from './checker-logic.js';
 
 checkerTest(0, 3);

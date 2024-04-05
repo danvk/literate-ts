@@ -76,7 +76,7 @@ jobs:
         run: yarn test --shard=${{ matrix.shard }}/${{ strategy.job-total }} --coverage
 
       - run: mv coverage/coverage-final.json coverage/${{matrix.shard}}.json
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: coverage-artifacts
           path: coverage/
@@ -86,7 +86,7 @@ jobs:
     needs: [test]
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: coverage-artifacts
           path: coverage

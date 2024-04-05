@@ -1,0 +1,38 @@
+- descriptor: ./tsconfig-directive.asciidoc:3
+  id: implicit-any
+  sectionHeader: null
+  language: ts
+  content: 'const x: number = null;'
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: tsconfig-directive.asciidoc
+  lineNumber: 5
+  targetFilename: null
+  tsOptions:
+    noImplicitAny: false
+    strictNullChecks: false
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./tsconfig-directive.asciidoc:11
+  id: strict
+  sectionHeader: null
+  language: ts
+  content: 'const x: number = null;'
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: tsconfig-directive.asciidoc
+  lineNumber: 13
+  targetFilename: null
+  tsOptions:
+    noImplicitAny: true
+    strictNullChecks: true
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

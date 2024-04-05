@@ -1,0 +1,17 @@
+- descriptor: ./skip.md:3
+  id: skip-3
+  sectionHeader: null
+  language: ts
+  content: keyof A&B = (keyof A) | (keyof B)
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: skip.md
+  lineNumber: 2
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: true
+  auxiliaryFiles: []
+  inCommentBlock: false

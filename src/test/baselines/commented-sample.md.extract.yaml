@@ -1,0 +1,44 @@
+- descriptor: ./commented-sample.md:6
+  id: commented-sample-6
+  sectionHeader: null
+  language: ts
+  content: function somethingDangerous() {}
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: commented-sample.md
+  lineNumber: 5
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./commented-sample.md:11
+  id: commented-sample-11
+  sectionHeader: null
+  language: ts
+  content: |-
+    let val = null;  // Type is any
+    try {
+      somethingDangerous();
+      val = 12;
+      val  // Type is number
+    } catch (e) {
+      console.warn('alas!');
+    }
+    val  // Type is number | null
+  prefixes:
+    - id: commented-sample-6
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: commented-sample.md
+  lineNumber: 10
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

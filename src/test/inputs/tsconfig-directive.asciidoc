@@ -1,0 +1,15 @@
+// verifier:tsconfig:noImplicitAny=false
+// verifier:tsconfig:strictNullChecks=false
+[[implicit-any]]
+[source,ts]
+----
+const x: number = null;
+----
+
+// verifier:tsconfig:noImplicitAny=true
+// verifier:tsconfig:strictNullChecks=true
+[[strict]]
+[source,ts]
+----
+const x: number = null;
+----

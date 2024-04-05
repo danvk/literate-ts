@@ -1,0 +1,71 @@
+- descriptor: ./prepend-with-id.asciidoc:2
+  id: prefix
+  sectionHeader: null
+  language: ts
+  content: type AB = 'a' | 'b';
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-with-id.asciidoc
+  lineNumber: 4
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-with-id.asciidoc:8
+  id: combined
+  sectionHeader: null
+  language: ts
+  content: 'const a: AB = ''a'';'
+  prefixes:
+    - id: prefix
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-with-id.asciidoc
+  lineNumber: 10
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-with-id.asciidoc:16
+  id: final
+  sectionHeader: null
+  language: ts
+  content: 'const a: AB = ''a'';'
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-with-id.asciidoc
+  lineNumber: 18
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-with-id.asciidoc:26
+  id: prepended-with-ids
+  sectionHeader: null
+  language: ts
+  content: console.log(a);
+  prefixes:
+    - id: prefix
+    - id: combined
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-with-id.asciidoc
+  lineNumber: 28
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

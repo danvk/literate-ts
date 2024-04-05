@@ -6,7 +6,7 @@ import {Processor} from '../processor.js';
 import ts from 'typescript';
 import {flushLog, getTestLogs} from '../logger.js';
 
-describe('checker', () => {
+describe('checker baselines', () => {
   afterEach(() => {
     flushLog();
   });

@@ -1,0 +1,38 @@
+- descriptor: ./doc1.md:3
+  id: greet-ts
+  sectionHeader: null
+  language: ts
+  content: |-
+    function greet(who: string) {
+      console.log('Hello', who);
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: doc1.md
+  lineNumber: 4
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./doc1.md:20
+  id: doc1-20
+  sectionHeader: null
+  language: ts
+  content: |
+    console.log("end of file");
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: doc1.md
+  lineNumber: 19
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

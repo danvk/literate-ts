@@ -1,0 +1,54 @@
+- descriptor: ./prepend-multiple.md:3
+  id: prepend-multiple-3
+  sectionHeader: null
+  language: ts
+  content: type AB = 'a' | 'b';
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-multiple.md
+  lineNumber: 2
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-multiple.md:8
+  id: prepend-multiple-8
+  sectionHeader: null
+  language: ts
+  content: type ABC = AB | 'c';
+  prefixes:
+    - id: prepend-multiple-3
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-multiple.md
+  lineNumber: 7
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-multiple.md:12
+  id: prepend-multiple-12
+  sectionHeader: null
+  language: ts
+  content: 'const c: ABC = ''c'';'
+  prefixes:
+    - id: prepend-multiple-3
+    - id: prepend-multiple-8
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-multiple.md
+  lineNumber: 11
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

@@ -1,0 +1,17 @@
+- descriptor: ./noid.md:8
+  id: noid-8
+  sectionHeader: null
+  language: ts
+  content: console.log('Hello', 'TS');
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: noid.md
+  lineNumber: 7
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

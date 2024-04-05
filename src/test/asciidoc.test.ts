@@ -98,7 +98,9 @@ describe('asciidoc extract baselines', () => {
     const samples = extractSamples(content, name, base);
     const sampleTxt = yaml.dump(samples, {noRefs: true});
     const baselineFile = `src/test/baselines/${name}.extract.yaml`;
-    await writeFile(baselineFile, sampleTxt, 'utf-8');
+    if (process.env.UPDATE_MODE) {
+      await writeFile(baselineFile, sampleTxt, 'utf-8');
+    }
     const expected = await readFile(baselineFile, 'utf-8');
     expect(sampleTxt).toEqual(expected);
   });

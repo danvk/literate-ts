@@ -1,0 +1,7 @@
+1/1: ././src/test/inputs/equivalent.asciidoc
+1/1: ././src/test/inputs/equivalent.asciidoc: 1/6 ././src/test/inputs/equivalent.asciidoc:8
+1/1: ././src/test/inputs/equivalent.asciidoc: 2/6 ././src/test/inputs/equivalent.asciidoc:23
+1/1: ././src/test/inputs/equivalent.asciidoc: 3/6 ././src/test/inputs/equivalent.asciidoc:31
+1/1: ././src/test/inputs/equivalent.asciidoc: 4/6 ././src/test/inputs/equivalent.asciidoc:39
+1/1: ././src/test/inputs/equivalent.asciidoc: 5/6 ././src/test/inputs/equivalent.asciidoc:48
+1/1: ././src/test/inputs/equivalent.asciidoc: 6/6 ././src/test/inputs/equivalent.asciidoc:60

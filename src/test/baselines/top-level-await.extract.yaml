@@ -1,0 +1,29 @@
+- descriptor: ./top-level-await.asciidoc:8
+  id: top-level-await-8
+  sectionHeader: null
+  language: ts
+  content: |-
+    declare function get(url: string): Promise<number>;
+    export async function timeout(ms: number): Promise<never> {
+        return new Promise((resolve, reject) => {
+            setTimeout(reject, ms);
+        });
+    }
+
+    const resource = await Promise.race([get('example.com'), timeout(500)]);
+    //    ^? const resource: number
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: top-level-await.asciidoc
+  lineNumber: 7
+  targetFilename: null
+  tsOptions:
+    moduleResolution: 2
+    module: 7
+    target: 4
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

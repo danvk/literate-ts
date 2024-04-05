@@ -1,0 +1,6 @@
+1/1: ././src/test/inputs/program-listing.asciidoc
+1/1: ././src/test/inputs/program-listing.asciidoc: 1/5 ././src/test/inputs/program-listing.asciidoc:4
+1/1: ././src/test/inputs/program-listing.asciidoc: 2/5 ././src/test/inputs/program-listing.asciidoc:17
+1/1: ././src/test/inputs/program-listing.asciidoc: 3/5 ././src/test/inputs/program-listing.asciidoc:24
+1/1: ././src/test/inputs/program-listing.asciidoc: 4/5 ././src/test/inputs/program-listing.asciidoc:40
+1/1: ././src/test/inputs/program-listing.asciidoc: 5/5 ././src/test/inputs/program-listing.asciidoc:49

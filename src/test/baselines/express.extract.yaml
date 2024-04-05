@@ -1,0 +1,55 @@
+- descriptor: ./express.asciidoc:8
+  id: express-8
+  sectionHeader: null
+  language: ts
+  content: |-
+    import express from 'express';
+    const app = express();
+    //    ^? const app: Express
+  prefixes: []
+  nodeModules:
+    - '@types/express'
+  isTSX: false
+  checkJS: false
+  sourceFile: express.asciidoc
+  lineNumber: 7
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: true
+- descriptor: ./express.asciidoc:16
+  id: express-16
+  sectionHeader: null
+  language: ts
+  content: >-
+    // Don't do this:
+
+    app.get('/health', (request: express.Request, response: express.Response) =>
+    {
+      response.send('OK');
+    });
+
+
+    // Do this:
+
+    app.get('/health', (request, response) => {
+      //                ^? (parameter) request: Request<...>
+      response.send('OK');
+      // ^? (parameter) response: Response<...>
+    });
+  prefixes:
+    - id: express-8
+  nodeModules:
+    - '@types/express'
+  isTSX: false
+  checkJS: false
+  sourceFile: express.asciidoc
+  lineNumber: 15
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

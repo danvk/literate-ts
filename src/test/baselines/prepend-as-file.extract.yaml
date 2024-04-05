@@ -1,0 +1,153 @@
+- descriptor: ./prepend-as-file.asciidoc:10
+  id: prepend-as-file-10
+  sectionHeader: null
+  language: ts
+  content: |-
+    // point.ts
+    export interface Point {
+      x: number;
+      y: number;
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-as-file.asciidoc
+  lineNumber: 9
+  targetFilename: point.ts
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-as-file.asciidoc:21
+  id: prepend-as-file-21
+  sectionHeader: null
+  language: ts
+  content: >-
+    import { Point } from './point';
+
+    const pt: Point = {
+        x: 3,
+        y: 4,
+        z: 5,
+    //  ~ Object literal may only specify known properties, and 'z' does not
+    exist in type 'Point'.
+
+    }
+  prefixes:
+    - id: prepend-as-file-10
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-as-file.asciidoc
+  lineNumber: 20
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-as-file.asciidoc:36
+  id: prepend-as-file-36
+  sectionHeader: null
+  language: json
+  content: |-
+    // data.json
+    {
+      "year": 2023,
+      "months": [
+        "Jan",
+        "Feb",
+        /* ... */
+        "Dec"
+      ]
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-as-file.asciidoc
+  lineNumber: 35
+  targetFilename: data.json
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-as-file.asciidoc:52
+  id: prepend-as-file-52
+  sectionHeader: null
+  language: ts
+  content: |-
+    import data from './data.json';
+    console.log(data.year);
+    //               ^? (property) "year": number
+    console.log(data.months);
+    //               ^? (property) "months": string[]
+  prefixes:
+    - id: prepend-as-file-36
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-as-file.asciidoc
+  lineNumber: 51
+  targetFilename: null
+  tsOptions:
+    resolveJsonModule: true
+    esModuleInterop: true
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-as-file.asciidoc:65
+  id: prepend-as-file-65
+  sectionHeader: null
+  language: ts
+  content: |-
+    declare module 'ice-cream' {
+      export enum Flavor {
+        VANILLA = 'vanilla',
+        CHOCOLATE = 'chocolate',
+        STRAWBERRY = 'strawberry',
+      }
+
+      export function scoop(flavor: Flavor): void;
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-as-file.asciidoc
+  lineNumber: 64
+  targetFilename: ice-cream.d.ts
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./prepend-as-file.asciidoc:78
+  id: prepend-as-file-78
+  sectionHeader: null
+  language: ts
+  content: |-
+    import {scoop} from 'ice-cream';
+
+    scoop('vanilla');
+    //    ~~~~~~~~~ '"vanilla"' is not assignable to parameter of type 'Flavor'
+
+    import {Flavor} from 'ice-cream';
+    scoop(Flavor.VANILLA);  // OK
+  prefixes:
+    - id: prepend-as-file-65
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: prepend-as-file.asciidoc
+  lineNumber: 77
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

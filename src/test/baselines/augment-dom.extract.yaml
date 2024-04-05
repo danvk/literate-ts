@@ -1,0 +1,49 @@
+- descriptor: ./augment-dom.asciidoc:6
+  id: augment-dom-6
+  sectionHeader: null
+  language: ts
+  content: |-
+    export {}
+    declare global {
+      type HTMLTag = keyof HTMLElementTagNameMap;
+      interface ParentNode {
+      querySelector<
+          TagName extends HTMLTag
+      >(
+          selector: `${TagName}#${string}`
+      ): HTMLElementTagNameMap[TagName] | null;
+      }
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: augment-dom.asciidoc
+  lineNumber: 5
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./augment-dom.asciidoc:23
+  id: augment-dom-23
+  sectionHeader: null
+  language: ts
+  content: |-
+    const img = document.querySelector('img#spectacular-sunset');
+    //    ^? const img: HTMLImageElement | null
+    img?.src  // ok
+  prefixes:
+    - id: augment-dom-6
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: augment-dom.asciidoc
+  lineNumber: 22
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

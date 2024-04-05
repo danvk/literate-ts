@@ -1,0 +1,87 @@
+- descriptor: ./multilinetype.asciidoc:4
+  id: multilinetype-4
+  sectionHeader: null
+  language: ts
+  content: |-
+    const o = {x: 1, y: 2};
+    // type is {
+    //   x: number;
+    //   y: number;
+    // }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: multilinetype.asciidoc
+  lineNumber: 3
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./multilinetype.asciidoc:14
+  id: multilinetype-14
+  sectionHeader: null
+  language: ts
+  content: |-
+    function addWithExtras(a: number, b: number) {
+      const c = a + b;  // type is number
+      // ...
+      return c;
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: multilinetype.asciidoc
+  lineNumber: 13
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./multilinetype.asciidoc:25
+  id: multilinetype-25
+  sectionHeader: null
+  language: ts
+  content: |-
+    const o = {x: 1, y: 2};
+    //    ^? const o: {
+    //         x: number;
+    //         y: number;
+    //       }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: multilinetype.asciidoc
+  lineNumber: 24
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./multilinetype.asciidoc:37
+  id: multilinetype-37
+  sectionHeader: null
+  language: ts
+  content: |-
+    const o = {x: 1, y: 2};
+    //    ^? const o: { x: number; y: number; }
+    //    this comment applies to the next line.
+    const p = o;
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: multilinetype.asciidoc
+  lineNumber: 36
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

@@ -1,0 +1,23 @@
+---- BEGIN FILE ./src/test/inputs/issue-235.asciidoc
+
+Found 1 code samples in ./src/test/inputs/issue-235.asciidoc
+BEGIN #././src/test/inputs/issue-235.asciidoc:5 (--filter issue-235-5)
+
+Code passed type checker.
+Twoslash type assertion match:
+  Expected: const numArgsBad: (...args: any) => any
+    Actual: const numArgsBad: (...args: any) => any
+💥 ./src/test/inputs/issue-235.asciidoc:7:7-20: Failed type assertion for `numArgsBetter`
+  Expected: const numArgsBetter: (...args: any) => numberjsdklfjklsd
+    Actual: const numArgsBetter: (...args: any[]) => number
+  1/2 twoslash type assertions matched.
+const numArgsBad = (...args: any) => args.length;
+//    ^? const numArgsBad: (...args: any) => any
+const numArgsBetter = (...args: any[]) => args.length;
+//    ^? const numArgsBetter: (...args: any) => numberjsdklfjklsd
+tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
+
+END #././src/test/inputs/issue-235.asciidoc:5 (--- ms)
+
+---- END FILE ./src/test/inputs/issue-235.asciidoc
+

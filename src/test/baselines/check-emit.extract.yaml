@@ -1,0 +1,187 @@
+- descriptor: ./check-emit.asciidoc:7
+  id: sep-es2021
+  sectionHeader: null
+  language: ts
+  content: |-
+    // @target: es2021
+    const num = 1_234_567;
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: check-emit.asciidoc
+  lineNumber: 9
+  targetFilename: null
+  tsOptions:
+    alwaysStrict: false
+    moduleResolution: 2
+    module: 99
+    target: 8
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./check-emit.asciidoc:14
+  id: sep-es2021-emit-js
+  sectionHeader: null
+  language: js
+  content: |-
+    // @target: es2021
+    const num = 1_234_567;
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: check-emit.asciidoc
+  lineNumber: 16
+  targetFilename: null
+  tsOptions:
+    alwaysStrict: false
+    moduleResolution: 2
+    module: 99
+    target: 8
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./check-emit.asciidoc:24
+  id: sep-es5
+  sectionHeader: null
+  language: ts
+  content: |-
+    // @target: es5
+    const num = 1_234_567;
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: check-emit.asciidoc
+  lineNumber: 26
+  targetFilename: null
+  tsOptions:
+    alwaysStrict: false
+    moduleResolution: 2
+    module: 99
+    target: 1
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./check-emit.asciidoc:31
+  id: sep-es5-emit-js
+  sectionHeader: null
+  language: js
+  content: |-
+    // @target: es5
+    var num = 1234567;
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: check-emit.asciidoc
+  lineNumber: 33
+  targetFilename: null
+  tsOptions:
+    alwaysStrict: false
+    moduleResolution: 2
+    module: 99
+    target: 1
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./check-emit.asciidoc:40
+  id: spread
+  sectionHeader: null
+  language: ts
+  content: const [x, y] = [1, 2];
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: check-emit.asciidoc
+  lineNumber: 42
+  targetFilename: null
+  tsOptions:
+    alwaysStrict: false
+    moduleResolution: 2
+    module: 99
+    target: 1
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./check-emit.asciidoc:48
+  id: spread-emit-js
+  sectionHeader: null
+  language: js
+  content: var [x, y] = [1, 2];
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: check-emit.asciidoc
+  lineNumber: 50
+  targetFilename: null
+  tsOptions:
+    alwaysStrict: false
+    moduleResolution: 2
+    module: 99
+    target: 1
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./check-emit.asciidoc:56
+  id: indent
+  sectionHeader: null
+  language: ts
+  content: |-
+    function foo(nums: number[]) {
+      for (const num of nums) {
+        console.log(num);
+      }
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: check-emit.asciidoc
+  lineNumber: 58
+  targetFilename: null
+  tsOptions:
+    alwaysStrict: false
+    moduleResolution: 2
+    module: 99
+    target: 1
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./check-emit.asciidoc:66
+  id: indent-emit-js
+  sectionHeader: null
+  language: js
+  content: |-
+    function foo(nums) {
+      for (var _i = 0, nums_1 = nums; _i < nums_1.length; _i++) {
+        var num = nums_1[_i];
+        console.log(num);
+      }
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: check-emit.asciidoc
+  lineNumber: 68
+  targetFilename: null
+  tsOptions:
+    alwaysStrict: false
+    moduleResolution: 2
+    module: 99
+    target: 1
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

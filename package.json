@@ -13,7 +13,10 @@
     "format": "prettier --write 'src/**/*.ts'",
     "format:check": "prettier --check 'src/**/*.ts'",
     "lint": "eslint 'src/**/*.ts'",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest --testPathIgnorePatterns 'dist|e2e'",
+    "baselines:check": "NODE_OPTIONS=--experimental-vm-modules jest src/test/*.e2e.test.ts",
+    "baselines:update": "NODE_OPTIONS=--experimental-vm-modules UPDATE_MODE=true jest src/test/*.e2e.test.ts"
   },
   "bin": {
     "literate-ts": "./bin/literate-ts.js"
@@ -25,6 +28,7 @@
     "find-cache-dir": "^5.0.0",
     "fs-extra": "^11.0.0",
     "html-to-text": "^9.0.5",
+    "js-yaml": "^4.1.0",
     "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.15",
     "ora": "^8.0.0",
@@ -41,6 +45,7 @@
     "@types/fs-extra": "^11.0.0",
     "@types/html-to-text": "^9.0.1",
     "@types/jest": "^29.5.12",
+    "@types/js-yaml": "^4.0.9",
     "@types/lodash": "^4.14.138",
     "@types/node": "20.12.4",
     "@types/ora": "^3.2.0",

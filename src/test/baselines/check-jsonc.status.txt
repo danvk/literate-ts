@@ -1,0 +1,3 @@
+1/1: ././src/test/inputs/check-jsonc.asciidoc
+1/1: ././src/test/inputs/check-jsonc.asciidoc: 1/2 ././src/test/inputs/check-jsonc.asciidoc:5
+1/1: ././src/test/inputs/check-jsonc.asciidoc: 2/2 ././src/test/inputs/check-jsonc.asciidoc:21

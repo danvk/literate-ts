@@ -1,0 +1,64 @@
+- descriptor: ./inline-replacement.asciidoc:6
+  id: inline-replacement-6
+  sectionHeader: null
+  language: ts
+  content: |-
+    function calculateAge(birthDate: Date): number {
+      // ...
+    }
+  prefixes: []
+  replacementId: calculate-age-replacement
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: inline-replacement.asciidoc
+  lineNumber: 5
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./inline-replacement.asciidoc:12
+  id: calculate-age-replacement
+  sectionHeader: null
+  language: ts
+  content: |-
+    function calculateAge(birthDate: Date): number {
+      // COMPRESS
+      return 0;
+      // END
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: inline-replacement.asciidoc
+  lineNumber: 14
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: true
+- descriptor: ./inline-replacement.asciidoc:28
+  id: inline-replacement-28
+  sectionHeader: null
+  language: ts
+  content: |-
+    function calculateAge(birthDate: string): number {
+      // ...
+    }
+  prefixes: []
+  replacementId: calculate-age-replacement
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: inline-replacement.asciidoc
+  lineNumber: 27
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

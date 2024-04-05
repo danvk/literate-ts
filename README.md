@@ -452,6 +452,14 @@ Publish a new version:
     $ tsc
     $ npm publish
 
+Update all baselines:
+
+    $ yarn baselines:update
+
+Update one baseline:
+
+    $ yarn baselines:update -t 'filename.asciidoc'
+
 ## References
 
 - [Testing Types: An Introduction to dtslint][tsconf] (29m20s) -

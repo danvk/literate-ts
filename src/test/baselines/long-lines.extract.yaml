@@ -1,0 +1,83 @@
+- descriptor: ./long-lines.asciidoc:5
+  id: long-lines-5
+  sectionHeader: null
+  language: json
+  content: |-
+    {
+      "prettier": {
+        "printWidth": 81
+      }
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: long-lines.asciidoc
+  lineNumber: 4
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./long-lines.asciidoc:18
+  id: long-lines-18
+  sectionHeader: null
+  language: ts
+  content: >-
+    // This is an extremely long line. This is an extremely long line. This is
+    an extremely long line. This is an extremely long line.
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: long-lines.asciidoc
+  lineNumber: 17
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: true
+- descriptor: ./long-lines.asciidoc:26
+  id: long-lines-26
+  sectionHeader: null
+  language: ts
+  content: >-
+    // This is also a long line. 100 characters ought to be enough for anyone.
+    Don't you think that's true?
+  prefixes:
+    - id: long-lines-18
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: long-lines.asciidoc
+  lineNumber: 25
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./long-lines.asciidoc:32
+  id: long-lines-32
+  sectionHeader: null
+  language: node
+  content: >-
+    <pre data-type="programlisting">&gt; <strong>["some", "text", "that", "is",
+    "long", "but", "not", "too", "long"].length</strong>
+
+    9</pre>
+  prefixes:
+    - id: long-lines-18
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: long-lines.asciidoc
+  lineNumber: 31
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

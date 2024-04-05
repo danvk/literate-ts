@@ -1,0 +1,29 @@
+---- BEGIN FILE ./src/test/inputs/long-lines.asciidoc
+
+Found 4 code samples in ./src/test/inputs/long-lines.asciidoc
+BEGIN #././src/test/inputs/long-lines.asciidoc:5 (--filter long-lines-5)
+
+
+END #././src/test/inputs/long-lines.asciidoc:5 (--- ms)
+
+BEGIN #././src/test/inputs/long-lines.asciidoc:18 (--filter long-lines-18)
+
+Code passed type checker.
+
+END #././src/test/inputs/long-lines.asciidoc:18 (--- ms)
+
+BEGIN #././src/test/inputs/long-lines.asciidoc:26 (--filter long-lines-26)
+
+Code passed type checker.
+💥 ./src/test/inputs/long-lines.asciidoc:26:101-104: Line too long: 103 > 100
+
+END #././src/test/inputs/long-lines.asciidoc:26 (--- ms)
+
+BEGIN #././src/test/inputs/long-lines.asciidoc:32 (--filter long-lines-32)
+
+Node session matched program listing.
+
+END #././src/test/inputs/long-lines.asciidoc:32 (--- ms)
+
+---- END FILE ./src/test/inputs/long-lines.asciidoc
+

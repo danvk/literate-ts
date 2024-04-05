@@ -1,0 +1,21 @@
+---- BEGIN FILE ./src/test/inputs/empty-twoslash.asciidoc
+
+Found 1 code samples in ./src/test/inputs/empty-twoslash.asciidoc
+BEGIN #././src/test/inputs/empty-twoslash.asciidoc:7 (--filter empty-twoslash-7)
+
+Code passed type checker.
+💥 ./src/test/inputs/empty-twoslash.asciidoc:10:1-16: Failed type assertion for `getRandomNumber`
+  Expected: 
+    Actual: function getRandomNumber(): Promise<number>
+  0/1 twoslash type assertions matched.
+async function getRandomNumber(): Promise<number> {
+  return Math.random();
+}
+getRandomNumber
+// ^?
+tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
+
+END #././src/test/inputs/empty-twoslash.asciidoc:7 (--- ms)
+
+---- END FILE ./src/test/inputs/empty-twoslash.asciidoc
+

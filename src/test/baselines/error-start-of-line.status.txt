@@ -1,0 +1,2 @@
+1/1: ././src/test/inputs/error-start-of-line.asciidoc
+1/1: ././src/test/inputs/error-start-of-line.asciidoc: 1/1 ././src/test/inputs/error-start-of-line.asciidoc:5

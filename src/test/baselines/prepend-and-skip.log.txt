@@ -1,0 +1,19 @@
+---- BEGIN FILE ./src/test/inputs/prepend-and-skip.asciidoc
+
+Found 2 code samples in ./src/test/inputs/prepend-and-skip.asciidoc
+BEGIN #././src/test/inputs/prepend-and-skip.asciidoc:13 (--filter prepend-and-skip-13)
+
+matched errors:
+  expected:  Cannot redeclare block-scoped variable 'shared'. b.ts
+    actual: Cannot redeclare block-scoped variable 'shared'.
+  error messages could not be matched!
+matched errors:
+  expected:  Cannot redeclare block-scoped variable 'shared'.
+    actual: Cannot redeclare block-scoped variable 'shared'.
+  error messages could not be matched!
+Matched 2/2 errors.
+
+END #././src/test/inputs/prepend-and-skip.asciidoc:13 (--- ms)
+
+---- END FILE ./src/test/inputs/prepend-and-skip.asciidoc
+

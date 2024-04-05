@@ -1,0 +1,15 @@
+---- BEGIN FILE ./src/test/inputs/error-start-of-line.asciidoc
+
+Found 1 code samples in ./src/test/inputs/error-start-of-line.asciidoc
+BEGIN #././src/test/inputs/error-start-of-line.asciidoc:5 (--filter error-start-of-line-5)
+
+matched errors:
+  expected: Cannot find name 'x'.
+    actual: Cannot find name 'x'.
+  error messages match: perfect
+Matched 1/1 errors.
+
+END #././src/test/inputs/error-start-of-line.asciidoc:5 (--- ms)
+
+---- END FILE ./src/test/inputs/error-start-of-line.asciidoc
+

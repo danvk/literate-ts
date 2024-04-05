@@ -1,0 +1,5 @@
+1/1: ././src/test/inputs/long-lines.asciidoc
+1/1: ././src/test/inputs/long-lines.asciidoc: 1/4 ././src/test/inputs/long-lines.asciidoc:5
+1/1: ././src/test/inputs/long-lines.asciidoc: 2/4 ././src/test/inputs/long-lines.asciidoc:18
+1/1: ././src/test/inputs/long-lines.asciidoc: 3/4 ././src/test/inputs/long-lines.asciidoc:26
+1/1: ././src/test/inputs/long-lines.asciidoc: 4/4 ././src/test/inputs/long-lines.asciidoc:32

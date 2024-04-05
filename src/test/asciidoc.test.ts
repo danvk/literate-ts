@@ -1,7 +1,7 @@
 import fs from 'fs';
 import {readFile, writeFile} from 'fs/promises';
-import glob from 'fast-glob';
 import path from 'path';
+import yaml from 'js-yaml';
 
 import {dedent, getTempDir} from '../utils.js';
 import {extractSamples} from '../code-sample.js';
@@ -96,9 +96,9 @@ describe('asciidoc extract baselines', () => {
     const {base, name} = path.parse(inputFile);
     const content = await readFile(inputFile, 'utf8');
     const samples = extractSamples(content, name, base);
-    const sampleTxt = JSON.stringify(samples, null, 2);
-    const baselineFile = `src/test/baselines/${name}.extract.json`;
-    // await writeFile(baselineFile, sampleTxt, 'utf-8');
+    const sampleTxt = yaml.dump(samples, {noRefs: true});
+    const baselineFile = `src/test/baselines/${name}.extract.yaml`;
+    await writeFile(baselineFile, sampleTxt, 'utf-8');
     const expected = await readFile(baselineFile, 'utf-8');
     expect(sampleTxt).toEqual(expected);
   });

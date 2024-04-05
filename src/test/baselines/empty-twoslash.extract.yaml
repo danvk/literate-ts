@@ -1,0 +1,22 @@
+- descriptor: ./empty-twoslash.asciidoc:7
+  id: empty-twoslash-7
+  sectionHeader: null
+  language: ts
+  content: |-
+    async function getRandomNumber(): Promise<number> {
+      return Math.random();
+    }
+    getRandomNumber
+    // ^?
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: empty-twoslash.asciidoc
+  lineNumber: 6
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

@@ -1,0 +1,21 @@
+- descriptor: ./issue-235.asciidoc:5
+  id: issue-235-5
+  sectionHeader: null
+  language: ts
+  content: |-
+    const numArgsBad = (...args: any) => args.length;
+    //    ^? const numArgsBad: (...args: any) => any
+    const numArgsBetter = (...args: any[]) => args.length;
+    //    ^? const numArgsBetter: (...args: any) => numberjsdklfjklsd
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: issue-235.asciidoc
+  lineNumber: 4
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

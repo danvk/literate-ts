@@ -1,0 +1,20 @@
+- descriptor: ./doc1.asciidoc:3
+  id: greet-ts
+  sectionHeader: null
+  language: ts
+  content: |-
+    function greet(who: string) {
+      console.log('Hello', who);
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: doc1.asciidoc
+  lineNumber: 5
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

@@ -1,0 +1,23 @@
+- descriptor: ./twoslash-assertion.asciidoc:5
+  id: twoslash-assertion-5
+  sectionHeader: null
+  language: ts
+  content: |-
+    type T = `${number}`;
+
+    const one = 1;
+    //    ^? const one: 1
+
+    const two = 2;  // type is 2
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: twoslash-assertion.asciidoc
+  lineNumber: 4
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

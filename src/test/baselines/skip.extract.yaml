@@ -1,0 +1,17 @@
+- descriptor: ./skip.asciidoc:4
+  id: skip-4
+  sectionHeader: null
+  language: ts
+  content: keyof A&B = (keyof A) | (keyof B)
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: skip.asciidoc
+  lineNumber: 3
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: true
+  auxiliaryFiles: []
+  inCommentBlock: false

@@ -1,0 +1,46 @@
+- descriptor: ./president.asciidoc:7
+  id: president-7
+  sectionHeader: null
+  language: ts
+  content: |-
+    declare let hasMiddle: boolean;
+    const firstLast = {first: 'Harry', last: 'Truman'};
+    const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
+    //    ^? const president: {
+    //         first: string;
+    //         last: string;
+    //         middle?: string;
+    //       }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: president.asciidoc
+  lineNumber: 6
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./president.asciidoc:21
+  id: president-21
+  sectionHeader: null
+  language: ts
+  content: |-
+    declare let hasMiddle: boolean;
+    const firstLast = {first: 'Harry', last: 'Truman'};
+    const president = {...firstLast, ...(hasMiddle ? {middle: 'S'} : {})};
+    // Type is { first: string; last: string; middle?: string; }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: president.asciidoc
+  lineNumber: 20
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

@@ -1,0 +1,61 @@
+- descriptor: ./node-output.asciidoc:8
+  id: node-output-8
+  sectionHeader: null
+  language: ts
+  content: |-
+    const xs = [0, 1, 2];
+    //    ^? const xs: number[]
+    const x = xs[3];
+    //    ^? const x: number
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: node-output.asciidoc
+  lineNumber: 7
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./node-output.asciidoc:16
+  id: unsound-code
+  sectionHeader: null
+  language: ts
+  content: console.log(x.toFixed(1));
+  prefixes:
+    - id: node-output-8
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: node-output.asciidoc
+  lineNumber: 18
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./node-output.asciidoc:24
+  id: unsound-code-output
+  sectionHeader: null
+  language: null
+  content: |-
+    console.log(x.toFixed(1));
+                  ^
+
+    TypeError: Cannot read properties of undefined (reading 'toFixed')
+  prefixes:
+    - id: node-output-8
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: node-output.asciidoc
+  lineNumber: 25
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

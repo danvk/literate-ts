@@ -92,4 +92,4 @@ jobs:
           path: coverage
       - name: Merge Code Coverage
         run: npx nyc merge coverage/ merged-output/merged-coverage.json
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4

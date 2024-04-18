@@ -24,6 +24,7 @@ const ALL_TESTS = [
   './src/test/inputs/error-start-of-line.asciidoc',
   './src/test/inputs/check-emit.asciidoc',
   './src/test/inputs/long-lines.asciidoc',
+  './src/test/inputs/unaligned-error.asciidoc',
 ];
 
 export function testsForShard(shard: number, total: number) {

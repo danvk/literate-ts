@@ -1,0 +1,2 @@
+1/1: ././src/test/inputs/unaligned-error.asciidoc
+1/1: ././src/test/inputs/unaligned-error.asciidoc: 1/1 ././src/test/inputs/unaligned-error.asciidoc:5

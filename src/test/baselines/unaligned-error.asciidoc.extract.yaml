@@ -1,0 +1,21 @@
+- descriptor: ./unaligned-error.asciidoc:5
+  id: unaligned-error-5
+  sectionHeader: null
+  language: ts
+  content: |-
+    function foo(): number {
+      //               ~~~~~~ A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
+      console.log('not gonna return!');
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: unaligned-error.asciidoc
+  lineNumber: 4
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

@@ -1,0 +1,10 @@
+The indicated error span in this snippet overlaps the true one, but it's not a subset of it:
+
+[source,ts]
+----
+function foo(): number {
+  //               ~~~~~~ A function whose declared type is neither
+  //                      'undefined', 'void', nor 'any' must return a value.
+  console.log('not gonna return!');
+}
+----

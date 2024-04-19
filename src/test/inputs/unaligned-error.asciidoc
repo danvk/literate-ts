@@ -8,3 +8,13 @@ function foo(): number {
   console.log('not gonna return!');
 }
 ----
+
+There is some wiggle room in error span matching at the start of a line. This is considered OK even though the span match isn't precise:
+
+[source,ts]
+----
+{
+  longname = 12;
+  // ~~~~~ Cannot find name 'longname'.
+}
+----

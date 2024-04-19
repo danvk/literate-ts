@@ -1,6 +1,6 @@
 ---- BEGIN FILE ./src/test/inputs/unaligned-error.asciidoc
 
-Found 1 code samples in ./src/test/inputs/unaligned-error.asciidoc
+Found 2 code samples in ./src/test/inputs/unaligned-error.asciidoc
 BEGIN #././src/test/inputs/unaligned-error.asciidoc:5 (--filter unaligned-error-5)
 
 matched errors:
@@ -22,6 +22,17 @@ function foo(): number {
 tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
 
 END #././src/test/inputs/unaligned-error.asciidoc:5 (--- ms)
+
+BEGIN #././src/test/inputs/unaligned-error.asciidoc:16 (--filter unaligned-error-16)
+
+matched errors:
+  expected: Cannot find name 'longname'.
+    actual: Cannot find name 'longname'.
+  mismatched error span: start: -3
+  error messages match: perfect
+Matched 1/1 errors.
+
+END #././src/test/inputs/unaligned-error.asciidoc:16 (--- ms)
 
 ---- END FILE ./src/test/inputs/unaligned-error.asciidoc
 

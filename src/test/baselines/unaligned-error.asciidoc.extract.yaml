@@ -20,3 +20,24 @@
   skip: false
   auxiliaryFiles: []
   inCommentBlock: false
+- descriptor: ./unaligned-error.asciidoc:16
+  id: unaligned-error-16
+  sectionHeader: null
+  language: ts
+  content: |-
+    {
+      longname = 12;
+      // ~~~~~ Cannot find name 'longname'.
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: unaligned-error.asciidoc
+  lineNumber: 15
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

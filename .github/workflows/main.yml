@@ -97,3 +97,5 @@ jobs:
       - name: Merge Code Coverage
         run: npx nyc merge coverage/ merged-output/merged-coverage.json
       - uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

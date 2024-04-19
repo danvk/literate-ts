@@ -6,9 +6,9 @@ as the companion blog, [effectivetypescript.com][etsblog].
 
 <p align="center">
   <a href="https://codecov.io/gh/danvk/literate-ts" target="_blank">
-    <img alt="Codecov Test Coverage" src="https://codecov.io/gh/danvk/literate-ts/branch/master/graph/badge.svg?token=EF5OX198BL"/>
+    <img alt="Codecov Test Coverage" src="https://codecov.io/gh/danvk/literate-ts/branch/main/graph/badge.svg?token=EF5OX198BL"/>
   </a>
-  <a href="https://github.com/danvk/literate-ts/blob/master/LICENSE" target="_blank">
+  <a href="https://github.com/danvk/literate-ts/blob/main/LICENSE" target="_blank">
     <img alt="License: Apache2 📝" src="https://img.shields.io/github/license/danvk/literate-ts">
   </a>
   <a href="https://github.com/sponsors/danvk" target="_blank">

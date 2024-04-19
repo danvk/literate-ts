@@ -21,6 +21,7 @@ export interface TypeScriptError {
   line: number;
   start: number; // inclusive
   end: number; // exclusive
+  isStartOfLine?: boolean; // In this case, "end" should not be checked.
   message: string;
 }
 
@@ -73,7 +74,7 @@ export function extractExpectedErrors(content: string): TypeScriptError[] {
       const message = startErrorMatch[1];
       const start = comment.length - 2;
       const end = start + 1;
-      errors.push({line: i - 1, start, end, message});
+      errors.push({line: i - 1, start, end, message, isStartOfLine: true});
       return;
     }
 
@@ -115,13 +116,24 @@ function checkMatchingErrors(expectedErrorsIn: TypeScriptError[], actualErrors: 
       log('  expected: ' + matchedError.message);
       log('    actual: ' + error.message);
 
-      const posMismatch = [];
       const dStart = error.start - matchedError.start;
       const dEnd = error.end - matchedError.end;
-      if (dStart) posMismatch.push(`start: ${dStart}`);
-      if (dEnd) posMismatch.push(`end: ${dEnd}`);
-      if (posMismatch.length) {
-        log('  mismatched error span: ' + posMismatch.join(', '));
+      if (matchedError.isStartOfLine) {
+        if (dStart > 0) {
+          const {line, start, end} = error;
+          fail(`error span mismatch: start: ${dStart}`, {location: {line, start, end}});
+        }
+      } else {
+        const posMismatch = [];
+        if (dStart) posMismatch.push(`start: ${dStart}`);
+        if (dEnd) posMismatch.push(`end: ${dEnd}`);
+        if (posMismatch.length) {
+          log('  mismatched error span: ' + posMismatch.join(', '));
+        }
+        if (dEnd) {
+          const {line, start, end} = error;
+          fail(`error span mismatch: end: ${dEnd}`, {location: {line, start, end}});
+        }
       }
 
       let matchType = '';

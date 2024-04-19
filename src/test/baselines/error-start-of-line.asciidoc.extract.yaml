@@ -17,3 +17,46 @@
   skip: false
   auxiliaryFiles: []
   inCommentBlock: false
+- descriptor: ./error-start-of-line.asciidoc:13
+  id: error-start-of-line-13
+  sectionHeader: null
+  language: ts
+  content: |-
+    {
+      longname = 12;
+      // Error: Cannot find name 'longname'.
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: error-start-of-line.asciidoc
+  lineNumber: 12
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false
+- descriptor: ./error-start-of-line.asciidoc:23
+  id: error-start-of-line-23
+  sectionHeader: null
+  language: ts
+  content: |-
+    console.log(x);
+    // Error: Cannot find name 'x'.
+
+    console.log(x);
+    //          ~ Cannot find name 'x'.
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: error-start-of-line.asciidoc
+  lineNumber: 22
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

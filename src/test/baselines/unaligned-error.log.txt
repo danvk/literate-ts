@@ -1,0 +1,38 @@
+---- BEGIN FILE ./src/test/inputs/unaligned-error.asciidoc
+
+Found 2 code samples in ./src/test/inputs/unaligned-error.asciidoc
+BEGIN #././src/test/inputs/unaligned-error.asciidoc:5 (--filter unaligned-error-5)
+
+matched errors:
+  expected: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
+    actual: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
+  mismatched error span: start: -3, end: -3
+💥 ./src/test/inputs/unaligned-error.asciidoc:5:17-23: error span mismatch: end: -3
+  error messages match: perfect
+Matched 1/1 errors.
+💥 ./src/test/inputs/unaligned-error.asciidoc:5:10-13: Failed type assertion for `foo`
+  Expected: neither 'undefined', 'void', nor 'any' must return a value.
+    Actual: () => number
+  0/1 type assertions matched.
+function foo(): number {
+  //               ~~~~~~ A function whose declared type is neither
+  //                      'undefined', 'void', nor 'any' must return a value.
+  console.log('not gonna return!');
+}
+tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
+
+END #././src/test/inputs/unaligned-error.asciidoc:5 (--- ms)
+
+BEGIN #././src/test/inputs/unaligned-error.asciidoc:16 (--filter unaligned-error-16)
+
+matched errors:
+  expected: Cannot find name 'longname'.
+    actual: Cannot find name 'longname'.
+  mismatched error span: start: -3
+  error messages match: perfect
+Matched 1/1 errors.
+
+END #././src/test/inputs/unaligned-error.asciidoc:16 (--- ms)
+
+---- END FILE ./src/test/inputs/unaligned-error.asciidoc
+

@@ -76,9 +76,11 @@ jobs:
         run: yarn test --shard=${{ matrix.shard }}/${{ strategy.job-total }} --coverage
 
       - run: mv coverage/coverage-final.json coverage/${{matrix.shard}}.json
+
+      # https://github.com/actions/download-artifact?tab=readme-ov-file#download-multiple-filtered-artifacts-to-the-same-directory
       - uses: actions/upload-artifact@v4
         with:
-          name: coverage-artifacts
+          name: coverage-artifacts-${{ matrix.shard }}
           path: coverage/
 
   report-coverage:
@@ -88,8 +90,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: coverage-artifacts
           path: coverage
+          pattern: coverage-artifacts-*
+          merge-multiple: true
+      - run: ls -l coverage
       - name: Merge Code Coverage
         run: npx nyc merge coverage/ merged-output/merged-coverage.json
       - uses: codecov/codecov-action@v4

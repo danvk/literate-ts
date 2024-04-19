@@ -1,6 +1,6 @@
 ---- BEGIN FILE ./src/test/inputs/error-start-of-line.asciidoc
 
-Found 1 code samples in ./src/test/inputs/error-start-of-line.asciidoc
+Found 3 code samples in ./src/test/inputs/error-start-of-line.asciidoc
 BEGIN #././src/test/inputs/error-start-of-line.asciidoc:5 (--filter error-start-of-line-5)
 
 matched errors:
@@ -10,6 +10,34 @@ matched errors:
 Matched 1/1 errors.
 
 END #././src/test/inputs/error-start-of-line.asciidoc:5 (--- ms)
+
+BEGIN #././src/test/inputs/error-start-of-line.asciidoc:13 (--filter error-start-of-line-13)
+
+matched errors:
+  expected: Cannot find name 'longname'.
+    actual: Cannot find name 'longname'.
+  error messages match: perfect
+Matched 1/1 errors.
+
+END #././src/test/inputs/error-start-of-line.asciidoc:13 (--- ms)
+
+BEGIN #././src/test/inputs/error-start-of-line.asciidoc:23 (--filter error-start-of-line-23)
+
+💥 ./src/test/inputs/error-start-of-line.asciidoc:23:13-14: Unexpected TypeScript error: Cannot find name 'x'.
+matched errors:
+  expected: Cannot find name 'x'.
+    actual: Cannot find name 'x'.
+  error messages match: perfect
+💥 ./src/test/inputs/error-start-of-line.asciidoc:23:1-2: Expected TypeScript error was not produced: Cannot find name 'x'.
+Matched 1/2 errors.
+console.log(x);
+// Error: Cannot find name 'x'.
+
+console.log(x);
+//          ~ Cannot find name 'x'.
+tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
+
+END #././src/test/inputs/error-start-of-line.asciidoc:23 (--- ms)
 
 ---- END FILE ./src/test/inputs/error-start-of-line.asciidoc
 

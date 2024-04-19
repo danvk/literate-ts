@@ -4,7 +4,8 @@
   language: ts
   content: |-
     function foo(): number {
-      //               ~~~~~~ A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
+      //               ~~~~~~ A function whose declared type is neither
+      //                      'undefined', 'void', nor 'any' must return a value.
       console.log('not gonna return!');
     }
   prefixes: []

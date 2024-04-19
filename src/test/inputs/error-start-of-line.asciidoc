@@ -5,3 +5,24 @@ This code sample has an error at the very start of the line. It's awkward to put
 x = 12;
 // Error: Cannot find name 'x'.
 ----
+
+This also works for indented code:
+
+[source,ts]
+----
+{
+  longname = 12;
+  // Error: Cannot find name 'longname'.
+}
+----
+
+If the error is not at the start of the line, a mismatch will be reported:
+
+[source,ts]
+----
+console.log(x);
+// Error: Cannot find name 'x'.
+
+console.log(x);
+//          ~ Cannot find name 'x'.
+----

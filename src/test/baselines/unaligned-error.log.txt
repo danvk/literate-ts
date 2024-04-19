@@ -7,6 +7,7 @@ matched errors:
   expected: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
     actual: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
   mismatched error span: start: -3, end: -3
+💥 ./src/test/inputs/unaligned-error.asciidoc:5:17-23: error span mismatch: end: -3
   error messages match: perfect
 Matched 1/1 errors.
 💥 ./src/test/inputs/unaligned-error.asciidoc:5:10-13: Failed type assertion for `foo`
@@ -14,11 +15,11 @@ Matched 1/1 errors.
     Actual: () => number
   0/1 type assertions matched.
 function foo(): number {
-  //               ~~~~~~ A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
+  //               ~~~~~~ A function whose declared type is neither
+  //                      'undefined', 'void', nor 'any' must return a value.
   console.log('not gonna return!');
 }
 tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
-💥 ./src/test/inputs/unaligned-error.asciidoc:6:101-120: Line too long: 119 > 100
 
 END #././src/test/inputs/unaligned-error.asciidoc:5 (--- ms)
 

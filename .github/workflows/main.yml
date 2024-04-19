@@ -77,10 +77,12 @@ jobs:
 
       - run: mv coverage/coverage-final.json coverage/${{matrix.shard}}.json
       - run: ls -l coverage
+      - run: ls coverage | grep -v ${{matrix.shard}}.json | xargs rm
+      - run: ls -l coverage
       - uses: actions/upload-artifact@v4
         with:
           name: coverage-artifacts
-          path: coverage/*.json
+          path: coverage
 
   report-coverage:
     runs-on: ubuntu-latest

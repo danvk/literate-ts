@@ -75,10 +75,13 @@ jobs:
 
         run: yarn test --shard=${{ matrix.shard }}/${{ strategy.job-total }} --coverage
 
-      - run: mv coverage/coverage-final.json coverage/${{matrix.shard}}.json
-      - run: ls -l coverage/*
-      - run: ls coverage/* | grep -v ${{matrix.shard}}.json | xargs rm
-      - run: ls -l coverage/*
+      - run: >-
+          ls -l coverage
+          mkdir coverage-tmp
+          mv coverage/coverage-final.json coverage-tmp/${{matrix.shard}}.json
+          mv coverage old-coverage
+          mv coverage-tmp coverage
+          ls -l coverage
       - uses: actions/upload-artifact@v4
         with:
           name: coverage-artifacts

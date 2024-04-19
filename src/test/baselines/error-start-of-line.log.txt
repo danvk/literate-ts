@@ -1,6 +1,6 @@
 ---- BEGIN FILE ./src/test/inputs/error-start-of-line.asciidoc
 
-Found 3 code samples in ./src/test/inputs/error-start-of-line.asciidoc
+Found 4 code samples in ./src/test/inputs/error-start-of-line.asciidoc
 BEGIN #././src/test/inputs/error-start-of-line.asciidoc:5 (--filter error-start-of-line-5)
 
 matched errors:
@@ -38,6 +38,17 @@ console.log(x);
 tsconfig options: {"strictNullChecks":true,"module":1,"esModuleInterop":true}
 
 END #././src/test/inputs/error-start-of-line.asciidoc:23 (--- ms)
+
+BEGIN #././src/test/inputs/error-start-of-line.asciidoc:34 (--filter error-start-of-line-34)
+
+matched errors:
+  expected: Cannot find name 'longname'.
+    actual: Cannot find name 'longname'.
+  mismatched error span: start: -3
+  error messages match: perfect
+Matched 1/1 errors.
+
+END #././src/test/inputs/error-start-of-line.asciidoc:34 (--- ms)
 
 ---- END FILE ./src/test/inputs/error-start-of-line.asciidoc
 

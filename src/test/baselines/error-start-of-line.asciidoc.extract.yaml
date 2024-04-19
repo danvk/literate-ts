@@ -60,3 +60,24 @@
   skip: false
   auxiliaryFiles: []
   inCommentBlock: false
+- descriptor: ./error-start-of-line.asciidoc:34
+  id: error-start-of-line-34
+  sectionHeader: null
+  language: ts
+  content: |-
+    {
+      longname = 12;
+      // ~~~~~ Cannot find name 'longname'.
+    }
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: error-start-of-line.asciidoc
+  lineNumber: 33
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

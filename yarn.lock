@@ -2800,9 +2800,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 knip@^5.7.3:
-  version "5.12.2"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.12.2.tgz#dcf817f9b6f6e560781da08166ae41dec2c3a6ec"
-  integrity sha512-js9PY49o3xEkheceQqwVGSE2xJb4HAwOSDNk51aBSZFQch6tkT2P1aipT2VnsyvOD25eBo1SXvJdSQhOBTUYsA==
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.13.0.tgz#13e9e6a087a1346a930aa2a35f81a4235f7ea7cf"
+  integrity sha512-CvGvUkb4SIpLWNYOwv8sqGp9WlWe7i57Qw3w/cvEMOdbPxIyzCWBKuD+xpty4zKtdrWxwdV5Jr0LtSKcxxA6Yw==
   dependencies:
     "@ericcornelissen/bash-parser" "0.5.2"
     "@nodelib/fs.walk" "2.0.0"
@@ -4054,6 +4054,6 @@ zod-validation-error@^3.0.3:
   integrity sha512-cYlPR6zuyrgmu2wRTdumEAJGuwI7eHVHGT+VyneAQxmRAKtGRL1/7pjz4wfLhz4J05f5qoSZc3rGacswgyTjjw==
 
 zod@^3.22.4:
-  version "3.23.6"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.6.tgz#c08a977e2255dab1fdba933651584a05fcbf19e1"
-  integrity sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==
+  version "3.23.8"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.8.tgz#e37b957b5d52079769fb8097099b592f0ef4067d"
+  integrity sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==

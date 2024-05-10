@@ -1,12 +1,12 @@
 /** Generate TypeScript Playground URLs */
 
 import lzString from 'lz-string';
-import {CompilerOptions, version} from 'typescript';
+import ts from 'typescript';
 
 export function getPlaygroundUrl(
   source: string,
-  options: CompilerOptions,
-  tsVersion = version,
+  options: ts.CompilerOptions,
+  tsVersion = ts.version,
 ): string {
   const code = lzString.compressToBase64(source);
   // Options are passed as URL components: exactOptionalPropertyTypes=true
@@ -25,7 +25,6 @@ export function getPlaygroundUrl(
       strOptions.push([key, v]);
     }
   }
-  console.log(strOptions);
   const params = new URLSearchParams(strOptions).toString();
   return `https://www.typescriptlang.org/play/?${params}#code/${code}`;
 }

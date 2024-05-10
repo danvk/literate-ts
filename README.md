@@ -433,7 +433,7 @@ It's extremely convenient to run literate-ts as a task in VS Code since it will 
 Quickstart:
 
     $ yarn
-    $ yarn ts-node index.ts examples/asciidoc/sample.asciidoc
+    $ yarn run check examples/asciidoc/sample.asciidoc
     Logging details to /var/folders/st/8n5l6s0139x5dwpxfhl0xs3w0000gn/T/tmp-96270LdwL51L23N9D/log.txt
     Verifying with TypeScript 3.6.2
     examples/asciidoc/sample.asciidoc 5/5 passed

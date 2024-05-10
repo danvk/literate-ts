@@ -1,17 +1,18 @@
 /** Generate TypeScript Playground URLs */
 
 import lzString from 'lz-string';
-import {CompilerOptions} from 'typescript';
+import {CompilerOptions, version} from 'typescript';
 
 export function getPlaygroundUrl(
   source: string,
   options: CompilerOptions,
-  tsVersion: string,
+  tsVersion = version,
 ): string {
   const code = lzString.compressToBase64(source);
   // Options are passed as URL components: exactOptionalPropertyTypes=true
   // Enum options are passed numerically: target=9&module=1
   // at least at the moment, the target setting doesn't seem to work.
+  // language comes out as "filetype=js"
   const strOptions: [string, string][] = [['ts', tsVersion]];
   for (const [key, val] of Object.entries(options)) {
     let v;

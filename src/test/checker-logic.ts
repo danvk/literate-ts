@@ -73,6 +73,7 @@ export function checkerTest(shard: number, total: number) {
             replacements: undefined,
             _: [],
             $0: 'test',
+            playground: false,
           },
           {
             host,

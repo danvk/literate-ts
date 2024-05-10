@@ -1,4 +1,5 @@
 import fs from 'fs';
+import fsp from 'fs/promises';
 import path, {isAbsolute} from 'path';
 
 import chalk from 'chalk';
@@ -12,6 +13,7 @@ import {getTestResults} from './test-tracker.js';
 import {CACHE_DIR, ConfigBundle} from './ts-checker.js';
 import {Processor} from './processor.js';
 import {argSchema} from './args.js';
+import {getTempDir} from './utils.js';
 
 const argv = argSchema.parseSync(process.argv.slice(2));
 
@@ -97,6 +99,16 @@ export function main() {
       }
     } else {
       console.log(chalk.green(`✓ All ${numTotal} samples passed!`));
+    }
+
+    if (argv.playground) {
+      const playgroundFile = getTempDir() + '/playground.json';
+      await fsp.writeFile(
+        playgroundFile,
+        JSON.stringify(processor.playgrounds, null, '  '),
+        'utf-8',
+      );
+      console.log('Wrote code sample playground URLs to', playgroundFile);
     }
   })()
     .catch(e => {

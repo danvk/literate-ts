@@ -230,14 +230,18 @@ export class Processor {
   }
 
   addPlayground(sourceFile: string, sample: CodeSample) {
+    const {language, tsOptions} = sample;
+    if (sample.skip || sample.inCommentBlock || (language !== 'ts' && language !== 'js')) {
+      return;
+    }
     this.playgrounds.push({
       displayedCode: sample.originalContent ?? sample.content,
       id: sample.id,
       sourceFile,
       sourceLineNumber: sample.lineNumber,
-      language: sample.language,
-      tsOptions: sample.tsOptions,
-      playgroundUrl: getPlaygroundUrl(sample.content, sample.tsOptions),
+      language,
+      tsOptions,
+      playgroundUrl: getPlaygroundUrl(sample.content + '\n', tsOptions),
     });
   }
 }

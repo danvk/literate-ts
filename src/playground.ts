@@ -8,7 +8,7 @@ export function getPlaygroundUrl(
   options: ts.CompilerOptions,
   tsVersion = ts.version,
 ): string {
-  const code = lzString.compressToBase64(source);
+  const code = lzString.compressToEncodedURIComponent(source);
   // Options are passed as URL components: exactOptionalPropertyTypes=true
   // Enum options are passed numerically: target=9&module=1
   // at least at the moment, the target setting doesn't seem to work.

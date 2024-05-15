@@ -1,0 +1,42 @@
+- descriptor: ./playground.asciidoc:7
+  id: playground-7
+  sectionHeader: null
+  language: ts
+  content: 'function helper(x: string) {}'
+  prefixes: []
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: playground.asciidoc
+  lineNumber: 6
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: true
+- descriptor: ./playground.asciidoc:13
+  id: playground-13
+  sectionHeader: null
+  language: ts
+  content: |-
+    function callHelper(x: string, y: number) {
+      helper(x);
+      //     ^? (parameter) x: string
+      helper(y);
+      //     ~ Argument of type 'number' is not assignable to ... type 'string'.
+
+    }
+  prefixes:
+    - id: playground-7
+  nodeModules: []
+  isTSX: false
+  checkJS: false
+  sourceFile: playground.asciidoc
+  lineNumber: 12
+  targetFilename: null
+  tsOptions: {}
+  prefixesLength: 0
+  skip: false
+  auxiliaryFiles: []
+  inCommentBlock: false

@@ -25,6 +25,7 @@ const ALL_TESTS = [
   './src/test/inputs/check-emit.asciidoc',
   './src/test/inputs/long-lines.asciidoc',
   './src/test/inputs/unaligned-error.asciidoc',
+  './src/test/inputs/playground.asciidoc',
 ];
 
 export function testsForShard(shard: number, total: number) {
@@ -73,7 +74,7 @@ export function checkerTest(shard: number, total: number) {
             replacements: undefined,
             _: [],
             $0: 'test',
-            playground: false,
+            playground: name.includes('playground'),
           },
           {
             host,

@@ -1,0 +1,25 @@
+---- BEGIN FILE ./src/test/inputs/playground.asciidoc
+
+Found 2 code samples in ./src/test/inputs/playground.asciidoc
+BEGIN #././src/test/inputs/playground.asciidoc:7 (--filter playground-7)
+
+Code passed type checker.
+
+END #././src/test/inputs/playground.asciidoc:7 (--- ms)
+
+BEGIN #././src/test/inputs/playground.asciidoc:13 (--filter playground-13)
+
+matched errors:
+  expected: Argument of type 'number' is not assignable to ... type 'string'.
+    actual: Argument of type 'number' is not assignable to parameter of type 'string'.
+  error messages match: match with ...
+Matched 1/1 errors.
+Twoslash type assertion match:
+  Expected: (parameter) x: string
+    Actual: (parameter) x: string
+  1/1 twoslash type assertions matched.
+
+END #././src/test/inputs/playground.asciidoc:13 (--- ms)
+
+---- END FILE ./src/test/inputs/playground.asciidoc
+

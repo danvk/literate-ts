@@ -891,10 +891,10 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.5.tgz#1ef302e01cf7d2b5a0fa526790c9123bf1d06690"
   integrity sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==
 
-"@types/node@*", "@types/node@20.12.10":
-  version "20.12.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.12.10.tgz#8f0c3f12b0f075eee1fe20c1afb417e9765bef76"
-  integrity sha512-Eem5pH9pmWBHoGAT8Dr5fdc5rYA+4NAovdM4EktRPVAAiJhmWWfQrA0cFhAbOsQdSfIHjAud6YdkbL69+zSKjw==
+"@types/node@*", "@types/node@20.12.11":
+  version "20.12.11"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.12.11.tgz#c4ef00d3507000d17690643278a60dc55a9dc9be"
+  integrity sha512-vDg9PZ/zi+Nqp6boSOT7plNuthRugEKixDv5sFTIpkE89MmNtEArAShI4mxuX2+UrLEe9pxC1vm2cjm9YlWbJw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -2800,9 +2800,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 knip@^5.7.3:
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.13.0.tgz#13e9e6a087a1346a930aa2a35f81a4235f7ea7cf"
-  integrity sha512-CvGvUkb4SIpLWNYOwv8sqGp9WlWe7i57Qw3w/cvEMOdbPxIyzCWBKuD+xpty4zKtdrWxwdV5Jr0LtSKcxxA6Yw==
+  version "5.15.1"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.15.1.tgz#897b792dd7e0e1130a24fc17d9f1a13b02fb8c02"
+  integrity sha512-v6/Bf2qUmZ7pMJb2GjTficHyEjhP2ysIifjM1wgJr2psFbK6Vbxw2/DpeDAcgK9d99kTGh1PUQwoiFd6LHtI6A==
   dependencies:
     "@ericcornelissen/bash-parser" "0.5.2"
     "@nodelib/fs.walk" "2.0.0"
@@ -4054,9 +4054,9 @@ yocto-queue@^1.0.0:
   integrity sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==
 
 zod-validation-error@^3.0.3:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/zod-validation-error/-/zod-validation-error-3.2.0.tgz#df2ef6a8531d959324990599fb58206ca9479093"
-  integrity sha512-cYlPR6zuyrgmu2wRTdumEAJGuwI7eHVHGT+VyneAQxmRAKtGRL1/7pjz4wfLhz4J05f5qoSZc3rGacswgyTjjw==
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/zod-validation-error/-/zod-validation-error-3.3.0.tgz#2cfe81b62d044e0453d1aa3ae7c32a2f36dde9af"
+  integrity sha512-Syib9oumw1NTqEv4LT0e6U83Td9aVRk9iTXPUQr1otyV1PuXQKOvOwhMNqZIq5hluzHP2pMgnOmHEo7kPdI2mw==
 
 zod@^3.22.4:
   version "3.23.8"

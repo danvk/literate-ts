@@ -372,9 +372,10 @@ If you fill out a `"prettier"` section in your `package.json`, literate-ts will 
 ## Command-Line Options
 
 - `--help`: Show help.
-- `--version`: Show version numbers for `literate-ts` and `typescript`.=
+- `--version`: Show version numbers for `literate-ts` and `typescript`.
 - `-f`/`--filter`: Only check IDs with the given prefix. This is either the ID you explicitly give the sample, or `file-line`, e.g. `explicit-id-1234` or `filename-no-ext-1234`. (The exact IDs are in the "detailed logs".)
 - `-r`/`--replacements`: If specified, load `**/*.{ts,js,txt}` under this directory as additional sources.
+- `--playground`: If specified, output a JSON file containing TypeScript playground URLs for all code samples. See the effective-typescript repo for an [example] of how this can be used.
 - `--alsologtostderr`: Log to stderr in addition to a log file.
 - `--nocache`: Disable reading and writing from on-disk cache. If this results in different behavior, please file an issue. The cache is in `node_modules/.cache/literate-ts`. Delete this directory to clear the cache.
 
@@ -481,3 +482,4 @@ Update one baseline:
 [pylit-post]: https://www.onebigfluke.com/2014/07/how-im-writing-programming-book.html
 [twoslash]: https://shikijs.github.io/twoslash/
 [machinery]: https://effectivetypescript.com/2022/02/25/gentips-4-display/
+[example]: https://github.com/danvk/effective-typescript/blob/main/samples/ch-intro/any.md

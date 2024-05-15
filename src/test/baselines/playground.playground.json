@@ -1,0 +1,13 @@
+[
+  {
+    "displayedCode": "function callHelper(x: string, y: number) {\n  helper(x);\n  //     ^? (parameter) x: string\n  helper(y);\n  //     ~ Argument of type 'number' is not assignable to ... type 'string'.\n\n}",
+    "id": "playground-14",
+    "sourceFile": "./src/test/inputs/playground.asciidoc",
+    "sourceLineNumber": 13,
+    "language": "ts",
+    "tsOptions": {
+      "strict": true
+    },
+    "playgroundUrl": "https://www.typescriptlang.org/play/?ts=5.4.5&strict=true#code/GYVwdgxgLglg9mABACwKYBsAOqBOAKADwC5EBnKHGMAcwEpEBvAXwChRJYFEIBDddABIZs+YmQpVqAGkQBPEmBABbAEa56DFohTDchWgG4tiAPQntFgHoB+RHkw8cPJaijrEY8pRrG0WPbKGxmYW2gB+iACCONTKqGBQiHDAiFCy2IgA5IqquJmIMKSIYHCJPKSkMNRgPCroqKlwiAB0ranpDZlekpnNLCysQA"
+  }
+]

@@ -11,13 +11,14 @@ import {
 import {fileSlug, reduceIndentation, writeTempFile} from './utils.js';
 import {log} from './logger.js';
 import {startFile, fail, finishFile, finishSample, startSample} from './test-tracker.js';
-import {CodeSample} from './types.js';
+import {CodeSample, PlaygroundEntry} from './types.js';
 import {ConfigBundle, checkProgramListing, checkTs} from './ts-checker.js';
 import {runNode} from './node-runner.js';
 import {Args} from './args.js';
 import _ from 'lodash';
 import {NormalizedReadResult, readPackageUpSync} from 'read-pkg-up';
 import {htmlToText} from 'html-to-text';
+import {getPlaygroundUrl} from './playground.js';
 
 function checkOutput(expectedOutput: string, input: CodeSample) {
   const actualOutput = input.output;
@@ -103,12 +104,14 @@ export class Processor {
   typeScriptBundle: ConfigBundle;
   sources: {[id: string]: string};
   setStatus: (status: string) => void;
+  playgrounds: PlaygroundEntry[];
 
   constructor(argv: Args, typeScriptBundle: ConfigBundle, sources: {[id: string]: string}) {
     this.argv = argv;
     this.typeScriptBundle = typeScriptBundle;
     this.sources = sources;
     this.setStatus = _.noop;
+    this.playgrounds = [];
   }
 
   onSetStatus(setStatus: (status: string) => void) {
@@ -140,6 +143,9 @@ export class Processor {
       }
       this.setStatus(`${fileStatus}: ${n}/${samples.length} ${sample.descriptor}`);
       await this.checkSample(sample, outputs, pkg);
+      if (this.argv.playground) {
+        this.addPlayground(path, sample);
+      }
     }
 
     finishFile();
@@ -221,5 +227,21 @@ export class Processor {
     }
 
     finishSample();
+  }
+
+  addPlayground(sourceFile: string, sample: CodeSample) {
+    const {language, tsOptions} = sample;
+    if (sample.skip || sample.inCommentBlock || (language !== 'ts' && language !== 'js')) {
+      return;
+    }
+    this.playgrounds.push({
+      displayedCode: sample.originalContent ?? sample.content,
+      id: sample.id,
+      sourceFile,
+      sourceLineNumber: sample.lineNumber,
+      language,
+      tsOptions,
+      playgroundUrl: getPlaygroundUrl(sample.content + '\n', tsOptions),
+    });
   }
 }

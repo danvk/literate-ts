@@ -53,3 +53,13 @@ export interface AuxiliaryFile {
   filename: string;
   content: string;
 }
+
+export interface PlaygroundEntry {
+  displayedCode: string;
+  playgroundUrl: string;
+  id: string;
+  sourceFile: string;
+  sourceLineNumber: number;
+  language: CodeSample['language'];
+  tsOptions: CompilerOptions;
+}

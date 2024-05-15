@@ -1,0 +1,21 @@
+When run with the `--playground` option, literate-ts will output a JSON file containing TypeScript Playground URLs and code samples. The code samples are just what's displayed, but the playground URLs contained fully-inlined code.
+
+////
+// verifier:prepend-to-following
+[source,ts]
+----
+function helper(x: string) {}
+----
+////
+
+// verifier:tsconfig:strict=true
+[source,ts]
+----
+function callHelper(x: string, y: number) {
+  helper(x);
+  //     ^? (parameter) x: string
+  helper(y);
+  //     ~ Argument of type 'number' is not assignable to ... type 'string'.
+
+}
+----

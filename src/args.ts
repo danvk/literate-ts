@@ -26,6 +26,10 @@ export const argSchema = yargs()
       type: 'boolean',
       description: `Don't read previous results from cache.`,
     },
+    playground: {
+      type: 'boolean',
+      description: `Output a JSON file containing TypeScript Playground URLs.`,
+    },
   })
   .version(
     'version',

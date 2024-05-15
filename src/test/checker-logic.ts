@@ -65,6 +65,7 @@ export function checkerTest(shard: number, total: number) {
       async inputFile => {
         const {name} = path.parse(inputFile);
         const statuses: string[] = [];
+        const testPlayground = name.includes('playground');
 
         const processor = new Processor(
           {
@@ -74,7 +75,7 @@ export function checkerTest(shard: number, total: number) {
             replacements: undefined,
             _: [],
             $0: 'test',
-            playground: name.includes('playground'),
+            playground: testPlayground,
           },
           {
             host,
@@ -90,18 +91,25 @@ export function checkerTest(shard: number, total: number) {
 
         const logFile = `src/test/baselines/${name}.log.txt`;
         const statusFile = `src/test/baselines/${name}.status.txt`;
+        const playFile = `src/test/baselines/${name}.playground.json`;
         const logText = logs.join('\n') + '\n';
         const statusText = statuses.join('\n') + '\n';
+        const playText = JSON.stringify(processor.playgrounds, null, 2);
 
         if (process.env.UPDATE_MODE) {
           await writeFile(logFile, logText, 'utf-8');
           await writeFile(statusFile, statusText, 'utf-8');
+          await writeFile(playFile, playText, 'utf-8');
         }
 
         const expectedLogs = await readFile(logFile, 'utf-8');
         expect(logText).toEqual(expectedLogs);
         const expectedStatuses = await readFile(statusFile, 'utf-8');
         expect(statusText).toEqual(expectedStatuses);
+        if (testPlayground) {
+          const expectedPlayground = await readFile(playFile, 'utf-8');
+          expect(playText).toEqual(expectedPlayground);
+        }
       },
       40_000,
     );

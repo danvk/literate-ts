@@ -8,6 +8,7 @@ function helper(x: string) {}
 ----
 ////
 
+// verifier:tsconfig:strict=true
 [source,ts]
 ----
 function callHelper(x: string, y: number) {

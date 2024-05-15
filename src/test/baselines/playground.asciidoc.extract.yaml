@@ -15,8 +15,8 @@
   skip: false
   auxiliaryFiles: []
   inCommentBlock: true
-- descriptor: ./playground.asciidoc:13
-  id: playground-13
+- descriptor: ./playground.asciidoc:14
+  id: playground-14
   sectionHeader: null
   language: ts
   content: |-
@@ -33,9 +33,10 @@
   isTSX: false
   checkJS: false
   sourceFile: playground.asciidoc
-  lineNumber: 12
+  lineNumber: 13
   targetFilename: null
-  tsOptions: {}
+  tsOptions:
+    strict: true
   prefixesLength: 0
   skip: false
   auxiliaryFiles: []

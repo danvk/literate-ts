@@ -7,7 +7,7 @@ Code passed type checker.
 
 END #././src/test/inputs/playground.asciidoc:7 (--- ms)
 
-BEGIN #././src/test/inputs/playground.asciidoc:13 (--filter playground-13)
+BEGIN #././src/test/inputs/playground.asciidoc:14 (--filter playground-14)
 
 matched errors:
   expected: Argument of type 'number' is not assignable to ... type 'string'.
@@ -19,7 +19,7 @@ Twoslash type assertion match:
     Actual: (parameter) x: string
   1/1 twoslash type assertions matched.
 
-END #././src/test/inputs/playground.asciidoc:13 (--- ms)
+END #././src/test/inputs/playground.asciidoc:14 (--- ms)
 
 ---- END FILE ./src/test/inputs/playground.asciidoc
 

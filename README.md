@@ -2,7 +2,9 @@
 
 Literate TS statically checks TypeScript code samples in written text (blog posts, books, etc.).
 It was developed and used to type check [_Effective TypeScript_][ets] (O'Reilly 2019, 2024) as well
-as the companion blog, [effectivetypescript.com][etsblog]. For background on this, see [Type-safe blogs and books with literate-ts][blog post].
+as the companion blog, [effectivetypescript.com][etsblog].
+
+For background on this, see [Type-safe blogs and books with literate-ts][blog post].
 
 <p align="center">
   <a href="https://codecov.io/gh/danvk/literate-ts" target="_blank"><img alt="Codecov Test Coverage" src="https://codecov.io/gh/danvk/literate-ts/branch/main/graph/badge.svg?token=EF5OX198BL"/></a>

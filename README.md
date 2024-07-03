@@ -1,19 +1,15 @@
 # literate-ts
 
 Literate TS statically checks TypeScript code samples in written text (blog posts, books, etc.).
-It was developed and used to type check [_Effective TypeScript_][ets] (O'Reilly 2019) as well
+It was developed and used to type check [_Effective TypeScript_][ets] (O'Reilly 2019, 2024) as well
 as the companion blog, [effectivetypescript.com][etsblog].
 
+For background on this, see [Type-safe blogs and books with literate-ts][blog post].
+
 <p align="center">
-  <a href="https://codecov.io/gh/danvk/literate-ts" target="_blank">
-    <img alt="Codecov Test Coverage" src="https://codecov.io/gh/danvk/literate-ts/branch/main/graph/badge.svg?token=EF5OX198BL"/>
-  </a>
-  <a href="https://github.com/danvk/literate-ts/blob/main/LICENSE" target="_blank">
-    <img alt="License: Apache2 📝" src="https://img.shields.io/github/license/danvk/literate-ts">
-  </a>
-  <a href="https://github.com/sponsors/danvk" target="_blank">
-    <img alt="Sponsor: On GitHub 💸" src="https://img.shields.io/badge/sponsor-on_github_💸-21bb42.svg" />
-  </a>
+  <a href="https://codecov.io/gh/danvk/literate-ts" target="_blank"><img alt="Codecov Test Coverage" src="https://codecov.io/gh/danvk/literate-ts/branch/main/graph/badge.svg?token=EF5OX198BL"/></a>
+  <a href="https://github.com/danvk/literate-ts/blob/main/LICENSE" target="_blank"><img alt="License: Apache2 📝" src="https://img.shields.io/github/license/danvk/literate-ts"></a>
+  <a href="https://github.com/sponsors/danvk" target="_blank"><img alt="Sponsor: On GitHub 💸" src="https://img.shields.io/badge/sponsor-on_github_💸-21bb42.svg" /></a>
   <img alt="Style: Prettier 🧹" src="https://img.shields.io/badge/style-prettier_🧹-21bb42.svg" />
   <img alt="TypeScript: Strict 💪" src="https://img.shields.io/badge/typescript-strict_💪-21bb42.svg" />
 </p>
@@ -471,7 +467,7 @@ Update one baseline:
   interspersed in text, rather than comments being interspersed in code.
 
 [dtslint]: https://github.com/microsoft/dtslint
-[ets]: https://amzn.to/38s1oCK
+[ets]: https://amzn.to/3UjPrsK
 [asciidoc]: https://asciidoc.org/
 [atlas-asciidoc]: https://docs.atlas.oreilly.com/writing_in_asciidoc.html
 [atlas]: https://atlas.oreilly.com/
@@ -483,3 +479,4 @@ Update one baseline:
 [twoslash]: https://shikijs.github.io/twoslash/
 [machinery]: https://effectivetypescript.com/2022/02/25/gentips-4-display/
 [example]: https://github.com/danvk/effective-typescript/blob/main/samples/ch-intro/any.md
+[blog post]: https://effectivetypescript.com/2020/06/30/literate-ts/

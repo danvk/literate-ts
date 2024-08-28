@@ -2697,9 +2697,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 knip@^5.7.3:
-  version "5.27.3"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.27.3.tgz#7e8118b1e578f5cfa54c7128af581ab36f8870c2"
-  integrity sha512-X0zYs0viwENUtp+FZE2Ig6vQZYvKOz8TvuQkWSWMOXiEDoiMAF+NuDczVD9Dhupicfew0YKpYamHhKtNP+f8+g==
+  version "5.27.4"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.27.4.tgz#37442bacd88520ef1af2c2429e0e5d1be127ee68"
+  integrity sha512-7t1yqIKxaVGYD1cLI4raVLWi9cNqv+JNbngc8mgvTVJbomnxOg1pjxgCGEztB7eVgD+6VEwf7Jg5WHXzk+Kbpw==
   dependencies:
     "@nodelib/fs.walk" "1.2.8"
     "@snyk/github-codeowners" "1.1.0"

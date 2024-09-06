@@ -2673,9 +2673,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 knip@^5.7.3:
-  version "5.29.1"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.29.1.tgz#596ba9aea44fb56d89c9cc7d73e2522d50280713"
-  integrity sha512-l8qFtRqNpCk8xf46VOwhBUva7LBwanoGPJ4KQNwVRl6hmEXStf1BJlfbYRZ+yQpbilbIV6LN+ztX6LaGtyd4TQ==
+  version "5.29.2"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.29.2.tgz#c2b8c134f2018028a1aac0bea293ac127d40e4b9"
+  integrity sha512-NfJ3VDyV7gHvI4lVmr9PQCvC4lvrnTdaRMmtHIVBWB2GWWKj86uTw8Yfnp07M+fQeqOnX3AGPG8hjXHPlE1MEw==
   dependencies:
     "@nodelib/fs.walk" "1.2.8"
     "@snyk/github-codeowners" "1.1.0"
@@ -3134,9 +3134,9 @@ peberminta@^0.9.0:
   integrity sha512-XIxfHpEuSJbITd1H3EeQwpcZbTLHc+VVr8ANI9t5sit565tsI4/xK3KWTUFE2e6QiangUkh3B0jihzmGnNrRsQ==
 
 picocolors@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.1.tgz#a8ad579b571952f0e5d25892de5445bcfe25aaa1"
-  integrity sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.1.0.tgz#5358b76a78cde483ba5cef6a9dc9671440b27d59"
+  integrity sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==
 
 picomatch@^2.0.4, picomatch@^2.2.3, picomatch@^2.3.1:
   version "2.3.1"

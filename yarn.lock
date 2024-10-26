@@ -722,9 +722,9 @@
     "@types/serve-static" "*"
 
 "@types/find-cache-dir@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@types/find-cache-dir/-/find-cache-dir-5.0.0.tgz#3b3b6c48e907b5fcba2220fc6b0a1b13d5a0c2f5"
-  integrity sha512-9sbmWy0peTRfIMgHRwaeat9euvI+lAQQXIiAH8Sivd1ESFR5aIC+cbFsOnyH0UYhBd6sOUB6r426wbEbN+18fA==
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@types/find-cache-dir/-/find-cache-dir-5.0.2.tgz#5c5fdac0a261a927fafe01b27ea232d104acc167"
+  integrity sha512-pIpWpRaCpj/TH4XSRlBhbqgEkka/2UGCBQ1+aYX2yMLAnMc4YMvP11YrspgoN9mF4q0+AtWRdbTv4Zda4lpEew==
   dependencies:
     find-cache-dir "*"
 
@@ -3835,9 +3835,9 @@ yocto-queue@^0.1.0:
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
 yocto-queue@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-1.0.0.tgz#7f816433fb2cbc511ec8bf7d263c3b58a1a3c251"
-  integrity sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-1.1.1.tgz#fef65ce3ac9f8a32ceac5a634f74e17e5b232110"
+  integrity sha512-b4JR1PFR10y1mKjhHY9LaGo6tmrgjit7hxVIeAmyMw3jegXR4dhYqLaQF5zMXZxY7tLpMyJeLjr1C4rLmkVe8g==
 
 zod-validation-error@^3.0.3:
   version "3.4.0"

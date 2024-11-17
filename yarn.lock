@@ -2591,9 +2591,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 knip@^5.7.3:
-  version "5.36.7"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.36.7.tgz#5a570e89aa5781ea0f98929f558596c2128777e7"
-  integrity sha512-PSuu62+6wqd1Q1V/ZzbDhvJ3X+RU8wZILon90h2s93+d1OZL118ZE9WihzSqwP29GVt72MTlbS/HHG+O47H68w==
+  version "5.37.1"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.37.1.tgz#3c3e91c425dfb35be68b4d12cc0b9ee3cde794e8"
+  integrity sha512-69gjKj5lLsLXcIPXlHyFfX5AOHgRdh/iXH8gUqvmsHtjqoWhOATeXZDjvvemmgw7KxbWbUzxBNbpjhtJWzgqGA==
   dependencies:
     "@nodelib/fs.walk" "1.2.8"
     "@snyk/github-codeowners" "1.1.0"
@@ -3105,9 +3105,9 @@ pretty-format@^29.0.0, pretty-format@^29.7.0:
     react-is "^18.0.0"
 
 pretty-ms@^9.0.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-9.1.0.tgz#0ad44de6086454f48a168e5abb3c26f8db1b3253"
-  integrity sha512-o1piW0n3tgKIKCwk2vpM/vOV13zjJzvP37Ioze54YlTHE06m4tjEbzg9WsKkvTuyYln2DHjo5pY4qrZGI0otpw==
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-9.2.0.tgz#e14c0aad6493b69ed63114442a84133d7e560ef0"
+  integrity sha512-4yf0QO/sllf/1zbZWYnvWw3NxCQwLXKzIj0G849LSufP15BXKM0rbD2Z3wVnkMfjdn/CB0Dpp444gYAACdsplg==
   dependencies:
     parse-ms "^4.0.0"
 

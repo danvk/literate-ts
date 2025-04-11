@@ -1690,10 +1690,10 @@ fill-range@^7.1.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-find-cache-dir@*, find-cache-dir@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/find-cache-dir/-/find-cache-dir-5.0.0.tgz#69d1a9b77bbe39aea078dbede99d277a170d3079"
-  integrity sha512-OuWNfjfP05JcpAP3JPgAKUhWefjMRfI5iAoSsvE24ANYWJaepAtlSgWECSVEuRgSXpyNEc9DJwG/TZpgcOqyig==
+find-cache-dir@*, find-cache-dir@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/find-cache-dir/-/find-cache-dir-6.0.0.tgz#1d05fc52e17ac6d5e393027f9e1a921e88b3b506"
+  integrity sha512-nZMBQ0IuwcMgW8jsiShHtj2WQS6ReVTOMGiSnriCdWBUN/eVsolBlE0EPXe2R5MfIWtqkpM4grjGuqimbWhUFA==
   dependencies:
     common-path-prefix "^3.0.0"
     pkg-dir "^7.0.0"

@@ -2576,9 +2576,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 knip@^5.7.3:
-  version "5.48.0"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.48.0.tgz#cae19f72fc1e9c4161537602a377c8fadd2204e5"
-  integrity sha512-aXiNYFf+09G5At8PALVHV+9xsKTjw2TNaA3S7Gh5rCeaOyZH6sKkvA8chX8+9If13rxMQiJ9sY0QuMblvnGsmQ==
+  version "5.50.2"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.50.2.tgz#5d8fc3f511a7aefca50630497c1e02f8d0af202e"
+  integrity sha512-TGpfeeSMlaRd5wUkcb4HsVGSiQrE289LZF9qtW2TLHkAZbB2rM53wVQbXSf1KjOvJfBSZYSyYQ6q79lufrwsPw==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     easy-table "1.2.0"

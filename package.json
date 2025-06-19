@@ -46,7 +46,7 @@
     "@types/find-cache-dir": "^5.0.0",
     "@types/fs-extra": "^11.0.0",
     "@types/html-to-text": "^9.0.1",
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^30.0.0",
     "@types/js-yaml": "^4.0.9",
     "@types/lodash": "^4.14.138",
     "@types/node": "22.15.32",

@@ -2985,9 +2985,9 @@ keyv@^4.5.3:
     json-buffer "3.0.1"
 
 knip@^5.7.3:
-  version "5.61.0"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.61.0.tgz#4a05c3a4232921563b6eee70caaffa4eb250b1d4"
-  integrity sha512-g4zwSPUoSCWXWTHshNgtsiuM90jnLpZyBZ6J7BQaydfoOjclgh4NfrD7BL+TjChgDbeYg5bEQcERKK/vdJlpmA==
+  version "5.61.2"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.61.2.tgz#c21df1547f4704ab488a2082c8f92520a5072b40"
+  integrity sha512-ZBv37zDvZj0/Xwk0e93xSjM3+5bjxgqJ0PH2GlB5tnWV0ktXtmatWLm+dLRUCT/vpO3SdGz2nNAfvVhuItUNcQ==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     fast-glob "^3.3.3"
@@ -4261,11 +4261,11 @@ yocto-queue@^1.0.0:
   integrity sha512-b4JR1PFR10y1mKjhHY9LaGo6tmrgjit7hxVIeAmyMw3jegXR4dhYqLaQF5zMXZxY7tLpMyJeLjr1C4rLmkVe8g==
 
 zod-validation-error@^3.0.3:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/zod-validation-error/-/zod-validation-error-3.5.0.tgz#13d31d04abbc72f3cc33c5466985f861f54ff96c"
-  integrity sha512-IWK6O51sRkq0YsnYD2oLDuK2BNsIjYUlR0+1YSd4JyBzm6/892IWroUnLc7oW4FU+b0f6948BHi6H8MDcqpOGw==
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/zod-validation-error/-/zod-validation-error-3.5.2.tgz#5af463c1acd4662e6b2610a75260931dbcb43a56"
+  integrity sha512-mdi7YOLtram5dzJ5aDtm1AG9+mxRma1iaMrZdYIpFO7epdKBUwLHIxTF8CPDeCQ828zAXYtizrKlEJAtzgfgrw==
 
 zod@^3.22.4:
-  version "3.25.64"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.64.tgz#57b5c7e76dd64e447f7e710285fcdb396b32f803"
-  integrity sha512-hbP9FpSZf7pkS7hRVUrOjhwKJNyampPgtXKc3AN6DsWtoHsg2Sb4SQaS4Tcay380zSwd2VPo9G9180emBACp5g==
+  version "3.25.67"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.67.tgz#62987e4078e2ab0f63b491ef0c4f33df24236da8"
+  integrity sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==

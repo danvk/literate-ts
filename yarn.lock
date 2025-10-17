@@ -2883,9 +2883,9 @@ keyv@^4.5.3:
     json-buffer "3.0.1"
 
 knip@^5.7.3:
-  version "5.64.3"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.64.3.tgz#aab23ad8beac2a038b53a988700a56b419b8045a"
-  integrity sha512-P9dZetEZfSBwNBFwj55CAnPAMdzVLTTscWx6rdB8eBmPqXPji8F3L+hhWi+Xp+u9O6Xp2ClRDq2JENSK8Z04Qg==
+  version "5.66.0"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.66.0.tgz#41cc683bf28f6d87ee49d6c3b5d1c8b0ca9de2c9"
+  integrity sha512-b1IR8sEgeywrnzhl0ePDM6euAjrC3Jefdpg6EpUc2z+WSYO0UChGQhftZIbnSNTeqYi//7/5vh+lLAxwO1AoVQ==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     fast-glob "^3.3.3"

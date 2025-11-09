@@ -2890,9 +2890,9 @@ keyv@^4.5.3:
     json-buffer "3.0.1"
 
 knip@^5.7.3:
-  version "5.67.1"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.67.1.tgz#2e57aed18f51c3ac8f23f0818a96b1cff4e5fc4e"
-  integrity sha512-U5AtiqnZAbWIxihs5wxFFEZlpKhzRLWlXSGwA79na7wvlX+MsE0rSuU6If+kl/A4o3TDzTtKGZ4SjeLyWkNR/A==
+  version "5.68.0"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.68.0.tgz#4c35bb71b9ea401768dd99d2039df6cdd1d9730c"
+  integrity sha512-YFTu0uy/0x3UhNhlKGsFSwDXkdw+1ZKobrkPL5rbPJtmHnZrGOFI1yjTAi/emicy06zvLYhmW51jPKvwZETgQA==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     fast-glob "^3.3.3"

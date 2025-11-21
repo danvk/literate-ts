@@ -2831,7 +2831,7 @@ js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-js-yaml@^4.1.0:
+js-yaml@^4.1.0, js-yaml@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.1.tgz#854c292467705b699476e1a2decc0c8a3458806b"
   integrity sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==
@@ -2890,21 +2890,21 @@ keyv@^4.5.3:
     json-buffer "3.0.1"
 
 knip@^5.7.3:
-  version "5.69.1"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.69.1.tgz#d021a4303f8a053b5dbebc135e6845344caaba91"
-  integrity sha512-duK61dmrk9O3RiPQtDrsWGzxGyNoyf9gQyjXPcvmcecZypdv9x0ixzPdBU4YTPRbwvUaRtNGulHYUyixz2fbKg==
+  version "5.70.1"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.70.1.tgz#602f73687e2b92576c35a9b8e2f572f82c61e651"
+  integrity sha512-tGRjOivkHPV+YoVVDz0oKSlvCAY6d009Mlhufs4Y+7VWl/Ky073+KURcrgMLzJVy4pkpZvoxYu3wmC0gK7XS5g==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     fast-glob "^3.3.3"
     formatly "^0.3.0"
     jiti "^2.6.0"
-    js-yaml "^4.1.0"
+    js-yaml "^4.1.1"
     minimist "^1.2.8"
-    oxc-resolver "^11.12.0"
+    oxc-resolver "^11.13.2"
     picocolors "^1.1.1"
     picomatch "^4.0.1"
-    smol-toml "^1.4.1"
-    strip-json-comments "5.0.2"
+    smol-toml "^1.5.2"
+    strip-json-comments "5.0.3"
     zod "^4.1.11"
 
 leac@^0.6.0:
@@ -3214,7 +3214,7 @@ ora@*, ora@^9.0.0:
     string-width "^8.1.0"
     strip-ansi "^7.1.2"
 
-oxc-resolver@^11.12.0:
+oxc-resolver@^11.13.2:
   version "11.13.2"
   resolved "https://registry.yarnpkg.com/oxc-resolver/-/oxc-resolver-11.13.2.tgz#df613c8a0420dc63fc24686328a70822eddc3295"
   integrity sha512-1SXVyYQ9bqMX3uZo8Px81EG7jhZkO9PvvR5X9roY5TLYVm4ZA7pbPDNlYaDBBeF9U+YO3OeMNoHde52hrcCu8w==
@@ -3585,10 +3585,10 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-smol-toml@^1.4.1:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/smol-toml/-/smol-toml-1.5.0.tgz#514e56fa6379ce284e824c224e321e750f9ef5b6"
-  integrity sha512-Jjsa8LZ+DyLbZ7gVi9d18bS8oxq0PQrTlVDfvYXgh7gxLwbW9QWgvakHD+hBLUtr5NahfStd8LQLGSPchaEJ8Q==
+smol-toml@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/smol-toml/-/smol-toml-1.5.2.tgz#70d4324d47b7cccbc67d611829c9b3f6d528b02f"
+  integrity sha512-QlaZEqcAH3/RtNyet1IPIYPsEWAaYyXXv1Krsi+1L/QHppjX4Ifm8MQsBISz9vE8cHicIq3clogsheili5vhaQ==
 
 source-map-support@0.5.13:
   version "0.5.13"
@@ -3741,10 +3741,10 @@ strip-final-newline@^2.0.0:
   resolved "https://registry.yarnpkg.com/strip-final-newline/-/strip-final-newline-2.0.0.tgz#89b852fb2fcbe936f6f4b3187afb0a12c1ab58ad"
   integrity sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==
 
-strip-json-comments@5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-5.0.2.tgz#14a76abd63b84a6d2419d14f26a0281d0cf6ea46"
-  integrity sha512-4X2FR3UwhNUE9G49aIsJW5hRRR3GXGTBTZRMfv568O60ojM8HcWjV/VxAxCDW3SUND33O6ZY66ZuRcdkj73q2g==
+strip-json-comments@5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-5.0.3.tgz#b7304249dd402ee67fd518ada993ab3593458bcf"
+  integrity sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==
 
 strip-json-comments@^3.1.1:
   version "3.1.1"

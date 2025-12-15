@@ -78,7 +78,7 @@ jobs:
       - run: mv coverage/coverage-final.json coverage/${{matrix.shard}}.json
 
       # https://github.com/actions/download-artifact?tab=readme-ov-file#download-multiple-filtered-artifacts-to-the-same-directory
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: coverage-artifacts-${{ matrix.shard }}
           path: coverage/
@@ -88,7 +88,7 @@ jobs:
     needs: [test]
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           path: coverage
           pattern: coverage-artifacts-*

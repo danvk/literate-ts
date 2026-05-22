@@ -2,9 +2,9 @@ import {matchAndExtract} from './utils.js';
 import {Processor} from './code-sample.js';
 import {generateIdMetadata} from './metadata.js';
 
-const EXTRACT_BACKTICKS = /```(tsx|ts)/;
+const EXTRACT_BACKTICKS = /```(tsx|ts|jsx)/;
 const EXTRACT_ID = /\[\[([^\]]*)\]\]/;
-const EXTRACT_SOURCE = /\[source,(tsx|ts|js|json)\]/;
+const EXTRACT_SOURCE = /\[source,(tsx|ts|jsx|js|json)\]/;
 const EXTRACT_DIRECTIVE = /^\/\/ verifier:(.*)$/;
 const TOP_HEADER = /^={1,3} (.*)$/;
 const NODE_PROGRAM_LISTING = /<pre data-type="programlisting".*>&gt; /;

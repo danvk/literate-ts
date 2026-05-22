@@ -138,6 +138,12 @@ function process(
       if (lang === 'tsx') {
         lastLanguage = 'ts';
         nextIsTSX = true;
+      } else if (lang === 'jsx') {
+        lastLanguage = 'js';
+        nextIsTSX = true;
+        nextShouldCheckJs = true;
+        tsOptions['allowJs'] = true;
+        tsOptions['noEmit'] = true;
       } else {
         lastLanguage = lang;
       }

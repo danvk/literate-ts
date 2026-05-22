@@ -752,7 +752,9 @@ async function uncachedCheckTs(
   config: ConfigBundle,
 ): Promise<CheckTsResult> {
   const {id, content} = sample;
-  const fileName = sample.targetFilename || id + (sample.isTSX ? '.tsx' : `.${sample.language}`);
+  const fileName =
+    sample.targetFilename ||
+    id + (sample.isTSX ? (sample.language === 'js' ? '.jsx' : '.tsx') : `.${sample.language}`);
   const tsFile = writeTempFile(fileName, content);
   const sampleDir = getTempDir();
   const allFiles = [tsFile];

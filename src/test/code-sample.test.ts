@@ -330,6 +330,66 @@ describe('code-sample', () => {
       },
     ]);
   });
+
+  test('extracts markdown jsx code fences as JSX JavaScript samples', () => {
+    expect(
+      applyPrefixes(
+        extractSamples(
+          dedent`
+            <!-- #component -->
+            \`\`\`jsx
+            const el = <div>Hello</div>;
+            \`\`\`
+            `,
+          'jsx-sample',
+          'source.md',
+        ),
+      ),
+    ).toEqual([
+      {
+        ...baseSample,
+        descriptor: './source.md:1',
+        lineNumber: 2,
+        language: 'js',
+        id: 'component',
+        sourceFile: 'source.md',
+        isTSX: true,
+        checkJS: true,
+        tsOptions: {allowJs: true, noEmit: true},
+        content: `const el = <div>Hello</div>;`,
+      },
+    ]);
+  });
+
+  test('extracts asciidoc jsx source blocks as JSX JavaScript samples', () => {
+    expect(
+      applyPrefixes(
+        extractSamples(
+          dedent`
+            [[component]]
+            [source,jsx]
+            ----
+            const el = <div>Hello</div>;
+            ----
+            `,
+          'jsx-sample',
+          'source.asciidoc',
+        ),
+      ),
+    ).toEqual([
+      {
+        ...baseSample,
+        descriptor: './source.asciidoc:1',
+        lineNumber: 3,
+        language: 'js',
+        id: 'component',
+        isTSX: true,
+        checkJS: true,
+        tsOptions: {allowJs: true, noEmit: true},
+        content: `const el = <div>Hello</div>;`,
+      },
+    ]);
+  });
 });
 
 describe('stripSource', () => {

@@ -678,6 +678,73 @@ function setupNodeModules(sample: CodeSample, sampleDir: string, options: ts.Com
   }
 }
 
+function isBareModuleName(moduleName: string) {
+  return !moduleName.startsWith('.') && !path.isAbsolute(moduleName);
+}
+
+function getModuleResolutionContainingFile(
+  moduleName: string,
+  containingFile: string,
+  sampleTempFile: string,
+  sourceFileAbsPath: string,
+) {
+  return containingFile === sampleTempFile && isBareModuleName(moduleName)
+    ? sourceFileAbsPath
+    : containingFile;
+}
+
+function getSampleCompilerHost(
+  baseHost: ts.CompilerHost,
+  sampleTempFile: string,
+  sourceFileAbsPath: string,
+): ts.CompilerHost {
+  return {
+    ...baseHost,
+    resolveModuleNames(moduleNames, containingFile, _reusedNames, redirectedReference, options) {
+      return moduleNames.map(moduleName => {
+        const resolutionContainingFile = getModuleResolutionContainingFile(
+          moduleName,
+          containingFile,
+          sampleTempFile,
+          sourceFileAbsPath,
+        );
+        return ts.resolveModuleName(
+          moduleName,
+          resolutionContainingFile,
+          options,
+          baseHost,
+          undefined,
+          redirectedReference,
+        ).resolvedModule;
+      });
+    },
+    resolveModuleNameLiterals(
+      moduleLiterals,
+      containingFile,
+      redirectedReference,
+      options,
+      _containingSourceFile,
+    ) {
+      return moduleLiterals.map(moduleLiteral => {
+        const resolutionContainingFile = getModuleResolutionContainingFile(
+          moduleLiteral.text,
+          containingFile,
+          sampleTempFile,
+          sourceFileAbsPath,
+        );
+        return ts.resolveModuleName(
+          moduleLiteral.text,
+          resolutionContainingFile,
+          options,
+          baseHost,
+          undefined,
+          redirectedReference,
+        );
+      });
+    },
+  };
+}
+
 /** Verify that a TypeScript sample has the expected errors and no others. */
 async function uncachedCheckTs(
   sample: CodeSample,
@@ -705,7 +772,9 @@ async function uncachedCheckTs(
     options.typeRoots = [path.join(sampleDir, 'node_modules', '@types')];
   }
 
-  const program = ts.createProgram(allFiles, options, config.host);
+  const sourceFileAbsPath = path.resolve(process.cwd(), sample.sourceFile);
+  const host = getSampleCompilerHost(config.host, tsFile, sourceFileAbsPath);
+  const program = ts.createProgram(allFiles, options, host);
   const source = program.getSourceFile(tsFile);
   if (!source) {
     fail('Unable to load TS source file');

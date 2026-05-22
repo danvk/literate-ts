@@ -135,7 +135,12 @@ function process(
       }
     },
     setNextLanguage(lang) {
-      lastLanguage = lang;
+      if (lang === 'tsx') {
+        lastLanguage = 'ts';
+        nextIsTSX = true;
+      } else {
+        lastLanguage = lang;
+      }
     },
     startCommentBlock() {
       inCommentBlock = true;

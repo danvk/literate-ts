@@ -1,0 +1,1 @@
+# TSX module resolution fixture

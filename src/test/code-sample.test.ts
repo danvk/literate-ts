@@ -274,6 +274,62 @@ describe('code-sample', () => {
       },
     ]);
   });
+
+  test('extracts markdown tsx code fences as TSX TypeScript samples', () => {
+    expect(
+      applyPrefixes(
+        extractSamples(
+          dedent`
+            <!-- #component -->
+            \`\`\`tsx
+            const el = <div>Hello</div>;
+            \`\`\`
+            `,
+          'tsx-sample',
+          'source.md',
+        ),
+      ),
+    ).toEqual([
+      {
+        ...baseSample,
+        descriptor: './source.md:1',
+        lineNumber: 2,
+        language: 'ts',
+        id: 'component',
+        sourceFile: 'source.md',
+        isTSX: true,
+        content: `const el = <div>Hello</div>;`,
+      },
+    ]);
+  });
+
+  test('extracts asciidoc tsx source blocks as TSX TypeScript samples', () => {
+    expect(
+      applyPrefixes(
+        extractSamples(
+          dedent`
+            [[component]]
+            [source,tsx]
+            ----
+            const el = <div>Hello</div>;
+            ----
+            `,
+          'tsx-sample',
+          'source.asciidoc',
+        ),
+      ),
+    ).toEqual([
+      {
+        ...baseSample,
+        descriptor: './source.asciidoc:1',
+        lineNumber: 3,
+        language: 'ts',
+        id: 'component',
+        isTSX: true,
+        content: `const el = <div>Hello</div>;`,
+      },
+    ]);
+  });
 });
 
 describe('stripSource', () => {

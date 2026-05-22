@@ -116,7 +116,7 @@ literate-ts supports both Asciidoc and Markdown sources. The syntax used for eac
 ### Markdown
 
 Only fenced code blocks are supported in Markdown sources. For a source to be checked, it needs to
-have its language marked as "ts" or "js":
+have its language marked as "ts", "tsx" or "js":
 
     Here's a TypeScript code sample:
 
@@ -166,7 +166,7 @@ Any recent O'Reilly book (including [_Effective TypeScript_][ets]) is written in
 GitHub also provides a rich display for Asciidoc source files.
 
 In Asciidoc, code samples are marked with `----` or `....`. Samples must be marked
-with `[source,ts]` to be checked, or `[source,js]` to be run through Node.
+with `[source,ts]` or `[source,tsx]` to be checked, or `[source,js]` to be run through Node.
 
 Code samples can be given an identifier using `[[id]]`:
 

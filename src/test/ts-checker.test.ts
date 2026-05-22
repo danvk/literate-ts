@@ -3,6 +3,7 @@ import fs from 'fs';
 import ts from 'typescript';
 
 import {
+  checkTs,
   extractExpectedErrors,
   hasTypeAssertions,
   extractTypeAssertions,
@@ -13,9 +14,48 @@ import {
   normalize,
   limitedSplit,
 } from '../ts-checker.js';
+import {CodeSample} from '../types.js';
 import {dedent} from '../utils.js';
+import {baseSample} from './common.js';
 
 describe('ts-checker', () => {
+  test('resolves implicit JSX runtime imports from the sample source file location', async () => {
+    const config = ts.parseJsonConfigFileContent(
+      {
+        compilerOptions: {
+          jsx: 'react-jsx',
+          jsxImportSource: 'fake-jsx',
+          module: 'esnext',
+          moduleResolution: 'node10',
+        },
+      },
+      ts.sys,
+      process.cwd(),
+    );
+    const sample = {
+      ...baseSample,
+      descriptor: './src/test/inputs/tsx-module/doc.md:1',
+      language: 'ts',
+      id: 'tsx-module',
+      content: 'const el = <div />;',
+      isTSX: true,
+      sourceFile: 'src/test/inputs/tsx-module/doc.md',
+      lineNumber: 1,
+    } satisfies CodeSample;
+
+    await expect(
+      checkTs(
+        sample,
+        false,
+        {
+          options: config.options,
+          host: ts.createCompilerHost(config.options, true),
+        },
+        {skipCache: true},
+      ),
+    ).resolves.toMatchObject({passed: true});
+  });
+
   describe('extractExpectedErrors', () => {
     test('basic functionality', () => {
       expect(

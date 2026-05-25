@@ -3028,9 +3028,9 @@ keyv@^4.5.3:
     json-buffer "3.0.1"
 
 knip@^6.0.0:
-  version "6.14.1"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-6.14.1.tgz#fdee562e86a2fd46a510d1cd02402d5984a42866"
-  integrity sha512-SN3Ly0ixzj5CQkY/rc4OPHpWrCC0XRIIjgdP76G9Cni5k72ur5jBYOyvJuF5oPTM14v8eHcMUgPbElHa+lnR0g==
+  version "6.14.2"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-6.14.2.tgz#264f725dd2bf2104e70561b0fee7432d2c77fd76"
+  integrity sha512-Vg3JhIINjZew1I7qAFI4UHemW1mc4azP/BxJvsq9eGDfxpGO7oVCuD/bsWkog9TO/ZwwJeAeOMFZ1kd9jnY9+Q==
   dependencies:
     fdir "^6.5.0"
     formatly "^0.3.0"

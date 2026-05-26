@@ -61,3 +61,7 @@ typings/
 .next
 
 dist/
+
+# Stale playground baseline written for non-playground inputs (see src/test/checker-logic.ts)
+src/test/baselines/express.playground.json
+
